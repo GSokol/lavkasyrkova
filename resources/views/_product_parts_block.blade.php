@@ -1,0 +1,1 @@
+{{ $showParts ? implode('гр. ', $data['product_parts']).'гр.' : '—' }}

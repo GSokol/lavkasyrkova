@@ -1,0 +1,1 @@
+{{ number_format($price, 0, '', ' ').'р.' }}

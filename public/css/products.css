@@ -1,0 +1,177 @@
+#categories {
+    text-align: center;
+}
+
+.category {
+    cursor: pointer;
+    height: 270px;
+}
+
+.category:hover {
+    opacity: 0.7;
+}
+
+#products {
+    text-align: center;
+    display: none;
+}
+
+.order-form {
+    width: 100%;
+    display: table;
+    margin-bottom: 30px;
+}
+
+#products > button {
+    width: 320px;
+}
+
+#order-content hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#total-cost {
+    font-size: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.input-value-container {
+    width: 100%;
+    display: table;
+    margin-bottom: 15px;
+}
+
+.product {
+    display: table;
+}
+
+p.product-name {
+    font-weight: bolder;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.product .input-value-container {
+    margin: 10px 0 0 0;
+}
+
+.product .cost {
+    display: table-row;
+}
+
+.product .cost > p {
+    height: 30px;
+    padding: 10px;
+    font-style: italic;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    border-top: 1px solid #ddd;
+}
+
+.input-value-container input {
+    text-align: center;
+    font-weight: bold;
+    background-color: white;
+    font-size: 15px;
+}
+
+.input-value-container > div {
+    padding: 0 5px;
+    display: table-cell;
+}
+
+.input-value-container .button {
+    width: 35px;
+    color: grey;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.category img, .product img {
+    border: 1px solid #c1c1c1;
+}
+
+.category h3, .product h3 {
+    font-size: 20px;
+    text-align: left;
+    margin-bottom: 0;
+}
+
+.category h3 {
+    text-align: center;
+}
+
+.product p {
+    text-align: left;
+    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.product p.price {
+    /*border-bottom: 1px solid red;*/
+    padding-bottom: 10px;
+    font-style: italic;
+}
+
+.product p.price.action {
+    color: #ad0637;
+    font-weight: bolder;
+}
+
+.product.action p, .product.action p.action {
+    color: white;
+}
+
+.action-product {
+    padding: 20px;
+    display: table;
+    background-color: #faa54c;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.action-product h2 {
+    color: white;
+    text-align: center;
+}
+
+.shops-block {
+    padding-left: 30px;
+}
+
+#checkout-modal div.error {
+    font-size: 18px !important;
+    margin-bottom: 25px;
+    display: none;
+}
+
+#checkout-modal .form-group {
+    margin-bottom: 0;
+}
+
+#checkout-modal button.btn-primary {
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .category {
+        height: 300px;
+    }
+
+    .frame-image.tastings {
+        height: 300px;
+    }
+
+    #checkout-modal span.error {
+        text-align: left;
+        display: block;
+    }
+}

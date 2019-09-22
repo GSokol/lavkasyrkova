@@ -1,0 +1,17 @@
+#loader-screen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1051;
+    background: url("../images/white.png");
+    text-align: center;
+}
+
+#loader-screen > img {
+    width: 50px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}

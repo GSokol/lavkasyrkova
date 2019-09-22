@@ -1,0 +1,1 @@
+@include('_checkbox_block', ['name' => 'i_agree', 'addClass' => 'text-center', 'checked' => false, 'label' => 'Даю согласие на обработку персональных данных'])

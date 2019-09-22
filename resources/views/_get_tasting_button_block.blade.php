@@ -1,0 +1,1 @@
+@include('_button_block',['type' => 'button', 'icon' => 'icon-file-check', 'text' => 'Я участвую!'])

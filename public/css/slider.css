@@ -1,0 +1,23 @@
+.owl-carousel .owl-nav button.owl-next,
+.owl-carousel .owl-nav button.owl-prev {
+    position: absolute;
+    font-size: 70px;
+    margin-top: -330px;
+    color: #faa54c;
+    transform: translateY(50%);
+    text-shadow: 0 2px 1px #898989;
+    margin-left: -30px;
+}
+
+.owl-carousel .owl-nav button.owl-next {
+    margin-left: 100%;
+    transform: translate(7px,50%);
+}
+
+
+@media screen and (max-width: 768px) {
+    .owl-carousel .owl-nav button.owl-next,
+    .owl-carousel .owl-nav button.owl-prev {
+        display: none;
+    }
+}
