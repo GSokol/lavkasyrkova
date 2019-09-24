@@ -4,6 +4,7 @@ namespace Illuminate\Foundation\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Office;
 use Illuminate\Auth\Events\Registered;
 
 trait RegistersUsers
@@ -17,7 +18,7 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        return view('auth.register', ['offices' => Office::all()]);
     }
 
     /**

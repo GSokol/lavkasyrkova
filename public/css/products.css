@@ -120,27 +120,14 @@ p.product-name {
     font-style: italic;
 }
 
-.product p.price.action {
-    color: #ad0637;
-    font-weight: bolder;
+.actions {
+    width: 100%;
 }
 
-.product.action p, .product.action p.action {
-    color: white;
-}
-
-.action-product {
-    padding: 20px;
-    display: table;
-    background-color: #faa54c;
-    color: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
-
-.action-product h2 {
-    color: white;
-    text-align: center;
+.actions > .action {
+    width: 100%;
+    position: absolute;
+    background-size: cover !important;
 }
 
 .shops-block {

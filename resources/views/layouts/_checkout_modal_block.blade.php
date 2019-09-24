@@ -65,3 +65,13 @@
 
 <?php $content = ob_get_clean(); ?>
 @include('layouts._modal_block',['id' => 'checkout-modal', 'title' => 'Оформление заказа', 'content' => $content, 'addClass' => isset($addClass) ? $addClass : null])
+
+@if (Session::has('basket') && Session::get('basket')['total'] && Request::has('basket') && Request::input('basket'))
+    <script>
+        $(window).ready(function () {
+            setTimeout(function () {
+                $('#checkout-modal').modal('show');
+            }, 1000);
+        });
+    </script>
+@endif

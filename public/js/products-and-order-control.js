@@ -2,38 +2,20 @@ $(window).ready(function () {
     $('.input-value-container input').focus(function () {
         $(this).blur();
     });
-    
-    var categoriesContainer = $('#categories'),
-        productsContainer = $('#products'),
-        orderForm = productsContainer.find('.order-form');
 
     // Click to category href
-    categoriesContainer.find('.category').click(function () {
-        var id = $(this).attr('data-id'),
-            type = $(this).attr('data-type');
-        $.post('/get-category-products', {
-            '_token': $('input[name=_token]').val(),
-            'id':id,
-            'type':type
-        }, function (data) {
-            if (data.success) {
-                $('#cheeses-sub-head').html(data.head);
-                orderForm.html(data.products);
-                categoriesContainer.fadeOut('fast',function () {
-                    productsContainer.fadeIn('fast');
-                    maxHeight('product','action');
-                    bindValueInputsControl(true);
-                });
-            }
-        });
+    $('.category').click(function () {
+            getCategory($(this));
     });
 
     // Click back to categories
+    var productsContainer = $('#products');
     productsContainer.find('button').click(function () {
         productsContainer.fadeOut('fast',function () {
-            orderForm.html('');
+            $('.order-form').html('');
             $('#cheeses-sub-head').html('');
-            categoriesContainer.fadeIn('fast',function () {
+            $('#cheeses-head').fadeIn('fast');
+            $('#categories').fadeIn('fast',function () {
                 goToScroll('cheeses');
             });
         });
@@ -153,36 +135,10 @@ function bindValueInputsControl(usingBasketFlag) {
             usingBasketFlag = false;
         }
 
-        $('input[name='+input.attr('name')+']').val(value+' '+unit);
-
-        if ((product.length || productBasket.length) && price) {
-            if (usingBasketFlag) {
-                $.post('/basket', {
-                    '_token': $('input[name=_token]').val(),
-                    'id': productId,
-                    'value':value
-                }, function (data) {
-                    if (data.success) {
-                        var totalCost = data.total,
-                            item = $('#basket-product-'+productId);
-
-                        $('.total-cost-basket > span').html(totalCost+'р.');
-                        $('#total-cost').html(totalCost+'р.');
-
-
-                        if (item.length) {
-                            if (data.product) item.html(data.product);
-                            else item.remove();
-                        } else {
-                            $('#order-content').append(
-                                $('<div class="product-basket"></div>').attr('id','basket-product-'+productId).html(data.product)
-                            );
-                        }
-                        bindValueInputsControl(true);
-                        product.find('.cost > p').html(data.cost+'р.');
-                    }
-                });
-            }
+        if ((product.length || productBasket.length) && price && usingBasketFlag) {
+            changeProductValue(productId,value,unit);
+        } else {
+            input.val(value+' '+unit);
         }
     });
 }
@@ -207,7 +163,57 @@ function orderComplete(data) {
     showMessage(data.message);
 }
 
+function getCategory(obj) {
+    var id = obj.attr('data-id'),
+        type = obj.attr('data-type');
+
+    $.post('/get-category-products', {
+        '_token': $('input[name=_token]').val(),
+        'id':id,
+        'type':type
+    }, function (data) {
+        if (data.success) {
+            $('#cheeses-sub-head').html(data.head);
+            $('.order-form').html(data.products);
+            $('#cheeses-head').fadeOut('fast');
+            $('#categories').fadeOut('fast',function () {
+                $('#products').fadeIn('fast');
+                maxHeight('product','action');
+                bindValueInputsControl(true);
+            });
+        }
+    });
+}
+
 function clearErrors() {
     var errorContainer = $('#checkout-modal div.error');
     errorContainer.css('display','none').html('');
+}
+
+function changeProductValue(productId,value,unit) {
+    $.post('/basket', {
+        '_token': $('input[name=_token]').val(),
+        'id': productId,
+        'value':value
+    }, function (data) {
+        if (data.success) {
+            var totalCost = data.total,
+                basketItem = $('#basket-product-'+productId);
+
+            $('input[name=product_'+productId+']').val(value+' '+unit);
+            $('product-'+productId).find('.cost > p').html(data.cost+'р.');
+            $('.total-cost-basket > span').html(totalCost+'р.');
+            $('#total-cost').html(totalCost+'р.');
+
+            if (basketItem.length) {
+                if (data.product) basketItem.html(data.product);
+                else basketItem.remove();
+            } else {
+                $('#order-content').append(
+                    $('<div class="product-basket"></div>').attr('id','basket-product-'+productId).html(data.product)
+                );
+            }
+            bindValueInputsControl(true);
+        }
+    });
 }

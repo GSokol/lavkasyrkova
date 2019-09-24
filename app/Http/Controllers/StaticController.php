@@ -21,8 +21,6 @@ class StaticController extends Controller
     {
         $this->data['shops'] = Shop::all();
         $this->data['actions'] = Product::where('action',1)->where('active',1)->limit(5)->get();
-        $this->data['categories'] = Category::all();
-        $this->data['add_categories'] = AddCategory::all();
         $this->data['product_parts'] = $this->productParts;
         $this->data['products'] = Product::where('active',1)->get();
         $this->data['tasting_new'] = $this->getNewTasting();
@@ -48,11 +46,17 @@ class StaticController extends Controller
     private function showView($view)
     {
         $this->data['seo'] = Settings::getSeoTags();
+        $this->data['categories'] = Category::all();
+        $addCategories = AddCategory::all();
+
         $mainMenu = [];
-        $mainMenu[] = ['href' => 'about', 'name' => 'О компании'];
-        if (count($this->data['actions'])) $mainMenu[] = ['href' => 'actions', 'name' => 'Акции'];
-        $mainMenu[] = ['href' => 'cheeses', 'name' => 'Наши сыры'];
-        if ($this->data['tasting_new'] || (isset($this->data['tastings']) && count($this->data['tastings']))) $mainMenu[] = ['href' => 'tastings', 'name' => 'Дегустации'];
+        if (count($this->data['actions'])) $mainMenu[] = ['href' => 'actions', 'name' => 'Предложения недели'];
+
+        $subMenu = [];
+        $subMenu = $this->getCategorySubMenu($subMenu, $this->data['categories'], 'category');
+        $subMenu = $this->getCategorySubMenu($subMenu, $addCategories, 'add_category');
+        $mainMenu[] = ['href' => 'cheeses', 'name' => 'Наши сыры', 'submenu' => $subMenu];
+        $mainMenu[] = ['href' => 'tastings', 'name' => 'Дегустации'];
         $mainMenu[] = ['href' => 'shops', 'name' => 'Магазины'];
 
         if (Auth::guest()) {
@@ -69,5 +73,18 @@ class StaticController extends Controller
             'data' => $this->data,
             'metas' => $this->metas
         ]);
+    }
+
+    private function getCategorySubMenu($subMenu, $categories, $type)
+    {
+        foreach ($categories as $category) {
+            $subMenu[] = [
+                'href' => 'cheeses',
+                'id' => $category->id,
+                'type' => $type,
+                'name' => $category->name
+            ];
+        }
+        return $subMenu;
     }
 }

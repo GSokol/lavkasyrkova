@@ -6,7 +6,8 @@
     <div class="panel panel-body login-form">
         <div class="text-center">
             @include('auth._logo_block')
-            <h5 class="content-group-lg">{{ trans('auth.login_to_your_account') }} <small class="display-block">{!! trans('auth.login_head') !!}</small></h5>
+            <h5>{{ trans('auth.login_to_your_account') }}</h5>
+            <h6>Или пройдите <a href="{{ url('/register') }}">регистрацию</a></h6>
         </div>
 
         @include('_input_block',['name' => 'email', 'type' => 'email', 'placeholder' => 'E-mail', 'icon' => 'icon-user'])

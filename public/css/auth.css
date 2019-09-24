@@ -3,6 +3,10 @@ body {
     background-size: cover;
 }
 
+h5 {
+    margin-bottom: 10px;
+}
+
 .login-form {
     width: 345px !important;
     float: right;

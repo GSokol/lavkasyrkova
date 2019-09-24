@@ -11,7 +11,7 @@
     </div>
     <div class="collapse navbar-collapse" id="app-navbar-collapse">
         <div class="container">
-            <a href="#home" class="hidden-xs logo" data-scroll="home"><img src="{{ asset('images/logo_white.png') }}" /></a>
+            <div class="logo hidden-xs"><a href="#home" data-scroll="home"><img src="{{ asset('images/logo_small.svg') }}" /></a></div>
         <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav dropdown">
                 @foreach($mainMenu as $menu)
@@ -29,9 +29,9 @@
                             @endif
 
                             @if (isset($menu['submenu']) && is_array($menu['submenu']))
-                                <ul class="dropdown-menu">
-                                    @foreach($menu['submenu'] as $href => $name)
-                                        <li><a href="#{{ $href }}" data-scroll-parent="{{ $menu['href'] }}" data-scroll="{{ $href }}">{{ $name }}</a></li>
+                                <ul class="dropdown-menu hidden-xs">
+                                    @foreach($menu['submenu'] as $menu)
+                                        <li><a href="#{{ $menu['href'] }}" data-id="{{ $menu['id'] }}" data-type="{{ $menu['type'] }}" data-scroll="{{ $menu['href'] }}">{{ $menu['name'] }}</a></li>
                                     @endforeach
                                 </ul>
                             @endif

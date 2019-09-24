@@ -8,7 +8,7 @@ function addMap(coords, container) {
     ymaps.ready(function () {
         var myMap = new ymaps.Map(container, {
             center: coords[0].coords,
-            zoom: 12,
+            zoom: 13,
             controls: ['zoomControl', 'fullscreenControl']
         });
 

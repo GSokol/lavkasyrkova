@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'Flora';
+    src: url('../fonts/FLORA.ttf') format('truetype'), url('../fonts/FloraC-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
 /*Navbar*/
 .navbar-toggle {
     float: left !important;
@@ -19,18 +26,18 @@
     z-index: 999;
 }
 
-.navbar-default a.logo {
-    float: left;
-    width: 50px;
+.navbar-default .logo {
+    width: 170px;
     height: 50px;
+    overflow: hidden;
+    float: left;
     top: 5px;
-
     position: absolute;
     z-index: 999;
 }
 
-.navbar-default a.logo > img {
-    width: 100%;
+.navbar-default .logo img {
+    width: 170px;
 }
 
 .navbar-nav {
@@ -46,7 +53,7 @@
 
 .basket {
     position: absolute;
-    color: white !important;
+    color: #faa54c !important;
     margin-top: -5px;
     cursor: pointer;
     text-decoration: none;
@@ -80,31 +87,6 @@
     border: 1px solid grey !important;
 }
 
-/*.nav > li:before {*/
-    /*content: '|';*/
-    /*color: grey;*/
-    /*float: left;*/
-    /*position: relative;*/
-    /*margin-top: -3px;*/
-/*}*/
-
-/*.nav > li.logo {*/
-    /*width: 100px;*/
-    /*height: 20px;*/
-    /*padding: 0;*/
-/*}*/
-
-/*.nav > li.logo a {*/
-    /*text-align: left;*/
-    /*padding: 0;*/
-/*}*/
-
-/*.nav > li.logo img {*/
-    /*width: 80px;*/
-    /*position: absolute;*/
-    /*margin-top: -13px;*/
-/*}*/
-
 .nav > li:nth-child(2):before {
     content: '';
 }
@@ -127,17 +109,20 @@
 .basket:focus {
     background: none !important;
     /*border-color: #E65024;*/
-    color: #faa54c !important;
+    color: #ab0330 !important;
+}
+
+.nav > li.main-menu > a {
+    text-transform: uppercase;
 }
 
 .nav > li > a,
 .dropdown-menu > li > a {
     font-family: Optima, sans-serif;
-    padding: 0 15px;
+    padding: 0 10px;
     font-size: 17px;
-    text-transform: uppercase;
     text-decoration: none;
-    color: white !important;
+    color: #faa54c !important;
 }
 
 .nav > li .icon {
@@ -163,7 +148,7 @@
 
 #main-image > .logo > div > img {
     max-width: 90%;
-    margin-top: 50px;
+    margin-top: 120px;
 }
 
 #main-image > .text {
@@ -173,14 +158,24 @@
 
 #main-image > .text > div {
     display: table-cell;
+    padding-bottom: 50px;
     text-align: center;
     vertical-align: bottom;
 }
 
-#main-image > .text img {
-    max-width: 95%;
-    margin: auto;
-    display: block;
+#main-image > .text > div > p {
+    font-family: 'Flora', Arial, sans-serif;
+    font-size: 24px;
+    line-height: 1.85;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 30px;
+}
+
+@media screen and (max-width: 1200px) {
+    .navbar-default .logo {
+        width: 50px;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -209,9 +204,7 @@
         top: 7px;
         font-size: 25px;
     }
-}
 
-@media screen and (max-height: 768px) {
     #main-image > .text img:last-child {
         display: none;
     }

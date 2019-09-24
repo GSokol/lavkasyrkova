@@ -2,13 +2,14 @@
 
 namespace Illuminate\Foundation\Auth;
 
+use App\Http\Controllers\Auth\GoogleCapchaTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 trait AuthenticatesUsers
 {
-    use RedirectsUsers, ThrottlesLogins;
+    use RedirectsUsers, ThrottlesLogins, GoogleCapchaTrait;
 
     /**
      * Show the application's login form.
@@ -29,6 +30,9 @@ trait AuthenticatesUsers
     public function login(Request $request)
     {
         $this->validateLogin($request);
+
+        if (!$this->reCapchaRequest($request->input('g-recaptcha-response')))
+            return redirect()->back()->withErrors(['g-recaptcha-response' => trans('auth.capcha-error')]);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -62,6 +66,7 @@ trait AuthenticatesUsers
         $this->validate($request, [
             $this->username() => 'required|string',
             'password' => 'required|string',
+            'g-recaptcha-response' => 'required|string',
         ]);
     }
 

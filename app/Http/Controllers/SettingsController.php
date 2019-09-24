@@ -32,6 +32,11 @@ class SettingsController extends Controller
         return $this->settings->settings;
     }
 
+    public function getAddress()
+    {
+        return $this->settings->address;
+    }
+
     public function saveSeoTags(Request $request)
     {
         if ($request->has('title')) $this->settings->seo->title = $request->input('title');

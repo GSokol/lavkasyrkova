@@ -25,9 +25,9 @@
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/products.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/loader.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('css/owl.theme.default.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('css/slider.css') }}" rel="stylesheet" type="text/css">
+{{--    <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet" type="text/css">--}}
+{{--    <link href="{{ asset('css/owl.theme.default.min.css') }}" rel="stylesheet" type="text/css">--}}
+    {{--<link href="{{ asset('css/slider.css') }}" rel="stylesheet" type="text/css">--}}
 
     <!-- Core JS files -->
     <script type="text/javascript" src="{{ asset('js/core/libraries/jquery.min.js') }}"></script>
@@ -52,7 +52,7 @@
     <script type="text/javascript" src="{{ asset('js/products-and-order-control.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/message.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/loader.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/owl.carousel.js') }}"></script>
+    {{--<script type="text/javascript" src="{{ asset('js/owl.carousel.js') }}"></script>--}}
     <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
 
     <script type="text/javascript" src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
@@ -61,7 +61,6 @@
 <body>
 
 @include('layouts._message_modal_block')
-@include('layouts._delivery_info_modal_block')
 
 @if (!Auth::guest() && !Auth::user()->is_admin)
     @include('layouts._checkout_modal_block',['usingAjax' => true])
