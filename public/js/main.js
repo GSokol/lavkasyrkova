@@ -47,7 +47,6 @@ $(window).ready(function () {
                 }
             });
         }
-
         if ($(window).scrollTop() > $(window).height()) onTopButton.fadeIn();
         else onTopButton.fadeOut();
     });
@@ -74,9 +73,6 @@ $(window).ready(function () {
         $(this).find('img').attr('src','/images/free_tastings.png');
     });
 
-    // Bind inputs control
-    bindValueInputsControl(true);
-
     mainImageHeight();
     maxHeight('action-product',null);
     maxHeight('product','action');
@@ -86,46 +82,19 @@ $(window).ready(function () {
         maxHeight('product','action');
     });
 
-    // Slider
-    var actions = $('.action');
-    if (actions.length) {
-        var counter = actions.length-1,
-            zIndex = 1;
-        actions.each(function () {
-            $(this).css('z-index',zIndex);
-            zIndex++;
-        });
-
-        setInterval(function () {
-            $(actions[counter]).fadeOut('slow',function () {
-                var current = $(this);
-                actions.each(function () {
-                    if ($(this).attr('id') != current.attr('id')) {
-                        zIndex = parseInt($(this).css('z-index')) + 1;
-                        $(this).css('z-index',zIndex);
-                    }
-                });
-                current.css('z-index',1);
-                current.show();
-                counter--;
-                if (counter < 0) counter = actions.length-1;
-            });
-        }, 5000);
-    }
-
     // Owlcarousel
-    // var owl = $('.owl-carousel');
-    // owl.owlCarousel({
-    //     margin: 10,
-    //     loop: true,
-    //     nav: true,
-    //     // autoplay: true,
-    //     responsive: {
-    //         1000: {
-    //             items: 1
-    //         }
-    //     }
-    // });
+    var owl = $('.owl-carousel');
+    owl.owlCarousel({
+        margin: 0,
+        loop: true,
+        nav: true,
+        // autoplay: true,
+        responsive: {
+            100: {
+                items: 1
+            }
+        }
+    });
 });
 
 function goToScroll(scrollData) {
@@ -143,16 +112,18 @@ function resetColorHrefsMenu() {
 }
 
 function mainImageHeight() {
-    $('#main-image,.actions,.action').css('height',$(window).height());
+    $('#main-image').css('height',$(window).height());
+    $('.actions,.action').css('height',$(window).height()/1.3);
+
     var basket = $('.basket'),
         basketContainer = basket.parents('.container');
 
     basket.css('margin-left',basketContainer.width()-basket.width());
 }
 
-function tolocalstring(string, unit) {
-    return string.toLocaleString().replace(/\,/g, ' ')+' '+unit;
-}
+// function tolocalstring(string, unit) {
+//     return string.toLocaleString().replace(/\,/g, ' ')+' '+unit;
+// }
 
 function maxHeight(className,exceptClassName) {
     var maxHeight = 0,

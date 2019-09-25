@@ -60,3 +60,4 @@ Route::post('/admin/delete-shop', 'AdminController@deleteShop');
 
 Route::get('/', 'StaticController@index');
 Route::post('/get-category-products', 'StaticController@getCategoryProducts');
+Route::post('/get-product', 'StaticController@getProduct');

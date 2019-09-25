@@ -57,7 +57,7 @@
     <script type="text/javascript" src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.maskedinput.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/map.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/products-and-order-control.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/input-value.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/loader.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/message.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/admin.js') }}"></script>

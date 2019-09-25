@@ -1,1 +1,1 @@
-{{ $showParts ? implode('гр. ', $data['product_parts']).'гр.' : '—' }}
+{{ $showParts ? implode('гр. ', Helper::getProductParts()).'гр.' : '—' }}

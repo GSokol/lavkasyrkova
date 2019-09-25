@@ -21,7 +21,6 @@ class StaticController extends Controller
     {
         $this->data['shops'] = Shop::all();
         $this->data['actions'] = Product::where('action',1)->where('active',1)->limit(5)->get();
-        $this->data['product_parts'] = $this->productParts;
         $this->data['products'] = Product::where('active',1)->get();
         $this->data['tasting_new'] = $this->getNewTasting();
 
@@ -39,8 +38,14 @@ class StaticController extends Controller
         $this->validate($request,['id' => ($type == 'category' ? $this->validationCategory : $this->validationAddCategory)]);
         $head = $type == 'category' ? Category::where('id',$request->input('id'))->pluck('name')->first() : AddCategory::where('id',$request->input('id'))->pluck('name')->first();
         $this->data['products'] = Product::where($type.'_id',$request->input('id'))->where('active',1)->get();
-        $this->data['product_parts'] = $this->productParts;
         return response()->json(['success' => true, 'products' => view('_order_products_block', ['data' => $this->data])->render(), 'head' => $head]);
+    }
+
+    public function getProduct(Request $request)
+    {
+        $this->validate($request,['id' => 'required|integer|exists:products,id']);
+        $this->data['products'] = Product::where('id',$request->input('id'))->where('active',1)->get();
+        return response()->json(['success' => true, 'product' => view('_order_products_block', ['data' => $this->data, 'mainClass' => ''])->render()]);
     }
 
     private function showView($view)

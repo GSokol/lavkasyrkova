@@ -1,11 +1,7 @@
 $(window).ready(function () {
-    $('.input-value-container input').focus(function () {
-        $(this).blur();
-    });
-
     // Click to category href
     $('.category').click(function () {
-            getCategory($(this));
+        getCategory($(this));
     });
 
     // Click back to categories
@@ -83,69 +79,51 @@ $(window).ready(function () {
             addressBlock.show();
         }
     });
+
+    // Click to buy acion product
+    $('.action-product button').click(function () {
+        var id = $(this).attr('data-id');
+        $.post('/get-product', {
+            '_token':$('input[name=_token]').val(),
+            'id':id
+        }, function (data) {
+            if (data.success) {
+                var modal = $('#product-modal');
+                modal.find('.modal-body').html(data.product);
+                modal.modal('show');
+
+                bindValueInputsControl();
+                bindProductsValueInputControl();
+            }
+        });
+    });
+
+    bindProductsValueInputControl();
 });
 
-function bindValueInputsControl(usingBasketFlag) {
-    var inputsButton = $('.input-value-container .button');
-    inputsButton.unbind('click');
-    inputsButton.bind('click',function () {
-        var parent = $(this).parents('.input-value-container'),
-            type = $(this).hasClass('plus'),
-            input = parent.find('input'),
-            productId = input.attr('name').replace('product_',''),
-            product = $('.product-'+productId),
-            productBasket = $(this).parents('.product-basket'),
-            unit = input.attr('data-unit'),
-            value = parseInt(input.val().replace(' ','').replace(unit,'')),
-            differentially = parseInt(input.attr('data-differentially')),
-            price = parseInt(input.attr('data-price')),
-            increment = input.attr('data-increment'),
-            minVal = parseInt(input.attr('min')),
-            maxVal = parseInt(input.attr('max'));
+function bindProductsValueInputControl() {
+    var input = $('.input-value-container input'),
+        deleteFromBasket = $('.basket-product .product-delete');
 
-        increment = differentially ? jQuery.parseJSON(increment) : parseInt(increment);
+    input.unbind('change.val');
+    deleteFromBasket.unbind('click');
 
-        if (type && value < maxVal) {
-            if (differentially) {
-                if (value < increment[increment.length-1]) {
-                    for (var i=0;i<increment.length;i++) {
-                        if (increment[i] > value) {
-                            value = increment[i];
-                            break;
-                        }
-                    }
-                }
-            } else {
-                value = value + increment;
-            }
-        } else if (!type && value > minVal) {
-            if (differentially) {
-                var newVal = 0;
-                for (i=increment.length-1;i>=0;i--) {
-                    if (increment[i] < value) {
-                        newVal = increment[i];
-                        break;
-                    }
-                }
-                value = newVal;
-            } else {
-                value = value - increment;
-            }
-        } else {
-            usingBasketFlag = false;
-        }
+    input.bind('change.val', function (event,value,unit,id) {
+        changeProductValue(id,value,unit);
+    });
 
-        if ((product.length || productBasket.length) && price && usingBasketFlag) {
-            changeProductValue(productId,value,unit);
-        } else {
-            input.val(value+' '+unit);
-        }
+    deleteFromBasket.bind('click',function () {
+        var parent = $(this).parents('.basket-product'),
+            unit = parent.find('input').attr('data-unit'),
+            id = input.attr('name').replace('product_','');
+
+        changeProductValue(id,0,unit);
     });
 }
 
 function emptyBasket() {
     $('#order-content').html('');
-    $('#total-cost, .total-cost-basket > span').html('0р.');
+    $('.total-cost-basket > span').html('0р.');
     $('.product').each(function () {
         var input = $(this).find('input');
         input.val('0 '+input.attr('data-unit'));
@@ -179,7 +157,9 @@ function getCategory(obj) {
             $('#categories').fadeOut('fast',function () {
                 $('#products').fadeIn('fast');
                 maxHeight('product','action');
-                bindValueInputsControl(true);
+                
+                bindValueInputsControl();
+                bindProductsValueInputControl();
             });
         }
     });
@@ -190,30 +170,30 @@ function clearErrors() {
     errorContainer.css('display','none').html('');
 }
 
-function changeProductValue(productId,value,unit) {
+function changeProductValue(id,value,unit) {
     $.post('/basket', {
-        '_token': $('input[name=_token]').val(),
-        'id': productId,
+        '_token':$('input[name=_token]').val(),
+        'id':id,
         'value':value
     }, function (data) {
         if (data.success) {
-            var totalCost = data.total,
-                basketItem = $('#basket-product-'+productId);
+            var basketItem = $('#basket-product-'+id);
 
-            $('input[name=product_'+productId+']').val(value+' '+unit);
-            $('product-'+productId).find('.cost > p').html(data.cost+'р.');
-            $('.total-cost-basket > span').html(totalCost+'р.');
-            $('#total-cost').html(totalCost+'р.');
+            $('input[name=product_'+id+']').val(value+' '+unit);
+            $('.product-'+id+' .cost > p, .product-'+id+' .product-cost').html(data.cost+'р.');
+            $('.total-cost-basket > span').html(data.total+'р.');
 
+            // Add or remove value-input in basket modal
             if (basketItem.length) {
                 if (data.product) basketItem.html(data.product);
                 else basketItem.remove();
             } else {
                 $('#order-content').append(
-                    $('<div class="product-basket"></div>').attr('id','basket-product-'+productId).html(data.product)
+                    $('<div class="product-basket"></div>').attr('id','basket-product-'+id).html(data.product)
                 );
             }
-            bindValueInputsControl(true);
+            bindValueInputsControl();
+            bindProductsValueInputControl();
         }
     });
 }

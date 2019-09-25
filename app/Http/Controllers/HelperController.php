@@ -27,4 +27,14 @@ class HelperController extends Controller
     {
         return $product->parts ? 'гр.' : 'шт.';
     }
+    
+    public function productMinVal($product)
+    {
+        return $product->parts ? $this->productParts[0].'гр.' : '1шт.';
+    }
+    
+    public function getProductParts()
+    {
+        return $this->productParts;
+    }    
 }

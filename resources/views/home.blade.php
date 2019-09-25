@@ -19,10 +19,18 @@
     </div>
 
     @if (count($data['actions']))
-        <div class="cover actions" data-scroll-destination="actions">
+        <div class="cover owl-carousel actions" data-scroll-destination="actions">
             @foreach($data['actions'] as $action)
-                <div id="action-{{ $action->id }}" class="action" style="background: url('{{ asset($action->image) }}')">
-
+                <div id="action-{{ $action->id }}" class="action" style="background: url('{{ asset($action->image) }}') center; background-size: cover;">
+                    <div class="container">
+                        <div class="col-md-4 col-sm-6 col-xs-12 action-product">
+                            <h1>Предложение недели</h1>
+                            <h2>{{ $action->name }}</h2>
+                            <p class="description">{{ $action->description }}</p>
+                            <p class="action-price">{{ Helper::productPrice($action).'р. за '.Helper::productMinVal($action) }}</p>
+                            @include('_button_block',['type' => 'button', 'icon' => 'icon-cart5', 'text' => 'Купить', 'addAttr' => ['data-id' => $action->id]])
+                        </div>
+                    </div>
                 </div>
             @endforeach
         </div>

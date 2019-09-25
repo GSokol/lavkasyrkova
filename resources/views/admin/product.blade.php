@@ -72,7 +72,7 @@
                             ])
 
                             @include('_input_value_block', [
-                                'label' => 'Цена за '.$data['product_parts'][0].'гр.',
+                                'label' => 'Цена за '.Helper::getProductParts()[0].'гр.',
                                 'name' => 'part_price',
                                 'min' => 100,
                                 'max' => 100000,
@@ -84,7 +84,7 @@
                             ])
 
                             @include('_input_value_block', [
-                                'label' => 'Цена за '.$data['product_parts'][0].'гр. по акции',
+                                'label' => 'Цена за '.Helper::getProductParts()[0].'гр. по акции',
                                 'name' => 'action_part_price',
                                 'min' => 100,
                                 'max' => 100000,

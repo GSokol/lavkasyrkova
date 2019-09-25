@@ -22,19 +22,23 @@
     margin-bottom: 30px;
 }
 
-#products > button {
-    width: 320px;
-}
-
 #order-content hr {
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-#total-cost {
-    font-size: 15px;
+.modal-body .total-cost-basket {
+    font-size: 20px;
     margin-bottom: 15px;
     text-align: center;
+}
+
+.modal-body .product {
+    width: 100%;
+}
+
+.modal-body .product h3 {
+    margin-top: 20px;
 }
 
 .input-value-container {
@@ -47,10 +51,33 @@
     display: table;
 }
 
-p.product-name {
+.basket-product {
+    width: 100%;
+    display: table;
+}
+
+.basket-product > div {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 10px;
+}
+
+.basket-product .product-name,
+.basket-product .product-cost {
+    width: 40%;
     font-weight: bolder;
     font-size: 16px;
     margin-bottom: 5px;
+}
+
+.basket-product .product-cost {
+    width: 20%;
+    text-align: center;
+}
+
+.basket-product .product-delete {
+    text-align: center;
+    cursor: pointer;
 }
 
 .product .input-value-container {
@@ -124,10 +151,68 @@ p.product-name {
     width: 100%;
 }
 
-.actions > .action {
+.actions .container {
+    padding-top: 0;
+}
+
+.owl-carousel .owl-nav {
     width: 100%;
-    position: absolute;
-    background-size: cover !important;
+    height: 0;
+    position: relative;
+    z-index: 100;
+    top: -50%;
+    transform: translateY(-50%);
+}
+
+.owl-carousel .owl-nav button {
+    width: 60px;
+    height: 60px;
+    background-color: white !important;
+    font-size: 70px !important;
+    position: relative;
+    border-radius: 50%;
+    opacity: 0.7;
+}
+
+.owl-carousel .owl-nav button > span {
+    display: block;
+    position: relative;
+    top: -27px;
+}
+
+.owl-carousel .owl-nav button.owl-prev {
+    float: left;
+    margin-left: 20px;
+}
+
+.owl-carousel .owl-nav button.owl-next {
+    float: right;
+    margin-right: 20px;
+}
+
+.action-product {
+    display: table;
+    text-align: center;
+    padding: 30px;
+    background: url("../images/white.png") repeat;
+}
+
+.action-product h1 {
+    font-size: 27px;
+}
+
+.action-product h2 {
+    font-size: 20px;
+}
+
+.action-product p.description {
+    padding-bottom: 20px;
+    border-bottom: 1px solid grey;
+}
+
+.action-price {
+    font-weight: bolder;
+    color: #ab0330;
 }
 
 .shops-block {

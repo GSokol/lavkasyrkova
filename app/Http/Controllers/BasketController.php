@@ -22,7 +22,6 @@ class BasketController extends Controller
         $product = Product::find($request->input('id'));
         $this->validate($request, ['value' => 'required|integer|min:0|max:'.($product->parts ? $this->productParts[count($this->productParts)-1] : 10)]);
 
-        $this->data['product_parts'] = $product->parts;
         $basket = Session::has('basket') ? Session::get('basket') : [];
         $value = $request->input('value');
         $price = Helper::productPrice($product);

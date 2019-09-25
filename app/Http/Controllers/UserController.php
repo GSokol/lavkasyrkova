@@ -33,7 +33,6 @@ class UserController extends Controller
     public function orders()
     {
         $this->breadcrumbs = ['orders' => 'Заказы'];
-        $this->data['product_parts'] = $this->productParts;
         $this->data['orders'] = Auth::user()->is_admin ? Order::orderBy('id','desc')->get() : Order::where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
         return $this->showView('orders');
     }
@@ -42,7 +41,6 @@ class UserController extends Controller
     {
         $this->breadcrumbs = ['user' => 'Профиль пользователя'];
         $this->data['user'] = Auth::user();
-        $this->data['product_parts'] = $this->productParts;
         return $this->showView('user');
     }
     

@@ -23,7 +23,7 @@
                         <th class="text-center">Изображение</th>
                         <th class="text-center">Название</th>
                         <th class="text-center">Цена за целое</th>
-                        <th class="text-center">Цена за {{ $data['product_parts'][0] }}гр.</th>
+                        <th class="text-center">Цена за {{ Helper::getProductParts()[0] }}гр.</th>
                         <th class="text-center">Акционный товар</th>
                         <th class="text-center">Статус</th>
                         <th class="text-center">Удалить</th>
