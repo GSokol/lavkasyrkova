@@ -10,6 +10,7 @@ use App\Tasting;
 use App\UserToTasting;
 use App\Shop;
 use Settings;
+use Imagick;
 
 class StaticController extends Controller
 {
@@ -19,6 +20,8 @@ class StaticController extends Controller
 
     public function index()
     {
+        new Imagick();
+
         $this->data['shops'] = Shop::all();
         $this->data['actions'] = Product::where('action',1)->where('active',1)->limit(5)->get();
         $this->data['products'] = Product::where('active',1)->get();

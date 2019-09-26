@@ -98,7 +98,8 @@ class UserController extends Controller
         }
 
         $this->saveCompleteMessage();
-        return redirect('/admin/users');
+        if (Auth::user()->is_admin) return redirect('/admin/users');
+        else return redirect('/profile/user');
     }
 
     public function checkoutOrder(Request $request)

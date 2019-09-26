@@ -50,15 +50,6 @@
                     'value' => isset($data['user']) ? $data['user']->phone : ''
                 ])
 
-                @include('_input_block', [
-                    'label' => 'Адрес',
-                    'name' => 'address',
-                    'type' => 'text',
-                    'max' => 255,
-                    'placeholder' => 'Адрес пользователя',
-                    'value' => isset($data['user']) ? $data['user']->address : ''
-                ])
-
                 <div class="panel panel-flat">
                     @if (isset($data['user']))
                         <div class="panel-heading">

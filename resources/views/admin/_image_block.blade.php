@@ -1,7 +1,7 @@
 <div class="col-md-{{ isset($col) ? $col : '3' }} col-sm-12 col-xs-12 {{ isset($addClass) ? $addClass : '' }}" {{ isset($delData) ? 'id=image_'.$delData : '' }}>
     <div class="panel panel-flat">
         <div class="panel-heading">
-            <div class="panel-title">{{ trans('admin_content.image') }}</div>
+            <div class="panel-title">{{ isset($label) ? $label : trans('admin_content.image') }}</div>
         </div>
         <div class="panel-body edit-image-preview">
             @if (isset($preview) && $preview)

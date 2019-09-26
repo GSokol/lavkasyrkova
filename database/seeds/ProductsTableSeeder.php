@@ -110,6 +110,7 @@ class ProductsTableSeeder extends Seeder
             $fields = $product;
             $fields['description'] = 'Попробуйте начать свой день с чашки ароматного кофе и теплого домашнего хлеба со свежим «'.$product['name'].'».';
             $fields['image'] = $prodPath.$prodCount.'.jpg';
+            $fields['big_image'] = $prodPath.$prodCount.'_big.jpg';
             $fields['whole_price'] = 1000*($k+1);
             $fields['part_price'] = 100;
             $fields['action_whole_price'] = rand(500,2000);

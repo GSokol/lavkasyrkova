@@ -21,7 +21,7 @@
     @if (count($data['actions']))
         <div class="cover owl-carousel actions" data-scroll-destination="actions">
             @foreach($data['actions'] as $action)
-                <div id="action-{{ $action->id }}" class="action" style="background: url('{{ asset($action->image) }}') center; background-size: cover;">
+                <div id="action-{{ $action->id }}" class="action" style="background: url('{{ asset($action->big_image) }}') center; background-size: cover;">
                     <div class="container">
                         <div class="col-md-4 col-sm-6 col-xs-12 action-product">
                             <h1>Предложение недели</h1>

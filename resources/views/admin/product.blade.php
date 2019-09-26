@@ -12,7 +12,18 @@
                     <input type="hidden" name="id" value="{{ $data['product']->id }}">
                 @endif
 
-                @include('admin._image_block',['preview' => isset($data['product']) ? $data['product']->image : null])
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    @include('admin._image_block',[
+                        'col' => 12,
+                        'preview' => isset($data['product']) && $data['product']->big_image ? $data['product']->big_image : null,
+                        'name' => 'big_image',
+                        'label' => 'Большая картинка'
+                    ])
+                    @include('admin._image_block',[
+                        'col' => 12,
+                        'preview' => isset($data['product']) ? $data['product']->image : null
+                    ])
+                </div>
 
                 <div class="col-md-9 col-sm-12 col-xs-12">
                     <div class="panel panel-flat">

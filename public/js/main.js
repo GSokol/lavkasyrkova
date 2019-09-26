@@ -88,7 +88,7 @@ $(window).ready(function () {
         margin: 0,
         loop: true,
         nav: true,
-        // autoplay: true,
+        autoplay: true,
         responsive: {
             100: {
                 items: 1

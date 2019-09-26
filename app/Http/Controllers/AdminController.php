@@ -156,13 +156,14 @@ class AdminController extends UserController
             'action_whole_price' => $this->validationPrice,
             'action_part_price' => $this->validationPrice,
             'image' => $this->validationImage,
+            'big_image' => $this->validationImage,
             'category_id' => $this->validationCategory,
             'add_category_id' => $this->validationAddCategory
         ];
         $fields = $this->processingFields(
             $request,
             ['action','active','parts'],
-            'image',
+            ['image','big_image'],
             null,
             ['whole_price','part_price','action_whole_price','action_part_price']
         );
@@ -173,12 +174,25 @@ class AdminController extends UserController
 
             $this->validate($request, $validationArr);
             $product = Product::find($request->input('id'));
+
+            if ($request->hasFile('image')) 
+                $fields = array_merge($fields, $this->processingImage($request, $product, 'image'));
+            if ($request->hasFile('big_image'))
+                $fields = array_merge($fields, $this->processingImage($request, $product, 'big_image'));
+                
             $product->update($fields);
 
         } else {
             $validationArr['image'] = 'required|'.$this->validationImage;
+            $validationArr['big_image'] = 'required|'.$this->validationImage;
+            
             $this->validate($request, $validationArr);
-            $fields = array_merge($fields, $this->processingImage($request, null, 'image', str_slug($fields['name']), 'images/products'));
+            $fields = array_merge(
+                $fields,
+                $this->processingImage($request, null, 'image', str_slug($fields['name']), 'images/products'),
+                $this->processingImage($request, null, 'big_image', str_slug($fields['name']).'_big', 'images/products')
+            );
+            
             Product::create($fields);
         }
 
