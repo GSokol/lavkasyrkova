@@ -90,7 +90,7 @@
             <script>window.map = [];</script>
             @foreach($data['shops'] as $shop)
                 <p>{!! $shop->address !!}</p>
-                <script>window.map.push({coords:[parseFloat("{{ $shop->latitude }}"),parseFloat("{{ $shop->longitude }}")],'address':"{{ $shop->address }}"});</script>
+                <script>window.map.push({coords:[parseFloat("{{ $shop->latitude }}"),parseFloat("{{ $shop->longitude }}")],'address':"{{ strip_tags($shop->address) }}"});</script>
             @endforeach
             <p>Тел: {{ Settings::getAddress()->phone1.'; '.Settings::getAddress()->phone2 }}</p>
             <p><a href="mailto:{{ Settings::getAddress()->email }}">{{ Settings::getAddress()->email }}</a></p>

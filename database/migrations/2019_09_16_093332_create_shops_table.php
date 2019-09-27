@@ -16,8 +16,8 @@ class CreateShopsTable extends Migration
         Schema::create('shops', function (Blueprint $table) {
             $table->increments('id');
             $table->string('address');
-            $table->double('latitude');
-            $table->double('longitude');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->timestamps();
         });
     }
