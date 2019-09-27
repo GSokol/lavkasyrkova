@@ -14,14 +14,10 @@ $(window).ready(function () {
     // sr.reveal('.navbar-default', {duration:1000});
     // sr.reveal('.cover', {duration:2000});
     // sr.reveal('.tasting', {duration:5000});
-    
+
     // Drop down menu
-    $('li.main-menu, .basket').bind('mouseover',function () {
-        var dropDownMenu = $(this).find('ul.dropdown-menu');
-        dropDownMenu.show();
-        dropDownMenu.bind('mouseleave',function () {
-            dropDownMenu.hide();
-        })
+    $('li.main-menu ul.dropdown-menu, .basket ul.dropdown-menu').bind('mouseleave',function () {
+        $(this).hide();
     });
 
     // Click hover zone and menu
@@ -76,10 +72,12 @@ $(window).ready(function () {
     mainImageHeight();
     maxHeight('action-product',null);
     maxHeight('product','action');
+    bindDropdownMenu();
     $(window).resize(function() {
         mainImageHeight();
         maxHeight('action-product',null);
         maxHeight('product','action');
+        bindDropdownMenu();
     });
 
     // Owlcarousel
@@ -133,4 +131,16 @@ function maxHeight(className,exceptClassName) {
         if ($(this).height() > maxHeight) maxHeight = $(this).height();
     });
     objects.not('.'+exceptClassName).css('height',maxHeight);
+}
+
+function bindDropdownMenu() {
+    var parentMenu = $('li.main-menu, .basket'),
+        bindType = $(window).width() > 768 ? 'mouseover' : 'click';
+
+    parentMenu.unbind();
+    parentMenu.bind(bindType,function () {
+        var dropDownMenu = $(this).find('ul.dropdown-menu');
+        if (dropDownMenu.is(':visible') && bindType != 'mouseover') dropDownMenu.hide();
+        else dropDownMenu.show();
+    });
 }

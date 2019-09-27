@@ -10,7 +10,7 @@ class ProductsTableSeeder extends Seeder
     public function run()
     {
         $categories = [
-            'Мягкие сыры',
+            'Молодые сыры',
             'Полутвердые сыры',
             'Твердые сыры',
             'Сыры с белой плесенью',

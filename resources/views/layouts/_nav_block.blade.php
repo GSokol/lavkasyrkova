@@ -29,7 +29,7 @@
                             @endif
 
                             @if (isset($menu['submenu']) && is_array($menu['submenu']))
-                                <ul class="dropdown-menu hidden-xs">
+                                <ul class="dropdown-menu">
                                     @foreach($menu['submenu'] as $menu)
                                         <li><a href="#{{ $menu['href'] }}" data-id="{{ $menu['id'] }}" data-type="{{ $menu['type'] }}" data-scroll="{{ $menu['href'] }}">{{ $menu['name'] }}</a></li>
                                     @endforeach
