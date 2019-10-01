@@ -34,9 +34,9 @@
                 <table class="table datatable-basic table-items">
                     <tr>
                         <th class="id">id</th>
-                        <th class="text-center">Название</th>
-                        <th class="text-center">Место проведения</th>
                         <th class="text-center">Время проведения</th>
+                        <th class="text-center">Место проведения</th>
+                        <th class="text-center">Дата создания</th>
                         <th class="text-center">Количество участников</th>
                         <th class="text-center">Новая/прошедшая</th>
                         <th class="text-center">Статус</th>
@@ -45,9 +45,9 @@
                     @foreach ($data['tastings'] as $tasting)
                         <tr role="row" id="{{ 'tasting_'.$tasting->id }}">
                             <td class="id">{{ $tasting->id }}</td>
-                            <td class="text-center"><a href="/admin/tastings?id={{ $tasting->id }}">{{ $tasting->name }}</a></td>
+                            <td class="text-center"><a href="/admin/tastings?id={{ $tasting->id }}">{{ date('d.m.Y',$tasting->time) }}</a></td>
                             <td class="text-center">{{ $tasting->office->address }}</td>
-                            <td class="text-center">{{ date('d.m.Y',$tasting->time) }}</td>
+                            <td class="text-center">{{ $tasting->created_at->format('d.m.Y') }}</td>
                             <td class="text-center">{{ count($tasting->tastingToUsers) }}</td>
                             <td class="text-center">@include('admin._status_block',['status' => $tasting->time < time(), 'trueLabel' => 'Новая', 'falseLabel' => 'прошедшая'])</td>
                             <td class="text-center">@include('admin._status_block',['status' => $tasting->active, 'trueLabel' => 'активна', 'falseLabel' => 'не активна'])</td>

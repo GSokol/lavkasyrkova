@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Tasting extends Model
 {
     protected $fillable = [
-        'name',
         'time',
         'active',
         'office_id'

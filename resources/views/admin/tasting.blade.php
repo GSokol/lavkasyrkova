@@ -27,14 +27,14 @@
                     'selected' => isset($data['tasting']) ? $data['tasting']->office_id : 1
                 ])
 
-                @include('_input_block', [
-                    'label' => 'Название дегустации',
-                    'name' => 'name',
-                    'type' => 'text',
-                    'max' => 255,
-                    'placeholder' => 'Название дегустации',
-                    'value' => isset($data['tasting']) ? $data['tasting']->name : ''
-                ])
+                {{--@include('_input_block', [--}}
+                    {{--'label' => 'Название дегустации',--}}
+                    {{--'name' => 'name',--}}
+                    {{--'type' => 'text',--}}
+                    {{--'max' => 255,--}}
+                    {{--'placeholder' => 'Название дегустации',--}}
+                    {{--'value' => isset($data['tasting']) ? $data['tasting']->name : ''--}}
+                {{--])--}}
 
                 @include('_date_block', [
                     'label' => 'Время проведения дегустации',

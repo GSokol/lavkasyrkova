@@ -203,7 +203,6 @@ class AdminController extends UserController
     public function editTasting(Request $request)
     {
         $validationArr = [
-            'name' => 'required|min:3|max:255',
             'time' => 'required',
             'office_id' => $this->validationOffice
         ];

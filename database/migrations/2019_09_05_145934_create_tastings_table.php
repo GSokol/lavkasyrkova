@@ -15,7 +15,6 @@ class CreateTastingsTable extends Migration
     {
         Schema::create('tastings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->integer('time');
             $table->boolean('active');
             $table->timestamps();
