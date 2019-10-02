@@ -28,68 +28,58 @@ class ProductsTableSeeder extends Seeder
         ];
 
         $products = [
-            ['name'=>'Азиаго', 'description'=>'', 'parts'=>1, 'category_id'=>3, 'add_category_id'=>1],
-            ['name'=>'Альпийский', 'description'=>'', 'parts'=>1, 'category_id'=>3, 'add_category_id'=>2],
-            ['name'=>'Алферьевский Козий', 'description'=>'', 'parts'=>1, 'category_id'=>3, 'add_category_id'=>1],
-            ['name'=>'Брюност', 'description'=>'', 'parts'=>0, 'category_id'=>2, 'add_category_id'=>2],
-            ['name'=>'Брюност по-рижски', 'description'=>'', 'parts'=>1, 'category_id'=>2, 'add_category_id'=>2],
-            ['name'=>'Бюш Козий в белой плесени/зола', 'description'=>'', 'parts'=>1, 'category_id'=>1, 'add_category_id'=>1],
-            ['name'=>'Вайнкезе', 'description'=>'', 'parts'=>1, 'category_id'=>1, 'add_category_id'=>2],
-            ['name'=>'Валансе козий', 'description'=>'', 'parts'=>1, 'category_id'=>4, 'add_category_id'=>1],
-            ['name'=>'Гауда подарочная', 'description'=>'', 'parts'=>1, 'category_id'=>2, 'add_category_id'=>2],
-            ['name'=>'Грандфортезза 12 мес', 'description'=>'', 'parts'=>1, 'category_id'=>3, 'add_category_id'=>2],
-            ['name'=>'Камамбер', 'description'=>'', 'parts'=>1, 'category_id'=>4, 'add_category_id'=>2],
-            ['name'=>'Камамбер Блэк', 'description'=>'', 'parts'=>1, 'category_id'=>4, 'add_category_id'=>2],
-            ['name'=>'Камамбер из козьего молока', 'description'=>'', 'parts'=>1, 'category_id'=>4, 'add_category_id'=>1],
-            ['name'=>'Каприно Козий', 'description'=>'', 'parts'=>1, 'category_id'=>2, 'add_category_id'=>1],
-            ['name'=>'Качетта натур', 'description'=>'', 'parts'=>1, 'category_id'=>2, 'add_category_id'=>2],
-            ['name'=>'Качеств с Трюфелем вакуум', 'description'=>'', 'parts'=>1, 'category_id'=>2, 'add_category_id'=>2],
-            ['name'=>'Кнолле белпер Соболев', 'description'=>'', 'parts'=>0, 'category_id'=>3, 'add_category_id'=>2],
-            ['name'=>'Кнолле белпер', 'description'=>'', 'parts'=>1, 'category_id'=>3, 'add_category_id'=>2],
-            ['name'=>'Козий твёрдый 8 мес', 'description'=>'', 'parts'=>1, 'category_id'=>3, 'add_category_id'=>1],
-            ['name'=>'Кроттен', 'description'=>'', 'parts'=>1, 'category_id'=>4, 'add_category_id'=>1],
-            ['name'=>'Ливнекас', 'description'=>'', 'parts'=>1, 'category_id'=>4, 'add_category_id'=>1],
-            ['name'=>'Маасдам', 'description'=>'', 'parts'=>1, 'category_id'=>2, 'add_category_id'=>2],
-            ['name'=>'Малахит козий (рокфор)', 'description'=>'', 'parts'=>1, 'category_id'=>5, 'add_category_id'=>1],
-            ['name'=>'Масло премиум 82,5%', 'description'=>'', 'parts'=>0, 'category_id'=>10],
-            ['name'=>'Масло домашнее','parts'=>1, 'category_id'=>10],
-            ['name'=>'Монтазио с Трюфелем', 'description'=>'', 'parts'=>1, 'category_id'=>2, 'add_category_id'=>2],
-            ['name'=>'Горгонзола кремозо', 'description'=>'', 'parts'=>1, 'category_id'=>5, 'add_category_id'=>2],
-            ['name'=>'Пармезан русский ставрополь', 'description'=>'', 'parts'=>1, 'category_id'=>3, 'add_category_id'=>2],
-            ['name'=>'Паттэ из мяса индейки', 'description'=>'', 'parts'=>0, 'category_id'=>6],
-            ['name'=>'Паттэ из мяса индейки с грибами', 'description'=>'', 'parts'=>0, 'category_id'=>6],
-            ['name'=>'Паттэ из печени индейки', 'description'=>'', 'parts'=>0, 'category_id'=>6],
-            ['name'=>'Паттэ из мяса утки', 'description'=>'', 'parts'=>0, 'category_id'=>6],
-            ['name'=>'Паттэ из печени утки', 'description'=>'', 'parts'=>0, 'category_id'=>6],
-            ['name'=>'Паттэ из печени утки с инжиром', 'description'=>'', 'parts'=>0, 'category_id'=>6],
-            ['name'=>'Пеккарино овечий', 'description'=>'', 'parts'=>1, 'category_id'=>2, 'add_category_id'=>3],
-            ['name'=>'Премиола', 'description'=>'', 'parts'=>1, 'category_id'=>3, 'add_category_id'=>2],
-            ['name'=>'Сент мор из козьего молока', 'description'=>'', 'parts'=>1, 'category_id'=>4, 'add_category_id'=>1],
-            ['name'=>'Скамррца натур', 'description'=>'', 'parts'=>1, 'category_id'=>2, 'add_category_id'=>2],
-            ['name'=>'Соус фрукт в ассортименте', 'description'=>'', 'parts'=>0, 'category_id'=>7],
-            ['name'=>'Стилтон дольче', 'description'=>'', 'parts'=>1, 'category_id'=>5, 'add_category_id'=>2],
-            ['name'=>'Стилтон пиканте', 'description'=>'', 'parts'=>1, 'category_id'=>5, 'add_category_id'=>2],
-            ['name'=>'Талоеджио', 'description'=>'', 'parts'=>1, 'category_id'=>1, 'add_category_id'=>2],
-            ['name'=>'Раклет', 'description'=>'', 'parts'=>1, 'category_id'=>2, 'add_category_id'=>2],
-            ['name'=>'Том де шевр', 'description'=>'', 'parts'=>1, 'category_id'=>3, 'add_category_id'=>1],
-            ['name'=>'Фетта', 'description'=>'', 'parts'=>0, 'category_id'=>1, 'add_category_id'=>2],
-            ['name'=>'Халуми натур', 'description'=>'', 'parts'=>0, 'category_id'=>1, 'add_category_id'=>2],
-            ['name'=>'Халлуми с мятой', 'description'=>'', 'parts'=>0, 'category_id'=>1, 'add_category_id'=>2],
-            ['name'=>'Чедлер 6 м6с', 'description'=>'', 'parts'=>1, 'category_id'=>2, 'add_category_id'=>2],
-            ['name'=>'Чеддер 12 мес', 'description'=>'', 'parts'=>1, 'category_id'=>3, 'add_category_id'=>2],
-            ['name'=>'Шевр козий крем', 'description'=>'', 'parts'=>1, 'category_id'=>1, 'add_category_id'=>1],
-            ['name'=>'Эмменталер кенигсбергский', 'description'=>'', 'parts'=>1, 'category_id'=>2, 'add_category_id'=>2],
-            ['name'=>'Янтарный', 'description'=>'', 'parts'=>1, 'category_id'=>3, 'add_category_id'=>2],
-            ['name'=>'Моцарелла 0,2', 'description'=>'', 'parts'=>0, 'category_id'=>1, 'add_category_id'=>2],
-            ['name'=>'Буратта 0,15', 'description'=>'', 'parts'=>0, 'category_id'=>1, 'add_category_id'=>2],
-            ['name'=>'Салями милано', 'description'=>'', 'parts'=>1, 'category_id'=>6],
-            ['name'=>'Брезаола', 'description'=>'', 'parts'=>1, 'category_id'=>6],
-            ['name'=>'Балык Платта', 'description'=>'', 'parts'=>1, 'category_id'=>6],
-            ['name'=>'Конина', 'description'=>'', 'parts'=>1, 'category_id'=>6],
-            ['name'=>'Мини-салями', 'description'=>'', 'parts'=>1, 'category_id'=>6],
-            ['name'=>'Мини-чоризо', 'description'=>'', 'parts'=>1, 'category_id'=>6],
-            ['name'=>'Маринованые сливы', 'description'=>'', 'parts'=>0, 'category_id'=>7],
-            ['name'=>'Мармелад', 'description'=>'', 'parts'=>0, 'category_id'=>7]
+            ['name'=>'АЗИАГО','description'=>'','parts'=>1,'price'=>2200,'category_id'=>3,'add_category_id'=>1],
+            ['name'=>'Буратта','description'=>'','parts'=>0,'price'=>280,'category_id'=>1,'add_category_id'=>2],
+            ['name'=>'ВАЙНКЕЗЕ','description'=>'','parts'=>0,'price'=>360,'category_id'=>4,'add_category_id'=>2],
+            ['name'=>'ГОРГОНЗОЛА КРЕМОЗО','description'=>'','parts'=>1,'price'=>20,'category_id'=>5,'add_category_id'=>2],
+            ['name'=>'Камамбер козий СМ','description'=>'','parts'=>0,'price'=>280,'category_id'=>4,'add_category_id'=>1],
+            ['name'=>'Камамбер с трюфелем','description'=>'','parts'=>0,'price'=>330,'category_id'=>4,'add_category_id'=>2],
+            ['name'=>'КАМАМБЕР СМ','description'=>'','parts'=>0,'price'=>360,'category_id'=>4,'add_category_id'=>2],
+            ['name'=>'КАПРИНО 1-2','description'=>'','parts'=>1,'price'=>2200,'category_id'=>2,'add_category_id'=>1],
+            ['name'=>'Качетта с трюфелем','description'=>'','parts'=>1,'price'=>2200,'category_id'=>2,'add_category_id'=>2],
+            ['name'=>'Кнолле белпер Губернский','description'=>'','parts'=>1,'price'=>2200,'category_id'=>3,'add_category_id'=>2],
+            ['name'=>'Кнолле белпер Соболев','description'=>'','parts'=>0,'price'=>200,'category_id'=>3,'add_category_id'=>2],
+            ['name'=>'КРОТТЕН','description'=>'','parts'=>1,'price'=>3000,'category_id'=>4,'add_category_id'=>1],
+            ['name'=>'Козий твердый','description'=>'','parts'=>1,'price'=>2500,'category_id'=>3,'add_category_id'=>1],
+            ['name'=>'КОЗИЙ МОЛОДОЙ','description'=>'','parts'=>1,'price'=>1500,'category_id'=>1,'add_category_id'=>1],
+            ['name'=>' МААСДАМ','description'=>'','parts'=>1,'price'=>1600,'category_id'=>2,'add_category_id'=>2],
+            ['name'=>'МАЛАХИТ','description'=>'','parts'=>1,'price'=>3500,'category_id'=>5,'add_category_id'=>1],
+            ['name'=>'монтазио с трюфелем','description'=>'','parts'=>1,'price'=>2500,'category_id'=>2,'add_category_id'=>2],
+            ['name'=>'МОНФЛЕР 0,13','description'=>'','parts'=>0,'price'=>380,'category_id'=>4,'add_category_id'=>1],
+            ['name'=>'МОЦАРЕЛЛА 0,2','description'=>'','parts'=>0,'price'=>260,'category_id'=>1,'add_category_id'=>2],
+            ['name'=>'ПЕКАРИНО 1-2','description'=>'','parts'=>1,'price'=>2900,'category_id'=>2,'add_category_id'=>3],
+            ['name'=>'Песто класс','description'=>'','parts'=>0,'price'=>250,'category_id'=>7],
+            ['name'=>'ПРЕМИОЛА','description'=>'','parts'=>1,'price'=>1900,'category_id'=>3,'add_category_id'=>2],
+            ['name'=>'РАКЛЕТ','description'=>'','parts'=>1,'price'=>1800,'category_id'=>2,'add_category_id'=>2],
+            ['name'=>'Русский пармезан','description'=>'','parts'=>1,'price'=>1200,'category_id'=>3,'add_category_id'=>2],
+            ['name'=>'СЕНТМОР','description'=>'','parts'=>0,'price'=>390,'category_id'=>4],
+            ['name'=>'Скаморца копченая','description'=>'','parts'=>1,'price'=>1200,'category_id'=>1,'add_category_id'=>2],
+            ['name'=>'Скаморца натуральная','description'=>'','parts'=>1,'price'=>1200,'category_id'=>1,'add_category_id'=>2],
+            ['name'=>'Соус к сыру','description'=>'','parts'=>0,'price'=>200,'category_id'=>7],
+            ['name'=>'Стилтон дольче','description'=>'','parts'=>1,'price'=>2500,'category_id'=>5,'add_category_id'=>2],
+            ['name'=>'Стилтон пиканте','description'=>'','parts'=>1,'price'=>2500,'category_id'=>5,'add_category_id'=>2],
+            ['name'=>'Страчателла','description'=>'','parts'=>1,'price'=>600,'category_id'=>1,'add_category_id'=>2],
+            ['name'=>'ТАЛЛЕДЖИО','description'=>'','parts'=>1,'price'=>2000,'category_id'=>2,'add_category_id'=>2],
+            ['name'=>'Том де шевр','description'=>'','parts'=>1,'price'=>2000,'category_id'=>2,'add_category_id'=>1],
+            ['name'=>'ТОММИ','description'=>'','parts'=>1,'price'=>2200,'category_id'=>2,'add_category_id'=>1],
+            ['name'=>'Халуми','description'=>'','parts'=>0,'price'=>330,'category_id'=>1,'add_category_id'=>2],
+            ['name'=>'Чеддер 12М','description'=>'','parts'=>1,'price'=>3000,'category_id'=>3,'add_category_id'=>2],
+            ['name'=>'Чеддер 6М','description'=>'','parts'=>1,'price'=>2200,'category_id'=>2,'add_category_id'=>2],
+            ['name'=>'ШЕВР КРЕМ','description'=>'','parts'=>1,'price'=>1700,'category_id'=>1],
+            ['name'=>'ЭМЕНТАЛЕР кенигсбергский','description'=>'','parts'=>1,'price'=>2200,'category_id'=>2,'add_category_id'=>2],
+            ['name'=>'ЯНТАРНЫЙ','description'=>'','parts'=>1,'price'=>1800,'category_id'=>2,'add_category_id'=>2],
+            ['name'=>'Пате мясо утки','description'=>'','parts'=>0,'price'=>300,'category_id'=>6],
+            ['name'=>'Пате печень утки','description'=>'','parts'=>0,'price'=>300,'category_id'=>6],
+            ['name'=>'Пате печень утки с инжиром','description'=>'','parts'=>0,'price'=>300,'category_id'=>6],
+            ['name'=>'Пате мясо индейки','description'=>'','parts'=>0,'price'=>300,'category_id'=>6],
+            ['name'=>'Пате мясо индейки с грибами','description'=>'','parts'=>0,'price'=>300,'category_id'=>6],
+            ['name'=>'Пате печень индейки','description'=>'','parts'=>0,'price'=>300,'category_id'=>6],
+            ['name'=>'Минисалями','description'=>'','parts'=>1,'price'=>2000,'category_id'=>6],
+            ['name'=>'Миниколбаски Чоризо','description'=>'','parts'=>1,'price'=>2000,'category_id'=>6],
+            ['name'=>'Салями Милано','description'=>'','parts'=>1,'price'=>1800,'category_id'=>6],
+            ['name'=>'Балык Пратта','description'=>'','parts'=>1,'price'=>2000,'category_id'=>6],
+            ['name'=>'Шейка Коппа','description'=>'','parts'=>1,'price'=>2300,'category_id'=>6],
+            ['name'=>'Суджук','description'=>'','parts'=>1,'price'=>2500,'category_id'=>6]
         ];
 
         $prodPath = 'images/products/product';
@@ -111,10 +101,24 @@ class ProductsTableSeeder extends Seeder
             $fields['description'] = 'Попробуйте начать свой день с чашки ароматного кофе и теплого домашнего хлеба со свежим «'.$product['name'].'».';
             $fields['image'] = $prodPath.$prodCount.'.jpg';
             $fields['big_image'] = $prodPath.$prodCount.'_big.jpg';
-            $fields['whole_price'] = 1000*($k+1);
-            $fields['part_price'] = 100;
-            $fields['action_whole_price'] = rand(500,2000);
-            $fields['action_part_price'] = 50;
+
+            if ($product['parts']) {
+                $fields['whole_price'] = 0;
+                $fields['part_price'] = 0.1 * $product['price'];
+
+                $fields['action_whole_price'] = 0;
+                $fields['action_part_price'] = $fields['part_price']/2;
+
+            } else {
+                $fields['whole_price'] = $product['price'];
+                $fields['part_price'] = 0;
+
+                $fields['action_whole_price'] = $fields['whole_price']/2;
+                $fields['action_part_price'] = 0;
+            }
+
+            unset($fields['price']);
+
             $fields['action'] = $k<5;
             $fields['active'] = true;
 

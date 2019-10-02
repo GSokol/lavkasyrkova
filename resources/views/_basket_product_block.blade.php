@@ -5,7 +5,7 @@
             'name' => 'product_'.$product->id,
             'min' => 0,
             'max' => $product->parts ? $productParts[count($productParts)-1] : 10,
-            'unit' => $product->parts ? 'гр.' : 'шт.',
+            'unit' => $product->parts ? Helper::getPartsName() : 'шт.',
             'differentially' => $product->parts,
             'price' => $price,
             'increment' => $product->parts ? json_encode($productParts) : 1,
