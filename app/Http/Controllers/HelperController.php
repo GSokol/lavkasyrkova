@@ -30,7 +30,7 @@ class HelperController extends Controller
     
     public function productMinVal($product)
     {
-        return $product->parts ? $this->productParts[0].$this->getPartsName() : '1 шт.';
+        return $product->parts ? $this->productParts[0].$this->getPartsName() : '1шт.';
     }
     
     public function getProductParts()
