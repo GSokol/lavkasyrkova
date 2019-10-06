@@ -10,7 +10,7 @@ class ProductsTableSeeder extends Seeder
     public function run()
     {
         $categories = [
-            ['name' => 'Молодые сыры','image' => '8343'],
+            ['name' => 'Молодые сыры','image' => '8345'],
             ['name' => 'Полутвердые сыры','image' => '8332'],
             ['name' => 'Твердые сыры','image' => ''],
             ['name' => 'Сыры с белой плесенью','image' => '8122'],

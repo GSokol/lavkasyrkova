@@ -45,6 +45,7 @@
 {{--                @include('_categories_block',['categories' => $data['add_categories'],'type' => 'add_category'])--}}
             </div>
             <div id="products">
+                @include('_button_block',['type' => 'button', 'icon' => ' icon-backward', 'text' => 'Вернуться к списку категорий', 'addAttr' => ['style' => 'margin-bottom:40px;']])
                 <div class="order-form"></div>
                 @include('_button_block',['type' => 'button', 'icon' => ' icon-backward', 'text' => 'Вернуться к списку категорий'])
             </div>
