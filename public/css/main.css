@@ -274,6 +274,10 @@ input, select {
     border-top: 2px solid grey;
 }
 
+.actions {
+    border-top: 2px solid white;
+}
+
 .cover.map > div {
     width: 50%;
     display: table-cell;

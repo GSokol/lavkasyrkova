@@ -111,7 +111,7 @@ function resetColorHrefsMenu() {
 
 function mainImageHeight() {
     $('#main-image').css('height',$(window).height());
-    $('.actions,.action').css('height',$(window).height()/1.3);
+    $('.actions,.action').css('height',$(window).height()/1.2);
 
     var basket = $('.basket'),
         basketContainer = basket.parents('.container');

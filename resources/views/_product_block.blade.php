@@ -2,7 +2,11 @@
 
 <div class="product product-{{ $product->id }} {{ isset($mainClass) ? $mainClass : 'col-md-3 col-sm-4 col-xs-12' }}">
     <div class="image">
-        <a class="img-preview" href="{{ asset($product->image) }}"><img src="{{ asset($product->image) }}" /></a>
+        @if (!$product->image)
+            <img src="{{ asset('images/products/empty.jpg') }}" />
+        @else
+            <a class="img-preview" href="{{ $product->big_image ? asset($product->big_image) : asset($product->image) }}"><img src="{{ asset($product->image) }}" /></a>
+        @endif
     </div>
     @include('_input_value_block',[
         'name' => 'product_'.$product->id,

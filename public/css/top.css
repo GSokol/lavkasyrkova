@@ -172,6 +172,7 @@
     font-weight: 600;
     color: black;
     margin-bottom: 30px;
+    text-shadow: white 2px 2px 0, white -2px -2px 0, white -2px 2px 0, white 2px -2px 0;
 }
 
 @media screen and (max-width: 1200px) {

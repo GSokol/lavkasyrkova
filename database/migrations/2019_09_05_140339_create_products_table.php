@@ -17,8 +17,8 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
-            $table->string('image');
-            $table->string('big_image');
+            $table->string('image')->nullable();
+            $table->string('big_image')->nullable();
             $table->boolean('parts');
             $table->integer('whole_price');
             $table->integer('part_price');
