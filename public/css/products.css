@@ -142,9 +142,9 @@
 }
 
 .product p.price {
-    /*border-bottom: 1px solid red;*/
+    font-size: 17px;
     padding-bottom: 10px;
-    font-style: italic;
+    font-weight: bolder;
 }
 
 .actions {
@@ -231,6 +231,27 @@
 
 #checkout-modal button.btn-primary {
     margin-top: 20px;
+}
+
+#basket-notice {
+    width: 100px;
+    height: 100px;
+    padding-top: 12px;
+    border-radius: 20px;
+    position: absolute;
+    left: 50%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    background-color: white;
+    transform: translate(-50%,-50%);
+    z-index: 999;
+    font-size: 50px;
+    text-align: center;
+    color: #fd4100;
+}
+
+#basket-notice:after {
+    font-family: 'icomoon';
+    content: '\ea68';
 }
 
 @media screen and (max-width: 768px) {

@@ -19,11 +19,14 @@ function bindValueInputsControl() {
             value = getInputValue(input.val(),unit),
             differentially = parseInt(input.attr('data-differentially')),
             increment = input.attr('data-increment'),
-            minVal = parseInt(input.attr('min')),
+            minVal = parseFloat(input.attr('min')),
             maxVal = parseInt(input.attr('max'));
 
         increment = differentially ? jQuery.parseJSON(increment) : parseInt(increment);
 
+        // First increment
+        if (!value) input.trigger('change.first');
+        
         if (type && value < maxVal) {
             if (differentially) {
                 if (value < increment[increment.length-1]) {
@@ -51,11 +54,12 @@ function bindValueInputsControl() {
                 value = value - increment;
             }
         }
+
         input.val(value+' '+unit);
         input.trigger('change.val',[value,unit,id]);
     });
 }
 
 function getInputValue(value,unit) {
-    return parseInt(value.replace(' ','').replace(unit,''));
+    return parseFloat(value.replace(' ','').replace(unit,''));
 }

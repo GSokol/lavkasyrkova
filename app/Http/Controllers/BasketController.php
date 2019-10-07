@@ -20,7 +20,6 @@ class BasketController extends Controller
     {
         $this->validate($request, ['id' => 'required|integer|exists:products,id']);
         $product = Product::find($request->input('id'));
-        $this->validate($request, ['value' => 'required|integer|min:0|max:'.($product->parts ? $this->productParts[count($this->productParts)-1] : 10)]);
 
         $basket = Session::has('basket') ? Session::get('basket') : [];
         $value = $request->input('value');

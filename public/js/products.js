@@ -56,7 +56,7 @@ $(window).ready(function () {
             '_token': $('input[name=_token]').val()
         }, function (data) {
             if (data.success) {
-                emptyBasket(usingBasketFlag);
+                emptyBasket();
             }
         });
     });
@@ -80,7 +80,7 @@ $(window).ready(function () {
         }
     });
 
-    // Click to buy acion product
+    // Click to buy action product
     $('.action-product button').click(function () {
         var id = $(this).attr('data-id');
         $.post('/get-product', {
@@ -106,7 +106,21 @@ function bindProductsValueInputControl() {
         deleteFromBasket = $('.basket-product .product-delete');
 
     input.unbind('change.val');
+    input.unbind('change.first');
     deleteFromBasket.unbind('click');
+
+    input.bind('change.first', function () {
+        var basketNotice = $('<div></div>').attr('id','basket-notice').css('margin-top',($(window).height()/2)+$(window).scrollTop());
+        $('body').prepend(basketNotice);
+        basketNotice.animate({
+            'width':200,
+            'height':200,
+            'font-size':100,
+            'opacity':0
+        },1500,function () {
+            $(this).remove();
+        });
+    });
 
     input.bind('change.val', function (event,value,unit,id) {
         changeProductValue(id,value,unit);
