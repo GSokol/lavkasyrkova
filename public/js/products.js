@@ -6,7 +6,7 @@ $(window).ready(function () {
 
     // Click back to categories
     var productsContainer = $('#products');
-    productsContainer.find('button').click(function () {
+    productsContainer.find('.back-to-categories > div').click(function () {
         productsContainer.fadeOut('fast',function () {
             $('.order-form').html('');
             $('#cheeses-sub-head').html('');
@@ -170,7 +170,7 @@ function getCategory(obj) {
             $('#cheeses-head').fadeOut('fast');
             $('#categories').fadeOut('fast',function () {
                 $('#products').fadeIn('fast');
-                maxHeight('product','action');
+                // maxHeight('product','action');
                 
                 bindValueInputsControl();
                 bindProductsValueInputControl();

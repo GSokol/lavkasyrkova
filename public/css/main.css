@@ -115,7 +115,7 @@ a {
 }
 
 .tasting-block .icon > img {
-    max-width: 90%;
+    width: 50px;
 }
 
 .cover .container {
@@ -341,10 +341,6 @@ input, select {
 
     .frame-image {
         margin-bottom: 20px;
-    }
-
-    .tasting-block .icon > img {
-        width: 50%;
     }
 
     .tasting-block h4,

@@ -70,13 +70,13 @@ $(window).ready(function () {
     });
 
     mainImageHeight();
-    maxHeight('action-product',null);
-    maxHeight('product','action');
+    // maxHeight('action-product',null);
+    // maxHeight('product','action');
     bindDropdownMenu();
     $(window).resize(function() {
         mainImageHeight();
-        maxHeight('action-product',null);
-        maxHeight('product','action');
+        // maxHeight('action-product',null);
+        // maxHeight('product','action');
         bindDropdownMenu();
     });
 
@@ -111,7 +111,7 @@ function resetColorHrefsMenu() {
 
 function mainImageHeight() {
     $('#main-image').css('height',$(window).height());
-    $('.actions,.action').css('height',$(window).height()/1.2);
+    $('.actions,.action').css('height',$(window).height());
 
     var basket = $('.basket'),
         basketContainer = basket.parents('.container');
@@ -123,15 +123,15 @@ function mainImageHeight() {
 //     return string.toLocaleString().replace(/\,/g, ' ')+' '+unit;
 // }
 
-function maxHeight(className,exceptClassName) {
-    var maxHeight = 0,
-        objects = $('.'+className);
-
-    objects.each(function () {
-        if ($(this).height() > maxHeight) maxHeight = $(this).height();
-    });
-    objects.not('.'+exceptClassName).css('height',maxHeight);
-}
+// function maxHeight(className,exceptClassName) {
+//     var maxHeight = 0,
+//         objects = $('.'+className);
+//
+//     objects.each(function () {
+//         if ($(this).height() > maxHeight) maxHeight = $(this).height();
+//     });
+//     objects.not('.'+exceptClassName).css('height',maxHeight);
+// }
 
 function bindDropdownMenu() {
     var parentMenu = $('li.main-menu, .basket'),

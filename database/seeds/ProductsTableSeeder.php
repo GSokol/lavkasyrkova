@@ -29,24 +29,25 @@ class ProductsTableSeeder extends Seeder
 
         $products = [
             ['name'=>'Азиаго','parts'=>1,'image'=>'8088','price'=>2200,'category_id'=>3,'add_category_id'=>1],
+            ['name'=>'Азиаго','parts'=>1,'image'=>'8088','price'=>2200,'category_id'=>3,'add_category_id'=>1],
             ['name'=>'Бри','parts'=>1,'image'=>'7974','price'=>2000,'category_id'=>4,'add_category_id'=>2],
             ['name'=>'Брюност','parts'=>1,'image'=>'8155','price'=>250,'category_id'=>2,'add_category_id'=>2],
             ['name'=>'Буратта 0,15','parts'=>1,'image'=>'8337','price'=>280,'category_id'=>1,'add_category_id'=>2],
             ['name'=>'Вайнкезе','parts'=>1,'image'=>'7935','price'=>360,'category_id'=>4,'add_category_id'=>2],
-            ['name'=>'Валансе козий зрелый','parts'=>1,'image'=>'7816','price'=>0,'category_id'=>4,'add_category_id'=>1],
+            ['name'=>'Сент Пьер','parts'=>0,'image'=>'7816','price'=>600,'category_id'=>4,'add_category_id'=>1],
             ['name'=>'Валансе','parts'=>1,'image'=>'7854','price'=>0,'category_id'=>4,'add_category_id'=>1],
             ['name'=>'Горгонзола Дольче','parts'=>1,'image'=>'8028','price'=>2500,'category_id'=>5,'add_category_id'=>2],
             ['name'=>'Горгонзола Пиканте','parts'=>1,'image'=>'8045','price'=>2600,'category_id'=>5,'add_category_id'=>2],
             ['name'=>'Грандфортузза 12 мес','parts'=>1,'image'=>'8144','price'=>2000,'category_id'=>3,'add_category_id'=>2],
-            ['name'=>'МОТЭ','parts'=>0,'image'=>'7905','price'=>280,'category_id'=>4,'add_category_id'=>1],
+            ['name'=>'МОТЭ','parts'=>0,'image'=>'7905','price'=>250,'category_id'=>4,'add_category_id'=>1],
             ['name'=>'Камамбер с трюфелем','parts'=>0,'image'=>'7952','price'=>330,'category_id'=>4,'add_category_id'=>2],
             ['name'=>'Камамбер','parts'=>1,'image'=>'7926','price'=>1800,'category_id'=>4,'add_category_id'=>2],
-            ['name'=>'Камамбер из козьего молока','parts'=>1,'image'=>'7968','price'=>2600,'category_id'=>4,'add_category_id'=>2],
+            ['name'=>'Камамбер из козьего молока','parts'=>0,'image'=>'7968','price'=>280,'category_id'=>4,'add_category_id'=>2],
             ['name'=>'Каприно Козий','parts'=>1,'image'=>'8253','price'=>2200,'category_id'=>2,'add_category_id'=>1],
-            ['name'=>'Сент мор зрелый','parts'=>1,'image'=>'7841','price'=>0,'category_id'=>4,'add_category_id'=>1],
+            ['name'=>'Сент мор зрелый','parts'=>0,'image'=>'7841','price'=>390,'category_id'=>4,'add_category_id'=>1],
             ['name'=>'Качетта с Трюфелем вакуум','parts'=>1,'image'=>'8278','price'=>2200,'category_id'=>2,'add_category_id'=>2],
             ['name'=>'Кнолле белпер','parts'=>1,'image'=>'7982','price'=>2200,'category_id'=>3,'add_category_id'=>2],
-            ['name'=>'Кроттен','parts'=>1,'image'=>'7877','price'=>3000,'category_id'=>4,'add_category_id'=>1],
+            ['name'=>'Кроттен','parts'=>0,'image'=>'7877','price'=>3000,'category_id'=>4,'add_category_id'=>1],
             ['name'=>'Козий Твердый 8 мес','parts'=>1,'image'=>'8236','price'=>2200,'category_id'=>3,'add_category_id'=>1],
             ['name'=>'Козий Молодой','parts'=>1,'image'=>'8336','price'=>1500,'category_id'=>1,'add_category_id'=>1],
             ['name'=>'Маасдам','parts'=>1,'image'=>'8150','price'=>1600,'category_id'=>2,'add_category_id'=>2],
@@ -80,7 +81,9 @@ class ProductsTableSeeder extends Seeder
             ['name'=>'Шевр крем','parts'=>1,'image'=>'8347','price'=>1700,'category_id'=>1,'add_category_id'=>1],
             ['name'=>'Эмменталер Кенигсбергский','parts'=>1,'image'=>'8181','price'=> 200,'category_id'=>2,'add_category_id'=>2],
             ['name'=>'Минисалями','parts'=>1,'image'=>'8283','price'=> 2000,'category_id'=>6],
-            ['name'=>'Миниколбаски Чоризо','parts'=>1,'image'=>'8288','price'=> 2000,'category_id'=>6]
+            ['name'=>'Миниколбаски Чоризо','parts'=>1,'image'=>'8288','price'=> 2000,'category_id'=>6],
+            ['name'=>'Бюш козий в белой плесени в золе','parts'=>0,'image'=>null,'price'=>360,'category_id'=>4,'add_category_id'=>1],
+            ['name'=>'Моншери','parts'=>0,'image'=>'7895','price'=>420,'category_id'=>4,'add_category_id'=>1],
         ];
 
         $prodPath = 'images/products/';

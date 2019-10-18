@@ -45,9 +45,9 @@
 {{--                @include('_categories_block',['categories' => $data['add_categories'],'type' => 'add_category'])--}}
             </div>
             <div id="products">
-                @include('_button_block',['type' => 'button', 'icon' => ' icon-backward', 'text' => 'Вернуться к списку категорий', 'addAttr' => ['style' => 'margin-bottom:40px;']])
+                @include('_back_to_categories_block')
                 <div class="order-form"></div>
-                @include('_button_block',['type' => 'button', 'icon' => ' icon-backward', 'text' => 'Вернуться к списку категорий'])
+                @include('_back_to_categories_block')
             </div>
         </div>
     </div>
@@ -63,24 +63,24 @@
                 ])
             @endforeach
 
-            @include('_tasting_block',['icon' => 'icon_place.png','head' => 'Место проведения','text' => 'Столовые или специальные места для мероприятий в офисных центрах Москвы и Подмосковья'])
-            @include('_tasting_block',['icon' => 'icon_what_will.png','head' => 'Что будет','text' => 'Дегустация 9 - 10 видов вкусного сыра. Мы расскажем о каждом виде, сочетаниях с винами и продуктами, сезонных рецептах и интересных способах подачи сыра.'])
-            @include('_tasting_block',['icon' => 'icon_clock.png','head' => 'Время проведения','text' => 'Будние дни с 12 до 16 часов'])
-            @include('_tasting_block',['icon' => 'icon_mail.png','head' => 'Уже хотите?','text' => 'Напишите нам на почту: <a href="mailto:lavkasyrkov@gmail.com">lavkasyrkov@gmail.com</a>.<br>Согласуем время и место и ждите в гости!'])
+            @include('_tasting_block',['icon' => 'icon_star.svg','head' => 'Место проведения','text' => 'Столовые или специальные места для мероприятий в офисных центрах Москвы и Подмосковья'])
+            @include('_tasting_block',['icon' => 'icon_gift.svg','head' => 'Что будет','text' => 'Дегустация 9 - 10 видов вкусного сыра. Мы расскажем о каждом виде, сочетаниях с винами и продуктами, сезонных рецептах и интересных способах подачи сыра.'])
+            @include('_tasting_block',['icon' => 'icon_clock.svg','head' => 'Время проведения','text' => 'Будние дни с 12 до 16 часов'])
+            @include('_tasting_block',['icon' => 'icon_clouds.svg','head' => 'Уже хотите?','text' => 'Напишите нам на почту: <a href="mailto:lavkasyrkov@gmail.com">lavkasyrkov@gmail.com</a>.<br>Согласуем время и место и ждите в гости!'])
 
-            @if ($data['tasting_new'])
-                <div class="new-tasting {{ count($data['tastings']) }} col-md-12 col-sm-12 col-xs-12">
-                    <h4>{{ $data['tasting_new']->name }} состоится {{ date('d.m.Y',$data['tasting_new']->time) }}</h4>
-                    <p>По адресу: {{ $data['tasting_new']->place }}</p>
-                    @if (isset($data['tasting_new']) && $data['tasting_new'] && (!isset($data['tasting_signed']) || !$data['tasting_signed']))
-                        @if (Auth::guest())
-                            <a href="/login">@include('_get_tasting_button_block')</a>
-                        @else
-                            <a id="get-tasting" href="#">@include('_get_tasting_button_block')</a>
-                        @endif
-                    @endif
-                </div>
-            @endif
+            {{--@if ($data['tasting_new'])--}}
+                {{--<div class="new-tasting {{ count($data['tastings']) }} col-md-12 col-sm-12 col-xs-12">--}}
+                    {{--<h4>{{ $data['tasting_new']->name }} состоится {{ date('d.m.Y',$data['tasting_new']->time) }}</h4>--}}
+                    {{--<p>По адресу: {{ $data['tasting_new']->place }}</p>--}}
+                    {{--@if (isset($data['tasting_new']) && $data['tasting_new'] && (!isset($data['tasting_signed']) || !$data['tasting_signed']))--}}
+                        {{--@if (Auth::guest())--}}
+                            {{--<a href="/login">@include('_get_tasting_button_block')</a>--}}
+                        {{--@else--}}
+                            {{--<a id="get-tasting" href="#">@include('_get_tasting_button_block')</a>--}}
+                        {{--@endif--}}
+                    {{--@endif--}}
+                {{--</div>--}}
+            {{--@endif--}}
         </div>
     </div>
 
