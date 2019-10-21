@@ -1,6 +1,6 @@
 <?php $prodPrice = Helper::productPrice($product); $prodUnit = Helper::productUnit($product);?>
 
-<div class="product product-{{ $product->id }} {{ isset($mainClass) ? $mainClass : 'col-md-3 col-sm-4 col-xs-12' }}">
+<div class="product product-{{ $product->id }} {{ isset($mainClass) ? $mainClass : 'col-md-4 col-sm-4 col-xs-12' }}">
     <div class="image">
         @if (!$product->image)
             <img src="{{ asset('images/products/empty.jpg') }}" />
