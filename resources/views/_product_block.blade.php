@@ -20,6 +20,7 @@
     ])
     <div class="text-block">
         <h3>{{ $product->name }}</h3>
+        <p class="small">{{ $product->addCategory->name }}</p>
         <p class="description">{{ $product->description }}</p>
         <p class="price {{ $product->action ? 'action' : '' }}">{{ $prodPrice }}р. за {{ $product->parts ? Helper::getProductParts()[0].$prodUnit : '1'.$prodUnit }}</p>
     </div>
