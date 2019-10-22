@@ -10,21 +10,21 @@ class ProductsTableSeeder extends Seeder
     public function run()
     {
         $categories = [
-            ['name' => 'Твердые сыры'],
-            ['name' => 'Полутвердые сыры'],
-            ['name' => 'Сыры с белой плесенью'],
-            ['name' => 'Сыры с голубой плесенью'],
-            ['name' => 'Молодые сыры'],
-            ['name' => 'К сыру'],
-            ['name' => 'Мясная гастрономия'],
+//            ['name' => 'Твердые сыры'],
+//            ['name' => 'Полутвердые сыры'],
+//            ['name' => 'Сыры с белой плесенью'],
+//            ['name' => 'Сыры с голубой плесенью'],
+//            ['name' => 'Молодые сыры'],
+//            ['name' => 'К сыру'],
+//            ['name' => 'Мясная гастрономия'],
             
-//            ['name' => 'Твердые сыры','image' => '8318'],
-//            ['name' => 'Полутвердые сыры','image' => '8332'],
-//            ['name' => 'Сыры с белой плесенью','image' => '8122'],
-//            ['name' => 'Сыры с голубой плесенью','image' => '8107'],
-//            ['name' => 'Молодые сыры','image' => '8345'],
-//            ['name' => 'К сыру','image' => '7990'],
-//            ['name' => 'Мясная гастрономия','image' => '8010'],
+            ['name' => 'Твердые сыры','image' => '8318'],
+            ['name' => 'Полутвердые сыры','image' => '8332'],
+            ['name' => 'Сыры с белой плесенью','image' => '8122'],
+            ['name' => 'Сыры с голубой плесенью','image' => '8107'],
+            ['name' => 'Молодые сыры','image' => '8345'],
+            ['name' => 'К сыру','image' => '7990'],
+            ['name' => 'Мясная гастрономия','image' => '8010'],
 
             ['name' => 'Подарочные корзины','image' => ''],
             ['name' => 'Сырные тарелки','image' => ''],
@@ -38,8 +38,17 @@ class ProductsTableSeeder extends Seeder
 
         $products = [
             ['name'=>'Сыр№1','parts'=>1,'price'=>2200,'category_id'=>1,'add_category_id'=>1],
+            ['name'=>'Сыр№1','parts'=>1,'price'=>2200,'category_id'=>1,'add_category_id'=>1],
+            ['name'=>'Сыр№1','parts'=>1,'price'=>2200,'category_id'=>1,'add_category_id'=>1],
+
             ['name'=>'Сыр№2','parts'=>1,'price'=>2200,'category_id'=>2,'add_category_id'=>2],
+            ['name'=>'Сыр№2','parts'=>1,'price'=>2200,'category_id'=>2,'add_category_id'=>2],
+            ['name'=>'Сыр№2','parts'=>1,'price'=>2200,'category_id'=>2,'add_category_id'=>2],
+
             ['name'=>'Сыр№3','parts'=>1,'price'=>2200,'category_id'=>3,'add_category_id'=>3],
+            ['name'=>'Сыр№3','parts'=>1,'price'=>2200,'category_id'=>3,'add_category_id'=>3],
+            ['name'=>'Сыр№3','parts'=>1,'price'=>2200,'category_id'=>3,'add_category_id'=>3],
+
             ['name'=>'Сыр№4','parts'=>1,'price'=>2200,'category_id'=>4,'add_category_id'=>1],
             ['name'=>'Сыр№5','parts'=>1,'price'=>2200,'category_id'=>5,'add_category_id'=>2],
             ['name'=>'Сыр№6','parts'=>1,'price'=>2200,'category_id'=>6,'add_category_id'=>3],
