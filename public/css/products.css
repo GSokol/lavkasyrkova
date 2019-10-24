@@ -139,17 +139,37 @@
     text-align: center;
 }
 
-.back-to-categories {
+#sub-head-block {
     width: 100%;
+    background-color: white;
     display: table;
     text-align: center;
 }
 
+#sub-head-block > .inner-container {
+    width: 900px;
+    display: table;
+    margin: auto;
+}
+
+#sub-head-block h1 {
+    float: right;
+    margin: 30px 0 10px 0;
+}
+
+.back-to-categories {
+    height: 67px;
+    margin: 30px 0 10px 0;
+    padding-top: 15px;
+    float: left;
+}
+
 .back-to-categories > div {
     font-size: 40px;
-    margin-bottom: 5px;
     color: #fd4100;
+    margin-right: 15px;
     cursor: pointer;
+    float: left;
 }
 
 .back-to-categories > div:hover {
@@ -158,8 +178,10 @@
 
 .back-to-categories > p {
     font-size: 15px;
+    padding-top: 10px;
     font-weight: bolder;
     text-transform: uppercase;
+    float: right;
 }
 
 .product p {

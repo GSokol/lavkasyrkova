@@ -2,6 +2,7 @@ window.activeHover = [];
 window.hoverInterval = null;
 window.criticalResolution = 1024;
 window.menuClickFlag = false;
+window.subHeadPosFlag = false;
 
 $(window).ready(function () {
     $('.styled').uniform();
@@ -31,6 +32,27 @@ $(window).ready(function () {
     // On-top button controls
     var onTopButton = $('#on-top-button');
     $(window).scroll(function() {
+        var subHeadBlock = $('#sub-head-block'),
+            criticalHeight = ($(window).height()*2);
+
+        if ($(this).scrollTop() >= criticalHeight && !window.menuFixedPosFlag) {
+            window.menuFixedPosFlag = true;
+            subHeadBlock.css({
+                'position':'fixed',
+                'left':0,
+                'top':65,
+                'border-bottom':'1px solid #818181',
+                'z-index':999
+            });
+        } else if ($(this).scrollTop() <= criticalHeight && window.menuFixedPosFlag) {
+            window.menuFixedPosFlag = false;
+            subHeadBlock.css({
+                'position':'relative',
+                'border-bottom':'none',
+                'top':0
+            });
+        }
+
         if (!window.menuClickFlag) {
             var win = $(this);
             $('.cover').each(function () {

@@ -39,15 +39,18 @@
     <div class="cover" data-scroll-destination="cheeses">
         <div class="container">
             <h1 class="head" id="cheeses-head">Наши сыры</h1>
-            <h1 class="head" id="cheeses-sub-head"></h1>
             <div id="categories">
                 @include('_categories_block',['categories' => $data['categories'],'type' => 'category'])
 {{--                @include('_categories_block',['categories' => $data['add_categories'],'type' => 'add_category'])--}}
             </div>
             <div id="products">
-                @include('_back_to_categories_block')
+                <div id="sub-head-block">
+                    <div class="inner-container">
+                        @include('_back_to_categories_block')
+                        <h1 class="head" id="cheeses-sub-head"></h1>
+                    </div>
+                </div>
                 <div class="order-form"></div>
-                @include('_back_to_categories_block')
             </div>
         </div>
     </div>
