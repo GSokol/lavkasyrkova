@@ -40,7 +40,7 @@ $(window).ready(function () {
             subHeadBlock.css({
                 'position':'fixed',
                 'left':0,
-                'top':65,
+                'top':63,
                 'border-bottom':'1px solid #818181',
                 'z-index':999
             });
