@@ -2,7 +2,6 @@ window.activeHover = [];
 window.hoverInterval = null;
 window.criticalResolution = 1024;
 window.menuClickFlag = false;
-window.subHeadPosFlag = false;
 
 $(window).ready(function () {
     $('.styled').uniform();
@@ -10,7 +9,7 @@ $(window).ready(function () {
 
     window.phoneRegExp = /^((\+)[0-9]{11})$/gi;
     $('input[name=phone]').mask("+7(999)999-99-99");
-    
+
     // var sr = ScrollReveal();
     // sr.reveal('.navbar-default', {duration:1000});
     // sr.reveal('.cover', {duration:2000});
@@ -28,31 +27,10 @@ $(window).ready(function () {
         window.menuClickFlag = true;
         goToScroll($(this).attr('data-scroll'));
     });
-    
+
     // On-top button controls
     var onTopButton = $('#on-top-button');
     $(window).scroll(function() {
-        var subHeadBlock = $('#sub-head-block'),
-            criticalHeight = ($(window).height()*2);
-
-        if ($(this).scrollTop() >= criticalHeight && !window.menuFixedPosFlag) {
-            window.menuFixedPosFlag = true;
-            subHeadBlock.css({
-                'position':'fixed',
-                'left':0,
-                'top':63,
-                'border-bottom':'1px solid #818181',
-                'z-index':999
-            });
-        } else if ($(this).scrollTop() <= criticalHeight && window.menuFixedPosFlag) {
-            window.menuFixedPosFlag = false;
-            subHeadBlock.css({
-                'position':'relative',
-                'border-bottom':'none',
-                'top':0
-            });
-        }
-
         if (!window.menuClickFlag) {
             var win = $(this);
             $('.cover').each(function () {
@@ -83,7 +61,7 @@ $(window).ready(function () {
             showMessage(data.message);
         });
     });
-    
+
     // Hover text of free tastings
     $('#main-image a[href=#tasting]').bind('mouseover',function () {
         $(this).find('img').attr('src','/images/free_tastings_hover.png');
