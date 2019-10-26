@@ -42,7 +42,7 @@
             <h1 class="head" id="cheeses-sub-head"></h1>
             <div id="categories">
                 @include('_categories_block',['categories' => $data['categories'],'type' => 'category'])
-                {{--                @include('_categories_block',['categories' => $data['add_categories'],'type' => 'add_category'])--}}
+{{--                @include('_categories_block',['categories' => $data['add_categories'],'type' => 'add_category'])--}}
             </div>
             <div id="products">
                 @include('_back_to_categories_block')
