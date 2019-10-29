@@ -50,6 +50,7 @@
 
 .product {
     display: table;
+    margin-bottom: 20px;
 }
 
 .product .text-block {
@@ -89,25 +90,33 @@
     margin: 10px 0 0 0;
 }
 
-.product .cost {
-    display: table-row;
+.product .value {
+    display: table;
+    padding-top: 5px;
+    border-top: 1px solid #ddd;
 }
 
-.product .cost > p {
+.product .value > p {
     height: 30px;
     padding: 10px;
-    font-style: italic;
-    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
     display: table-cell;
+    text-align: center;
     vertical-align: middle;
-    border-top: 1px solid #ddd;
 }
 
 .input-value-container input {
     text-align: center;
     font-weight: bold;
+    font-style: italic;
     background-color: white;
     font-size: 15px;
+}
+
+.product .value .input-value-container {
+    width: 60%;
+    display: table-cell;
 }
 
 .input-value-container > div {
@@ -170,9 +179,13 @@
 }
 
 .product p.price {
-    font-size: 17px;
+    font-size: 15px;
     padding-bottom: 10px;
-    font-weight: bolder;
+    font-weight: bold;
+}
+
+.product p.price > span {
+    font-style: italic;
 }
 
 .actions {
