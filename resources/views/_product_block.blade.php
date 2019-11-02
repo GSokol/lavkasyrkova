@@ -10,7 +10,9 @@
     </div>
     <div class="text-block">
         <h3>{{ $product->name }}</h3>
-        <p class="small">{{ $product->addCategory->name }}</p>
+        @if ($product->addCategory && isset($product->addCategory->name))
+            <p class="small">{{ $product->addCategory->name }}</p>
+        @endif
         <p class="price {{ $product->action ? 'action' : '' }}"><span>{{ $prodPrice }}</span>р. за {!! $product->parts ? '<span>'.Helper::getProductParts()[0].'</span>'.$prodUnit : '<span>1</span>'.$prodUnit !!}</p>
         <p class="description">{{ $product->description }}</p>
 

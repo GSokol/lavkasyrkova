@@ -171,7 +171,7 @@ function getCategory(obj) {
             $('#categories').fadeOut('fast',function () {
                 $('#products').fadeIn('fast');
                 // maxHeight('product','action');
-                
+
                 bindValueInputsControl();
                 bindProductsValueInputControl();
             });
