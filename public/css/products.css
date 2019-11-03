@@ -57,6 +57,11 @@
     height: 240px;
 }
 
+.modal-body .product .text-block {
+    height: auto;
+    padding-bottom: 10px;
+}
+
 .basket-product {
     width: 100%;
     display: table;

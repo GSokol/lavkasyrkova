@@ -193,7 +193,7 @@ function changeProductValue(id,value,unit) {
         if (data.success) {
             var basketItem = $('#basket-product-'+id);
 
-            $('input[name=product_'+id+']').val(value+' '+unit);
+            $('input[name=product_'+id+']').val(value.toString().replace('.',',')+' '+unit);
             $('.product-'+id+' .cost > p, .product-'+id+' .product-cost').html(data.cost+'р.');
             $('.total-cost-basket > span').html(data.total+'р.');
 

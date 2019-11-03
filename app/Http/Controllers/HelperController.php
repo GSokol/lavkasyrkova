@@ -28,9 +28,13 @@ class HelperController extends Controller
         return $product->parts ? $this->getPartsName() : 'шт.';
     }
     
+    public function productValue($value) {
+        return str_replace('.',',',(string)$value);
+    }
+    
     public function productMinVal($product)
     {
-        return $product->parts ? $this->productParts[0].$this->getPartsName() : '1шт.';
+        return $product->parts ? $this->productValue($this->productParts[0]).$this->getPartsName() : '1шт.';
     }
     
     public function getProductParts()

@@ -55,11 +55,11 @@ function bindValueInputsControl() {
             }
         }
 
-        input.val(value+' '+unit);
+        // input.val(value+' '+unit);
         input.trigger('change.val',[value,unit,id]);
     });
 }
 
 function getInputValue(value,unit) {
-    return parseFloat(value.replace(' ','').replace(unit,''));
+    return parseFloat(value.replace(' ','').replace(unit,'').replace(',','.'));
 }

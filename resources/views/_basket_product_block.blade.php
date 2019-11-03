@@ -9,7 +9,7 @@
             'differentially' => $product->parts,
             'price' => $price,
             'increment' => $product->parts ? json_encode($productParts) : 1,
-            'value' => $value
+            'value' => Helper::productValue($value)
         ])
     </div>
     <div class="product-cost">{{ Helper::productCost($product,$value) }}р.</div>

@@ -13,7 +13,7 @@
         @if ($product->addCategory && isset($product->addCategory->name))
             <p class="small">{{ $product->addCategory->name }}</p>
         @endif
-        <p class="price {{ $product->action ? 'action' : '' }}"><span>{{ $prodPrice }}</span>р. за {!! $product->parts ? '<span>'.Helper::getProductParts()[0].'</span>'.$prodUnit : '<span>1</span>'.$prodUnit !!}</p>
+        <p class="price {{ $product->action ? 'action' : '' }}"><span>{{ $prodPrice }}</span>р. за {!! $product->parts ? '<span>'.Helper::productValue(Helper::getProductParts()[0]).'</span>'.$prodUnit : '<span>1</span>'.$prodUnit !!}</p>
         <p class="description">{{ $product->description }}</p>
 
     </div>
@@ -26,7 +26,7 @@
             'differentially' => $product->parts,
             'price' => $prodPrice,
             'increment' => $product->parts ? json_encode(Helper::getProductParts()) : 1,
-            'value' => $value
+            'value' => Helper::productValue($value)
         ])
         @if ($useCost)
             <p>{{ Helper::productCost($product,$value) }}р.</p>
