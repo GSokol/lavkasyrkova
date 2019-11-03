@@ -46,4 +46,9 @@ class HelperController extends Controller
     {
         return 'кг.';
     }
+    
+    public function randHash()
+    {
+        return '?'.md5(rand(0,100));
+    }
 }
