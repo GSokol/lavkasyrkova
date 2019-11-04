@@ -18,6 +18,11 @@ class HelperController extends Controller
         return $product->parts ? ($product->action ? $product->action_part_price : $product->part_price) : ($product->action ? $product->action_whole_price : $product->whole_price);
     }
     
+    public function productCostSting($product)
+    {
+        return '<span>'.$this->productPrice($product).'р.</span> за <span>'.$this->productMinVal($product).'</span>';
+    }
+    
     public function productCost($product, $value)
     {
         return ceil( $this->productPrice($product)*($product->parts ? $value/$this->productParts[0] : $value));

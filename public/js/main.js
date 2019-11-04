@@ -4,6 +4,12 @@ window.criticalResolution = 1024;
 window.menuClickFlag = false;
 
 $(window).ready(function () {
+
+    // Reload page
+    setTimeout(function () {
+        location.reload(true);
+    }, 900000);
+
     $('.styled').uniform();
     $('a.img-preview').fancybox({padding: 3});
 

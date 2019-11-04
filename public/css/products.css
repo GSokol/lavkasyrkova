@@ -54,7 +54,8 @@
 }
 
 .product .text-block {
-    height: 240px;
+    height: 230px;
+    padding-bottom: 10px;
 }
 
 .modal-body .product .text-block {
@@ -189,7 +190,8 @@
     font-weight: bold;
 }
 
-.product p.price > span {
+.product p.price > span,
+.product p.cost {
     font-style: italic;
 }
 

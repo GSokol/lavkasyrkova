@@ -1,5 +1,3 @@
-<?php $prodPrice = Helper::productPrice($product); $prodUnit = Helper::productUnit($product);?>
-
 <div class="product product-{{ $product->id }} {{ isset($mainClass) ? $mainClass : 'col-md-4 col-sm-4 col-xs-12' }}">
     <div class="image">
         @if (!$product->image)
@@ -13,9 +11,8 @@
         @if ($product->addCategory && isset($product->addCategory->name))
             <p class="small">{{ $product->addCategory->name }}</p>
         @endif
-        <p class="price {{ $product->action ? 'action' : '' }}"><span>{{ $prodPrice }}</span>р. за {!! $product->parts ? '<span>'.Helper::productValue(Helper::getProductParts()[0]).'</span>'.$prodUnit : '<span>1</span>'.$prodUnit !!}</p>
         <p class="description">{{ $product->description }}</p>
-
+        <p class="price {{ $product->action ? 'action' : '' }}">{!! Helper::productCostSting($product) !!}</p>
     </div>
     <div class="value">
         @include('_input_value_block',[
@@ -24,12 +21,12 @@
             'max' => $product->parts ? Helper::getProductParts()[count(Helper::getProductParts())-1] : 10,
             'unit' => Helper::productUnit($product),
             'differentially' => $product->parts,
-            'price' => $prodPrice,
+            'price' => Helper::productPrice($product),
             'increment' => $product->parts ? json_encode(Helper::getProductParts()) : 1,
             'value' => Helper::productValue($value)
         ])
         @if ($useCost)
-            <p>{{ Helper::productCost($product,$value) }}р.</p>
+            <p class="cost">{{ Helper::productCost($product,$value) }}р.</p>
         @endif
     </div>
 </div>

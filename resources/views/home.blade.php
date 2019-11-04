@@ -27,7 +27,7 @@
                             <h1>Предложение недели</h1>
                             <h2>{{ $action->name }}</h2>
                             <p class="description">{{ $action->description }}</p>
-                            <p class="action-price">{{ Helper::productPrice($action).'р. за '.Helper::productMinVal($action) }}</p>
+                            <p class="action-price">{!! Helper::productCostSting($action) !!}</p>
                             @include('_button_block',['type' => 'button', 'icon' => 'icon-cart5', 'text' => 'Купить', 'addAttr' => ['data-id' => $action->id]])
                         </div>
                     </div>

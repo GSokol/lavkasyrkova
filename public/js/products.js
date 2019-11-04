@@ -194,7 +194,7 @@ function changeProductValue(id,value,unit) {
             var basketItem = $('#basket-product-'+id);
 
             $('input[name=product_'+id+']').val(value.toString().replace('.',',')+' '+unit);
-            $('.product-'+id+' .cost > p, .product-'+id+' .product-cost').html(data.cost+'р.');
+            $('.product-'+id+' .cost, .product-'+id+' .product-cost').html(data.cost+'р.');
             $('.total-cost-basket > span').html(data.total+'р.');
 
             // Add or remove value-input in basket modal
