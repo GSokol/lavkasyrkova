@@ -43,18 +43,7 @@ class StaticController extends Controller
                 $length = mb_strlen($product->description, 'UTF-8');
                 if ($length > $maxLength) $maxLength = $length;
             }
-
-            switch ($maxLength) {
-                case $maxLength < 190:
-                    $textHeight = 180;
-                    break;
-                case $maxLength < 290:
-                    $textHeight = 230;
-                    break;
-                default:
-                    $textHeight = 245;
-                    break;
-            }
+            $textHeight = ceil($maxLength/47)*15+120;
         } else $textHeight = null;
 
         return response()->json(['success' => true, 'products' => view('_products_block', [
