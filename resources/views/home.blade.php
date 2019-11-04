@@ -68,18 +68,18 @@
             @include('_tasting_block',['icon' => 'icon_clock.svg','head' => 'Время проведения','text' => 'Будние дни с 12 до 16 часов'])
             @include('_tasting_block',['icon' => 'icon_clouds.svg','head' => 'Уже хотите?','text' => 'Напишите нам на почту: <a href="mailto:lavkasyrkov@gmail.com">lavkasyrkov@gmail.com</a>.<br>Согласуем время и место и ждите в гости!'])
 
-            {{--@if ($data['tasting_new'])--}}
-            {{--<div class="new-tasting {{ count($data['tastings']) }} col-md-12 col-sm-12 col-xs-12">--}}
-            {{--<h4>{{ $data['tasting_new']->name }} состоится {{ date('d.m.Y',$data['tasting_new']->time) }}</h4>--}}
-            {{--<p>По адресу: {{ $data['tasting_new']->place }}</p>--}}
-            {{--@if (isset($data['tasting_new']) && $data['tasting_new'] && (!isset($data['tasting_signed']) || !$data['tasting_signed']))--}}
-            {{--@if (Auth::guest())--}}
-            {{--<a href="/login">@include('_get_tasting_button_block')</a>--}}
-            {{--@else--}}
-            {{--<a id="get-tasting" href="#">@include('_get_tasting_button_block')</a>--}}
-            {{--@endif--}}
-            {{--@endif--}}
-            {{--</div>--}}
+            {{--@if (isset($data['tasting_new']) && $data['tasting_new'])--}}
+                {{--<div class="new-tasting {{ count($data['tastings']) }} col-md-12 col-sm-12 col-xs-12">--}}
+                    {{--<h4>{{ $data['tasting_new']->name }} состоится {{ date('d.m.Y',$data['tasting_new']->time) }}</h4>--}}
+                    {{--<p>По адресу: {{ $data['tasting_new']->place }}</p>--}}
+                    {{--@if (isset($data['tasting_new']) && $data['tasting_new'] && (!isset($data['tasting_signed']) || !$data['tasting_signed']))--}}
+                        {{--@if (Auth::guest())--}}
+                            {{--<a href="/login">@include('_get_tasting_button_block')</a>--}}
+                        {{--@else--}}
+                            {{--<a id="get-tasting" href="#">@include('_get_tasting_button_block')</a>--}}
+                        {{--@endif--}}
+                    {{--@endif--}}
+                {{--</div>--}}
             {{--@endif--}}
         </div>
     </div>

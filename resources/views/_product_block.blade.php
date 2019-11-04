@@ -6,7 +6,7 @@
             <a class="img-preview" href="{{ $product->big_image ? asset($product->big_image) : asset($product->image) }}"><img src="{{ asset($product->image) }}" /></a>
         @endif
     </div>
-    <div class="text-block">
+    <div class="text-block" {{ isset($textBlockHeight) && $textBlockHeight ? 'style=height:'.$textBlockHeight.'px' : '' }}>
         <h3>{{ $product->name }}</h3>
         @if ($product->addCategory && isset($product->addCategory->name))
             <p class="small">{{ $product->addCategory->name }}</p>

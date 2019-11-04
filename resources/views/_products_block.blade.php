@@ -24,6 +24,7 @@
     @include('_product_block', [
         'product' => $product,
         'value' => $value,
-        'useCost' => true
+        'useCost' => true,
+        'textBlockHeight' => $textBlockHeight
     ])
 @endforeach

@@ -54,12 +54,12 @@
 }
 
 .product .text-block {
-    height: 230px;
+    /*height: 230px;*/
     padding-bottom: 10px;
 }
 
 .modal-body .product .text-block {
-    height: auto;
+    height: auto !important;
     padding-bottom: 10px;
 }
 
@@ -308,7 +308,7 @@
     }
 
     .product .text-block {
-        height: auto;
+        height: auto !important;
     }
 
     .frame-image.tastings {
