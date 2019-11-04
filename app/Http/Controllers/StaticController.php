@@ -52,7 +52,7 @@ class StaticController extends Controller
                     $textHeight = 230;
                     break;
                 default:
-                    $textHeight = 240;
+                    $textHeight = 245;
                     break;
             }
         } else $textHeight = null;
