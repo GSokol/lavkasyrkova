@@ -1,10 +1,19 @@
 body {
-    background: url("../images/auth_bg.jpg") 50% 50% no-repeat;
+    background: url("../images/main_image.jpg") 50% 50% no-repeat;
     background-size: cover;
 }
 
 h5 {
     margin-bottom: 10px;
+}
+
+#logo {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+    width: 400px;
+    max-width: 90%;
 }
 
 .login-form {

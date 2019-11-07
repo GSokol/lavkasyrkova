@@ -15,6 +15,7 @@
         <div class="content-wrapper">
             <!-- Content area -->
             <div class="content">
+                <img id="logo" src="{{ asset('images/logo.svg') }}" />
                 @yield('content')
             </div>
             <!-- /content area -->

@@ -8,13 +8,18 @@
         <div class="text">
             <div>
                 <p>РОССИЙСКИЙ ФЕРМЕРСКИЙ СЫР<br>от рикотты до пармезана</p>
-                <a href="#tasting" data-scroll="tastings">@include('_button_block',[
+
+            </div>
+        </div>
+        <div class="button">
+            <a href="#tasting" data-scroll="tastings">
+                @include('_button_block',[
                     'addClass' => 'big-button',
                     'type' => 'button',
                     'icon' => null,
                      'text' => 'Бесплатные тематические дегустации'
-                 ])</a>
-            </div>
+                 ])
+            </a>
         </div>
     </div>
 
