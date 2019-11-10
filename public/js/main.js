@@ -34,8 +34,8 @@ $(window).ready(function () {
         goToScroll($(this).attr('data-scroll'));
     });
 
-    // On-top button controls
-    var onTopButton = $('#on-top-button');
+    // Scroll controls
+    // var onTopButton = $('#on-top-button');
     $(window).scroll(function() {
         if (!window.menuClickFlag) {
             var win = $(this);
@@ -49,13 +49,13 @@ $(window).ready(function () {
                 }
             });
         }
-        if ($(window).scrollTop() > $(window).height()) onTopButton.fadeIn();
-        else onTopButton.fadeOut();
+        // if ($(window).scrollTop() > $(window).height()) onTopButton.fadeIn();
+        // else onTopButton.fadeOut();
     });
 
-    onTopButton.click(function() {
-        goToScroll('home');
-    });
+    // onTopButton.click(function() {
+    //     goToScroll('home');
+    // });
 
     // Click to signing tasting
     $('a#get-tasting').click(function (e) {
@@ -93,6 +93,7 @@ $(window).ready(function () {
         loop: true,
         nav: true,
         autoplay: true,
+        autoplaySpeed: 3000,
         responsive: {
             100: {
                 items: 1

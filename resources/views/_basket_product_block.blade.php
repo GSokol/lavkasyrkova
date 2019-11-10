@@ -12,7 +12,7 @@
             'value' => Helper::productValue($value)
         ])
     </div>
-    <div class="product-cost">{{ Helper::productCost($product,$value) }}р.</div>
+    <div class="product-cost">{{ Helper::productCost($product,$value) }} руб</div>
     <div class="product-delete"><i class="icon-close2"></i></div>
 </div>
 

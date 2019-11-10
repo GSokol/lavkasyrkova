@@ -71,7 +71,7 @@
 
 {{ csrf_field() }}
 @yield('content')
-<div id="on-top-button"><i class="glyphicon glyphicon-upload"></i></div>
+{{--<div id="on-top-button"><i class="glyphicon glyphicon-upload"></i></div>--}}
 <div id="footer">
     <div class="container">
         <p>

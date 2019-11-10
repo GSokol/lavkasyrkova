@@ -20,7 +20,7 @@ class HelperController extends Controller
     
     public function productCostSting($product)
     {
-        return '<span>'.$this->productPrice($product).'р.</span> за <span>'.$this->productMinVal($product).'</span>';
+        return '<span>'.$this->productPrice($product).' руб</span> за <span>'.$this->productMinVal($product).'</span>';
     }
     
     public function productCost($product, $value)
@@ -30,7 +30,7 @@ class HelperController extends Controller
     
     public function productUnit($product)
     {
-        return $product->parts ? $this->getPartsName() : 'шт.';
+        return $product->parts ? $this->getPartsName() : 'шт';
     }
     
     public function productValue($value) {
@@ -39,7 +39,7 @@ class HelperController extends Controller
     
     public function productMinVal($product)
     {
-        return $product->parts ? $this->productValue($this->productParts[0]).$this->getPartsName() : '1шт.';
+        return $product->parts ? $this->productValue($this->productParts[0]).$this->getPartsName() : '1 шт';
     }
     
     public function getProductParts()
@@ -49,7 +49,7 @@ class HelperController extends Controller
 
     public function getPartsName()
     {
-        return 'кг.';
+        return ' кг';
     }
     
     public function randHash()

@@ -21,6 +21,7 @@ class StaticController extends Controller
     {
         $this->data['shops'] = Shop::all();
         $this->data['actions'] = Product::where('action',1)->where('active',1)->limit(5)->get();
+        $this->data['products'] = Product::where('active',1)->get();
 //        $this->data['tasting_new'] = $this->getNewTasting();
 //        if ($this->data['tasting_new']) {
 //            $this->data['tastings'] = Tasting::where('id','!=',$this->data['tasting_new']->id)->orderBy('time','desc')->get();

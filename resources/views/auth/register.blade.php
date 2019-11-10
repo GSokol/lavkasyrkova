@@ -25,6 +25,7 @@
 
         <div class="form-group">
             @include('_button_block', ['type' => 'submit', 'mainClass' => 'bg-orange-800 btn-block', 'text' => trans('auth.register'), 'icon' => 'icon-circle-right2 position-right'])
+            @include('auth._back_home_block')
         </div>
     </div>
 </form>

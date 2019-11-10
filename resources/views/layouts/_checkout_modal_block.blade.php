@@ -20,13 +20,13 @@
         @endif
     </div>
     <hr>
-    <p class="total-cost-basket"><b>Итоговая сумма: </b><span>{{ Session::has('basket') ? Session::get('basket')['total'] : '0' }}р.<span></p>
+    <p class="total-cost-basket"><b>Итоговая сумма: </b><span>{{ Session::has('basket') ? Session::get('basket')['total'] : '0' }} руб</span></p>
 
     <h3>Доставка</h3>
     <?php $displayAddress = Session::has('basket') && Session::get('basket')['total'] > 10000; ?>
     <div class="error"></div>
 
-    @foreach(['Доставка в офис ('.Auth::user()->office->address.')','Доставка в магазин','Доставка по адресу <span class="error">(при заказе свыше 10 000р.!)</span>'] as $k => $delivery)
+    @foreach([(Auth::user()->office->id == 1 || Auth::user()->office->id == 2 ? Auth::user()->office->address : 'Доставка в офис ('.Auth::user()->office->address.')'),'Доставка в магазин','Доставка по адресу <span class="error">(при заказе свыше 10 000 руб!)</span>'] as $k => $delivery)
         @include('_radio_simple_block',[
             'name' => 'delivery',
             'value' => $k+1,

@@ -9,7 +9,7 @@
     <div class="text-block" {{ isset($textBlockHeight) && $textBlockHeight ? 'style=height:'.$textBlockHeight.'px' : '' }}>
         <h3>{{ $product->name }}</h3>
         @if ($product->addCategory && isset($product->addCategory->name))
-            <p class="small">{{ $product->addCategory->name }}</p>
+            <p class="small">{{ str_replace('Сыры','Сыр',$product->addCategory->name) }}</p>
         @endif
         <p class="description">{{ $product->description }}</p>
         <p class="price {{ $product->action ? 'action' : '' }}">{!! Helper::productCostSting($product) !!}</p>
@@ -26,7 +26,7 @@
             'value' => Helper::productValue($value)
         ])
         @if ($useCost)
-            <p class="cost">{{ Helper::productCost($product,$value) }}р.</p>
+            <p class="cost">{{ Helper::productCost($product,$value) }} руб</p>
         @endif
     </div>
 </div>

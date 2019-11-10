@@ -6,7 +6,8 @@ $(window).ready(function () {
 
     // Click back to categories
     var productsContainer = $('#products');
-    productsContainer.find('.back-to-categories > div').click(function () {
+    // productsContainer.find('.back-to-categories > div').click(function () {
+    $('#on-top-button').click(function () {
         productsContainer.fadeOut('fast',function () {
             $('.order-form').html('');
             $('#cheeses-sub-head').html('');
@@ -137,13 +138,13 @@ function bindProductsValueInputControl() {
 
 function emptyBasket() {
     $('#order-content').html('');
-    $('.total-cost-basket > span').html('0р.');
+    $('.total-cost-basket > span').html('0 руб');
     $('.product').each(function () {
         var input = $(this).find('input');
         input.val('0 '+input.attr('data-unit'));
-        $(this).find('p.cost').html('0р.');
+        $(this).find('p.cost').html('0 руб');
     });
-    $('.total-cost > span').html('0р.');
+    $('.total-cost > span').html('0 руб');
 }
 
 function orderComplete(data) {
@@ -194,8 +195,8 @@ function changeProductValue(id,value,unit) {
             var basketItem = $('#basket-product-'+id);
 
             $('input[name=product_'+id+']').val(value.toString().replace('.',',')+' '+unit);
-            $('.product-'+id+' .cost, .product-'+id+' .product-cost').html(data.cost+'р.');
-            $('.total-cost-basket > span').html(data.total+'р.');
+            $('.product-'+id+' .cost, .product-'+id+' .product-cost').html(data.cost+' руб');
+            $('.total-cost-basket > span').html(data.total+' руб');
 
             // Add or remove value-input in basket modal
             if (basketItem.length) {

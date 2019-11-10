@@ -239,18 +239,24 @@
 }
 
 .action-product {
+    width: 410px;
+    max-width: 100%;
+    position: absolute;
+    bottom: 0;
     display: table;
     text-align: center;
-    padding: 30px;
-    /*background: url("../images/white.png") repeat;*/
+    padding: 20px;
+    background: url("../images/white.png") repeat;
 }
 
 .action-product h1 {
-    font-size: 27px;
+    font-size: 30px;
+    color: #fd4100;
 }
 
 .action-product h2 {
-    font-size: 20px;
+    font-size: 27px;
+    color: #fd4100;
 }
 
 .action-product p.description {
@@ -259,8 +265,14 @@
 }
 
 .action-price {
+    font-size: 2em;
     font-weight: bolder;
-    color: #ab0330;
+    color: #fd4100;
+}
+
+.action-price span.old {
+    color: black;
+    text-decoration: line-through;
 }
 
 .shops-block {

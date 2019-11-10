@@ -13,7 +13,7 @@ use Config;
 trait HelperTrait
 {
     public $validationPhone = 'required|regex:/^((\+)?(\d)(\s)?(\()?[0-9]{3}(\))?(\s)?([0-9]{3})(\-)?([0-9]{2})(\-)?([0-9]{2}))$/';
-    public $validationPrice = 'required|regex:/^(\d+\s(р.))$/';
+    public $validationPrice = 'required|regex:/^(\d+\s( руб))$/';
     public $validationUser = 'required|integer|exists:users,id';
     public $validationTasting = 'required|integer|exists:tastings,id';
     public $validationOffice = 'required|integer|exists:offices,id';
@@ -188,7 +188,7 @@ trait HelperTrait
 
     public function convertCompositeVal($val)
     {
-        return (int)str_replace([' ','р.','шт.'],'',$val);
+        return (int)str_replace([' ',' руб','шт.'],'',$val);
     }
 
     private function fGetRGB($iH, $iS, $iV)

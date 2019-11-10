@@ -8,7 +8,6 @@
         <div class="text">
             <div>
                 <p>РОССИЙСКИЙ ФЕРМЕРСКИЙ СЫР<br>от рикотты до пармезана</p>
-
             </div>
         </div>
         <div class="button">
@@ -32,7 +31,7 @@
                             <h1>Предложение недели</h1>
                             <h2>{{ $action->name }}</h2>
                             <p class="description">{{ $action->description }}</p>
-                            <p class="action-price">{!! Helper::productCostSting($action) !!}</p>
+                            <p class="action-price"><span class="old">{{ Helper::productPrice($action) }} руб</span> {!! Helper::productCostSting($action) !!}</p>
                             @include('_button_block',['type' => 'button', 'icon' => 'icon-cart5', 'text' => 'Купить', 'addAttr' => ['data-id' => $action->id]])
                         </div>
                     </div>
@@ -50,9 +49,10 @@
 {{--                @include('_categories_block',['categories' => $data['add_categories'],'type' => 'add_category'])--}}
             </div>
             <div id="products">
-                @include('_back_to_categories_block')
+                {{--@include('_back_to_categories_block')--}}
                 <div class="order-form"></div>
-                @include('_back_to_categories_block')
+                <div id="on-top-button"><i class="glyphicon glyphicon-upload"></i></div>
+{{--                @include('_back_to_categories_block')--}}
             </div>
         </div>
     </div>

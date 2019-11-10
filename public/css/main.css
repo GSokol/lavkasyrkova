@@ -39,6 +39,10 @@ a {
     text-decoration: underline;
 }
 
+a.button {
+    text-decoration: none !important;
+}
+
 .image img {
     width: 100%;
 }
@@ -259,7 +263,7 @@ input, select {
     right: 5%;
     bottom: 5%;
     cursor: pointer;
-    display: none;
+    /*display: none;*/
     z-index: 999;
 }
 

@@ -137,7 +137,11 @@ class UserController extends Controller
             if (!isset($this->data['shops'])) $this->data['shops'] = Shop::all();
         }
 
-        $menus = [['href' => 'orders', 'name' => 'Заказы', 'icon' => 'icon-list-unordered']];
+        $menus = [
+            ['href' => '/', 'name' => 'На главную страницу', 'icon' => 'icon-list-unordered'],
+            ['href' => 'orders', 'name' => 'Заказы', 'icon' => 'icon-home']
+        ];
+
         if (Auth::user()->is_admin) {
             $addMenus = [
                 ['href' => 'seo', 'name' => 'SEO', 'icon' => 'icon-price-tags'],
