@@ -39,7 +39,7 @@ trait HelperTrait
         'meta_google_site_verification' => ['name' => 'robots', 'property' => false],
     ];
     public $orderStatuses = ['новый','завершен'];
-    public $productParts = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1];
+    public $productParts = [100,200,300,400,500,600,700,800,900,1000];
 
     public function getMasterMail()
     {

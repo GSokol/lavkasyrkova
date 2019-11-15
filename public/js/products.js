@@ -194,7 +194,8 @@ function changeProductValue(id,value,unit) {
         if (data.success) {
             var basketItem = $('#basket-product-'+id);
 
-            $('input[name=product_'+id+']').val(value.toString().replace('.',',')+' '+unit);
+            // $('input[name=product_'+id+']').val(value.toString().replace('.',',')+' '+unit);
+            $('input[name=product_'+id+']').val(value.toString()+' '+unit);
             $('.product-'+id+' .cost, .product-'+id+' .product-cost').html(data.cost+' руб');
             $('.total-cost-basket > span').html(data.total+' руб');
 

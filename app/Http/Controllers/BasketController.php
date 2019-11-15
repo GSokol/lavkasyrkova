@@ -18,7 +18,10 @@ class BasketController extends Controller
     
     public function editBasket(Request $request)
     {
-        $this->validate($request, ['id' => 'required|integer|exists:products,id']);
+        $this->validate($request, [
+            'id' => 'required|integer|exists:products,id',
+            'value' => 'required|integer'
+        ]);
         $product = Product::find($request->input('id'));
 
         $basket = Session::has('basket') ? Session::get('basket') : [];

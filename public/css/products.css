@@ -193,6 +193,7 @@
 .product p.price > span,
 .product p.cost {
     font-style: italic;
+    font-weight: normal;
 }
 
 .actions {
