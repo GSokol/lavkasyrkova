@@ -9,7 +9,7 @@ $(window).ready(function () {
 
 function bindValueInputsControl() {
     var inputsButton = $('.input-value-container .button');
-    
+
     inputsButton.unbind('click');
     inputsButton.bind('click',function () {
         var type = $(this).hasClass('plus'),

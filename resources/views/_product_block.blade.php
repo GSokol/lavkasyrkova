@@ -18,7 +18,7 @@
         @include('_input_value_block',[
             'name' => 'product_'.$product->id,
             'min' => 0,
-            'max' => $product->parts ? Helper::getProductParts()[count(Helper::getProductParts())-1] : 10,
+            'max' => $product->parts ? Helper::getProductParts()[count(Helper::getProductParts())-1] : 100,
             'unit' => Helper::productUnit($product),
             'differentially' => $product->parts,
             'price' => Helper::productPrice($product),

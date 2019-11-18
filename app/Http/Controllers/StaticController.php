@@ -7,7 +7,7 @@ use App\Category;
 use App\AddCategory;
 use App\Product;
 use App\Tasting;
-use App\UserToTasting;
+//use App\UserToTasting;
 use App\Shop;
 use Settings;
 
@@ -22,11 +22,7 @@ class StaticController extends Controller
         $this->data['shops'] = Shop::all();
         $this->data['actions'] = Product::where('action',1)->where('active',1)->limit(5)->get();
         $this->data['products'] = Product::where('active',1)->get();
-//        $this->data['tasting_new'] = $this->getNewTasting();
-//        if ($this->data['tasting_new']) {
-//            $this->data['tastings'] = Tasting::where('id','!=',$this->data['tasting_new']->id)->orderBy('time','desc')->get();
-//            if (!Auth::guest()) $this->data['tasting_signed'] = UserToTasting::where('tasting_id',$this->data['tasting_new']->id)->where('user_id',Auth::user()->id)->first();
-//        }
+        $this->getTastings();
         return $this->showView('home');
     }
     

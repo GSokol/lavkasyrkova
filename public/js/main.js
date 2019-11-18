@@ -58,15 +58,15 @@ $(window).ready(function () {
     // });
 
     // Click to signing tasting
-    $('a#get-tasting').click(function (e) {
-        e.preventDefault();
-        $.post('/profile/signing-tasting', {
-            '_token': $('input[name=_token]').val()
-        }, function (data) {
-            $('#get-tasting').remove();
-            showMessage(data.message);
-        });
-    });
+    // $('a#get-tasting').click(function (e) {
+    //     e.preventDefault();
+    //     $.post('/profile/signing-tasting', {
+    //         '_token': $('input[name=_token]').val()
+    //     }, function (data) {
+    //         $('#get-tasting').remove();
+    //         showMessage(data.message);
+    //     });
+    // });
 
     // Hover text of free tastings
     $('#main-image a[href=#tasting]').bind('mouseover',function () {
@@ -100,6 +100,8 @@ $(window).ready(function () {
             }
         }
     });
+
+    if (window.showMessage) $('#message').modal('show');
 });
 
 function goToScroll(scrollData) {

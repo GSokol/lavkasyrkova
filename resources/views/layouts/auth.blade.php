@@ -26,7 +26,10 @@
 </div>
 <!-- /page container -->
 
-<script>$('.styled').uniform();</script>
+<script>
+    $('.styled').uniform();
+    $('input[name=phone]').mask("+7(999)999-99-99");
+</script>
 
 </body>
 </html>

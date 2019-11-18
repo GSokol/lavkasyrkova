@@ -50,6 +50,21 @@
                     'value' => isset($data['user']) ? $data['user']->phone : ''
                 ])
 
+                @include('_input_block', [
+                    'label' => 'Адрес',
+                    'name' => 'address',
+                    'type' => 'text',
+                    'placeholder' => 'Адрес для доставки',
+                    'value' => isset($data['user']) ? $data['user']->address : ''
+                ])
+
+                @include('admin._select_block',[
+                    'label' => 'Привязка к офису',
+                    'name' => 'office_id',
+                    'values' => $data['offices'],
+                    'selected' => isset($data['user']) ? $data['user']->office_id : ''
+                ])
+
                 <div class="panel panel-flat">
                     @if (isset($data['user']))
                         <div class="panel-heading">

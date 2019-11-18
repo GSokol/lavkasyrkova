@@ -30,6 +30,7 @@ $(window).ready(function () {
             $.post('/checkout-order', {
                 '_token': $('input[name=_token]').val(),
                 'delivery': $('input[name=delivery]:checked').val(),
+                'tasting_id': $('input[name=tasting_id]:checked').val(),
                 'shop_id': $('input[name=shop_id]:checked').val(),
                 'address': $('input[name=address]').val()
             }, function (data) {
@@ -48,11 +49,11 @@ $(window).ready(function () {
             });
         }
     );
-    
+
     // Click empty basket
     $('a#empty-basket').click(function (e) {
         e.preventDefault();
-        
+
         $.post('/empty-basket', {
             '_token': $('input[name=_token]').val()
         }, function (data) {
@@ -66,16 +67,20 @@ $(window).ready(function () {
     $('input[name=delivery]').change(function () {
         clearErrors();
 
-        var shopsBlock = $('.shops-block'),
+        var timesBlock = $('.times-block'),
+            shopsBlock = $('.shops-block'),
             addressBlock = $('.address-block');
         
         if ($(this).val() == 1) {
+            timesBlock.show();
             shopsBlock.hide();
             addressBlock.hide();
         } else if ($(this).val() == 2) {
+            timesBlock.hide();
             shopsBlock.show();
             addressBlock.hide();
         } else {
+            timesBlock.hide();
             shopsBlock.hide();
             addressBlock.show();
         }
@@ -153,7 +158,10 @@ function orderComplete(data) {
         $('#checkout-modal').modal('hide');
         emptyBasket();
     }
-    showMessage(data.message);
+
+    var modal = $('#message');
+    modal.find('h3').html(data.message);
+    modal.modal('show');
 }
 
 function getCategory(obj) {

@@ -21,6 +21,14 @@
                                     'placeholder' => 'Основной E-mail',
                                     'value' => Settings::getSettings()->email
                                 ])
+
+                                @include('_input_block', [
+                                    'label' => 'Достака от…',
+                                    'name' => 'delivery_limit',
+                                    'type' => 'number',
+                                    'max' => 1000000,
+                                    'value' => Settings::getSettings()->delivery_limit
+                                ])
                             </div>
                         </div>
                     </div>

@@ -100,13 +100,13 @@ class AdminController extends UserController
     {
         $this->breadcrumbs = ['tastings' => 'Дегустации'];
         if ($request->has('id')) {
-            $this->data['offices'] = Office::all();
+            $this->data['offices'] = Office::where('id','!=',1)->where('id','!=',2)->get();
             $this->data['tasting'] = Tasting::find($request->input('id'));
             if (!$this->data['tasting']) return $this->notExist('Продукта');
             $this->breadcrumbs['tastings?id='.$this->data['tasting']->id] = $this->data['tasting']->name;
             return $this->showView('tasting');
         } else if ($slug && $slug == 'add') {
-            $this->data['offices'] = Office::all();
+            $this->data['offices'] = Office::where('id','!=',1)->where('id','!=',2)->get();
             $this->breadcrumbs['tastings/add'] = 'Добавление дегустации';
             return $this->showView('tasting');
         } else {
@@ -140,7 +140,9 @@ class AdminController extends UserController
 
     public function editSettings(Request $request)
     {
-        $this->validate($request, ['email' => 'required|email']);
+        $this->validate($request, [
+            'email' => 'required|email'
+        ]);
         Settings::saveSettings($this->processingFields($request));
         $this->saveCompleteMessage();
         return redirect()->back();
@@ -217,10 +219,10 @@ class AdminController extends UserController
         } else {
             $this->validate($request, $validationArr);
             $fields = $this->processingFields($request, 'active', null, 'time');
-            $tasting = Tasting::create($fields);
+            Tasting::create($fields);
         }
         $this->saveCompleteMessage();
-        return redirect('/admin/tastings?id='.$tasting->id);
+        return redirect('/admin/tastings');
     }
     
     public function editTastingsImages(Request $request)

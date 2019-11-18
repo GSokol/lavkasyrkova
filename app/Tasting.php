@@ -16,6 +16,11 @@ class Tasting extends Model
     {
         return $this->belongsTo('App\Office');
     }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Order');
+    }
     
     public function tastingToUsers()
     {

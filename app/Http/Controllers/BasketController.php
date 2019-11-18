@@ -74,14 +74,15 @@ class BasketController extends Controller
     {
         $this->validate($request, [
             'delivery' => 'required|integer|min:1|max:3',
+            'tasting_id' => $this->validationTasting,
             'shop_id' => $this->validationShop
         ]);
 
         $errors = [];
-        if (Auth::guest()) $errors[] = 'Вам необходимо авторизаоваться!';
+        if (Auth::guest()) $errors[] = 'Вам необходимо авторизоваться!';
         if (!Session::has('basket')) $errors[] = 'Ваша корзина пуста!';
         elseif ($request->input('delivery') == 3) {
-            if (Session::get('basket')['total'] < 10000) $errors[] = 'Доставка по адресу возможна только при заказе от 10 000р.!';
+            if (Session::get('basket')['total'] < (int)Settings::getSettings()->delivery_limit) $errors[] = 'Доставка по адресу возможна только при заказе от '.((string)Settings::getSettings()->delivery_limit).'р.!';
             elseif (!Auth::user()->address && !$request->input('address')) $errors[] = 'Вы должны указать адрес!';
             elseif (!Auth::user()->address && $request->input('address')) User::where('id',Auth::user()->id)->update(['address' => $request->input('address')]);
         }
@@ -96,6 +97,7 @@ class BasketController extends Controller
             'status' => 1,
             'user_id' => Auth::user()->id,
             'shop_id' => $request->input('delivery') == 2 ? $request->input('shop_id') : null,
+            'tasting_id' => $request->input('tasting_id'),
             'delivery' => $request->input('delivery') == 3
         ]);
 
@@ -109,7 +111,8 @@ class BasketController extends Controller
                 ]);
             }
         }
-        Session::forget('basket');
+//        Session::forget('basket');
+        
         $this->sendMessage($order->user->email, 'auth.emails.new_order', ['title' => 'Новый заказ', 'order' => $order], (string)Settings::getSettings()->email);
 
         $result = ['success' => true, 'message' => 'Ваш заказ оформлен!'];

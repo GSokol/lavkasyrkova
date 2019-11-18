@@ -58,6 +58,8 @@ $(document).ready(function() {
     $('form.complex-form').submit(function () {
         removeHiddenAddBlocks();
     });
+
+    if (window.showMessage) $('#message').modal('show');
 });
 
 function deleteItem(obj) {
@@ -74,10 +76,4 @@ function deleteItem(obj) {
 
 function removeHiddenAddBlocks() {
     $('.add-block:hidden').remove();
-}
-
-function showMessage(message) {
-    var modal = $('#message');
-    modal.find('h3').html(message);
-    modal.modal('show');
 }

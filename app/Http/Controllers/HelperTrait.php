@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Tasting;
 use Session;
@@ -13,7 +14,7 @@ use Config;
 trait HelperTrait
 {
     public $validationPhone = 'required|regex:/^((\+)?(\d)(\s)?(\()?[0-9]{3}(\))?(\s)?([0-9]{3})(\-)?([0-9]{2})(\-)?([0-9]{2}))$/';
-    public $validationPrice = 'required|regex:/^(\d+\s( руб))$/';
+    public $validationPrice = 'integer';
     public $validationUser = 'required|integer|exists:users,id';
     public $validationTasting = 'required|integer|exists:tastings,id';
     public $validationOffice = 'required|integer|exists:offices,id';
@@ -41,6 +42,11 @@ trait HelperTrait
     public $orderStatuses = ['новый','завершен'];
     public $productParts = [100,200,300,400,500,600,700,800,900,1000];
 
+    public function getTastings()
+    {
+        if (!Auth::guest()) $this->data['tastings'] = Tasting::where('office_id',Auth::user()->office_id)->where('time','>','time')->get();
+    }
+    
     public function getMasterMail()
     {
         return (string)Settings::getSettings()->email;

@@ -50,7 +50,6 @@
 
     <script type="text/javascript" src="{{ asset('js/input-value.js').Helper::randHash() }}"></script>
     <script type="text/javascript" src="{{ asset('js/products.js').Helper::randHash() }}"></script>
-    <script type="text/javascript" src="{{ asset('js/message.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/loader.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/owl.carousel.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>

@@ -49,7 +49,7 @@
                             <td class="text-center">{{ $tasting->office->address }}</td>
                             <td class="text-center">{{ $tasting->created_at->format('d.m.Y') }}</td>
                             <td class="text-center">{{ count($tasting->tastingToUsers) }}</td>
-                            <td class="text-center">@include('admin._status_block',['status' => $tasting->time < time(), 'trueLabel' => 'Новая', 'falseLabel' => 'прошедшая'])</td>
+                            <td class="text-center">@include('admin._status_block',['status' => $tasting->time > time(), 'trueLabel' => 'Новая', 'falseLabel' => 'прошедшая'])</td>
                             <td class="text-center">@include('admin._status_block',['status' => $tasting->active, 'trueLabel' => 'активна', 'falseLabel' => 'не активна'])</td>
                             <td class="delete"><span del-data="{{ $tasting->id }}" modal-data="delete-modal" class="glyphicon glyphicon-remove-circle"></span></td>
                         </tr>

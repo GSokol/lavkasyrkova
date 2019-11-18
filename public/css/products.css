@@ -276,8 +276,13 @@
     text-decoration: line-through;
 }
 
-.shops-block {
+.times-block, .shops-block {
     padding-left: 30px;
+}
+
+.times-block h6 {
+    font-size: 15px;
+    margin-bottom: 10px;
 }
 
 #checkout-modal div.error {

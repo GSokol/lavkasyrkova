@@ -58,8 +58,8 @@
     <script type="text/javascript" src="{{ asset('js/jquery.maskedinput.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/map.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/input-value.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/products.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/loader.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/message.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/admin.js') }}"></script>
 
     <script type="text/javascript" src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
@@ -69,7 +69,7 @@
 @include('layouts._message_modal_block')
 
 @if (!Auth::user()->is_admin)
-    @include('layouts._checkout_modal_block',['usingAjax' => false])
+    @include('layouts._checkout_modal_block',['usingAjax' => true])
 @endif
 
 @if (count($errors))
@@ -157,26 +157,30 @@
         <ul class="navigation navigation-main navigation-accordion">
             <!-- Main -->
             @foreach ($menus as $menu)
-                <li {{ preg_match('/^('.$prefix.'\/'.str_replace('/','\/',$menu['href']).')/', Request::path()) ? 'class=active' : '' }}>
-                    <a href="{{ url('/'.$prefix.'/'.$menu['href']) }}"><i class="{{ $menu['icon'] }}"></i> <span>{{ str_limit($menu['name'], 20) }}</span></a>
-                    @if (isset($menu['submenu']) && count($menu['submenu']))
-                        <ul>
-                            @foreach ($menu['submenu'] as $submenu)
-                                <?php
-                                $addAttrStr = '';
-                                if (isset($submenu['addAttr']) && count($submenu['addAttr']) ) {
-                                    foreach ($submenu['addAttr'] as $attr => $val) {
-                                        $addAttrStr .= $attr.'="'.$val.'"';
+                @if ($menu['href'] == '/')
+                    <li><a href="{{ url('/') }}"><i class="{{ $menu['icon'] }}"></i> <span>{{ str_limit($menu['name'], 20) }}</span></a></li>
+                @else
+                    <li {{ preg_match('/^('.$prefix.'\/'.str_replace('/','\/',$menu['href']).')/', Request::path()) ? 'class=active' : '' }}>
+                        <a href="{{ url('/'.$prefix.'/'.$menu['href']) }}"><i class="{{ $menu['icon'] }}"></i> <span>{{ str_limit($menu['name'], 20) }}</span></a>
+                        @if (isset($menu['submenu']) && count($menu['submenu']))
+                            <ul>
+                                @foreach ($menu['submenu'] as $submenu)
+                                    <?php
+                                    $addAttrStr = '';
+                                    if (isset($submenu['addAttr']) && count($submenu['addAttr']) ) {
+                                        foreach ($submenu['addAttr'] as $attr => $val) {
+                                            $addAttrStr .= $attr.'="'.$val.'"';
+                                        }
                                     }
-                                }
-                                ?>
-                                <li {{ (preg_match('/^('.$prefix.'\/'.str_replace('/','\/',$menu['href'].'/'.$submenu['href']).')/', Request::path())) || (Request::path() == $prefix.'/products' && Request::has('id') && Request::input('id') == (int)str_replace('?id=','',$submenu['href'])) ? 'class=active' : '' }}>
-                                    <a href="{{ url('/'.$prefix.'/'.$menu['href'].'/'.$submenu['href']) }}" {!! $addAttrStr !!}>{{ str_limit($submenu['name'], 20) }}</a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </li>
+                                    ?>
+                                    <li {{ (preg_match('/^('.$prefix.'\/'.str_replace('/','\/',$menu['href'].'/'.$submenu['href']).')/', Request::path())) || (Request::path() == $prefix.'/products' && Request::has('id') && Request::input('id') == (int)str_replace('?id=','',$submenu['href'])) ? 'class=active' : '' }}>
+                                        <a href="{{ url('/'.$prefix.'/'.$menu['href'].'/'.$submenu['href']) }}" {!! $addAttrStr !!}>{{ str_limit($submenu['name'], 20) }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </li>
+                @endif
             @endforeach
         </ul>
     </div>
@@ -228,12 +232,6 @@
 
 </div>
 <!-- /page container -->
-
-@if (!Auth::user()->is_admin)
-    <script>bindValueInputsControl(true);</script>
-@else
-    <script>bindValueInputsControl(false);</script>
-@endif
 
 </body>
 </html>
