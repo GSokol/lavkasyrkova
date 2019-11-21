@@ -109,12 +109,12 @@ class ProductsTableSeeder extends Seeder
                  $fields['whole_price'] = $product['price'];
                  $fields['part_price'] = 0;
 
-                 $fields['action_whole_price'] = $product['price'] ? $fields['whole_price']/2 : 0;
+                 $fields['action_whole_price'] = $product['price'] ? $fields['whole_price'] : 0;
                  $fields['action_part_price'] = 0;
             }
             unset($fields['price']);
 
-            $fields['action'] = $k<5;
+            $fields['action'] = 0;
             $fields['active'] = true;
 
             Product::create($fields);
