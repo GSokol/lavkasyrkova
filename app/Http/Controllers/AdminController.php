@@ -304,15 +304,19 @@ class AdminController extends UserController
         $validationArr = [];
         $addPlace = $request->has('address');
         if ($addPlace) {
-//            $validationArr['latitude'] = $this->validationCoordinates;
-//            $validationArr['longitude'] = $this->validationCoordinates;
+            if ($request->input('latitude') || $request->input('longitude')) {
+                $validationArr['latitude'] = $this->validationCoordinates;
+                $validationArr['longitude'] = $this->validationCoordinates;
+            }
             $validationArr['address'] = 'required|max:255';
         }
 
         $places = $model->all();
         foreach ($places as $place) {
-//            $validationArr['latitude_'.$place->id] = $this->validationCoordinates;
-//            $validationArr['latitude_'.$place->id] = $this->validationCoordinates;
+            if ($request->input('latitude') || $request->input('longitude')) {
+                $validationArr['latitude_' . $place->id] = $this->validationCoordinates;
+                $validationArr['latitude_' . $place->id] = $this->validationCoordinates;
+            }
             $validationArr['address_'.$place->id] = 'required|max:255';
         }
 
@@ -320,8 +324,8 @@ class AdminController extends UserController
 
         foreach ($places as $place) {
             $place->update([
-//                'latitude' => $request->input('latitude_'.$place->id),
-//                'longitude' => $request->input('longitude_'.$place->id),
+                'latitude' => $request->input('latitude_'.$place->id),
+                'longitude' => $request->input('longitude_'.$place->id),
                 'address' => $request->input('address_'.$place->id)
             ]);
         }

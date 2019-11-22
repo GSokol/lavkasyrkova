@@ -22,7 +22,7 @@ trait HelperTrait
     public $validationCategory = 'required|integer|exists:categories,id';
     public $validationAddCategory = 'required|integer|exists:add_categories,id';
     public $validationPassword = 'required|confirmed|min:6|max:50';
-    public $validationCoordinates = 'required|regex:/^(\d{2}\.\d{5,6})$/';
+    public $validationCoordinates = 'regex:/^(\d{2}\.\d{5,6})$/';
     public $validationImage = 'image|min:5|max:5000';
     public $metas = [
         'meta_description' => ['name' => 'description', 'property' => false],
