@@ -75,6 +75,14 @@
                             ])
 
                             @include('_input_block', [
+                                'label' => 'Вес целого (г)',
+                                'name' => 'whole_weight',
+                                'type' => 'number',
+                                'max' => 5000,
+                                'value' => isset($data['product']) ? $data['product']->whole_weight : 200
+                            ])
+
+                            @include('_input_block', [
                                 'label' => 'Цена за '.Helper::getProductParts()[0].Helper::getPartsName().' (р)',
                                 'name' => 'part_price',
                                 'type' => 'number',

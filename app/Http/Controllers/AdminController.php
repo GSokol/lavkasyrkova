@@ -154,6 +154,7 @@ class AdminController extends UserController
             'name' => 'required|unique:products,name',
             'description' => 'required|min:3|max:500',
             'whole_price' => $this->validationPrice,
+            'whole_weight' => 'required|integer|min:1|max:5000',
             'part_price' => $this->validationPrice,
             'action_whole_price' => $this->validationPrice,
             'action_part_price' => $this->validationPrice,
@@ -303,15 +304,15 @@ class AdminController extends UserController
         $validationArr = [];
         $addPlace = $request->has('address');
         if ($addPlace) {
-            $validationArr['latitude'] = $this->validationCoordinates;
-            $validationArr['longitude'] = $this->validationCoordinates;
+//            $validationArr['latitude'] = $this->validationCoordinates;
+//            $validationArr['longitude'] = $this->validationCoordinates;
             $validationArr['address'] = 'required|max:255';
         }
 
         $places = $model->all();
         foreach ($places as $place) {
-            $validationArr['latitude_'.$place->id] = $this->validationCoordinates;
-            $validationArr['latitude_'.$place->id] = $this->validationCoordinates;
+//            $validationArr['latitude_'.$place->id] = $this->validationCoordinates;
+//            $validationArr['latitude_'.$place->id] = $this->validationCoordinates;
             $validationArr['address_'.$place->id] = 'required|max:255';
         }
 
@@ -319,8 +320,8 @@ class AdminController extends UserController
 
         foreach ($places as $place) {
             $place->update([
-                'latitude' => $request->input('latitude_'.$place->id),
-                'longitude' => $request->input('longitude_'.$place->id),
+//                'latitude' => $request->input('latitude_'.$place->id),
+//                'longitude' => $request->input('longitude_'.$place->id),
                 'address' => $request->input('address_'.$place->id)
             ]);
         }

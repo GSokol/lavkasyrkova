@@ -13,9 +13,10 @@ class HelperController extends Controller
         return $item->whole_value ? $item->whole_value*($item->product->action ? $item->product->action_whole_price : $item->product->whole_price) : ceil($item->part_value/$this->productParts[0]*($item->product->action ? $item->product->action_part_price : $item->product->part_price));
     }
     
-    public function productPrice($product)
+    public function productPrice($product,$useAction=false)
     {
-        return $product->parts ? ($product->action ? $product->action_part_price : $product->part_price) : ($product->action ? $product->action_whole_price : $product->whole_price);
+        if ($useAction) return $product->parts ? $product->part_price : $product->whole_price;
+        else return $product->parts ? ($product->action ? $product->action_part_price : $product->part_price) : ($product->action ? $product->action_whole_price : $product->whole_price);
     }
     
     public function productCostSting($product)
@@ -40,7 +41,7 @@ class HelperController extends Controller
     
     public function productMinVal($product)
     {
-        return $product->parts ? $this->productValue($this->productParts[0]).$this->getPartsName() : '1 шт/160 г';
+        return $product->parts ? $this->productValue($this->productParts[0]).$this->getPartsName() : '1 шт/'.$product->whole_weight.' г';
     }
     
     public function getProductParts()

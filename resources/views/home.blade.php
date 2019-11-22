@@ -31,7 +31,7 @@
                             <h1>Предложение недели</h1>
                             <h2>{{ $action->name }}</h2>
                             <p class="description">{{ $action->description }}</p>
-                            <p class="action-price"><span class="old">{{ Helper::productPrice($action) }} руб</span> {!! Helper::productCostSting($action) !!}</p>
+                            <p class="action-price"><span class="old">{{ Helper::productPrice($action,true) }} руб</span> {!! Helper::productCostSting($action) !!}</p>
                             @include('_button_block',['type' => 'button', 'icon' => 'icon-cart5', 'text' => 'Купить', 'addAttr' => ['data-id' => $action->id]])
                         </div>
                     </div>

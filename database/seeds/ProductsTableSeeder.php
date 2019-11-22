@@ -114,6 +114,7 @@ class ProductsTableSeeder extends Seeder
             }
             unset($fields['price']);
 
+            $fields['whole_weight'] = 160;
             $fields['action'] = 0;
             $fields['active'] = true;
 

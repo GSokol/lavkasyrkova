@@ -13,6 +13,7 @@ class Product extends Model
         'big_image',
         'parts',
         'whole_price',
+        'whole_weight',
         'part_price',
         'action_whole_price',
         'action_part_price',

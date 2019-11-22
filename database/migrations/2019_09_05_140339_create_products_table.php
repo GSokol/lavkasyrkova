@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('big_image')->nullable();
             $table->boolean('parts');
             $table->integer('whole_price');
+            $table->integer('whole_weight');
             $table->integer('part_price');
             $table->integer('action_whole_price');
             $table->integer('action_part_price');
