@@ -9,7 +9,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 20px;
     font-weight: bolder;
     text-transform: uppercase;
-    color: #ab0330;
+    color: #d73737;
 }
 
 h1.head {
@@ -237,7 +237,7 @@ input, select {
     font-size: 17px;
     text-align: center;
     font-weight: bold;
-    color: #ab0330;
+    color: #d73737;
 }
 
 .frame-image.tastings {
@@ -272,7 +272,7 @@ input, select {
 }
 
 #on-top-button:hover {
-    color: #ab0330;
+    color: #d73737;
 }
 
 #on-top-button .glyphicon {
