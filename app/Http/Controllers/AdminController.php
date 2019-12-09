@@ -160,8 +160,7 @@ class AdminController extends UserController
             'action_part_price' => $this->validationPrice,
             'image' => $this->validationImage,
             'big_image' => $this->validationImage,
-            'category_id' => $this->validationCategory,
-            'add_category_id' => $this->validationAddCategory
+            'category_id' => $this->validationCategory
         ];
         $fields = $this->processingFields(
             $request,

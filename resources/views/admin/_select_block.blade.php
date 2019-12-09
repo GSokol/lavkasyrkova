@@ -5,7 +5,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <select name="{{ $name }}" class="form-control">
             @if (isset($firstEmpty) && $firstEmpty)
-                <option value="0" {{ !$selected ? 'selected' : '' }}>нет</option>
+                <option value="" {{ !$selected ? 'selected' : '' }}>нет</option>
             @endif
 
             @if (is_array($values))
