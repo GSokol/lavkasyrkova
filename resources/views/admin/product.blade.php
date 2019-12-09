@@ -39,7 +39,8 @@
                                 'label' => 'Подкатегория товара',
                                 'name' => 'add_category_id',
                                 'values' => $data['add_categories'],
-                                'selected' => isset($data['product']) ? $data['product']->add_category_id : 1
+                                'firstEmpty' => true,
+                                'selected' => isset($data['product']) ? $data['product']->add_category_id : null
                             ])
 
                             @include('_input_block', [

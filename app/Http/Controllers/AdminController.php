@@ -66,7 +66,7 @@ class AdminController extends UserController
         if ($request->has('id')) {
             $this->data['product'] = Product::find($request->input('id'));
             if (!$this->data['product']) return $this->notExist('Продукта');
-            $this->breadcrumbs = ['products?id='.$this->data['product']->id => $this->data['product']->name];
+            $this->breadcrumbs['products?id='.$this->data['product']->id] = $this->data['product']->name;
             return $this->showView('product');
         } else if ($slug && $slug == 'add') {
             $this->breadcrumbs['products/add'] = 'Добавление продукта';
