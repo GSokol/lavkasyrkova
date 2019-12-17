@@ -39,12 +39,17 @@ class UserController extends Controller
         return $this->showView('orders');
     }
 
-    public function user()
+    public function user(Request $request)
     {
         $this->breadcrumbs = ['user' => 'Профиль пользователя'];
         $this->getTastings();
         $this->data['user'] = Auth::user();
         $this->data['offices'] = Office::all();
+        if ($request->has('unsubscribe') && $request->input('unsubscribe')) {
+            $this->data['user']->send_mail = 0;
+            $this->data['user']->save();
+            Session::flash('message','Вы отписались от автоматической рассылки!');
+        }
         return $this->showView('user');
     }
     

@@ -13,7 +13,6 @@ use App\Category;
 use App\AddCategory;
 use App\Tasting;
 use App\UserToTasting;
-use Config;
 use Session;
 use Settings;
 
