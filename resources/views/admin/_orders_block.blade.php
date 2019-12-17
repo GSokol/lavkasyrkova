@@ -13,7 +13,7 @@
                     <th class="text-center">Номер заказа</th>
                     <th class="text-center">Время создания</th>
                     <th class="text-center">Доставка</th>
-                    <th class="text-center">Время доставки</th>
+                    <th class="text-center">Дата дегустации</th>
                     <th class="text-center">Состав</th>
                     <th class="text-center">Статус заказа</th>
                     <th class="text-center">Стоимость</th>
