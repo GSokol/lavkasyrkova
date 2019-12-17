@@ -46,7 +46,7 @@ class AdminController extends UserController
             $this->data['user'] = User::find($request->input('id'));
             $this->data['product_parts'] = $this->productParts;
             if (!$this->data['user']) return $this->notExist('Пользователя');
-            $this->breadcrumbs = ['users?id='.$this->data['user']->id => $this->data['user']->email];
+            $this->breadcrumbs['users?id='.$this->data['user']->id] = $this->data['user']->email;
             return $this->showView('user');
         } else if ($slug && $slug == 'add') {
             $this->breadcrumbs['users/add'] = 'Добавление пользователя';
@@ -152,6 +152,7 @@ class AdminController extends UserController
     {
         $validationArr = [
             'name' => 'required|unique:products,name',
+            'additionally' => 'max:255',
             'description' => 'required|min:3|max:500',
             'whole_price' => $this->validationPrice,
             'whole_weight' => 'required|integer|min:1|max:5000',
@@ -164,7 +165,7 @@ class AdminController extends UserController
         ];
         $fields = $this->processingFields(
             $request,
-            ['action','active','parts'],
+            ['new','action','active','parts'],
             ['image','big_image'],
             null,
             ['whole_price','part_price','action_whole_price','action_part_price']

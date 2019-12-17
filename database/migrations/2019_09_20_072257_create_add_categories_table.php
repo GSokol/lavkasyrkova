@@ -13,12 +13,12 @@ class CreateAddCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('add_categories', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('image')->nullable();
-            $table->timestamps();
-        });
+//        Schema::create('add_categories', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->string('name');
+//            $table->string('image')->nullable();
+//            $table->timestamps();
+//        });
     }
 
     /**
@@ -28,6 +28,6 @@ class CreateAddCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('add_categories');
+//        Schema::dropIfExists('add_categories');
     }
 }

@@ -8,6 +8,9 @@
     </div>
     <div class="text-block" {{ isset($textBlockHeight) && $textBlockHeight ? 'style=height:'.$textBlockHeight.'px' : '' }}>
         <h3>{{ $product->name }}</h3>
+        @if ($product->additionally)
+            <h4>{{ $product->additionally }}</h4>
+        @endif
         @if ($product->addCategory && isset($product->addCategory->name))
             <p class="small">{{ str_replace('Сыры','Сыр',$product->addCategory->name) }}</p>
         @endif

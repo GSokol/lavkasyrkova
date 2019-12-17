@@ -13,10 +13,10 @@ class AddOfficeIdToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('office_id', false, true)->nullable();
-            $table->foreign('office_id')->references('id')->on('offices')->onDelete('cascade')->onUpdate('cascade');
-        });
+//        Schema::table('users', function (Blueprint $table) {
+//            $table->integer('office_id', false, true)->nullable();
+//            $table->foreign('office_id')->references('id')->on('offices')->onDelete('cascade')->onUpdate('cascade');
+//        });
     }
 
     /**
@@ -26,9 +26,9 @@ class AddOfficeIdToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('users_office_id_foreign');
-            $table->dropColumn('office_id');
-        });
+//        Schema::table('users', function (Blueprint $table) {
+//            $table->dropForeign('users_office_id_foreign');
+//            $table->dropColumn('office_id');
+//        });
     }
 }

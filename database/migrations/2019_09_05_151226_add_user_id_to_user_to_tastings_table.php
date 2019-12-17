@@ -13,10 +13,10 @@ class AddUserIdToUserToTastingsTable extends Migration
      */
     public function up()
     {
-        Schema::table('user_to_tastings', function (Blueprint $table) {
-            $table->integer('user_id', false, true);
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-        });
+//        Schema::table('user_to_tastings', function (Blueprint $table) {
+//            $table->integer('user_id', false, true);
+//            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+//        });
     }
 
     /**
@@ -26,9 +26,9 @@ class AddUserIdToUserToTastingsTable extends Migration
      */
     public function down()
     {
-        Schema::table('user_to_tastings', function (Blueprint $table) {
-            $table->dropForeign('user_to_tastings_user_id_foreign');
-            $table->dropColumn('user_id');
-        });
+//        Schema::table('user_to_tastings', function (Blueprint $table) {
+//            $table->dropForeign('user_to_tastings_user_id_foreign');
+//            $table->dropColumn('user_id');
+//        });
     }
 }

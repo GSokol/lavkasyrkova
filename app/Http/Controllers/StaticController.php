@@ -18,9 +18,9 @@ class StaticController extends Controller
     protected $data = [];
 
     public function index()
-    {
+    {   
         $this->data['shops'] = Shop::all();
-        $this->data['actions'] = Product::where('action',1)->where('active',1)->limit(5)->get();
+        $this->data['actions'] = Product::where(function($query){ $query->where('action',1)->orWhere('new',1); })->where('active',1)->get();
         $this->data['products'] = Product::where('active',1)->get();
         $this->getTastings();
         return $this->showView('home');
@@ -40,7 +40,7 @@ class StaticController extends Controller
                 $length = mb_strlen($product->description, 'UTF-8');
                 if ($length > $maxLength) $maxLength = $length;
             }
-            $textHeight = ceil($maxLength/47)*15+120;
+            $textHeight = ceil($maxLength/47)*15+150;
         } else $textHeight = null;
 
         return response()->json(['success' => true, 'products' => view('_products_block', [

@@ -68,7 +68,7 @@ class UserController extends Controller
         
         $fields = $this->processingFields(
             $request,
-            (Auth::user()->is_admin ? ['active','is_admin'] : null),
+            (Auth::user()->is_admin ? ['active','is_admin','send_mail'] : 'send_mail'),
             (Auth::user()->is_admin ? 'old_password' : ['old_password', 'active','is_admin'])
         );
         

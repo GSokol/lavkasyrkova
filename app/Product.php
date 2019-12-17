@@ -8,6 +8,7 @@ class Product extends Model
 {
     protected $fillable = [
         'name',
+        'additionally',
         'description',
         'image',
         'big_image',
@@ -17,6 +18,7 @@ class Product extends Model
         'part_price',
         'action_whole_price',
         'action_part_price',
+        'new',
         'action',
         'active',
         'category_id',

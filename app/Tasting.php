@@ -9,6 +9,7 @@ class Tasting extends Model
     protected $fillable = [
         'time',
         'active',
+        'informed',
         'office_id'
     ];
 

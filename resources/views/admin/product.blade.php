@@ -52,6 +52,15 @@
                                 'value' => isset($data['product']) ? $data['product']->name : ''
                             ])
 
+                            @include('_input_block', [
+                                'label' => 'Дополнительно',
+                                'name' => 'additionally',
+                                'type' => 'text',
+                                'max' => 255,
+                                'placeholder' => 'Дополнительная информация о товаре',
+                                'value' => isset($data['product']) ? $data['product']->additionally : ''
+                            ])
+
                             @include('admin._textarea_block', [
                                 'label' => 'Описание',
                                 'name' => 'description',
@@ -111,6 +120,12 @@
                                         'label' => 'Продукт активен',
                                         'name' => 'active',
                                         'checked' => isset($data['product']) ? $data['product']->active : true
+                                    ])
+
+                                    @include('admin._checkbox_block',[
+                                        'label' => 'Новинка',
+                                        'name' => 'new',
+                                        'checked' => isset($data['product']) ? $data['product']->new : false
                                     ])
 
                                     @include('admin._checkbox_block',[

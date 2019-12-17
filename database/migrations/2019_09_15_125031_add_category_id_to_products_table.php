@@ -13,10 +13,10 @@ class AddCategoryIdToProductsTable extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->integer('category_id', false, true);
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
-        });
+//        Schema::table('products', function (Blueprint $table) {
+//            $table->integer('category_id', false, true);
+//            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
+//        });
     }
 
     /**
@@ -26,9 +26,9 @@ class AddCategoryIdToProductsTable extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropForeign('products_category_id_foreign');
-            $table->dropColumn('category_id');
-        });
+//        Schema::table('products', function (Blueprint $table) {
+//            $table->dropForeign('products_category_id_foreign');
+//            $table->dropColumn('category_id');
+//        });
     }
 }

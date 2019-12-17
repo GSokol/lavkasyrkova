@@ -241,7 +241,6 @@ trait HelperTrait
             $message->subject(trans('auth.message_from').$title);
             $message->from(Config::get('app.master_mail'), $title);
             $message->to($destination);
-            $message->to($destination);
             if ($copyTo) $message->cc($copyTo);
             if ($pathToFile) $message->attach($pathToFile);
         });

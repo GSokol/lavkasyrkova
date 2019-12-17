@@ -16,4 +16,9 @@ class Office extends Model
     {
         return $this->hasMany('App\Tasting')->orderBy('id','desc');
     }
+
+    public function users()
+    {
+        return $this->hasMany('App\User');
+    }
 }

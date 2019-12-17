@@ -13,10 +13,10 @@ class AddUserIdToOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->integer('user_id', false, true);
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-        });
+//        Schema::table('orders', function (Blueprint $table) {
+//            $table->integer('user_id', false, true);
+//            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+//        });
     }
 
     /**
@@ -26,9 +26,9 @@ class AddUserIdToOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropForeign('orders_user_id_foreign');
-            $table->dropColumn('user_id');
-        });
+//        Schema::table('orders', function (Blueprint $table) {
+//            $table->dropForeign('orders_user_id_foreign');
+//            $table->dropColumn('user_id');
+//        });
     }
 }

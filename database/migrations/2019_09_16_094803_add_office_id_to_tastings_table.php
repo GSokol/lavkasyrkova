@@ -13,10 +13,10 @@ class AddOfficeIdToTastingsTable extends Migration
      */
     public function up()
     {
-        Schema::table('tastings', function (Blueprint $table) {
-            $table->integer('office_id', false, true)->nullable();
-            $table->foreign('office_id')->references('id')->on('offices')->onDelete('cascade')->onUpdate('cascade');
-        });
+//        Schema::table('tastings', function (Blueprint $table) {
+//            $table->integer('office_id', false, true)->nullable();
+//            $table->foreign('office_id')->references('id')->on('offices')->onDelete('cascade')->onUpdate('cascade');
+//        });
     }
 
     /**
@@ -26,9 +26,9 @@ class AddOfficeIdToTastingsTable extends Migration
      */
     public function down()
     {
-        Schema::table('tastings', function (Blueprint $table) {
-            $table->dropForeign('tastings_office_id_foreign');
-            $table->dropColumn('office_id');
-        });
+//        Schema::table('tastings', function (Blueprint $table) {
+//            $table->dropForeign('tastings_office_id_foreign');
+//            $table->dropColumn('office_id');
+//        });
     }
 }

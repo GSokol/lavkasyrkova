@@ -105,6 +105,12 @@
                     </div>
                 </div>
 
+                @include('admin._checkbox_block',[
+                    'label' => 'Отправлять письма',
+                    'name' => 'send_mail',
+                    'checked' => isset($data['user']) ? $data['user']->send_mail : true
+                ])
+
                 @if (Auth::user()->is_admin)
                     @include('admin._checkbox_block',[
                         'label' => 'Пользователь активен',
