@@ -26,7 +26,7 @@
                         <td class="text-center">@include('admin._delivery_place_block',['order' => $order])</td>
                         <td class="text-center">
                             @if ($order->user->office_id > 2 && !$order->delivery && !$order->shop_id)
-
+                                {{ date('d.m.Y',$order->user->office->tastings[count($order->user->office->tastings)-1]->time) }}
                             @endif
                         </td>
                         <td class="text-left">@include('admin._order_content_block',['order' => $order])</td>
