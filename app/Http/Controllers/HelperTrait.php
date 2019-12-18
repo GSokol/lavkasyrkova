@@ -236,7 +236,7 @@ trait HelperTrait
 
     public function sendMessage($destination, $template, $fields, $copyTo=null, $pathToFile=null)
     {
-        $title = Settings::getSeoTags()['title'];
+        $title = 'Лавка сыркова';
         Mail::send($template, $fields, function($message) use ($title, $pathToFile, $destination, $copyTo) {
             $message->subject(trans('auth.message_from').$title);
             $message->from(Config::get('app.master_mail'), $title);
