@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call('CronMethods@checkTasting')->daily();
         $schedule->call('CronMethods@informingAboutTastings')->daily();
-        $schedule->call('CronMethods@cronInforming')->everyTenMinutes();
+        $schedule->call('CronMethods@cronInforming')->daily();
     }
 
     /**
