@@ -11,30 +11,30 @@ class CronMethods extends Command
 
     public function checkTasting()
     {
-        $tastingsIds = [];
-        $ordersIds = [];
+//        $tastingsIds = [];
+//        $ordersIds = [];
         $tastings = Tasting::where('active',1)->get();
         foreach ($tastings as $tasting) {
-            if ($tasting->time <= time()) {
+            if ($tasting->time < time()) {
                 foreach ($tasting->orders as $order) {
                     if ($order->status == 1) {
-                        $ordersIds[] = $order->id;
-//                        $order->status = 2;
-//                        $order->save();
+//                        $ordersIds[] = $order->id;
+                        $order->status = 2;
+                        $order->save();
                     }
                 }
-                $tastingsIds[] = $tasting->id;
-//                $tasting->active = 0;
-//                $tasting->save();
+//                $tastingsIds[] = $tasting->id;
+                $tasting->active = 0;
+                $tasting->save();
             }
         }
 
-        if (count($tastingsIds)) {
-            $this->sendMessage('romis.nesmelov@gmail.com', 'auth.emails.tasting_admin_informing', [
-                'tastings' => $tastingsIds,
-                'orders' => $ordersIds
-            ]);
-        }
+//        if (count($tastingsIds)) {
+//            $this->sendMessage('romis.nesmelov@gmail.com', 'auth.emails.tasting_admin_informing', [
+//                'tastings' => $tastingsIds,
+//                'orders' => $ordersIds
+//            ]);
+//        }
     }
     
     public function informingAboutTastings()
