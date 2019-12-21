@@ -40,17 +40,19 @@ class CronMethods extends Command
     public function informingAboutTastings()
     {
         $tastings = Tasting::where('time','>',time())->orWhere('time','<',(time() + (60 * 60 * 24 * 3)))->where('active',1)->where('informed',NULL)->get();
+        echo 'Open tastings: '.count($tastings)."\n";
         foreach ($tastings as $tasting) {
             foreach ($tasting->office->users as $user) {
-                if ($user->send_mail) {
-                    $this->sendMessage($user->email, 'auth.emails.tasting_informing', [
-                        'address' => $tasting->office->address,
-                        'time' => date('d.m.Y',$tasting->time)
-                    ], 'romis.nesmelov@gmail.com');
-                }
+                echo 'User: '.$user->email.'-'.$user->send_mail."\n";
+//                if ($user->send_mail) {
+//                    $this->sendMessage('romis.nesmelov@gmail.com', 'auth.emails.tasting_informing', [
+//                        'address' => $tasting->office->address,
+//                        'time' => date('d.m.Y',$tasting->time)
+//                    ]);
+//                }
             }
-            $tasting->informed = 1;
-            $tasting->save();
+//            $tasting->informed = 1;
+//            $tasting->save();
         }
     }
     
