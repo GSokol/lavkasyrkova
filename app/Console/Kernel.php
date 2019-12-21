@@ -24,8 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call('CronMethods@checkTasting')->hourly();
-        $schedule->call('CronMethods@informingAboutTastings')->hourly();
+        $schedule->call('CronMethods@checkTasting')->daily();
+        $schedule->call('CronMethods@informingAboutTastings')->daily();
 //        $schedule->call('CronMethods@cronInforming')->daily();
     }
 

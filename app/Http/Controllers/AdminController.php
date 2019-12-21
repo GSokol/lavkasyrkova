@@ -26,13 +26,6 @@ class AdminController extends UserController
 
     public function index()
     {
-
-        $tastings = Tasting::where('time','<',(time() + (60 * 60 * 24 * 3)))->where('active',1)->where('informed',0)->get();
-
-        foreach ($tastings as $tasting) {
-            echo $tasting->id.'<br>';
-        }
-        die;
         return redirect('/admin/orders');
     }
 

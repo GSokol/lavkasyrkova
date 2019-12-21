@@ -37,7 +37,7 @@
                         <th class="text-center">Время проведения</th>
                         <th class="text-center">Место проведения</th>
                         <th class="text-center">Дата создания</th>
-                        <th class="text-center">Количество участников</th>
+                        <th class="text-center">Прошла рассылка</th>
                         <th class="text-center">Новая/прошедшая</th>
                         <th class="text-center">Статус</th>
                         <th class="text-center">Удалить</th>
@@ -48,7 +48,7 @@
                             <td class="text-center"><a href="/admin/tastings?id={{ $tasting->id }}">{{ date('d.m.Y',$tasting->time) }}</a></td>
                             <td class="text-center">{{ $tasting->office->address }}</td>
                             <td class="text-center">{{ $tasting->created_at->format('d.m.Y') }}</td>
-                            <td class="text-center">{{ count($tasting->tastingToUsers) }}</td>
+                            <td class="text-center">@include('admin._status_block',['status' => $tasting->informed > time(), 'trueLabel' => 'Да', 'falseLabel' => 'Нет'])</td>
                             <td class="text-center">@include('admin._status_block',['status' => $tasting->time > time(), 'trueLabel' => 'Новая', 'falseLabel' => 'прошедшая'])</td>
                             <td class="text-center">@include('admin._status_block',['status' => $tasting->active, 'trueLabel' => 'активна', 'falseLabel' => 'не активна'])</td>
                             <td class="delete"><span del-data="{{ $tasting->id }}" modal-data="delete-modal" class="glyphicon glyphicon-remove-circle"></span></td>
