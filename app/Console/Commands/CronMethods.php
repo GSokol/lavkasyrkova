@@ -44,12 +44,12 @@ class CronMethods extends Command
         foreach ($tastings as $tasting) {
             foreach ($tasting->office->users as $user) {
                 echo 'User: '.$user->email.'-'.$user->send_mail."\n";
-//                if ($user->send_mail) {
-//                    $this->sendMessage('romis.nesmelov@gmail.com', 'auth.emails.tasting_informing', [
-//                        'address' => $tasting->office->address,
-//                        'time' => date('d.m.Y',$tasting->time)
-//                    ]);
-//                }
+                if ($user->send_mail) {
+                    $this->sendMessage('romis.nesmelov@gmail.com', 'auth.emails.tasting_informing', [
+                        'address' => $tasting->office->address,
+                        'time' => date('d.m.Y',$tasting->time)
+                    ]);
+                }
             }
 //            $tasting->informed = 1;
 //            $tasting->save();
