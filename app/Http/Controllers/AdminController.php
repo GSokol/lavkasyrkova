@@ -26,6 +26,13 @@ class AdminController extends UserController
 
     public function index()
     {
+
+        $tastings = Tasting::where('time','<',(time() + (60 * 60 * 24 * 3)))->where('active',1)->where('informed',0)->get();
+
+        foreach ($tastings as $tasting) {
+            echo $tasting->id.'<br>';
+        }
+        die;
         return redirect('/admin/orders');
     }
 
@@ -208,17 +215,16 @@ class AdminController extends UserController
             'time' => 'required',
             'office_id' => $this->validationOffice
         ];
-
+        $fields = $this->processingFields($request, 'active', null, 'time');
+        
         if ($request->has('id')) {
             $validationArr['id'] = $this->validationTasting;
             $this->validate($request, $validationArr);
-            $tasting = Tasting::find($request->input('id'));
-
-            $fields = $this->processingFields($request, 'active', null, 'time');
+            $tasting = Tasting::find($request->input('id'));    
             $tasting->update($fields);
         } else {
             $this->validate($request, $validationArr);
-            $fields = $this->processingFields($request, 'active', null, 'time');
+            $fields['informed'] = 0;
             Tasting::create($fields);
         }
         $this->saveCompleteMessage();

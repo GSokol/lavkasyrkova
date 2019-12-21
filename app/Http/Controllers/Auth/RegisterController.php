@@ -75,7 +75,8 @@ class RegisterController extends Controller
             'confirm_token' => str_random(32),
             'office_id' => $data['office_id'],
             'address' => $data['address'],
-            'active' => false
+            'active' => false,
+            'send_mail' => 1
         ]);
         return $user;
     }
