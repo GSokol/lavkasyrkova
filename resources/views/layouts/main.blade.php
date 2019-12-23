@@ -52,7 +52,7 @@
     <script type="text/javascript" src="{{ asset('js/products.js').Helper::randHash() }}"></script>
     <script type="text/javascript" src="{{ asset('js/loader.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/owl.carousel.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/main.js?').Helper::randHash() }}"></script>
 
     <script type="text/javascript" src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
     <script type="text/javascript" src="{{ asset('js/map.js') }}"></script>
