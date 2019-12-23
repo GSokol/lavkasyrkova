@@ -111,8 +111,8 @@ class BasketController extends Controller
                 ]);
             }
         }
-//        Session::forget('basket');
-        
+        Session::forget('basket');
+
         $this->sendMessage($order->user->email, 'auth.emails.new_order', ['title' => 'Новый заказ', 'order' => $order], (string)Settings::getSettings()->email);
 
         $result = ['success' => true, 'message' => 'Ваш заказ оформлен!'];
