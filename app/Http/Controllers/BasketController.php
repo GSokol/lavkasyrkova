@@ -72,11 +72,13 @@ class BasketController extends Controller
     
     public function checkoutOrder(Request $request, $usingAjax = true)
     {
-        $this->validate($request, [
+        $validationArr = [
             'delivery' => 'required|integer|min:1|max:3',
-            'tasting_id' => $this->validationTasting,
             'shop_id' => $this->validationShop
-        ]);
+        ];
+
+        if ($request->has('tasting_id') && $request->input('tasting_id')) $validationArr['tasting_id'] = $this->validationTasting;
+        $this->validate($request, $validationArr);
 
         $errors = [];
         if (Auth::guest()) $errors[] = 'Вам необходимо авторизоваться!';
@@ -97,7 +99,7 @@ class BasketController extends Controller
             'status' => 1,
             'user_id' => Auth::user()->id,
             'shop_id' => $request->input('delivery') == 2 ? $request->input('shop_id') : null,
-            'tasting_id' => $request->input('tasting_id'),
+            'tasting_id' => $request->has('tasting_id') && $request->input('tasting_id') ? $request->input('tasting_id') : null,
             'delivery' => $request->input('delivery') == 3
         ]);
 
@@ -114,6 +116,7 @@ class BasketController extends Controller
         Session::forget('basket');
 
         $this->sendMessage($order->user->email, 'auth.emails.new_order', ['title' => 'Новый заказ', 'order' => $order], (string)Settings::getSettings()->email);
+//        $this->sendMessage('romis.nesmelov@gmail.com', 'auth.emails.new_order', ['title' => 'Новый заказ', 'order' => $order]);
 
         $result = ['success' => true, 'message' => 'Ваш заказ оформлен!'];
         if ($usingAjax) return response()->json($result);
