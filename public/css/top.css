@@ -20,6 +20,7 @@
     width: 100%;
     padding: 20px;
     position: fixed;
+    top: -1px;
     background: url("../images/top_menu_bg.jpg") 50% 50% no-repeat;
     background-size: 100% 100%;
     border-bottom: 1px solid grey;
@@ -54,6 +55,7 @@
     position: absolute;
     color: #faa54c !important;
     margin-top: -5px;
+    right: 20px;
     cursor: pointer;
     text-decoration: none;
 }
@@ -186,11 +188,27 @@
     .navbar-default .logo {
         width: 50px;
     }
+
+    .nav > li.main-menu > a {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 860px) {
+    .nav > li.main-menu > a {
+        font-size: 12px;
+        padding: 0 5px;
+    }
 }
 
 @media screen and (max-width: 768px) {
     .nav > li {
         display: block;
+    }
+
+    .nav > li.main-menu > a {
+        padding: 5px 0;
+        font-size: 16px;
     }
 
     .nav > li > a,
@@ -217,5 +235,46 @@
 
     #main-image > .text img:last-child {
         display: none;
+    }
+}
+
+@media screen and (max-height: 800px) {
+    #main-image > .logo > div {
+        padding-top: 100px;
+    }
+
+    #main-image > .text {
+        height: auto;
+    }
+
+    #main-image > .logo > div > img {
+        width: auto;
+        height: 70%;
+        margin-bottom: 0;
+    }
+
+    #main-image > .text > div {
+        padding: 0;
+    }
+
+    #main-image > .button {
+        height: 30%;
+    }
+}
+
+@media screen and (max-height: 635px) {
+    #main-image > .logo > div > img {
+        height: 50%;
+    }
+
+    #main-image > .text > div > p {
+        font-size: 20px;
+    }
+
+    #main-image > .button .btn-primary {
+        width: 320px;
+        height: 30px;
+        font-size: 12px;
+        padding-top: 5px;
     }
 }

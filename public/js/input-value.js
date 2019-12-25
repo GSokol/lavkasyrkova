@@ -1,14 +1,27 @@
 $(window).ready(function () {
-    $('.input-value-container input').focus(function () {
-        $(this).blur();
-    });
-
     // Bind inputs control
     bindValueInputsControl();
 });
 
 function bindValueInputsControl() {
-    var inputsButton = $('.input-value-container .button');
+    var container = $('.input-value-container'),
+        inputValue = container.find('input'),
+        inputsButton = container.find('.button');
+
+    inputValue.unbind('keypress');
+    inputValue.unbind('click');
+    inputValue.unbind('focus');
+
+    inputValue.bind('keypress',function (e) {
+        e.preventDefault();
+        $(this).blur();
+    }).bind('click',function (e) {
+        e.preventDefault();
+        $(this).blur();
+    }).bind('focus',function (e) {
+        e.preventDefault();
+        $(this).blur();
+    });
 
     inputsButton.unbind('click');
     inputsButton.bind('click',function () {

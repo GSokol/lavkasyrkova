@@ -122,10 +122,10 @@ function mainImageHeight() {
     $('#main-image').css('height',$(window).height());
     $('.actions,.action').css('height',$(window).height());
 
-    var basket = $('.basket'),
-        basketContainer = basket.parents('.container');
-
-    basket.css('margin-left',basketContainer.width()-basket.width());
+    // var basket = $('.basket'),
+    //     basketContainer = basket.parents('.container');
+    //
+    // basket.css('margin-left',basketContainer.width()-basket.width()/2);
 }
 
 // function tolocalstring(string, unit) {
