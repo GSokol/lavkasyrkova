@@ -24,6 +24,8 @@ class BasketController extends Controller
         ]);
         $product = Product::find($request->input('id'));
 
+        if (!$product->active) return false;
+
         $basket = Session::has('basket') ? Session::get('basket') : [];
         $value = $request->input('value');
         $price = Helper::productPrice($product);

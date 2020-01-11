@@ -21,7 +21,7 @@ class StaticController extends Controller
     {   
         $this->data['shops'] = Shop::all();
         $this->data['actions'] = Product::where(function($query){ $query->where('action',1)->orWhere('new',1); })->where('active',1)->get();
-        $this->data['products'] = Product::where('active',1)->get();
+        $this->data['products'] = Product::all();
         $this->getTastings();
         return $this->showView('home');
     }
@@ -32,7 +32,7 @@ class StaticController extends Controller
         $type = $request->input('type');
         $this->validate($request,['id' => ($type == 'category' ? $this->validationCategory : $this->validationAddCategory)]);
         $head = $type == 'category' ? Category::where('id',$request->input('id'))->pluck('name')->first() : AddCategory::where('id',$request->input('id'))->pluck('name')->first();
-        $this->data['products'] = Product::where($type.'_id',$request->input('id'))->where('active',1)->get();
+        $this->data['products'] = Product::where($type.'_id',$request->input('id'))->get();
 
         if (count($this->data['products']) > 1) {
             $maxLength = 0;

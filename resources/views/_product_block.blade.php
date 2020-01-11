@@ -1,9 +1,19 @@
 <div class="product product-{{ $product->id }} {{ isset($mainClass) ? $mainClass : 'col-md-4 col-sm-4 col-xs-12' }}">
     <div class="image">
+        @if (!$product->active)
+            @if ($product->image)
+                @include('_product_preview_block',['image' => 'images/not-available.png', 'imageClass' => 'not-available'])
+            @else
+                <img class="not-available" src="{{ asset('images/not-available.png') }}" />
+            @endif
+        @endif
+
         @if (!$product->image)
             <img src="{{ asset('images/products/empty.jpg') }}" />
+        @elseif ($product->image && $product->active)
+            @include('_product_preview_block',['image' => $product->image])
         @else
-            <a class="img-preview" href="{{ $product->big_image ? asset($product->big_image) : asset($product->image) }}"><img src="{{ asset($product->image) }}" /></a>
+            <img src="{{ asset($product->image) }}" />
         @endif
     </div>
     <div class="text-block" {{ isset($textBlockHeight) && $textBlockHeight ? 'style=height:'.$textBlockHeight.'px' : '' }}>
@@ -18,16 +28,21 @@
         <p class="price {{ $product->action ? 'action' : '' }}">{!! Helper::productCostSting($product) !!}</p>
     </div>
     <div class="value">
-        @include('_input_value_block',[
-            'name' => 'product_'.$product->id,
-            'min' => 0,
-            'max' => $product->parts ? Helper::getProductParts()[count(Helper::getProductParts())-1] : 100,
-            'unit' => Helper::productUnit($product),
-            'differentially' => $product->parts,
-            'price' => Helper::productPrice($product),
-            'increment' => $product->parts ? json_encode(Helper::getProductParts()) : 1,
-            'value' => Helper::productValue($value)
-        ])
+        @if ($product->active)
+            @include('_input_value_block',[
+                'name' => 'product_'.$product->id,
+                'min' => 0,
+                'max' => $product->parts ? Helper::getProductParts()[count(Helper::getProductParts())-1] : 100,
+                'unit' => Helper::productUnit($product),
+                'differentially' => $product->parts,
+                'price' => Helper::productPrice($product),
+                'increment' => $product->parts ? json_encode(Helper::getProductParts()) : 1,
+                'value' => Helper::productValue($value)
+            ])
+        @else
+            <div class="disabled-value-container">{{ Helper::productValue($value).' '.Helper::productUnit($product) }}</div>
+        @endif
+
         @if ($useCost)
             <p class="cost">{{ Helper::productCost($product,$value) }} руб</p>
         @endif
