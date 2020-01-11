@@ -79,10 +79,13 @@ class BasketController extends Controller
 
         if ($request->has('tasting_id') && $request->input('tasting_id')) $validationArr['tasting_id'] = $this->validationTasting;
         $this->validate($request, $validationArr);
-
+        $this->getTastings();
+        
         $errors = [];
         if (Auth::guest()) $errors[] = 'Вам необходимо авторизоваться!';
+        
         if (!Session::has('basket')) $errors[] = 'Ваша корзина пуста!';
+        elseif ($request->input('delivery') == 1 && Auth::user()->office->id != 1 && Auth::user()->office->id != 2 && !count($this->data['tastings'])) $errors[] = 'Нет доступных дегустаций!'; 
         elseif ($request->input('delivery') == 3) {
             if (Session::get('basket')['total'] < (int)Settings::getSettings()->delivery_limit) $errors[] = 'Доставка по адресу возможна только при заказе от '.((string)Settings::getSettings()->delivery_limit).'р.!';
             elseif (!Auth::user()->address && !$request->input('address')) $errors[] = 'Вы должны указать адрес!';

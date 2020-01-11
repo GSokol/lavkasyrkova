@@ -26,13 +26,21 @@
     <?php $displayAddress = Session::has('basket') && Session::get('basket')['total'] > (int)Settings::getSettings()->delivery_limit || !count($data['tastings']); ?>
     <div class="error"></div>
 
-    @foreach([(Auth::user()->office->id == 1 || Auth::user()->office->id == 2 || count($data['tastings']) ? Auth::user()->office->address : 'Доставка в офис ('.Auth::user()->office->address.')'),'Доставка в магазин','Доставка по адресу <span class="error">(при заказе свыше '.Settings::getSettings()->delivery_limit.' руб!)</span>'] as $d => $delivery)
-        @include('_radio_simple_block',[
-            'name' => 'delivery',
-            'value' => $d+1,
-            'label' => $delivery,
-            'checked' => (!$displayAddress && !$d) || ($displayAddress && $d == 2)
-        ])
+    @foreach(
+        [
+            (Auth::user()->office->id == 1 || Auth::user()->office->id == 2 || count($data['tastings']) ? Auth::user()->office->address : (count($data['tastings']) ? 'Доставка в офис ('.Auth::user()->office->address.')' : null)),
+            'Доставка в магазин',
+            'Доставка по адресу <span class="error">(при заказе свыше '.Settings::getSettings()->delivery_limit.' руб!)</span>'
+        ] as $d => $delivery)
+
+        @if ($delivery)
+            @include('_radio_simple_block',[
+                'name' => 'delivery',
+                'value' => $d+1,
+                'label' => $delivery,
+                'checked' => (!$displayAddress && !$d) || ($displayAddress && $d == 2)
+            ])
+        @endif
 
         @if (!$d && count($data['tastings']))
             <div class="times-block">

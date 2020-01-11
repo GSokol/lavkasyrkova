@@ -90,6 +90,36 @@
     <div class="navbar-collapse collapse" id="navbar-mobile">
         <ul class="nav navbar-nav">
             <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
+
+            @if (isset($data['tastings']) && !Auth::user()->is_admin && Auth::user()->office->id != 1 && Auth::user()->office->id != 2)
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="icon-trophy2"></i>
+                        <span class="position-right hidden-xs">Ближайшие дегустации</span>
+                        @if (count($data['tastings']))
+                            <span class="badge bg-warning-400">{{ count($data['tastings']) }}</span>
+                        @endif
+                    </a>
+
+                    <div class="dropdown-menu dropdown-content">
+                        @if (count($data['tastings']))
+                            <div class="dropdown-content-heading">Дегустации</div>
+                            <ul class="media-list dropdown-content-body width-350">
+                                @foreach($data['tastings'] as $tasting)
+                                    <li class="media">
+                                        <div class="media-body">
+                                            {{ date('d.m.Y',$tasting->time) }}
+                                            <div class="media-annotation">{{ $tasting->office->address }}</div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <div class="dropdown-content-heading">Нет открытых дегустаций</div>
+                        @endif
+                    </div>
+                </li>
+            @endif
         </ul>
 
         <div class="navbar-right">
