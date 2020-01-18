@@ -53,6 +53,12 @@
     margin-bottom: 20px;
 }
 
+.product .image {
+    text-align: center;
+    height: 249px;
+    overflow: hidden;
+}
+
 .product .not-available {
     width: calc(100% - 20px);
     position: absolute;
@@ -260,7 +266,6 @@
 
 .action-product {
     width: 410px;
-    max-width: 100%;
     position: absolute;
     bottom: 0;
     display: table;
@@ -341,7 +346,8 @@
 
 @media screen and (max-width: 768px) {
     .category {
-        height: 300px;
+        display: table;
+        height: auto;
     }
 
     .product .text-block {
@@ -349,11 +355,18 @@
     }
 
     .frame-image.tastings {
-        height: 300px;
+        display: table;
+        height: auto;
     }
 
     #checkout-modal span.error {
         text-align: left;
         display: block;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .action-product {
+        width: 95%;
     }
 }

@@ -92,7 +92,7 @@ $(window).ready(function () {
         margin: 0,
         loop: true,
         nav: true,
-        autoplay: true,
+        autoplay: false,
         autoplaySpeed: 3000,
         responsive: {
             100: {
