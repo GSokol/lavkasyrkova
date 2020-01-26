@@ -93,4 +93,9 @@ class RegisterController extends Controller
         } else Session::flash('message', trans('auth.register_error'));
         return redirect('/');
     }
+
+    public function sendConfirmMail()
+    {
+        return view('auth.send_confirm_mail');
+    }
 }
