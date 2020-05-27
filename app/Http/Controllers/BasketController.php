@@ -18,8 +18,13 @@ class BasketController extends Controller
     
     public function editBasket(Request $request)
     {
-        $this->validate($request, ['id' => 'required|integer|exists:products,id']);
+        $this->validate($request, [
+            'id' => 'required|integer|exists:products,id',
+            'value' => 'required|integer'
+        ]);
         $product = Product::find($request->input('id'));
+
+        if (!$product->active) return false;
 
         $basket = Session::has('basket') ? Session::get('basket') : [];
         $value = $request->input('value');
@@ -69,16 +74,22 @@ class BasketController extends Controller
     
     public function checkoutOrder(Request $request, $usingAjax = true)
     {
-        $this->validate($request, [
+        $validationArr = [
             'delivery' => 'required|integer|min:1|max:3',
             'shop_id' => $this->validationShop
-        ]);
+        ];
 
+        if ($request->has('tasting_id') && $request->input('tasting_id')) $validationArr['tasting_id'] = $this->validationTasting;
+        $this->validate($request, $validationArr);
+        $this->getTastings();
+        
         $errors = [];
-        if (Auth::guest()) $errors[] = 'Вам необходимо авторизаоваться!';
+        if (Auth::guest()) $errors[] = 'Вам необходимо авторизоваться!';
+        
         if (!Session::has('basket')) $errors[] = 'Ваша корзина пуста!';
+        elseif ($request->input('delivery') == 1 && Auth::user()->office->id != 1 && Auth::user()->office->id != 2 && !count($this->data['tastings'])) $errors[] = 'Нет доступных дегустаций!'; 
         elseif ($request->input('delivery') == 3) {
-            if (Session::get('basket')['total'] < 10000) $errors[] = 'Доставка по адресу возможна только при заказе от 10 000р.!';
+            if (Session::get('basket')['total'] < (int)Settings::getSettings()->delivery_limit) $errors[] = 'Доставка по адресу возможна только при заказе от '.((string)Settings::getSettings()->delivery_limit).'р.!';
             elseif (!Auth::user()->address && !$request->input('address')) $errors[] = 'Вы должны указать адрес!';
             elseif (!Auth::user()->address && $request->input('address')) User::where('id',Auth::user()->id)->update(['address' => $request->input('address')]);
         }
@@ -93,6 +104,7 @@ class BasketController extends Controller
             'status' => 1,
             'user_id' => Auth::user()->id,
             'shop_id' => $request->input('delivery') == 2 ? $request->input('shop_id') : null,
+            'tasting_id' => $request->has('tasting_id') && $request->input('tasting_id') ? $request->input('tasting_id') : null,
             'delivery' => $request->input('delivery') == 3
         ]);
 
@@ -107,7 +119,9 @@ class BasketController extends Controller
             }
         }
         Session::forget('basket');
+
         $this->sendMessage($order->user->email, 'auth.emails.new_order', ['title' => 'Новый заказ', 'order' => $order], (string)Settings::getSettings()->email);
+//        $this->sendMessage('romis.nesmelov@gmail.com', 'auth.emails.new_order', ['title' => 'Новый заказ', 'order' => $order]);
 
         $result = ['success' => true, 'message' => 'Ваш заказ оформлен!'];
         if ($usingAjax) return response()->json($result);

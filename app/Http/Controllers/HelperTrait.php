@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Tasting;
 use Session;
@@ -13,7 +14,7 @@ use Config;
 trait HelperTrait
 {
     public $validationPhone = 'required|regex:/^((\+)?(\d)(\s)?(\()?[0-9]{3}(\))?(\s)?([0-9]{3})(\-)?([0-9]{2})(\-)?([0-9]{2}))$/';
-    public $validationPrice = 'required|regex:/^(\d+\s(р.))$/';
+    public $validationPrice = 'integer';
     public $validationUser = 'required|integer|exists:users,id';
     public $validationTasting = 'required|integer|exists:tastings,id';
     public $validationOffice = 'required|integer|exists:offices,id';
@@ -21,7 +22,7 @@ trait HelperTrait
     public $validationCategory = 'required|integer|exists:categories,id';
     public $validationAddCategory = 'required|integer|exists:add_categories,id';
     public $validationPassword = 'required|confirmed|min:6|max:50';
-    public $validationCoordinates = 'required|regex:/^(\d{2}\.\d{5,6})$/';
+    public $validationCoordinates = 'regex:/^(\d{2}\.\d{5,6})$/';
     public $validationImage = 'image|min:5|max:5000';
     public $metas = [
         'meta_description' => ['name' => 'description', 'property' => false],
@@ -39,8 +40,13 @@ trait HelperTrait
         'meta_google_site_verification' => ['name' => 'robots', 'property' => false],
     ];
     public $orderStatuses = ['новый','завершен'];
-    public $productParts = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1];
+    public $productParts = [100,200,300,400,500,600,700,800,900,1000];
 
+    public function getTastings()
+    {
+        if (!Auth::guest()) $this->data['tastings'] = Tasting::where('office_id',Auth::user()->office_id)->where('time','>',time()+(60 * 60 * 5))->where('active',1)->orderBy('time','desc')->get();
+    }
+    
     public function getMasterMail()
     {
         return (string)Settings::getSettings()->email;
@@ -188,7 +194,7 @@ trait HelperTrait
 
     public function convertCompositeVal($val)
     {
-        return (int)str_replace([' ','р.','шт.'],'',$val);
+        return (int)str_replace([' ',' руб','шт.'],'',$val);
     }
 
     private function fGetRGB($iH, $iS, $iV)
@@ -230,11 +236,10 @@ trait HelperTrait
 
     public function sendMessage($destination, $template, $fields, $copyTo=null, $pathToFile=null)
     {
-        $title = Settings::getSeoTags()['title'];
+        $title = 'Лавка сыркова';
         Mail::send($template, $fields, function($message) use ($title, $pathToFile, $destination, $copyTo) {
             $message->subject(trans('auth.message_from').$title);
             $message->from(Config::get('app.master_mail'), $title);
-            $message->to($destination);
             $message->to($destination);
             if ($copyTo) $message->cc($copyTo);
             if ($pathToFile) $message->attach($pathToFile);

@@ -4,6 +4,10 @@
     @endif
     <div class="col-md-12 col-sm-12 col-xs-12">
         <select name="{{ $name }}" class="form-control">
+            @if (isset($firstEmpty) && $firstEmpty)
+                <option value="" {{ !$selected ? 'selected' : '' }}>нет</option>
+            @endif
+
             @if (is_array($values))
                 @foreach ($values as $value => $options)
                     <option value="{{ $value }}" {{ $value == $selected ? 'selected' : '' }}>{{ $options }}</option>

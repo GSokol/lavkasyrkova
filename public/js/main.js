@@ -4,6 +4,12 @@ window.criticalResolution = 1024;
 window.menuClickFlag = false;
 
 $(window).ready(function () {
+
+    // Reload page
+    setTimeout(function () {
+        location.reload(true);
+    }, 900000);
+
     $('.styled').uniform();
     $('a.img-preview').fancybox({padding: 3});
 
@@ -28,8 +34,8 @@ $(window).ready(function () {
         goToScroll($(this).attr('data-scroll'));
     });
 
-    // On-top button controls
-    var onTopButton = $('#on-top-button');
+    // Scroll controls
+    // var onTopButton = $('#on-top-button');
     $(window).scroll(function() {
         if (!window.menuClickFlag) {
             var win = $(this);
@@ -43,24 +49,24 @@ $(window).ready(function () {
                 }
             });
         }
-        if ($(window).scrollTop() > $(window).height()) onTopButton.fadeIn();
-        else onTopButton.fadeOut();
+        // if ($(window).scrollTop() > $(window).height()) onTopButton.fadeIn();
+        // else onTopButton.fadeOut();
     });
 
-    onTopButton.click(function() {
-        goToScroll('home');
-    });
+    // onTopButton.click(function() {
+    //     goToScroll('home');
+    // });
 
     // Click to signing tasting
-    $('a#get-tasting').click(function (e) {
-        e.preventDefault();
-        $.post('/profile/signing-tasting', {
-            '_token': $('input[name=_token]').val()
-        }, function (data) {
-            $('#get-tasting').remove();
-            showMessage(data.message);
-        });
-    });
+    // $('a#get-tasting').click(function (e) {
+    //     e.preventDefault();
+    //     $.post('/profile/signing-tasting', {
+    //         '_token': $('input[name=_token]').val()
+    //     }, function (data) {
+    //         $('#get-tasting').remove();
+    //         showMessage(data.message);
+    //     });
+    // });
 
     // Hover text of free tastings
     $('#main-image a[href=#tasting]').bind('mouseover',function () {
@@ -87,12 +93,15 @@ $(window).ready(function () {
         loop: true,
         nav: true,
         autoplay: true,
+        autoplaySpeed: 3000,
         responsive: {
             100: {
                 items: 1
             }
         }
     });
+
+    if (window.showMessage) $('#message').modal('show');
 });
 
 function goToScroll(scrollData) {
@@ -113,10 +122,10 @@ function mainImageHeight() {
     $('#main-image').css('height',$(window).height());
     $('.actions,.action').css('height',$(window).height());
 
-    var basket = $('.basket'),
-        basketContainer = basket.parents('.container');
-
-    basket.css('margin-left',basketContainer.width()-basket.width());
+    // var basket = $('.basket'),
+    //     basketContainer = basket.parents('.container');
+    //
+    // basket.css('margin-left',basketContainer.width()-basket.width()/2);
 }
 
 // function tolocalstring(string, unit) {

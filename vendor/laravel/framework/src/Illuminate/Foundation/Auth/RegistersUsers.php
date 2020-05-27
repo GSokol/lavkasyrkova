@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Office;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Settings;
+use Illuminate\Support\Facades\Mail;
+use Config;
+use Session;
 
 trait RegistersUsers
 {
@@ -58,6 +62,12 @@ trait RegistersUsers
      */
     protected function registered(Request $request, $user)
     {
-        //
+        $title = Settings::getSeoTags()['title'];
+        Mail::send('auth.emails.registration', ['token' => $user->confirm_token], function($message) use ($title, $user) {
+            $message->subject(trans('auth.message_from').$title);
+            $message->from(Config::get('app.master_mail'), $title);
+            $message->to($user->email);
+        });
+        Session::flash('message', trans('auth.check_your_mail'));
     }
 }

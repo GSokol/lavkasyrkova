@@ -13,21 +13,24 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('description');
-            $table->string('image')->nullable();
-            $table->string('big_image')->nullable();
-            $table->boolean('parts');
-            $table->integer('whole_price');
-            $table->integer('part_price');
-            $table->integer('action_whole_price');
-            $table->integer('action_part_price');
-            $table->boolean('action');
-            $table->boolean('active');
-            $table->timestamps();
-        });
+//        Schema::create('products', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->string('name');
+//            $table->text('additionally')->nullable();
+//            $table->text('description');
+//            $table->string('image')->nullable();
+//            $table->string('big_image')->nullable();
+//            $table->boolean('parts');
+//            $table->integer('whole_price');
+//            $table->integer('whole_weight');
+//            $table->integer('part_price');
+//            $table->integer('action_whole_price');
+//            $table->integer('action_part_price');
+//            $table->boolean('new');
+//            $table->boolean('action');
+//            $table->boolean('active');
+//            $table->timestamps();
+//        });
     }
 
     /**
@@ -37,6 +40,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+//        Schema::dropIfExists('products');
     }
 }

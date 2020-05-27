@@ -6,7 +6,8 @@ $(window).ready(function () {
 
     // Click back to categories
     var productsContainer = $('#products');
-    productsContainer.find('.back-to-categories > div').click(function () {
+    // productsContainer.find('.back-to-categories > div').click(function () {
+    $('#on-top-button').click(function () {
         productsContainer.fadeOut('fast',function () {
             $('.order-form').html('');
             $('#cheeses-sub-head').html('');
@@ -29,6 +30,7 @@ $(window).ready(function () {
             $.post('/checkout-order', {
                 '_token': $('input[name=_token]').val(),
                 'delivery': $('input[name=delivery]:checked').val(),
+                'tasting_id': $('input[name=tasting_id]:checked').val(),
                 'shop_id': $('input[name=shop_id]:checked').val(),
                 'address': $('input[name=address]').val()
             }, function (data) {
@@ -47,11 +49,11 @@ $(window).ready(function () {
             });
         }
     );
-    
+
     // Click empty basket
     $('a#empty-basket').click(function (e) {
         e.preventDefault();
-        
+
         $.post('/empty-basket', {
             '_token': $('input[name=_token]').val()
         }, function (data) {
@@ -65,16 +67,20 @@ $(window).ready(function () {
     $('input[name=delivery]').change(function () {
         clearErrors();
 
-        var shopsBlock = $('.shops-block'),
+        var timesBlock = $('.times-block'),
+            shopsBlock = $('.shops-block'),
             addressBlock = $('.address-block');
         
         if ($(this).val() == 1) {
+            timesBlock.show();
             shopsBlock.hide();
             addressBlock.hide();
         } else if ($(this).val() == 2) {
+            timesBlock.hide();
             shopsBlock.show();
             addressBlock.hide();
         } else {
+            timesBlock.hide();
             shopsBlock.hide();
             addressBlock.show();
         }
@@ -137,13 +143,13 @@ function bindProductsValueInputControl() {
 
 function emptyBasket() {
     $('#order-content').html('');
-    $('.total-cost-basket > span').html('0р.');
+    $('.total-cost-basket > span').html('0 руб');
     $('.product').each(function () {
         var input = $(this).find('input');
         input.val('0 '+input.attr('data-unit'));
-        $(this).find('p.cost').html('0р.');
+        $(this).find('p.cost').html('0 руб');
     });
-    $('.total-cost > span').html('0р.');
+    $('.total-cost > span').html('0 руб');
 }
 
 function orderComplete(data) {
@@ -152,7 +158,10 @@ function orderComplete(data) {
         $('#checkout-modal').modal('hide');
         emptyBasket();
     }
-    showMessage(data.message);
+
+    var modal = $('#message');
+    modal.find('h3').html(data.message);
+    modal.modal('show');
 }
 
 function getCategory(obj) {
@@ -171,7 +180,7 @@ function getCategory(obj) {
             $('#categories').fadeOut('fast',function () {
                 $('#products').fadeIn('fast');
                 // maxHeight('product','action');
-                
+
                 bindValueInputsControl();
                 bindProductsValueInputControl();
             });
@@ -193,9 +202,10 @@ function changeProductValue(id,value,unit) {
         if (data.success) {
             var basketItem = $('#basket-product-'+id);
 
-            $('input[name=product_'+id+']').val(value+' '+unit);
-            $('.product-'+id+' .cost > p, .product-'+id+' .product-cost').html(data.cost+'р.');
-            $('.total-cost-basket > span').html(data.total+'р.');
+            // $('input[name=product_'+id+']').val(value.toString().replace('.',',')+' '+unit);
+            $('input[name=product_'+id+']').val(value.toString()+' '+unit);
+            $('.product-'+id+' .cost, .product-'+id+' .product-cost').html(data.cost+' руб');
+            $('.total-cost-basket > span').html(data.total+' руб');
 
             // Add or remove value-input in basket modal
             if (basketItem.length) {

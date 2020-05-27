@@ -74,7 +74,9 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'confirm_token' => str_random(32),
             'office_id' => $data['office_id'],
-            'active' => false
+            'address' => $data['address'],
+            'active' => false,
+            'send_mail' => 1
         ]);
         return $user;
     }
@@ -86,8 +88,8 @@ class RegisterController extends Controller
             $user->active = 1;
             $user->confirm_token = '';
             $user->save();
-            Auth::login($user);
             Session::flash('message', trans('auth.register_success'));
+            Auth::login($user);
         } else Session::flash('message', trans('auth.register_error'));
         return redirect('/');
     }

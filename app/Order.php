@@ -9,6 +9,7 @@ class Order extends Model
     protected $fillable = [
         'status',
         'user_id',
+        'tasting_id',
         'shop_id',
         'delivery',
     ];
@@ -21,6 +22,11 @@ class Order extends Model
     public function orderToProducts()
     {
         return $this->hasMany('App\ProductToOrder');
+    }
+
+    public function tasting()
+    {
+        return $this->belongsTo('App\Tasting');
     }
 
     public function shop()

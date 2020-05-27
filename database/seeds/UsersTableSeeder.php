@@ -9,7 +9,8 @@ class UsersTableSeeder extends Seeder
     {
         $data = [
             ['email' => 'romis.nesmelov@gmail.com', 'phone' => '+79262477725', 'password' => bcrypt('apg192'), 'active' => 1, 'is_admin' => 1],
-            ['email' => 'romis@nesmelov.com', 'phone' => '+79262477725', 'password' => bcrypt('apg192'), 'active' => 1, 'is_admin' => 0, 'office_id' => 1],
+            ['email' => 'lavkasyrkova@gmail.com', 'phone' => '+79855790411', 'password' => bcrypt('lavkasyrkova2019'), 'active' => 1, 'is_admin' => 1],
+            ['email' => 'romis@nesmelov.com', 'phone' => '+79262477725', 'password' => bcrypt('apg192'), 'active' => 1, 'is_admin' => 0, 'office_id' => 3],
         ];
 
         foreach ($data as $user) {

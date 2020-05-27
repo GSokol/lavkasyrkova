@@ -13,11 +13,11 @@ class CreateProductToOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_to_orders', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('whole_value')->nullable();
-            $table->integer('part_value')->nullable();
-        });
+//        Schema::create('product_to_orders', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->integer('whole_value')->nullable();
+//            $table->integer('part_value')->nullable();
+//        });
     }
 
     /**
@@ -27,6 +27,6 @@ class CreateProductToOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_to_orders');
+//        Schema::dropIfExists('product_to_orders');
     }
 }

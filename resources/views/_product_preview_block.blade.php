@@ -1,0 +1,1 @@
+<a class="img-preview" href="{{ $product->big_image ? asset($product->big_image) : asset($product->image) }}"><img {{ isset($imageClass) ? 'class='.$imageClass : '' }} src="{{ asset($image) }}" /></a>

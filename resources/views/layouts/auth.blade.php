@@ -15,6 +15,7 @@
         <div class="content-wrapper">
             <!-- Content area -->
             <div class="content">
+                <img id="logo" src="{{ asset('images/logo.svg') }}" />
                 @yield('content')
             </div>
             <!-- /content area -->
@@ -25,7 +26,10 @@
 </div>
 <!-- /page container -->
 
-<script>$('.styled').uniform();</script>
+<script>
+    $('.styled').uniform();
+    $('input[name=phone]').mask("+7(999)999-99-99");
+</script>
 
 </body>
 </html>

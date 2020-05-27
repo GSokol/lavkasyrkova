@@ -36,10 +36,11 @@
                             ])
 
                             @include('admin._select_block',[
-                                'label' => 'Под-категория товара',
+                                'label' => 'Подкатегория товара',
                                 'name' => 'add_category_id',
                                 'values' => $data['add_categories'],
-                                'selected' => isset($data['product']) ? $data['product']->add_category_id : 1
+                                'firstEmpty' => true,
+                                'selected' => isset($data['product']) ? $data['product']->add_category_id : null
                             ])
 
                             @include('_input_block', [
@@ -51,6 +52,15 @@
                                 'value' => isset($data['product']) ? $data['product']->name : ''
                             ])
 
+                            @include('_input_block', [
+                                'label' => 'Дополнительно',
+                                'name' => 'additionally',
+                                'type' => 'text',
+                                'max' => 255,
+                                'placeholder' => 'Дополнительная информация о товаре',
+                                'value' => isset($data['product']) ? $data['product']->additionally : ''
+                            ])
+
                             @include('admin._textarea_block', [
                                 'label' => 'Описание',
                                 'name' => 'description',
@@ -58,51 +68,43 @@
                                 'value' => isset($data['product']) ? $data['product']->description : ''
                             ])
 
-                            @include('_input_value_block', [
-                                'label' => 'Цена за целое',
+                            @include('_input_block', [
+                                'label' => 'Цена за целое (p)',
                                 'name' => 'whole_price',
-                                'min' => 100,
+                                'type' => 'number',
                                 'max' => 100000,
-                                'unit' => 'р.',
-                                'differentially' => false,
-                                'price' => 0,
-                                'increment' => 100,
                                 'value' => isset($data['product']) ? $data['product']->whole_price : 100
                             ])
 
-                            @include('_input_value_block', [
-                                'label' => 'Цена за целое по акции',
+                            @include('_input_block', [
+                                'label' => 'Цена за целое по акции (р)',
                                 'name' => 'action_whole_price',
-                                'min' => 100,
+                                'type' => 'number',
                                 'max' => 100000,
-                                'unit' => 'р.',
-                                'differentially' => false,
-                                'price' => 0,
-                                'increment' => 100,
                                 'value' => isset($data['product']) ? $data['product']->action_whole_price : 100
                             ])
 
-                            @include('_input_value_block', [
-                                'label' => 'Цена за '.Helper::getProductParts()[0].Helper::getPartsName(),
+                            @include('_input_block', [
+                                'label' => 'Вес целого (г)',
+                                'name' => 'whole_weight',
+                                'type' => 'number',
+                                'max' => 5000,
+                                'value' => isset($data['product']) ? $data['product']->whole_weight : 200
+                            ])
+
+                            @include('_input_block', [
+                                'label' => 'Цена за '.Helper::getProductParts()[0].Helper::getPartsName().' (р)',
                                 'name' => 'part_price',
-                                'min' => 100,
+                                'type' => 'number',
                                 'max' => 100000,
-                                'unit' => 'р.',
-                                'differentially' => false,
-                                'price' => 0,
-                                'increment' => 100,
                                 'value' => isset($data['product']) ? $data['product']->part_price : 100
                             ])
 
-                            @include('_input_value_block', [
-                                'label' => 'Цена за '.Helper::getProductParts()[0].Helper::getPartsName().' по акции',
+                            @include('_input_block', [
+                                'label' => 'Цена за '.Helper::getProductParts()[0].Helper::getPartsName().' по акции (р)',
                                 'name' => 'action_part_price',
-                                'min' => 100,
+                                'type' => 'number',
                                 'max' => 100000,
-                                'unit' => 'р.',
-                                'differentially' => false,
-                                'price' => 0,
-                                'increment' => 100,
                                 'value' => isset($data['product']) ? $data['product']->action_part_price : 100
                             ])
 
@@ -118,6 +120,12 @@
                                         'label' => 'Продукт активен',
                                         'name' => 'active',
                                         'checked' => isset($data['product']) ? $data['product']->active : true
+                                    ])
+
+                                    @include('admin._checkbox_block',[
+                                        'label' => 'Новинка',
+                                        'name' => 'new',
+                                        'checked' => isset($data['product']) ? $data['product']->new : false
                                     ])
 
                                     @include('admin._checkbox_block',[

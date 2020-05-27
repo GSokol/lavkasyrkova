@@ -20,31 +20,53 @@
         @endif
     </div>
     <hr>
-    <p class="total-cost-basket"><b>Итоговая сумма: </b><span>{{ Session::has('basket') ? Session::get('basket')['total'] : '0' }}р.<span></p>
+    <p class="total-cost-basket"><b>Итоговая сумма: </b><span>{{ Session::has('basket') ? Session::get('basket')['total'] : '0' }} руб</span></p>
 
     <h3>Доставка</h3>
-    <?php $displayAddress = Session::has('basket') && Session::get('basket')['total'] > 10000; ?>
+    <?php $displayAddress = Session::has('basket') && Session::get('basket')['total'] > (int)Settings::getSettings()->delivery_limit || !count($data['tastings']); ?>
     <div class="error"></div>
 
-    @foreach(['Доставка в офис ('.Auth::user()->office->address.')','Доставка в магазин','Доставка по адресу <span class="error">(при заказе свыше 10 000р.!)</span>'] as $k => $delivery)
-        @include('_radio_simple_block',[
-            'name' => 'delivery',
-            'value' => $k+1,
-            'label' => $delivery,
-            'checked' => (!$displayAddress && !$k) || ($displayAddress && $k == 2)
-        ])
-    @endforeach
+    @foreach(
+        [
+            (Auth::user()->office->id == 1 || Auth::user()->office->id == 2 || count($data['tastings']) ? Auth::user()->office->address : (count($data['tastings']) ? 'Доставка в офис ('.Auth::user()->office->address.')' : null)),
+            'Доставка в магазин',
+            'Доставка по адресу <span class="error">(при заказе свыше '.Settings::getSettings()->delivery_limit.' руб!)</span>'
+        ] as $d => $delivery)
 
-    <div class="shops-block" style="display:none;">
-        @foreach($data['shops'] as $k => $shop)
+        @if ($delivery)
             @include('_radio_simple_block',[
-                'name' => 'shop_id',
-                'value' => $shop->id,
-                'label' => $shop->address,
-                'checked' => !$k
+                'name' => 'delivery',
+                'value' => $d+1,
+                'label' => $delivery,
+                'checked' => (!$displayAddress && !$d) || ($displayAddress && $d == 2)
             ])
-        @endforeach
-    </div>
+        @endif
+
+        @if (!$d && count($data['tastings']))
+            <div class="times-block">
+                <h6>Дата доставки</h6>
+                @foreach($data['tastings'] as $k => $tasting)
+                    @include('_radio_simple_block',[
+                        'name' => 'tasting_id',
+                        'value' => $tasting->id,
+                        'label' => date('d.m.Y',$tasting->time),
+                        'checked' => !$k
+                    ])
+                @endforeach
+            </div>
+        @elseif ($d == 1)
+            <div class="shops-block" style="display:none;">
+                @foreach($data['shops'] as $k => $shop)
+                    @include('_radio_simple_block',[
+                        'name' => 'shop_id',
+                        'value' => $shop->id,
+                        'label' => $shop->address,
+                        'checked' => !$k
+                    ])
+                @endforeach
+            </div>
+        @endif
+    @endforeach
 
     <div class="address-block" {{ !$displayAddress ? 'style=display:none' : '' }}>
         @include('_input_block', [

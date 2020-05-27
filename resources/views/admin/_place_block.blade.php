@@ -1,4 +1,4 @@
-<div class="col-md-{{ round(12/count($places)) }} col-sm-6 col-xs-12 {{ !isset($place) ? 'add-block' : '' }} {{ $errors && ($errors->has('address') || $errors->has('latitude') || $errors->has('longitude')) ? 'visible' : '' }}" id="{{ 'place_'.(isset($office) ? $office->id : 'add') }}">
+<div class="col-md-4 col-sm-6 col-xs-12 {{ !isset($place) ? 'add-block' : '' }} {{ $errors && ($errors->has('address') || $errors->has('latitude') || $errors->has('longitude')) ? 'visible' : '' }}" id="{{ 'place_'.(isset($office) ? $office->id : 'add') }}">
     <div class="panel panel-flat">
         <div class="panel-body">
             @include('_input_block', [

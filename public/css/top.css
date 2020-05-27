@@ -20,6 +20,7 @@
     width: 100%;
     padding: 20px;
     position: fixed;
+    top: -1px;
     background: url("../images/top_menu_bg.jpg") 50% 50% no-repeat;
     background-size: 100% 100%;
     border-bottom: 1px solid grey;
@@ -54,6 +55,7 @@
     position: absolute;
     color: #faa54c !important;
     margin-top: -5px;
+    right: 20px;
     cursor: pointer;
     text-decoration: none;
 }
@@ -145,45 +147,68 @@
 #main-image > .logo > div {
     display: table-cell;
     text-align: center;
-    vertical-align: middle;
+    vertical-align: bottom;
 }
 
 #main-image > .logo > div > img {
+    width: 400px;
     max-width: 90%;
-    margin-top: 120px;
+    margin-bottom: 35px;
 }
 
 #main-image > .text {
-    height: 100px;
+    height: 200px;
     display: table-row;
 }
 
 #main-image > .text > div {
     display: table-cell;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
     text-align: center;
-    vertical-align: bottom;
+    vertical-align: top;
 }
 
 #main-image > .text > div > p {
     font-family: 'Flora', Arial, sans-serif;
-    font-size: 24px;
-    line-height: 1.85;
+    font-size: 42px;
+    line-height: 1.2;
     font-weight: 600;
-    color: black;
-    margin-bottom: 30px;
-    text-shadow: white 2px 2px 0, white -2px -2px 0, white -2px 2px 0, white 2px -2px 0;
+    color: #615657;
+    /*margin-bottom: 30px;*/
+    /*text-shadow: white 2px 2px 0, white -2px -2px 0, white -2px 2px 0, white 2px -2px 0;*/
+}
+
+#main-image > .button {
+    height: 110px;
+    text-align: center;
+    display: table-row;
 }
 
 @media screen and (max-width: 1200px) {
     .navbar-default .logo {
         width: 50px;
     }
+
+    .nav > li.main-menu > a {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 860px) {
+    .nav > li.main-menu > a {
+        font-size: 12px;
+        padding: 0 5px;
+    }
 }
 
 @media screen and (max-width: 768px) {
     .nav > li {
         display: block;
+    }
+
+    .nav > li.main-menu > a {
+        padding: 5px 0;
+        font-size: 16px;
     }
 
     .nav > li > a,
@@ -210,5 +235,46 @@
 
     #main-image > .text img:last-child {
         display: none;
+    }
+}
+
+@media screen and (max-height: 800px) {
+    #main-image > .logo > div {
+        padding-top: 100px;
+    }
+
+    #main-image > .text {
+        height: auto;
+    }
+
+    #main-image > .logo > div > img {
+        width: auto;
+        height: 70%;
+        margin-bottom: 0;
+    }
+
+    #main-image > .text > div {
+        padding: 0;
+    }
+
+    #main-image > .button {
+        height: 30%;
+    }
+}
+
+@media screen and (max-height: 635px) {
+    #main-image > .logo > div > img {
+        height: 50%;
+    }
+
+    #main-image > .text > div > p {
+        font-size: 20px;
+    }
+
+    #main-image > .button .btn-primary {
+        width: 320px;
+        height: 30px;
+        font-size: 12px;
+        padding-top: 5px;
     }
 }

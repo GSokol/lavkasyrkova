@@ -53,8 +53,32 @@
     margin-bottom: 20px;
 }
 
+.product .image {
+    text-align: center;
+    height: 249px;
+    overflow: hidden;
+}
+
+.product .not-available {
+    width: calc(100% - 20px);
+    position: absolute;
+}
+
 .product .text-block {
-    height: 180px;
+    /*height: 230px;*/
+    padding-bottom: 10px;
+}
+
+.product .text-block h4 {
+    font-size: 15px;
+    text-align: left;
+    margin-top: 3px;
+    margin-bottom: 0;
+}
+
+.modal-body .product .text-block {
+    height: auto !important;
+    padding-bottom: 10px;
 }
 
 .basket-product {
@@ -91,6 +115,7 @@
 }
 
 .product .value {
+    width: 100%;
     display: table;
     padding-top: 5px;
     border-top: 1px solid #ddd;
@@ -106,7 +131,8 @@
     vertical-align: middle;
 }
 
-.input-value-container input {
+.input-value-container input,
+.product .value .disabled-value-container {
     text-align: center;
     font-weight: bold;
     font-style: italic;
@@ -114,9 +140,14 @@
     font-size: 15px;
 }
 
-.product .value .input-value-container {
+.product .value .input-value-container,
+.product .value .disabled-value-container {
     width: 60%;
     display: table-cell;
+}
+
+.product .value .disabled-value-container {
+    vertical-align: middle;
 }
 
 .input-value-container > div {
@@ -184,8 +215,10 @@
     font-weight: bold;
 }
 
-.product p.price > span {
+.product p.price > span,
+.product p.cost {
     font-style: italic;
+    font-weight: normal;
 }
 
 .actions {
@@ -232,18 +265,23 @@
 }
 
 .action-product {
+    width: 410px;
+    position: absolute;
+    bottom: 0;
     display: table;
     text-align: center;
-    padding: 30px;
-    /*background: url("../images/white.png") repeat;*/
+    padding: 20px;
+    background: url("../images/white.png") repeat;
 }
 
 .action-product h1 {
-    font-size: 27px;
+    font-size: 30px;
+    color: #fd4100;
 }
 
 .action-product h2 {
-    font-size: 20px;
+    font-size: 27px;
+    color: #fd4100;
 }
 
 .action-product p.description {
@@ -252,12 +290,23 @@
 }
 
 .action-price {
+    font-size: 2em;
     font-weight: bolder;
-    color: #ab0330;
+    color: #fd4100;
 }
 
-.shops-block {
+.action-price span.old {
+    color: black;
+    text-decoration: line-through;
+}
+
+.times-block, .shops-block {
     padding-left: 30px;
+}
+
+.times-block h6 {
+    font-size: 15px;
+    margin-bottom: 10px;
 }
 
 #checkout-modal div.error {
@@ -297,19 +346,27 @@
 
 @media screen and (max-width: 768px) {
     .category {
-        height: 300px;
-    }
-
-    .product .text-block {
+        display: table;
         height: auto;
     }
 
+    .product .text-block {
+        height: auto !important;
+    }
+
     .frame-image.tastings {
-        height: 300px;
+        display: table;
+        height: auto;
     }
 
     #checkout-modal span.error {
         text-align: left;
         display: block;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .action-product {
+        width: 95%;
     }
 }

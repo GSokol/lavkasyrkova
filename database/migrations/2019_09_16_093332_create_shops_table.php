@@ -13,13 +13,13 @@ class CreateShopsTable extends Migration
      */
     public function up()
     {
-        Schema::create('shops', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('address');
-            $table->string('latitude');
-            $table->string('longitude');
-            $table->timestamps();
-        });
+//        Schema::create('shops', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->string('address');
+//            $table->string('latitude')->nullable();
+//            $table->string('longitude')->nullable();
+//            $table->timestamps();
+//        });
     }
 
     /**
@@ -29,6 +29,6 @@ class CreateShopsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shops');
+//        Schema::dropIfExists('shops');
     }
 }

@@ -8,13 +8,17 @@
         <div class="text">
             <div>
                 <p>РОССИЙСКИЙ ФЕРМЕРСКИЙ СЫР<br>от рикотты до пармезана</p>
-                <a href="#tasting" data-scroll="tastings">@include('_button_block',[
+            </div>
+        </div>
+        <div class="button">
+            <a href="#tasting" data-scroll="tastings">
+                @include('_button_block',[
                     'addClass' => 'big-button',
                     'type' => 'button',
                     'icon' => null,
                      'text' => 'Бесплатные тематические дегустации'
-                 ])</a>
-            </div>
+                 ])
+            </a>
         </div>
     </div>
 
@@ -24,10 +28,14 @@
                 <div id="action-{{ $action->id }}" class="action" style="background: url('{{ $action->big_image ? asset($action->big_image) : asset('images/auth_bg.jpg') }}') center; background-size: cover;">
                     <div class="container">
                         <div class="col-md-4 col-sm-6 col-xs-12 action-product">
-                            <h1>Предложение недели</h1>
+                            <h1>{{ $action->new ? 'Новинка!' : 'Предложение недели' }}</h1>
                             <h2>{{ $action->name }}</h2>
                             <p class="description">{{ $action->description }}</p>
-                            <p class="action-price">{{ Helper::productPrice($action).'р. за '.Helper::productMinVal($action) }}</p>
+                            @if ($action->new)
+                                <p class="action-price">{!! Helper::productCostSting($action) !!}</p>
+                            @else
+                                <p class="action-price"><span class="old">{{ Helper::productPrice($action,true) }} руб</span> {!! Helper::productCostSting($action) !!}</p>
+                            @endif
                             @include('_button_block',['type' => 'button', 'icon' => 'icon-cart5', 'text' => 'Купить', 'addAttr' => ['data-id' => $action->id]])
                         </div>
                     </div>
@@ -45,9 +53,10 @@
 {{--                @include('_categories_block',['categories' => $data['add_categories'],'type' => 'add_category'])--}}
             </div>
             <div id="products">
-                @include('_back_to_categories_block')
+                {{--@include('_back_to_categories_block')--}}
                 <div class="order-form"></div>
-                @include('_back_to_categories_block')
+                <div id="on-top-button"><i class="glyphicon glyphicon-upload"></i></div>
+{{--                @include('_back_to_categories_block')--}}
             </div>
         </div>
     </div>
@@ -68,18 +77,18 @@
             @include('_tasting_block',['icon' => 'icon_clock.svg','head' => 'Время проведения','text' => 'Будние дни с 12 до 16 часов'])
             @include('_tasting_block',['icon' => 'icon_clouds.svg','head' => 'Уже хотите?','text' => 'Напишите нам на почту: <a href="mailto:lavkasyrkov@gmail.com">lavkasyrkov@gmail.com</a>.<br>Согласуем время и место и ждите в гости!'])
 
-            {{--@if ($data['tasting_new'])--}}
-            {{--<div class="new-tasting {{ count($data['tastings']) }} col-md-12 col-sm-12 col-xs-12">--}}
-            {{--<h4>{{ $data['tasting_new']->name }} состоится {{ date('d.m.Y',$data['tasting_new']->time) }}</h4>--}}
-            {{--<p>По адресу: {{ $data['tasting_new']->place }}</p>--}}
-            {{--@if (isset($data['tasting_new']) && $data['tasting_new'] && (!isset($data['tasting_signed']) || !$data['tasting_signed']))--}}
-            {{--@if (Auth::guest())--}}
-            {{--<a href="/login">@include('_get_tasting_button_block')</a>--}}
-            {{--@else--}}
-            {{--<a id="get-tasting" href="#">@include('_get_tasting_button_block')</a>--}}
-            {{--@endif--}}
-            {{--@endif--}}
-            {{--</div>--}}
+            {{--@if (isset($data['tasting_new']) && $data['tasting_new'])--}}
+                {{--<div class="new-tasting {{ count($data['tastings']) }} col-md-12 col-sm-12 col-xs-12">--}}
+                    {{--<h4>{{ $data['tasting_new']->name }} состоится {{ date('d.m.Y',$data['tasting_new']->time) }}</h4>--}}
+                    {{--<p>По адресу: {{ $data['tasting_new']->place }}</p>--}}
+                    {{--@if (isset($data['tasting_new']) && $data['tasting_new'] && (!isset($data['tasting_signed']) || !$data['tasting_signed']))--}}
+                        {{--@if (Auth::guest())--}}
+                            {{--<a href="/login">@include('_get_tasting_button_block')</a>--}}
+                        {{--@else--}}
+                            {{--<a id="get-tasting" href="#">@include('_get_tasting_button_block')</a>--}}
+                        {{--@endif--}}
+                    {{--@endif--}}
+                {{--</div>--}}
             {{--@endif--}}
         </div>
     </div>

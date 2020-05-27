@@ -50,6 +50,21 @@
                     'value' => isset($data['user']) ? $data['user']->phone : ''
                 ])
 
+                @include('_input_block', [
+                    'label' => 'Адрес',
+                    'name' => 'address',
+                    'type' => 'text',
+                    'placeholder' => 'Адрес для доставки',
+                    'value' => isset($data['user']) ? $data['user']->address : ''
+                ])
+
+                @include('admin._select_block',[
+                    'label' => 'Привязка к офису',
+                    'name' => 'office_id',
+                    'values' => $data['offices'],
+                    'selected' => isset($data['user']) ? $data['user']->office_id : ''
+                ])
+
                 <div class="panel panel-flat">
                     @if (isset($data['user']))
                         <div class="panel-heading">
@@ -89,6 +104,12 @@
 
                     </div>
                 </div>
+
+                @include('admin._checkbox_block',[
+                    'label' => 'Отправлять письма',
+                    'name' => 'send_mail',
+                    'checked' => isset($data['user']) ? $data['user']->send_mail : true
+                ])
 
                 @if (Auth::user()->is_admin)
                     @include('admin._checkbox_block',[

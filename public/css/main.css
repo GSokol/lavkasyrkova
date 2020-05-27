@@ -9,7 +9,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 20px;
     font-weight: bolder;
     text-transform: uppercase;
-    color: #ab0330;
+    color: #d73737;
 }
 
 h1.head {
@@ -17,6 +17,10 @@ h1.head {
     font-size: 52px;
     font-weight: 400;
     margin: 80px 0;
+}
+
+h6 {
+    margin-bottom: 7px;
 }
 
 p, li, table.table-striped td {
@@ -37,6 +41,10 @@ p.small {
 
 a {
     text-decoration: underline;
+}
+
+a.button {
+    text-decoration: none !important;
 }
 
 .image img {
@@ -229,7 +237,7 @@ input, select {
     font-size: 17px;
     text-align: center;
     font-weight: bold;
-    color: #ab0330;
+    color: #d73737;
 }
 
 .frame-image.tastings {
@@ -259,12 +267,12 @@ input, select {
     right: 5%;
     bottom: 5%;
     cursor: pointer;
-    display: none;
+    /*display: none;*/
     z-index: 999;
 }
 
 #on-top-button:hover {
-    color: #ab0330;
+    color: #d73737;
 }
 
 #on-top-button .glyphicon {

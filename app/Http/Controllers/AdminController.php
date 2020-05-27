@@ -13,7 +13,6 @@ use App\Category;
 use App\AddCategory;
 use App\Tasting;
 use App\UserToTasting;
-use Config;
 use Session;
 use Settings;
 
@@ -46,7 +45,7 @@ class AdminController extends UserController
             $this->data['user'] = User::find($request->input('id'));
             $this->data['product_parts'] = $this->productParts;
             if (!$this->data['user']) return $this->notExist('Пользователя');
-            $this->breadcrumbs = ['users?id='.$this->data['user']->id => $this->data['user']->email];
+            $this->breadcrumbs['users?id='.$this->data['user']->id] = $this->data['user']->email;
             return $this->showView('user');
         } else if ($slug && $slug == 'add') {
             $this->breadcrumbs['users/add'] = 'Добавление пользователя';
@@ -66,7 +65,7 @@ class AdminController extends UserController
         if ($request->has('id')) {
             $this->data['product'] = Product::find($request->input('id'));
             if (!$this->data['product']) return $this->notExist('Продукта');
-            $this->breadcrumbs = ['products?id='.$this->data['product']->id => $this->data['product']->name];
+            $this->breadcrumbs['products?id='.$this->data['product']->id] = $this->data['product']->name;
             return $this->showView('product');
         } else if ($slug && $slug == 'add') {
             $this->breadcrumbs['products/add'] = 'Добавление продукта';
@@ -100,13 +99,13 @@ class AdminController extends UserController
     {
         $this->breadcrumbs = ['tastings' => 'Дегустации'];
         if ($request->has('id')) {
-            $this->data['offices'] = Office::all();
+            $this->data['offices'] = Office::where('id','!=',1)->where('id','!=',2)->get();
             $this->data['tasting'] = Tasting::find($request->input('id'));
             if (!$this->data['tasting']) return $this->notExist('Продукта');
             $this->breadcrumbs['tastings?id='.$this->data['tasting']->id] = $this->data['tasting']->name;
             return $this->showView('tasting');
         } else if ($slug && $slug == 'add') {
-            $this->data['offices'] = Office::all();
+            $this->data['offices'] = Office::where('id','!=',1)->where('id','!=',2)->get();
             $this->breadcrumbs['tastings/add'] = 'Добавление дегустации';
             return $this->showView('tasting');
         } else {
@@ -140,7 +139,9 @@ class AdminController extends UserController
 
     public function editSettings(Request $request)
     {
-        $this->validate($request, ['email' => 'required|email']);
+        $this->validate($request, [
+            'email' => 'required|email'
+        ]);
         Settings::saveSettings($this->processingFields($request));
         $this->saveCompleteMessage();
         return redirect()->back();
@@ -150,19 +151,20 @@ class AdminController extends UserController
     {
         $validationArr = [
             'name' => 'required|unique:products,name',
+            'additionally' => 'max:255',
             'description' => 'required|min:3|max:500',
             'whole_price' => $this->validationPrice,
+            'whole_weight' => 'required|integer|min:1|max:5000',
             'part_price' => $this->validationPrice,
             'action_whole_price' => $this->validationPrice,
             'action_part_price' => $this->validationPrice,
             'image' => $this->validationImage,
             'big_image' => $this->validationImage,
-            'category_id' => $this->validationCategory,
-            'add_category_id' => $this->validationAddCategory
+            'category_id' => $this->validationCategory
         ];
         $fields = $this->processingFields(
             $request,
-            ['action','active','parts'],
+            ['new','action','active','parts'],
             ['image','big_image'],
             null,
             ['whole_price','part_price','action_whole_price','action_part_price']
@@ -206,21 +208,20 @@ class AdminController extends UserController
             'time' => 'required',
             'office_id' => $this->validationOffice
         ];
-
+        $fields = $this->processingFields($request, 'active', null, 'time');
+        
         if ($request->has('id')) {
             $validationArr['id'] = $this->validationTasting;
             $this->validate($request, $validationArr);
-            $tasting = Tasting::find($request->input('id'));
-
-            $fields = $this->processingFields($request, 'active', null, 'time');
+            $tasting = Tasting::find($request->input('id'));    
             $tasting->update($fields);
         } else {
             $this->validate($request, $validationArr);
-            $fields = $this->processingFields($request, 'active', null, 'time');
-            $tasting = Tasting::create($fields);
+            $fields['informed'] = 0;
+            Tasting::create($fields);
         }
         $this->saveCompleteMessage();
-        return redirect('/admin/tastings?id='.$tasting->id);
+        return redirect('/admin/tastings');
     }
     
     public function editTastingsImages(Request $request)
@@ -301,15 +302,19 @@ class AdminController extends UserController
         $validationArr = [];
         $addPlace = $request->has('address');
         if ($addPlace) {
-            $validationArr['latitude'] = $this->validationCoordinates;
-            $validationArr['longitude'] = $this->validationCoordinates;
+            if ($request->input('latitude') || $request->input('longitude')) {
+                $validationArr['latitude'] = $this->validationCoordinates;
+                $validationArr['longitude'] = $this->validationCoordinates;
+            }
             $validationArr['address'] = 'required|max:255';
         }
 
         $places = $model->all();
         foreach ($places as $place) {
-            $validationArr['latitude_'.$place->id] = $this->validationCoordinates;
-            $validationArr['latitude_'.$place->id] = $this->validationCoordinates;
+            if ($request->input('latitude') || $request->input('longitude')) {
+                $validationArr['latitude_' . $place->id] = $this->validationCoordinates;
+                $validationArr['latitude_' . $place->id] = $this->validationCoordinates;
+            }
             $validationArr['address_'.$place->id] = 'required|max:255';
         }
 

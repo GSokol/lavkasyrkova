@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Order;
 use App\Shop;
+use App\Office;
 use App\UserToTasting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -33,14 +34,22 @@ class UserController extends Controller
     public function orders()
     {
         $this->breadcrumbs = ['orders' => 'Заказы'];
+        $this->getTastings();
         $this->data['orders'] = Auth::user()->is_admin ? Order::orderBy('id','desc')->get() : Order::where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
         return $this->showView('orders');
     }
 
-    public function user()
+    public function user(Request $request)
     {
         $this->breadcrumbs = ['user' => 'Профиль пользователя'];
+        $this->getTastings();
         $this->data['user'] = Auth::user();
+        $this->data['offices'] = Office::all();
+        if ($request->has('unsubscribe') && $request->input('unsubscribe')) {
+            $this->data['user']->send_mail = 0;
+            $this->data['user']->save();
+            Session::flash('message','Вы отписались от автоматической рассылки!');
+        }
         return $this->showView('user');
     }
     
@@ -58,12 +67,13 @@ class UserController extends Controller
     {
         $validationArr = [
             'email' => 'required|email|unique:users,email',
-            'phone' => $this->validationPhone
+            'phone' => $this->validationPhone,
+            'office_id' => $this->validationOffice
         ];
         
         $fields = $this->processingFields(
             $request,
-            (Auth::user()->is_admin ? ['active','is_admin'] : null),
+            (Auth::user()->is_admin ? ['active','is_admin','send_mail'] : 'send_mail'),
             (Auth::user()->is_admin ? 'old_password' : ['old_password', 'active','is_admin'])
         );
         
@@ -137,7 +147,11 @@ class UserController extends Controller
             if (!isset($this->data['shops'])) $this->data['shops'] = Shop::all();
         }
 
-        $menus = [['href' => 'orders', 'name' => 'Заказы', 'icon' => 'icon-list-unordered']];
+        $menus = [
+            ['href' => '/', 'name' => 'На главную страницу', 'icon' => 'icon-list-unordered'],
+            ['href' => 'orders', 'name' => 'Заказы', 'icon' => 'icon-home']
+        ];
+
         if (Auth::user()->is_admin) {
             $addMenus = [
                 ['href' => 'seo', 'name' => 'SEO', 'icon' => 'icon-price-tags'],
