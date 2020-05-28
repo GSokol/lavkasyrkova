@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 @section('content')
-<form id="reg-form" method="POST" action="{{ url('/register') }}">
+<form method="POST" action="{{ url('/register') }}">
     {!! csrf_field() !!}
     <div class="panel panel-body login-form">
         <div class="text-center">
@@ -32,9 +32,4 @@
         </div>
     </div>
 </form>
-<script type="text/javascript">
-    $('#req-form').on('submit', function(e) {
-        ym(64409923,'reachGoal','ya_m_registration');
-    });
-</script>
 @endsection
