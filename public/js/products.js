@@ -37,7 +37,6 @@ $(window).ready(function () {
                 removeLoaderScreen();
                 if (data.success) {
                     orderComplete(data);
-                    ym(64409923,'reachGoal','ya_m_purchase');
                 } else {
                     var errorContainer = $('#checkout-modal div.error');
                     errorContainer.css('display','table');
