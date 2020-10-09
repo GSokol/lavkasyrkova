@@ -17,7 +17,7 @@ $(window).ready(function () {
             });
         });
     });
-    
+
     // Click checkout order
     $('button#checkout').click(
         function (e) {
@@ -32,7 +32,8 @@ $(window).ready(function () {
                 'delivery': $('input[name=delivery]:checked').val(),
                 'tasting_id': $('input[name=tasting_id]:checked').val(),
                 'shop_id': $('input[name=shop_id]:checked').val(),
-                'address': $('input[name=address]').val()
+                'address': $('input[name=address]').val(),
+                'description': $('textarea[name=description]').val(),
             }, function (data) {
                 removeLoaderScreen();
                 if (data.success) {
@@ -70,7 +71,7 @@ $(window).ready(function () {
         var timesBlock = $('.times-block'),
             shopsBlock = $('.shops-block'),
             addressBlock = $('.address-block');
-        
+
         if ($(this).val() == 1) {
             timesBlock.show();
             shopsBlock.hide();

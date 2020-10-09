@@ -77,6 +77,16 @@
             'value' => !Auth::guest() && Auth::user()->address ? Auth::user()->address : ''
         ])
     </div>
+
+    <div class="description-block">
+        @include('_textarea_block', [
+            'label' => 'Примечание:',
+            'name' => 'description',
+            'placeholder' => 'Укажите примечание к заказу',
+            'rows' => 3,
+            'value' => '',
+        ])
+    </div>
 </div>
 <div class="modal-footer">
     @include('_button_block', ['addAttr' => $usingAjax ? ['id' => 'checkout'] : null, 'type' => $usingAjax ? 'button' : 'submit', 'text' => 'Оформить заказ', 'icon' => 'icon-mail5'])
