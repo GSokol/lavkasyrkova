@@ -13,13 +13,13 @@ class CreateTastingsTable extends Migration
      */
     public function up()
     {
-//        Schema::create('tastings', function (Blueprint $table) {
-//            $table->increments('id');
-//            $table->integer('time');
-//            $table->boolean('informed');
-//            $table->boolean('active');
-//            $table->timestamps();
-//        });
+       Schema::create('tastings', function (Blueprint $table) {
+           $table->increments('id');
+           $table->integer('time');
+           $table->boolean('informed')->default(true);
+           $table->boolean('active');
+           $table->timestamps();
+       });
     }
 
     /**
@@ -29,6 +29,6 @@ class CreateTastingsTable extends Migration
      */
     public function down()
     {
-//        Schema::dropIfExists('tastings');
+       Schema::dropIfExists('tastings');
     }
 }

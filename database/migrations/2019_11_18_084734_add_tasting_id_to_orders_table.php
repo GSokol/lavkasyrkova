@@ -13,10 +13,10 @@ class AddTastingIdToOrdersTable extends Migration
      */
     public function up()
     {
-//        Schema::table('orders', function (Blueprint $table) {
-//            $table->integer('tasting_id', false, true)->nullable();
-//            $table->foreign('tasting_id')->references('id')->on('tastings')->onDelete('cascade')->onUpdate('cascade');
-//        });
+       Schema::table('orders', function (Blueprint $table) {
+           $table->integer('tasting_id', false, true)->nullable();
+           $table->foreign('tasting_id')->references('id')->on('tastings')->onDelete('cascade')->onUpdate('cascade');
+       });
     }
 
     /**
@@ -26,9 +26,9 @@ class AddTastingIdToOrdersTable extends Migration
      */
     public function down()
     {
-//        Schema::table('orders', function (Blueprint $table) {
-//            $table->dropForeign('orders_tasting_id_foreign');
-//            $table->dropColumn('tasting_id');
-//        });
+       Schema::table('orders', function (Blueprint $table) {
+           $table->dropForeign('orders_tasting_id_foreign');
+           $table->dropColumn('tasting_id');
+       });
     }
 }
