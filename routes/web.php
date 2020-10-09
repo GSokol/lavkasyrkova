@@ -41,6 +41,13 @@ Route::get('/admin/products/{slug?}', 'AdminController@products');
 Route::post('/admin/product', 'AdminController@editProduct');
 Route::post('/admin/delete-product', 'AdminController@deleteProduct');
 
+Route::prefix('admin')->as('admin.')->group(function() {
+    Route::group(['prefix' => 'categories'], function () {
+        Route::get('/', 'AdminController@categories');
+        Route::get('/{id}', 'AdminController@category')->name('category');
+    });
+});
+
 Route::get('/admin/tastings/{slug?}', 'AdminController@tastings');
 Route::post('/admin/tasting', 'AdminController@editTasting');
 Route::post('/admin/tasting-images', 'AdminController@editTastingsImages');

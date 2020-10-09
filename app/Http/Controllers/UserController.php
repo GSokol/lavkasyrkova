@@ -17,7 +17,7 @@ use Settings;
 class UserController extends Controller
 {
     use HelperTrait;
-    
+
     protected $breadcrumbs = [];
     protected $data = [];
 
@@ -52,7 +52,7 @@ class UserController extends Controller
         }
         return $this->showView('user');
     }
-    
+
     public function signingTasting()
     {
         $tasting = $this->getNewTasting();
@@ -70,13 +70,13 @@ class UserController extends Controller
             'phone' => $this->validationPhone,
             'office_id' => $this->validationOffice
         ];
-        
+
         $fields = $this->processingFields(
             $request,
             (Auth::user()->is_admin ? ['active','is_admin','send_mail'] : 'send_mail'),
             (Auth::user()->is_admin ? 'old_password' : ['old_password', 'active','is_admin'])
         );
-        
+
         $fields['password'] = bcrypt($fields['password']);
 
         if ($request->has('id')) {
@@ -156,6 +156,7 @@ class UserController extends Controller
             $addMenus = [
                 ['href' => 'seo', 'name' => 'SEO', 'icon' => 'icon-price-tags'],
                 ['href' => 'products', 'name' => 'Продукты', 'icon' => 'icon-pie5'],
+                ['href' => 'categories', 'name' => 'Категории', 'icon' => 'icon-folder'],
                 ['href' => 'settings', 'name' => 'Настройки', 'icon' => 'icon-gear'],
                 ['href' => 'offices', 'name' => 'Офисы', 'icon' => 'icon-office'],
                 ['href' => 'shops', 'name' => 'Магазины', 'icon' => 'icon-basket'],
