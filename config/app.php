@@ -68,7 +68,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://lavkasyrkova'),
-    
+
     /* Main Title */
 
     'main_title' => env('MAIN_TITLE', 'Лавка Сыркова'),
@@ -211,7 +211,8 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Barryvdh\Debugbar\ServiceProvider::class,
+        
         /*
          * Application Service Providers...
          */

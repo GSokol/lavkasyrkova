@@ -25,6 +25,5 @@
         'product' => $product,
         'value' => $value,
         'useCost' => true,
-        'textBlockHeight' => $textBlockHeight
     ])
 @endforeach

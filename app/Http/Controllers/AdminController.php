@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 //use App\Http\Requests;
 use App\Office;
-use App\Shop;
+use App\Models\Store;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\User;
 use App\Product;
-use App\Category;
-use App\AddCategory;
+use App\Models\AddCategory;
+use App\Models\Category;
 use App\Tasting;
 use App\UserToTasting;
 use Session;
@@ -55,7 +55,7 @@ class AdminController extends UserController
             return $this->showView('users');
         }
     }
-    
+
     public function products(Request $request, $slug=null)
     {
         $this->breadcrumbs = ['products' => 'Продукты'];
@@ -74,7 +74,7 @@ class AdminController extends UserController
             return $this->showView('products');
         }
     }
-    
+
     public function settings()
     {
         $this->breadcrumbs = ['settings' => 'Настройки'];
@@ -91,10 +91,10 @@ class AdminController extends UserController
     public function shops()
     {
         $this->breadcrumbs = ['shops' => 'Магазины'];
-        $this->data['shops'] = Shop::all();
+        $this->data['shops'] = Store::all();
         return $this->showView('shops');
     }
-    
+
     public function tastings(Request $request, $slug=null)
     {
         $this->breadcrumbs = ['tastings' => 'Дегустации'];
@@ -177,31 +177,31 @@ class AdminController extends UserController
             $this->validate($request, $validationArr);
             $product = Product::find($request->input('id'));
 
-            if ($request->hasFile('image')) 
+            if ($request->hasFile('image'))
                 $fields = array_merge($fields, $this->processingImage($request, $product, 'image'));
             if ($request->hasFile('big_image'))
                 $fields = array_merge($fields, $this->processingImage($request, $product, 'big_image'));
-                
+
             $product->update($fields);
 
         } else {
             $validationArr['image'] = 'required|'.$this->validationImage;
             $validationArr['big_image'] = 'required|'.$this->validationImage;
-            
+
             $this->validate($request, $validationArr);
             $fields = array_merge(
                 $fields,
                 $this->processingImage($request, null, 'image', str_slug($fields['name']), 'images/products'),
                 $this->processingImage($request, null, 'big_image', str_slug($fields['name']).'_big', 'images/products')
             );
-            
+
             Product::create($fields);
         }
 
         $this->saveCompleteMessage();
         return redirect('/admin/products');
     }
-    
+
     public function editTasting(Request $request)
     {
         $validationArr = [
@@ -209,11 +209,11 @@ class AdminController extends UserController
             'office_id' => $this->validationOffice
         ];
         $fields = $this->processingFields($request, 'active', null, 'time');
-        
+
         if ($request->has('id')) {
             $validationArr['id'] = $this->validationTasting;
             $this->validate($request, $validationArr);
-            $tasting = Tasting::find($request->input('id'));    
+            $tasting = Tasting::find($request->input('id'));
             $tasting->update($fields);
         } else {
             $this->validate($request, $validationArr);
@@ -223,7 +223,7 @@ class AdminController extends UserController
         $this->saveCompleteMessage();
         return redirect('/admin/tastings');
     }
-    
+
     public function editTastingsImages(Request $request)
     {
         $validationArr = [];
@@ -256,7 +256,7 @@ class AdminController extends UserController
 
     public function editShops(Request $request)
     {
-        return $this->editPlace($request, new Shop(), 'shops');
+        return $this->editPlace($request, new Store(), 'shops');
     }
 
     public function deleteUser(Request $request)
@@ -276,7 +276,7 @@ class AdminController extends UserController
 
     public function deleteShop(Request $request)
     {
-        return $this->deleteSomething($request, new Shop());
+        return $this->deleteSomething($request, new Store());
     }
 
     public function deleteTasting(Request $request)
@@ -291,7 +291,7 @@ class AdminController extends UserController
         $tasting->delete();
         return response()->json(['success' => true]);
     }
-    
+
     public function deleteTastingUser(Request $request)
     {
         return $this->deleteSomething($request, new UserToTasting());

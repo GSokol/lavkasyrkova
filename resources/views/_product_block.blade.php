@@ -11,7 +11,7 @@
         @if (!$product->image)
             <img src="{{ asset('images/products/empty.jpg') }}" />
         @elseif ($product->image && $product->active)
-            @include('_product_preview_block',['image' => $product->image])
+            @include('_product_preview_block', ['image' => $product->image])
         @else
             <img src="{{ asset($product->image) }}" />
         @endif
@@ -22,7 +22,7 @@
             <h4>{{ $product->additionally }}</h4>
         @endif
         @if ($product->addCategory && isset($product->addCategory->name))
-            <p class="small">{{ str_replace('Сыры','Сыр',$product->addCategory->name) }}</p>
+            <p class="small">{{ str_replace('Сыры', 'Сыр', $product->addCategory->name) }}</p>
         @endif
         <p class="description">{{ $product->description }}</p>
         <p class="price {{ $product->action ? 'action' : '' }}">{!! Helper::productCostSting($product) !!}</p>
@@ -44,7 +44,7 @@
         @endif
 
         @if ($useCost)
-            <p class="cost">{{ Helper::productCost($product,$value) }} руб</p>
+            <p class="cost">{{ Helper::productCost($product, $value) }} руб</p>
         @endif
     </div>
 </div>

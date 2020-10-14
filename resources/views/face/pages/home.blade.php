@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('face.layouts.main')
 
 @section('content')
     <div id="main-image" data-scroll-destination="home">
@@ -49,14 +49,20 @@
             <h1 class="head" id="cheeses-head">Наши сыры</h1>
             <h1 class="head" id="cheeses-sub-head"></h1>
             <div id="categories">
-                @include('_categories_block',['categories' => $data['categories'],'type' => 'category'])
-{{--                @include('_categories_block',['categories' => $data['add_categories'],'type' => 'add_category'])--}}
+                @foreach ($categories as $category)
+                    @if (count($category->products))
+                        <div class="category col-md-3 col-sm-4 col-xs-12">
+                            <a href="{{ route('face.category', ['slug' => $category->slug]) }}" class="image">
+                                <img src="{{ $category->image ? asset($category->image) : asset('images/products/empty.jpg') }}" />
+                            </a>
+                            <h3>{{ $category->name }}</h3>
+                        </div>
+                    @endif
+                @endforeach
             </div>
             <div id="products">
-                {{--@include('_back_to_categories_block')--}}
                 <div class="order-form"></div>
                 <div id="on-top-button"><i class="glyphicon glyphicon-upload"></i></div>
-{{--                @include('_back_to_categories_block')--}}
             </div>
         </div>
     </div>
@@ -98,9 +104,9 @@
         <div>
             <h1 class="head">Магазины</h1>
             <script>window.map = [];</script>
-            @foreach($data['shops'] as $shop)
-                <p>{!! $shop->address !!}</p>
-                <script>window.map.push({coords:[parseFloat("{{ $shop->latitude }}"),parseFloat("{{ $shop->longitude }}")],'address':"{{ strip_tags($shop->address) }}"});</script>
+            @foreach($stores as $store)
+                <p>{!! $store->address !!}</p>
+                <script>window.map.push({coords:[parseFloat("{{ $store->latitude }}"),parseFloat("{{ $store->longitude }}")],'address':"{{ strip_tags($store->address) }}"});</script>
             @endforeach
             <p>Тел: {{ Settings::getAddress()->phone1.'; '.Settings::getAddress()->phone2 }}</p>
             <p><a href="mailto:{{ Settings::getAddress()->email }}">{{ Settings::getAddress()->email }}</a></p>

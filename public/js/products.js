@@ -1,8 +1,8 @@
 $(window).ready(function () {
     // Click to category href
-    $('.category').click(function () {
-        getCategory($(this));
-    });
+    // $('.category').click(function () {
+    //     getCategory($(this));
+    // });
 
     // Click back to categories
     var productsContainer = $('#products');
@@ -17,7 +17,7 @@ $(window).ready(function () {
             });
         });
     });
-    
+
     // Click checkout order
     $('button#checkout').click(
         function (e) {
@@ -70,7 +70,7 @@ $(window).ready(function () {
         var timesBlock = $('.times-block'),
             shopsBlock = $('.shops-block'),
             addressBlock = $('.address-block');
-        
+
         if ($(this).val() == 1) {
             timesBlock.show();
             shopsBlock.hide();
