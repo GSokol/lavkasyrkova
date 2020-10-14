@@ -6,7 +6,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use App\User;
 use App\Order;
-use App\Shop;
+use App\Models\Store;
 use App\Office;
 use App\UserToTasting;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +17,7 @@ use Settings;
 class UserController extends Controller
 {
     use HelperTrait;
-    
+
     protected $breadcrumbs = [];
     protected $data = [];
 
@@ -35,7 +35,7 @@ class UserController extends Controller
     {
         $this->breadcrumbs = ['orders' => 'Заказы'];
         $this->getTastings();
-        $this->data['orders'] = Auth::user()->is_admin ? Order::orderBy('id','desc')->get() : Order::where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
+        $this->data['orders'] = Auth::user()->is_admin ? Order::orderBy('id','desc')->get() : Order::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
         return $this->showView('orders');
     }
 
@@ -52,7 +52,7 @@ class UserController extends Controller
         }
         return $this->showView('user');
     }
-    
+
     public function signingTasting()
     {
         $tasting = $this->getNewTasting();
@@ -70,13 +70,13 @@ class UserController extends Controller
             'phone' => $this->validationPhone,
             'office_id' => $this->validationOffice
         ];
-        
+
         $fields = $this->processingFields(
             $request,
             (Auth::user()->is_admin ? ['active','is_admin','send_mail'] : 'send_mail'),
             (Auth::user()->is_admin ? 'old_password' : ['old_password', 'active','is_admin'])
         );
-        
+
         $fields['password'] = bcrypt($fields['password']);
 
         if ($request->has('id')) {
@@ -144,7 +144,7 @@ class UserController extends Controller
     {
         if (!Auth::user()->is_admin) {
             $this->data['products'] = Product::where('active',1)->get();
-            if (!isset($this->data['shops'])) $this->data['shops'] = Shop::all();
+            if (!isset($this->data['shops'])) $this->data['shops'] = Store::all();
         }
 
         $menus = [

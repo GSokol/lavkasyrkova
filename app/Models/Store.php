@@ -1,11 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Order;
 
-class Shop extends Model
+class Store extends Model
 {
+    protected $table = 'shops';
+
     protected $fillable = [
         'address',
         'latitude',
@@ -14,6 +17,6 @@ class Shop extends Model
 
     public function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany(Order::class);
     }
 }
