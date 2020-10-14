@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\AddCategory;
+use App\Models\Category;
 
 class Product extends Model
 {
@@ -27,14 +29,14 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo('App\Category');
+        return $this->belongsTo(Category::class);
     }
 
     public function addCategory()
     {
-        return $this->belongsTo('App\AddCategory');
+        return $this->belongsTo(AddCategory::class);
     }
-    
+
     public function productToOrders()
     {
         return $this->hasMany('App\ProductToOrder');

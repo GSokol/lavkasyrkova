@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Office;
-use App\Shop;
+use App\Models\Store;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\User;
 use App\Product;
-use App\Category;
-use App\AddCategory;
+use App\Models\AddCategory;
+use App\Models\Category;
 use App\Tasting;
 use App\UserToTasting;
 use Session;
@@ -91,7 +91,7 @@ class AdminController extends UserController
     public function shops()
     {
         $this->breadcrumbs = ['shops' => 'Магазины'];
-        $this->data['shops'] = Shop::all();
+        $this->data['shops'] = Store::all();
         return $this->showView('shops');
     }
 
@@ -285,7 +285,7 @@ class AdminController extends UserController
 
     public function editShops(Request $request)
     {
-        return $this->editPlace($request, new Shop(), 'shops');
+        return $this->editPlace($request, new Store(), 'shops');
     }
 
     public function deleteUser(Request $request)
@@ -305,7 +305,7 @@ class AdminController extends UserController
 
     public function deleteShop(Request $request)
     {
-        return $this->deleteSomething($request, new Shop());
+        return $this->deleteSomething($request, new Store());
     }
 
     public function deleteTasting(Request $request)

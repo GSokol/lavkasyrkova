@@ -11,6 +11,17 @@
 |
 */
 Route::auth();
+
+Route::as('face.')->group(function() {
+    Route::get('/', 'StaticController@index')->name('home');
+
+    // Catalog
+    Route::group(['prefix' => 'category'], function() {
+        Route::get('/', 'CatalogController@index')->name('catalog');
+        Route::get('/{slug}', 'CatalogController@category')->name('category');
+    });
+});
+
 Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('/send-confirm-mail', 'Auth\RegisterController@sendConfirmMail');
 Route::get('/confirm-registration/{token}', 'Auth\RegisterController@confirmRegistration');
@@ -65,6 +76,5 @@ Route::get('/admin/shops', 'AdminController@shops');
 Route::post('/admin/shops', 'AdminController@editShops');
 Route::post('/admin/delete-shop', 'AdminController@deleteShop');
 
-Route::get('/', 'StaticController@index');
 Route::post('/get-category-products', 'StaticController@getCategoryProducts');
 Route::post('/get-product', 'StaticController@getProduct');

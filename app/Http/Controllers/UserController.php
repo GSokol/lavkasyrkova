@@ -6,7 +6,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use App\User;
 use App\Order;
-use App\Shop;
+use App\Models\Store;
 use App\Office;
 use App\UserToTasting;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +35,7 @@ class UserController extends Controller
     {
         $this->breadcrumbs = ['orders' => 'Заказы'];
         $this->getTastings();
-        $this->data['orders'] = Auth::user()->is_admin ? Order::orderBy('id','desc')->get() : Order::where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
+        $this->data['orders'] = Auth::user()->is_admin ? Order::orderBy('id','desc')->get() : Order::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
         return $this->showView('orders');
     }
 
@@ -144,7 +144,7 @@ class UserController extends Controller
     {
         if (!Auth::user()->is_admin) {
             $this->data['products'] = Product::where('active',1)->get();
-            if (!isset($this->data['shops'])) $this->data['shops'] = Shop::all();
+            if (!isset($this->data['shops'])) $this->data['shops'] = Store::all();
         }
 
         $menus = [
