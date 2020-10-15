@@ -165,6 +165,7 @@ function orderComplete(data) {
     modal.modal('show');
 }
 
+// deprecated
 function getCategory(obj) {
     var id = obj.attr('data-id'),
         type = obj.attr('data-type');

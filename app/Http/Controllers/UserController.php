@@ -21,11 +21,6 @@ class UserController extends Controller
     protected $breadcrumbs = [];
     protected $data = [];
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         return redirect('/profile/orders');
@@ -156,7 +151,7 @@ class UserController extends Controller
             $addMenus = [
                 ['href' => 'seo', 'name' => 'SEO', 'icon' => 'icon-price-tags'],
                 ['href' => 'products', 'name' => 'Продукты', 'icon' => 'icon-pie5'],
-                ['href' => 'categories', 'name' => 'Категории', 'icon' => 'icon-folder'],
+                ['href' => 'category', 'name' => 'Категории', 'icon' => 'icon-folder'],
                 ['href' => 'settings', 'name' => 'Настройки', 'icon' => 'icon-gear'],
                 ['href' => 'offices', 'name' => 'Офисы', 'icon' => 'icon-office'],
                 ['href' => 'shops', 'name' => 'Магазины', 'icon' => 'icon-basket'],

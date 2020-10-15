@@ -18,12 +18,6 @@ use Settings;
 
 class AdminController extends UserController
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->middleware('auth.admin');
-    }
-
     public function index()
     {
         return redirect('/admin/orders');
@@ -209,26 +203,55 @@ class AdminController extends UserController
      */
     public function categories()
     {
-        $menus = [
-            ['href' => '/', 'name' => 'На главную страницу', 'icon' => 'icon-list-unordered'],
-            ['href' => 'orders', 'name' => 'Заказы', 'icon' => 'icon-home'],
-            ['href' => 'seo', 'name' => 'SEO', 'icon' => 'icon-price-tags'],
-            ['href' => 'products', 'name' => 'Продукты', 'icon' => 'icon-pie5'],
-            ['href' => 'categories', 'name' => 'Категории', 'icon' => 'icon-folder'],
-            ['href' => 'settings', 'name' => 'Настройки', 'icon' => 'icon-gear'],
-            ['href' => 'offices', 'name' => 'Офисы', 'icon' => 'icon-office'],
-            ['href' => 'shops', 'name' => 'Магазины', 'icon' => 'icon-basket'],
-            ['href' => 'tastings', 'name' => 'Дегустации', 'icon' => 'icon-trophy2'],
-            ['href' => 'users', 'name' => 'Пользователи', 'icon' => 'icon-users']
-        ];
-        $categories = Category::all();
+        // $this->breadcrumbs['category'] = 'Категории';
+        $this->data['categories'] = Category::all();
+        return $this->showView('pages.category.list');
+    }
 
-        return view('admin.categories', [
-            'menus' => $menus,
-            'prefix' => Auth::user()->is_admin ? 'admin' : 'profile',
-            'breadcrumbs' => $this->breadcrumbs,
-            'categories' => $categories,
+    /**
+     * Страница редактирования категории
+     *
+     * @param int $id
+     * @return [type] [description]
+     */
+    public function category($id)
+    {
+        $this->breadcrumbs['category'] = 'Категории';
+        $category = Category::query()->findOrNew($id);
+        $this->data['category'] = $category;
+        return $this->showView('pages.category.item');
+    }
+
+    /**
+     * Создание/редактирование категории
+     *
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function postCategory(Request $request)
+    {
+        $data = $this->validate($request, [
+            'name' => ['required'],
+            'slug' => ['required', 'unique:categories,slug', 'slug'],
+        ], [
+            'slug.slug' => 'Некорректное имя ссылки. Разрешенные символы латинские буквы, цифры и тире'
         ]);
+        Category::updateOrCreate(['id' => $request->get('id')], $data);
+        return redirect()->route('admin.categoryList');
+    }
+
+    /**
+     * Удаление категории
+     *
+     * @return [type] [description]
+     */
+    public function deleteCategory(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|integer|exists:categories,id',
+        ]);
+        Category::destroy($request->get('id'));
+        return response()->json(['success' => true]);
     }
 
     public function editTasting(Request $request)

@@ -16,6 +16,9 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
+        if (!Auth::user()) {
+            return redirect()->guest('login');
+        }
         if (!Auth::user()->is_admin) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
