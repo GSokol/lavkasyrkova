@@ -13,13 +13,12 @@
             @endif
 
             <div class="col-md-3 col-sm-12 col-xs-12">
-                картинка
-                <!-- include('admin._image_block',[
+                @include('admin._image_block', [
                     'col' => 12,
-                    'preview' => isset($data['product']) && $data['product']->big_image ? $data['product']->big_image : null,
-                    'name' => 'big_image',
-                    'label' => 'Большая картинка'
-                ]) -->
+                    'preview' => isset($data['category']) && $data['category']->image ? $data['category']->image : null,
+                    'name' => 'image',
+                    'label' => 'Изображение',
+                ])
             </div>
 
             <div class="col-md-9 col-sm-12 col-xs-12">

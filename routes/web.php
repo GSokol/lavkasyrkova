@@ -51,7 +51,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth.admi
         Route::get('/', 'AdminController@categories')->name('categoryList');
         Route::get('/{id}', 'AdminController@category')->name('category');
         Route::post('/{id}', 'AdminController@postCategory')->name('postCategory');
-        Route::post('/delete', 'AdminController@deleteCategory')->name('deleteCategory');
+        Route::delete('/delete', 'AdminController@deleteCategory')->name('deleteCategory');
     });
     // seo
     Route::get('seo', 'AdminController@seo');

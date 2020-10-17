@@ -17,27 +17,38 @@
         </div>
         <div class="panel-body">
             <table class="table table-items">
-                <tr>
-                    <th class="id">id</th>
-                    <th class="text-center">Изображение</th>
-                    <th class="">Название</th>
-                    <th class="">Ссылка</th>
-                    <th class="">Дата редактирования</th>
-                    <th class="text-center"></th>
-                </tr>
-                @foreach ($categories as $category)
-                    <tr role="row" id="{{ 'category_'.$category->id }}">
-                        <td class="id">{{ $category->id }}</td>
-                        <td class="text-center image"><a class="img-preview" href="{{ asset($category->image) }}"><img src="{{ asset($category->image) }}" /></a></td>
-                        <td class=""><a href="{{ route('admin.category', ['id' => $category->id]) }}">{{ $category->name }}</a></td>
-                        <td class=""><span>{{ $category->slug }}</span></td>
-                        <td class=""><span>{{ $category->updated_at }}</span></td>
+                <thead>
+                    <tr>
+                        <th class="id">id</th>
+                        <th class="text-center">Изображение</th>
+                        <th class="">Название</th>
+                        <th class="">Ссылка</th>
+                        <th class="">Дата редактирования</th>
+                        <th class="text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr role="row" v-for="(row, index) in collection">
+                        <td class="id" v-text="row.id"></td>
+                        <td class="text-center image"><a v-if="row.image" class="img-preview" :href="'/' + row.image"><img :src="'/' + row.image" /></a></td>
+                        <td class=""><a :href="'/admin/category/' + row.id" v-text="row.name"></a></td>
+                        <td class=""><span v-text="row.slug"></span></td>
+                        <td class=""><span v-text="row.updated_at"></span></td>
                         <td class="delete">
-                            <span del-data="{{ $category->id }}" modal-data="delete-modal" class="glyphicon glyphicon-remove-circle"></span>
+                            <span class="glyphicon glyphicon-remove-circle" @click="onDelete(row, index)"></span>
                         </td>
                     </tr>
-                @endforeach
+                </tbody>
             </table>
         </div>
     </div>
+@endsection
+
+@section('js')
+<script>
+window.app = {!! json_encode([
+    'categories' => $data['categories'],
+]) !!};
+</script>
+<script type="text/javascript" src="{{ mix('js/admin/category.js') }}"></script>
 @endsection

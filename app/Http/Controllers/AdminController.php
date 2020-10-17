@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use File;
 use App\Office;
 use App\Models\Store;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\User;
 use App\Product;
 use App\Models\AddCategory;
@@ -232,11 +234,17 @@ class AdminController extends UserController
     {
         $data = $this->validate($request, [
             'name' => ['required'],
-            'slug' => ['required', 'unique:categories,slug', 'slug'],
+            'slug' => ['required', 'slug', Rule::unique('categories')->ignore($request->get('id'))],
+            'image' => ['image', 'max:5000'],
         ], [
             'slug.slug' => 'Некорректное имя ссылки. Разрешенные символы латинские буквы, цифры и тире'
         ]);
-        Category::updateOrCreate(['id' => $request->get('id')], $data);
+        $category = Category::updateOrCreate(['id' => $request->get('id')], $request->only(['name', 'slug', 'image']));
+        if ($request->hasFile('image')) {
+            $fileName = pathinfo($request->file('image')->getClientOriginalName(), PATHINFO_FILENAME);
+            $fields = $this->processingImage($request, $category, 'image', $fileName, 'images/categories');
+            $category->update(['image' => $fields['image']]);
+        }
         return redirect()->route('admin.categoryList');
     }
 
@@ -250,7 +258,11 @@ class AdminController extends UserController
         $this->validate($request, [
             'id' => 'required|integer|exists:categories,id',
         ]);
-        Category::destroy($request->get('id'));
+        $category = Category::findOrFail($request->get('id'));
+        if ($category->image && file_exists($category->image)) {
+            File::delete($category->image);
+        }
+        $category->delete();
         return response()->json(['success' => true]);
     }
 
