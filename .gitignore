@@ -3,6 +3,7 @@
 /public/storage
 /public/assets
 /public/vendor
+/public/setting.xml
 /resources/js/routes.js
 /storage/*.key
 /vendor

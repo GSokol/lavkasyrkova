@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin.layouts.default')
 
 @section('content')
     @include('admin._modal_delete_block',['modalId' => 'delete-modal', 'function' => 'delete-office', 'head' => 'Вы действительно хотите удалить этот офис?'])
