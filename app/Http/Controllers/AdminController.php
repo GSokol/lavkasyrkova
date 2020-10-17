@@ -205,7 +205,6 @@ class AdminController extends UserController
      */
     public function categories()
     {
-        // $this->breadcrumbs['category'] = 'Категории';
         $this->data['categories'] = Category::all();
         return $this->showView('pages.category.list');
     }
