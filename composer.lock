@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "058e3918c8f24f85844b32d16e970359",
+    "content-hash": "db9a016e0fa15cd4df45570c84fa09fe",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -151,6 +151,51 @@
                 "slugify"
             ],
             "time": "2019-12-14T13:04:14+00:00"
+        },
+        {
+            "name": "coderello/laravel-shared-data",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/coderello/laravel-shared-data.git",
+                "reference": "3efc56e04868dab6f9abf3dfedfb719d69f4631f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/coderello/laravel-shared-data/zipball/3efc56e04868dab6f9abf3dfedfb719d69f4631f",
+                "reference": "3efc56e04868dab6f9abf3dfedfb719d69f4631f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "php": "^7.3"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0|^5.0|^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Coderello\\SharedData\\Providers\\SharedDataServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Coderello\\SharedData\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Package for sharing data from Laravel to JavaScript.",
+            "time": "2020-09-09T07:58:12+00:00"
         },
         {
             "name": "cviebrock/eloquent-sluggable",

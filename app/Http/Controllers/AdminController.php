@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use File;
-use App\Office;
-use App\Models\Store;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-use App\User;
-use App\Product;
 use App\Models\AddCategory;
 use App\Models\Category;
+use App\Models\Store;
+use App\Office;
+use App\Product;
 use App\Tasting;
+use App\User;
 use App\UserToTasting;
+use Auth;
+use File;
 use Session;
 use Settings;
 
@@ -187,8 +188,8 @@ class AdminController extends UserController
             $this->validate($request, $validationArr);
             $fields = array_merge(
                 $fields,
-                $this->processingImage($request, null, 'image', str_slug($fields['name']), 'images/products'),
-                $this->processingImage($request, null, 'big_image', str_slug($fields['name']).'_big', 'images/products')
+                $this->processingImage($request, null, 'image', Str::slug($fields['name']), 'images/products'),
+                $this->processingImage($request, null, 'big_image', Str::slug($fields['name']).'_big', 'images/products')
             );
 
             Product::create($fields);
