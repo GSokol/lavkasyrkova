@@ -8,7 +8,7 @@ use App\Http\Controllers\HelperTrait;
 class CronNotify extends Command
 {
     use HelperTrait;
-    
+
     /**
      * The name and signature of the console command.
      *
@@ -50,7 +50,6 @@ class CronNotify extends Command
 
     private function notify()
     {
-        $this->sendMessage('vitaliy.artyukh@gmail.com', 'auth.emails.cron_informing', []);
-        // $this->sendMessage('romis.nesmelov@gmail.com', 'auth.emails.cron_informing', []);
+        $this->sendMessage('romis.nesmelov@gmail.com', 'auth.emails.cron_informing', []);
     }
 }
