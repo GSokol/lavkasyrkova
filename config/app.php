@@ -212,6 +212,7 @@ return [
          * Package Service Providers...
          */
         Barryvdh\Debugbar\ServiceProvider::class,
+        Coderello\SharedData\Providers\SharedDataServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -274,5 +275,7 @@ return [
 
         'Helper' => App\Facades\HelperFacades::class,
         'Settings' => App\Facades\SettingsFacades::class,
+        'Arr' => Illuminate\Support\Arr::class,
+        'Str' => Illuminate\Support\Str::class,
     ],
 ];

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Coderello\SharedData\Facades\SharedData;
 use App\Models\Order;
 use App\Models\OrderStatus;
 
@@ -38,6 +39,11 @@ class OrderController extends Controller
 
         $order = Order::with(['user', 'store', 'orderToProducts.product'])->findOrFail($id);
         $orderStatuses = OrderStatus::all();
+
+        SharedData::put([
+            'order' => $order,
+            'orderStatuses' => $orderStatuses,
+        ]);
 
         return view('admin.pages.order.item', [
             'order' => $order,

@@ -8,16 +8,13 @@
 @include('layouts._message_modal_block')
 
 @if (!Auth::user()->is_admin)
-    @include('layouts._checkout_modal_block',['usingAjax' => true])
+    @include('layouts._checkout_modal_block', ['usingAjax' => true])
 @endif
 
 @if (count($errors))
     @foreach ($errors as $error)
         {{ $error }}
     @endforeach
-    <!-- <script>
-        showMessage('Не все поля заполнены верно! Ошибки валидации отмечены красным.');
-    </script> -->
 @endif
 
 <div id="root">
@@ -55,6 +52,7 @@
     </div>
 </div>
 
+@shared
 @yield('js')
 </body>
 </html>
