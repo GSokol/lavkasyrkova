@@ -8,7 +8,6 @@
         "php": "^7.2",
         "barryvdh/laravel-debugbar": "^3.2",
         "coderello/laravel-shared-data": "^3.0",
-        "cviebrock/eloquent-sluggable": "^6.0",
         "facade/ignition": "^1.4",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.18.35",
