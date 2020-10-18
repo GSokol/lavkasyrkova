@@ -1,11 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Order;
 
 class ProductToOrder extends Model
 {
+    public $timestamps = false;
+
     protected $fillable = [
         'whole_value',
         'part_value',
@@ -20,8 +23,6 @@ class ProductToOrder extends Model
 
     public function order()
     {
-        return $this->belongsTo('App\Order');
+        return $this->belongsTo(Order::class);
     }
-
-    public $timestamps = false;
 }

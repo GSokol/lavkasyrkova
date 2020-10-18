@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
 use Illuminate\Http\Request;
-use App\User;
-use App\Order;
-use App\Models\Store;
-use App\Office;
-use App\UserToTasting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Order;
+use App\Models\OrderStatus;
+use App\Models\Store;
+use App\Office;
+use App\Product;
+use App\User;
+use App\UserToTasting;
 use Session;
 use Settings;
 
@@ -128,7 +129,8 @@ class UserController extends Controller
     {
         $this->validate($request, ['id' => 'required|integer|exists:orders,id']);
         $order = Order::find($request->input('id'));
-        if (Auth::user()->is_admin || (Auth::user()->id == $order->user->id && $order->status == 1)) {
+        $statusNew = OrderStatus::code(OrderStatus::ORDER_STATUS_NEW)->first();
+        if (Auth::user()->is_admin || (Auth::user()->id == $order->user->id && $order->status == $statusNew->id)) {
             $this->sendMessage($order->user->email, 'auth.emails.new_order', ['title' => 'Заказ удален', 'order' => $order], (string)Settings::getSettings()->email);
             $order->delete();
             return response()->json(['success' => true]);

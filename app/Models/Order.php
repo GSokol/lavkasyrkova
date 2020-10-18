@@ -1,14 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ProductToOrder;
 use App\Models\Store;
 
 class Order extends Model
 {
     protected $fillable = [
         'status',
+        'status_id',
         'description',
         'user_id',
         'tasting_id',
@@ -23,7 +25,7 @@ class Order extends Model
 
     public function orderToProducts()
     {
-        return $this->hasMany('App\ProductToOrder');
+        return $this->hasMany(ProductToOrder::class);
     }
 
     public function tasting()
@@ -31,7 +33,7 @@ class Order extends Model
         return $this->belongsTo('App\Tasting');
     }
 
-    public function shop()
+    public function store()
     {
         return $this->belongsTo(Store::class);
     }

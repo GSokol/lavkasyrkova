@@ -47,12 +47,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth.admi
     // home page
     Route::get('/', 'AdminController@index');
     // categories
-    Route::group(['prefix' => 'category'], function () {
+    Route::group(['prefix' => 'category'], function() {
         Route::get('/', 'AdminController@categories')->name('categoryList');
         Route::get('/{id}', 'AdminController@category')->name('category');
         Route::post('/{id}', 'AdminController@postCategory')->name('postCategory');
         Route::delete('/delete', 'AdminController@deleteCategory')->name('deleteCategory');
     });
+    // order
+    Route::group(['prefix' => 'orders'], function() {
+        Route::get('/', 'AdminController@orders');
+        Route::get('/{id}', 'Admin\OrderController@item')->name('order');
+        // Route::post('/{id}', 'AdminController@postOrder')->name('postOrder');
+        // Route::delete('/delete', 'AdminController@deleteCategory')->name('deleteCategory');
+    });
+    Route::post('/delete-order', 'UserController@deleteOrder');
     // seo
     Route::get('seo', 'AdminController@seo');
     Route::post('seo', 'AdminController@editSeo');
@@ -66,9 +74,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth.admi
     // user
     Route::get('/users/{slug?}', 'AdminController@users');
     Route::post('/delete-user', 'AdminController@deleteUser');
-    // order
-    Route::get('/orders', 'AdminController@orders');
-    Route::post('/delete-order', 'UserController@deleteOrder');
     // offices
     Route::get('/offices', 'AdminController@offices');
     Route::post('/offices', 'AdminController@editOffices');

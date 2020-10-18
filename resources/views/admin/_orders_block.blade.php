@@ -8,7 +8,7 @@
     </div>
     <div class="panel-body">
         @if (count($orders))
-            <table class="table datatable-basic table-items">
+            <table class="table table-items">
                 <tr>
                     <th class="text-center">Номер заказа</th>
                     <th class="text-center">Время создания</th>
@@ -23,7 +23,7 @@
                 @foreach ($orders as $order)
                     <tr role="row" id="{{ 'order_'.$order->id }}">
                         <td class="text-center id">{{ $order->id }}</td>
-                        <td class="text-center">{{ $order->created_at->format('d.m.Y') }}</td>
+                        <td class="text-center">{{ $order->created_at->format('d.m.Y H:i:s') }}</td>
                         <td class="text-center">@include('admin._delivery_place_block',['order' => $order])</td>
                         <td class="text-center">
                             @if ($order->user->office_id > 2 && !$order->delivery && !$order->shop_id)
