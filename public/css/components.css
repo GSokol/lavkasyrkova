@@ -2104,9 +2104,10 @@ body[class*=navbar-bottom] .footer:not(.navbar) {
   border-color: #fff;
 }
 .uploader {
-  width: 100%;
-  position: relative;
-  display: table;
+    width: 100%;
+    position: relative;
+    display: table;
+    border-radius: 3px;
 }
 .uploader .filename {
   color: #999999;
@@ -2127,12 +2128,14 @@ body[class*=navbar-bottom] .footer:not(.navbar) {
   border-top-left-radius: 3px;
 }
 .uploader .action {
-  display: table-cell;
-  cursor: pointer;
-  z-index: 1;
-  border-radius: 0;
-  border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
+    display: table-cell;
+    cursor: pointer;
+    z-index: 1;
+    border-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .uploader .action.btn {
   margin-top: 0;
@@ -17290,7 +17293,7 @@ thead .htCollapseButton:after {
 *
 *  # Responsive extension
 *
-*  Optimise the table's layout for different screen sizes through the dynamic 
+*  Optimise the table's layout for different screen sizes through the dynamic
 *  insertion and removal of columns from the table
 *
 *  Version: 1.0

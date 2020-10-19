@@ -46,12 +46,12 @@ Route::as('face.')->group(function() {
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth.admin']], function() {
     // home page
     Route::get('/', 'AdminController@index');
-    // categories
-    Route::group(['prefix' => 'category'], function() {
-        Route::get('/', 'AdminController@categories')->name('categoryList');
-        Route::get('/{id}', 'AdminController@category')->name('category');
-        Route::post('/{id}', 'AdminController@postCategory')->name('postCategory');
-        Route::delete('/delete', 'AdminController@deleteCategory')->name('deleteCategory');
+    // category
+    Route::group(['prefix' => 'category', 'namespace' => 'Admin'], function() {
+        Route::get('/', 'CategoryController@categories')->name('categoryList');
+        Route::get('/{id}', 'CategoryController@category')->name('category');
+        Route::post('/{id}', 'CategoryController@postCategory')->name('postCategory');
+        Route::delete('/delete', 'CategoryController@deleteCategory')->name('deleteCategory');
     });
     // order
     Route::group(['prefix' => 'orders'], function() {

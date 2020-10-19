@@ -3,19 +3,24 @@
 @section('content')
 <div class="panel panel-flat">
     <div class="panel-heading">
-        <h4 class="panel-title">{{ isset($data['category']) ? $data['category']->name : 'Новая категория' }}</h4>
+        <div class="row">
+            <div class="col-md-8">
+                <h3 class="panel-title">{{ $category->name ?: 'Новая категория' }}</h3>
+            </div>
+            <div class="col-md-4 text-right">
+                <a class="btn bg-success-600" href="{{ route('admin.category', ['id' => 'new']) }}"><i class="icon-add"></i> Добавить категорию</a>
+            </div>
+        </div>
     </div>
     <div class="panel-body">
-        <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('admin.postCategory', ['id' => $data['category']->name  ?: 'new']) }}" method="post">
+        <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('admin.postCategory', ['id' => $category->name  ?: 'new']) }}" method="post">
             {{ csrf_field() }}
-            @if (isset($data['category']))
-                <input type="hidden" name="id" value="{{ $data['category']->id }}">
-            @endif
+            <input type="hidden" name="id" value="{{ $category->id }}">
 
             <div class="col-md-3 col-sm-12 col-xs-12">
                 @include('admin._image_block', [
                     'col' => 12,
-                    'preview' => isset($data['category']) && $data['category']->image ? $data['category']->image : null,
+                    'preview' => isset($category) && $category->image ? $category->image : null,
                     'name' => 'image',
                     'label' => 'Изображение',
                 ])
@@ -30,7 +35,7 @@
                             'type' => 'text',
                             'max' => 255,
                             'placeholder' => 'Название продукта',
-                            'value' => isset($data['category']) ? $data['category']->name : ''
+                            'value' => isset($category) ? $category->name : ''
                         ])
 
                         @include('_input_block', [
@@ -39,7 +44,7 @@
                             'type' => 'text',
                             'max' => 255,
                             'placeholder' => 'Ссылка категории',
-                            'value' => isset($data['category']) ? $data['category']->slug : ''
+                            'value' => isset($category) ? $category->slug : ''
                         ])
                     </div>
                 </div>
@@ -48,9 +53,4 @@
         </form>
     </div>
 </div>
-
-@if (isset($data['user']))
-    @include('admin._orders_block',['orders' => $data['user']->orders, 'user' => $data['user']])
-@endif
-
 @endsection

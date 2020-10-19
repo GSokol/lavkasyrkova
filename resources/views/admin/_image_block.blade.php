@@ -15,7 +15,15 @@
             @else
                 <img src="/images/placeholder.jpg" />
             @endif
-            @include('admin._input_file_block', ['label' => '', 'name' =>  isset($name) && $name ? $name : 'image'])
+
+            <div class="form-group has-feedback {{ $errors && $errors->has($name) ? 'has-error' : '' }}">
+                <div class="col-md-12">
+                    <input {{ isset($inputId) ? 'id='.$inputId : '' }} type="file" name="{{ isset($name) && $name ? $name : 'image' }}" class="file-styled">
+                    @if ($errors && $errors->has($name))
+                        <span class="help-block error">{{ $errors->first($name) }}</span>
+                    @endif
+                </div>
+            </div>
 
             @if (isset($delData))
                 @include('admin._button_block', [

@@ -130,7 +130,7 @@ class UserController extends Controller
         $this->validate($request, ['id' => 'required|integer|exists:orders,id']);
         $order = Order::find($request->input('id'));
         $statusNew = OrderStatus::code(OrderStatus::ORDER_STATUS_NEW)->first();
-        if (Auth::user()->is_admin || (Auth::user()->id == $order->user->id && $order->status == $statusNew->id)) {
+        if (Auth::user()->is_admin || (Auth::user()->id == $order->user->id && $order->status_id == $statusNew->id)) {
             $this->sendMessage($order->user->email, 'auth.emails.new_order', ['title' => 'Заказ удален', 'order' => $order], (string)Settings::getSettings()->email);
             $order->delete();
             return response()->json(['success' => true]);

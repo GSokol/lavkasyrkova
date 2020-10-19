@@ -17,7 +17,6 @@
         <div class="panel panel-flat">
             <div class="panel-heading">
                 <h4 class="panel-title">Дегустация</h4>
-                @include('admin._heading_elements_block')
             </div>
             <div class="panel-body">
                 @include('admin._select_block',[
@@ -58,7 +57,6 @@
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <h4 class="panel-title">Участники дегустации</h4>
-                    @include('admin._heading_elements_block')
                 </div>
                 <div class="panel-body">
                     @if (count($data['tasting']->tastingToUsers))

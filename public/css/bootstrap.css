@@ -6521,6 +6521,14 @@ button.close {
   background-color: transparent;
   border: 0;
 }
+.text-truncate {
+    /* 1 */
+    max-width: 100%;
+    /* 2 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .hidden {
   display: none !important;
 }

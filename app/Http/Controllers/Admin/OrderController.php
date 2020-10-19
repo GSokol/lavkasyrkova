@@ -35,9 +35,17 @@ class OrderController extends Controller
      */
     public function item(int $id)
     {
-        // $this->breadcrumbs['orders/1'] = 'Заказы';
+        $order = Order::with([
+            'orderToProducts.product.category',
+            'user',
+            'store',
+        ])->findOrFail($id);
 
-        $order = Order::with(['user', 'store', 'orderToProducts.product'])->findOrFail($id);
+        $order->orderToProducts->transform(function($orderProduct) {
+            $orderProduct->setAppends(['quantity_unit', 'amount']);
+            return $orderProduct;
+        });
+
         $orderStatuses = OrderStatus::all();
 
         SharedData::put([

@@ -13,7 +13,7 @@ class OrderStatusSeeder extends Seeder
     public function run()
     {
         $rows = [
-            ['code' => OrderStatus::ORDER_STATUS_NEW, 'name' => 'Новый', 'class_name' => 'default'],
+            ['code' => OrderStatus::ORDER_STATUS_NEW, 'name' => 'Новый', 'class_name' => 'indigo'],
             ['code' => OrderStatus::ORDER_STATUS_PICKED, 'name' => 'Собраный', 'class_name' => 'primary'],
             ['code' => OrderStatus::ORDER_STATUS_DONE, 'name' => 'Выполнен', 'class_name' => 'success'],
             ['code' => OrderStatus::ORDER_STATUS_CANCELED, 'name' => 'Отменен', 'class_name' => 'danger'],

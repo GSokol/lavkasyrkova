@@ -26,7 +26,8 @@ mix.options({
  |
  */
 
-mix.js('resources/assets/js/admin/entry/category.js', 'public/js/admin');
+mix.js('resources/js/admin/entry/category.js', 'public/js/admin');
+mix.js('resources/js/admin/entry/order.js', 'public/js/admin');
 
 if (mix.inProduction()) {
     mix.version();

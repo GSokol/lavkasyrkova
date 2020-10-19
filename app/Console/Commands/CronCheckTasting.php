@@ -58,9 +58,9 @@ class CronCheckTasting extends Command
         foreach ($tastings as $tasting) {
             if ($tasting->time < time()) {
                 foreach ($tasting->orders as $order) {
-                    if ($order->status == $statusNew->id) {
+                    if ($order->status_id == $statusNew->id) {
                        $ordersIds[] = $order->id;
-                        $order->status = $statusDone->id;
+                        $order->status_id = $statusDone->id;
                         $order->save();
                     }
                 }

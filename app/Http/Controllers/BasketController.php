@@ -103,7 +103,7 @@ class BasketController extends Controller
 
         $statusNew = OrderStatus::code(OrderStatus::ORDER_STATUS_NEW)->first();
         $order = Order::create([
-            'status' => $statusNew->id,
+            'status_id' => $statusNew->id,
             'user_id' => Auth::user()->id,
             'shop_id' => $request->input('delivery') == 2 ? $request->input('shop_id') : null,
             'tasting_id' => $request->has('tasting_id') && $request->input('tasting_id') ? $request->input('tasting_id') : null,

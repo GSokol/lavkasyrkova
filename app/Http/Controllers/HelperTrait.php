@@ -39,14 +39,13 @@ trait HelperTrait
         'meta_googlebot' => ['name' => 'googlebot', 'property' => false],
         'meta_google_site_verification' => ['name' => 'robots', 'property' => false],
     ];
-    public $orderStatuses = ['новый','завершен'];
-    public $productParts = [100,200,300,400,500,600,700,800,900,1000];
+    public $productParts = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
 
     public function getTastings()
     {
         if (!Auth::guest()) $this->data['tastings'] = Tasting::where('office_id',Auth::user()->office_id)->where('time','>',time()+(60 * 60 * 5))->where('active',1)->orderBy('time','desc')->get();
     }
-    
+
     public function getMasterMail()
     {
         return (string)Settings::getSettings()->email;
@@ -56,20 +55,20 @@ trait HelperTrait
     {
         return Tasting::where('active',1)->where('time','>',time())->orderBy('time','desc')->first();
     }
-    
+
     public function notExist($item)
     {
         Session::flash('message',$item.' с таким id не существует!');
         return redirect()->back();
     }
-    
+
     public function youHaveNoRights()
     {
         Session::flash('message','У вас нет прав на данную операцию!');
         return redirect()->back();
     }
-    
-    public function subStr($string, $length) 
+
+    public function subStr($string, $length)
     {
         return mb_strlen($string, 'UTF-8') > $length ? mb_substr($string, 0, $length).'…' : $string;
     }
@@ -78,7 +77,7 @@ trait HelperTrait
     {
         Session::flash('message','Сохранение произведено');
     }
-    
+
     public function processingFields(Request $request, $checkboxFields=null, $ignoreFields=null, $timeFields=null, $compositeFields=null, $colorFields=null)
     {
         $exceptFields = ['_token','id'];
@@ -109,7 +108,7 @@ trait HelperTrait
                 $fields[$timeFields] = strtotime($this->convertTime($fields[$timeFields]));
             }
         }
-        
+
         if ($compositeFields) {
             if (is_array($compositeFields)) {
                 foreach ($compositeFields as $field) {
@@ -136,16 +135,16 @@ trait HelperTrait
     {
         $imageField = [];
         $field = $field ? $field : 'image';
-        
+
         if ($request->hasFile($field)) {
             $this->unlinkFile($model, $field);
 
             $info = $model && $model[$field] ? pathinfo($model[$field]) : null;
-            
+
             if ($name) $imageName = $name.'.'.$request->file($field)->getClientOriginalExtension();
             elseif ($info) $imageName = $info['filename'].'.'.$request->file($field)->getClientOriginalExtension();
             else $imageName = str_random(10).'.'.$request->file($field)->getClientOriginalExtension();
-            
+
             if (!$path && $info) $path = $info ? $info['dirname'] : 'images';
 
             $request->file($field)->move(base_path('public/'.$path),$imageName);

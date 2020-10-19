@@ -16,6 +16,7 @@ class Order extends Model
         'tasting_id',
         'shop_id',
         'delivery',
+        'discount_value',
     ];
 
     public function user()

@@ -4,9 +4,6 @@
     <div class="panel panel-flat">
         <div class="panel-heading">
             <h4 class="panel-title">{{ isset($data['user']) ? 'Редактирование пользователя '.$data['user']->email : 'Добавление пользователя' }}</h4>
-            @if (isset($data['user']))
-                @include('admin._heading_elements_block')
-            @endif
         </div>
         <div class="panel-body">
             <form class="form-horizontal" enctype="multipart/form-data" action="{{ url('/profile/user') }}" method="post">

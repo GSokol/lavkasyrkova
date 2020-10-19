@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -31393,10 +31393,10 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./resources/js/admin/entry/category.js":
-/*!**********************************************!*\
-  !*** ./resources/js/admin/entry/category.js ***!
-  \**********************************************/
+/***/ "./resources/js/admin/entry/order.js":
+/*!*******************************************!*\
+  !*** ./resources/js/admin/entry/order.js ***!
+  \*******************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -31415,7 +31415,8 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#root',
   data: function data() {
     return {
-      collection: _.get(window.app, 'categories'),
+      order: _.get(window.app, 'order'),
+      orderStatuses: _.get(window.app, 'orderStatuses') || [],
       state: {
         isLoading: false
       }
@@ -31423,41 +31424,59 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   },
   mounted: function mounted() {//
   },
-  created: function created() {//
+  created: function created() {
+    console.log('order');
   },
-  methods: {
-    onDelete: function onDelete(model, index) {
-      var _this = this;
+  methods: {// onDelete: function(model, index) {
+    //     if (confirm(`Вы действительно хотите удалить категорию: ${model.name}?`)) {
+    //         axios({
+    //             method: 'delete',
+    //             url: '/admin/category/delete',
+    //             data: {
+    //                 id: model.id,
+    //             },
+    //         }).then((response) => {
+    //             if (response.status === 200) {
+    //                 this.collection.splice(index, 1);
+    //             }
+    //         });
+    //     }
+    // },
+  },
+  computed: {
+    orderStatusById: function orderStatusById() {
+      return _.keyBy(this.orderStatuses, 'id');
+    },
+    statusClassName: function statusClassName() {
+      var currentStatus = _.get(this.order, 'status_id');
 
-      if (confirm("\u0412\u044B \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u043E \u0445\u043E\u0442\u0438\u0442\u0435 \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044E: ".concat(model.name, "?"))) {
-        axios__WEBPACK_IMPORTED_MODULE_1___default()({
-          method: 'delete',
-          url: '/admin/category/delete',
-          data: {
-            id: model.id
-          }
-        }).then(function (response) {
-          if (response.status === 200) {
-            _this.collection.splice(index, 1);
-          }
-        });
-      }
+      var className = _.get(this.orderStatusById, [currentStatus, 'class_name'], 'default');
+
+      return 'bg-' + className + '-400';
+    },
+    orderAmount: function orderAmount() {
+      return _.sumBy(this.order.order_to_products, 'amount');
+    },
+    discountAmount: function discountAmount() {
+      var discountValue = +_.get(this.order, 'discount_value', 0);
+      return this.orderAmount * discountValue / 100;
+    },
+    totalAmount: function totalAmount() {
+      return Math.round(this.orderAmount - this.discountAmount);
     }
-  },
-  computed: {//
   }
 });
 
 /***/ }),
 
-/***/ 0:
-/*!****************************************************!*\
-  !*** multi ./resources/js/admin/entry/category.js ***!
-  \****************************************************/
+/***/ 1:
+/*!*************************************************!*\
+  !*** multi ./resources/js/admin/entry/order.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/vitaliy/Documents/domains/lavkasyrkova.loc/resources/js/admin/entry/category.js */"./resources/js/admin/entry/category.js");
+module.exports = __webpack_require__(/*! /Users/vitaliy/Documents/domains/lavkasyrkova.loc/resources/js/admin/entry/order.js */"./resources/js/admin/entry/order.js");
 
 
 /***/ })
