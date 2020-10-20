@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use App\Models\AddCategory;
 use App\Models\Category;
 
@@ -20,7 +21,7 @@ class AddSlugColumnToCategoriesTable extends Migration
         });
         Category::all()->each(function($category) {
             $category->update([
-                'slug' => str_slug($category->name, '-'),
+                'slug' => Str::slug($category->name, '-'),
             ]);
         });
         Schema::table('categories', function (Blueprint $table) {
@@ -32,7 +33,7 @@ class AddSlugColumnToCategoriesTable extends Migration
         });
         AddCategory::all()->each(function($category) {
             $category->update([
-                'slug' => str_slug($category->name, '-'),
+                'slug' => Str::slug($category->name, '-'),
             ]);
         });
         Schema::table('add_categories', function (Blueprint $table) {

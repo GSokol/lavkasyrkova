@@ -46,13 +46,21 @@ Route::as('face.')->group(function() {
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth.admin']], function() {
     // home page
     Route::get('/', 'AdminController@index');
-    // categories
-    Route::group(['prefix' => 'category'], function () {
-        Route::get('/', 'AdminController@categories')->name('categoryList');
-        Route::get('/{id}', 'AdminController@category')->name('category');
-        Route::post('/{id}', 'AdminController@postCategory')->name('postCategory');
-        Route::delete('/delete', 'AdminController@deleteCategory')->name('deleteCategory');
+    // category
+    Route::group(['prefix' => 'category', 'namespace' => 'Admin'], function() {
+        Route::get('/', 'CategoryController@categories')->name('categoryList');
+        Route::get('/{id}', 'CategoryController@category')->name('category');
+        Route::post('/{id}', 'CategoryController@postCategory')->name('postCategory');
+        Route::delete('/delete', 'CategoryController@deleteCategory')->name('deleteCategory');
     });
+    // order
+    Route::group(['prefix' => 'orders', 'namespace' => 'Admin'], function() {
+        Route::get('/', 'OrderController@list')->name('orderList');
+        Route::get('/{id}', 'OrderController@item')->name('order');
+        Route::put('/item', 'OrderController@putOrder')->name('putOrder');
+        // Route::delete('/delete', 'AdminController@deleteCategory')->name('deleteCategory');
+    });
+    Route::post('/delete-order', 'UserController@deleteOrder');
     // seo
     Route::get('seo', 'AdminController@seo');
     Route::post('seo', 'AdminController@editSeo');
@@ -66,9 +74,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth.admi
     // user
     Route::get('/users/{slug?}', 'AdminController@users');
     Route::post('/delete-user', 'AdminController@deleteUser');
-    // order
-    Route::get('/orders', 'AdminController@orders');
-    Route::post('/delete-order', 'UserController@deleteOrder');
     // offices
     Route::get('/offices', 'AdminController@offices');
     Route::post('/offices', 'AdminController@editOffices');

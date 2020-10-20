@@ -2,6 +2,24 @@
 
 /*
 |--------------------------------------------------------------------------
+| Create custome constant
+|--------------------------------------------------------------------------
+|
+| Custome constants was allow all over the project
+|
+*/
+
+if (!defined('ERR')) define('ERR', 'error');
+if (!defined('CODE')) define('CODE', 'code');
+if (!defined('DATA')) define('DATA', 'data');
+if (!defined('MSG')) define('MSG', 'message');
+if (!defined('DESC')) define('DESC', 'description');
+if (!defined('FILE')) define('FILE', 'file');
+if (!defined('LINE')) define('LINE', 'line');
+if (!defined('SQL')) define('SQL', 'sql');
+
+/*
+|--------------------------------------------------------------------------
 | Create The Application
 |--------------------------------------------------------------------------
 |

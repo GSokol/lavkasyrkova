@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Order;
 
 class Tasting extends Model
 {
@@ -20,9 +21,9 @@ class Tasting extends Model
 
     public function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany(Order::class);
     }
-    
+
     public function tastingToUsers()
     {
         return $this->hasMany('App\UserToTasting');

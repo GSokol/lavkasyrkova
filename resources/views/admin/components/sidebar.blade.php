@@ -15,10 +15,10 @@
             <ul class="navigation navigation-main navigation-accordion">
                 @foreach ($menus as $menu)
                     @if ($menu['href'] == '/')
-                        <li><a href="{{ url('/') }}"><i class="{{ $menu['icon'] }}"></i> <span>{{ str_limit($menu['name'], 20) }}</span></a></li>
+                        <li><a href="{{ url('/') }}"><i class="{{ $menu['icon'] }}"></i> <span>{{ Str::limit($menu['name'], 20) }}</span></a></li>
                     @else
                         <li {{ preg_match('/^('.$prefix.'\/'.str_replace('/','\/',$menu['href']).')/', Request::path()) ? 'class=active' : '' }}>
-                            <a href="{{ url('/'.$prefix.'/'.$menu['href']) }}"><i class="{{ $menu['icon'] }}"></i> <span>{{ str_limit($menu['name'], 20) }}</span></a>
+                            <a href="{{ url('/'.$prefix.'/'.$menu['href']) }}"><i class="{{ $menu['icon'] }}"></i> <span>{{ Str::limit($menu['name'], 20) }}</span></a>
                             @if (isset($menu['submenu']) && count($menu['submenu']))
                                 <ul>
                                     @foreach ($menu['submenu'] as $submenu)
@@ -31,7 +31,7 @@
                                         }
                                         ?>
                                         <li {{ (preg_match('/^('.$prefix.'\/'.str_replace('/','\/',$menu['href'].'/'.$submenu['href']).')/', Request::path())) || (Request::path() == $prefix.'/products' && Request::has('id') && Request::input('id') == (int)str_replace('?id=','',$submenu['href'])) ? 'class=active' : '' }}>
-                                            <a href="{{ url('/'.$prefix.'/'.$menu['href'].'/'.$submenu['href']) }}" {!! $addAttrStr !!}>{{ str_limit($submenu['name'], 20) }}</a>
+                                            <a href="{{ url('/'.$prefix.'/'.$menu['href'].'/'.$submenu['href']) }}" {!! $addAttrStr !!}>{{ Str::limit($submenu['name'], 20) }}</a>
                                         </li>
                                     @endforeach
                                 </ul>

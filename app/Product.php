@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\AddCategory;
 use App\Models\Category;
+use App\Models\ProductToOrder;
 
 class Product extends Model
 {
@@ -39,7 +40,7 @@ class Product extends Model
 
     public function productToOrders()
     {
-        return $this->hasMany('App\ProductToOrder');
+        return $this->hasMany(ProductToOrder::class);
     }
 
     public function productToActions()

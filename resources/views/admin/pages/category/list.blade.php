@@ -1,9 +1,6 @@
 @extends('admin.layouts.default')
 
 @section('content')
-    @include('admin._modal_delete_block', ['modalId' => 'delete-modal', 'function' => 'category/delete', 'head' => 'Вы действительно хотите удалить этот продукт?'])
-    {{ csrf_field() }}
-
     <div class="panel panel-flat">
         <div class="panel-heading">
             <div class="row">
@@ -45,10 +42,5 @@
 @endsection
 
 @section('js')
-<script>
-window.app = {!! json_encode([
-    'categories' => $data['categories'],
-]) !!};
-</script>
 <script type="text/javascript" src="{{ mix('js/admin/category.js') }}"></script>
 @endsection

@@ -25,6 +25,7 @@ class StaticController extends Controller
         return $this->showView('face.pages.home');
     }
 
+    // deprecated
     public function getCategoryProducts(Request $request)
     {
         $this->validate($request,['type' => 'required|in:category,add_category']);

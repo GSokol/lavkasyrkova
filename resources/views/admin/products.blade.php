@@ -14,7 +14,6 @@
         <div class="panel panel-flat">
             <div class="panel-heading">
                 <h3 class="panel-title">{{ $category->name }}</h3>
-                @include('admin._heading_elements_block')
             </div>
             <div class="panel-body">
                 <table class="table datatable-basic table-items">

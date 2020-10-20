@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-//        \App\Console\Commands\CronMethods::class,
+        Commands\CronInformTasting::class,
+        Commands\CronCheckTasting::class,
+        Commands\CronNotify::class,
     ];
 
     /**
@@ -24,9 +26,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call('CronMethods@checkTasting')->daily();
-        $schedule->call('CronMethods@informingAboutTastings')->daily();
-//        $schedule->call('CronMethods@cronInforming')->daily();
+        $schedule->command('cron:inform-tasting')->daily();
+        $schedule->command('cron:check-tasting')->daily();
+        // $schedule->command('cron:notify')->daily();
     }
 
     /**

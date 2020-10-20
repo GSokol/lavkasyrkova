@@ -1,4 +1,4 @@
-@extends('layouts.mail')
+@extends('face.layouts.mail')
 
 @section('content')
     <h2 class="section-title">{{ $time }} состоится Доставка сыра в ваш офис по адресу {{ $address }}.</h2>

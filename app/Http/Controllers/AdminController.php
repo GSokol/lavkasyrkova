@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use File;
-use App\Office;
-use App\Models\Store;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use App\User;
-use App\Product;
+use Illuminate\Support\Str;
 use App\Models\AddCategory;
 use App\Models\Category;
+use App\Models\Store;
+use App\Office;
+use App\Product;
 use App\Tasting;
+use App\User;
 use App\UserToTasting;
+use Auth;
 use Session;
 use Settings;
 
@@ -187,8 +186,8 @@ class AdminController extends UserController
             $this->validate($request, $validationArr);
             $fields = array_merge(
                 $fields,
-                $this->processingImage($request, null, 'image', str_slug($fields['name']), 'images/products'),
-                $this->processingImage($request, null, 'big_image', str_slug($fields['name']).'_big', 'images/products')
+                $this->processingImage($request, null, 'image', Str::slug($fields['name']), 'images/products'),
+                $this->processingImage($request, null, 'big_image', Str::slug($fields['name']).'_big', 'images/products')
             );
 
             Product::create($fields);
@@ -196,73 +195,6 @@ class AdminController extends UserController
 
         $this->saveCompleteMessage();
         return redirect('/admin/products');
-    }
-
-    /**
-     * Список категорий
-     *
-     * @return [type] [description]
-     */
-    public function categories()
-    {
-        $this->data['categories'] = Category::all();
-        return $this->showView('pages.category.list');
-    }
-
-    /**
-     * Страница редактирования категории
-     *
-     * @param int $id
-     * @return [type] [description]
-     */
-    public function category($id)
-    {
-        $this->breadcrumbs['category'] = 'Категории';
-        $category = Category::query()->findOrNew($id);
-        $this->data['category'] = $category;
-        return $this->showView('pages.category.item');
-    }
-
-    /**
-     * Создание/редактирование категории
-     *
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function postCategory(Request $request)
-    {
-        $data = $this->validate($request, [
-            'name' => ['required'],
-            'slug' => ['required', 'slug', Rule::unique('categories')->ignore($request->get('id'))],
-            'image' => ['image', 'max:5000'],
-        ], [
-            'slug.slug' => 'Некорректное имя ссылки. Разрешенные символы латинские буквы, цифры и тире'
-        ]);
-        $category = Category::updateOrCreate(['id' => $request->get('id')], $request->only(['name', 'slug', 'image']));
-        if ($request->hasFile('image')) {
-            $fileName = pathinfo($request->file('image')->getClientOriginalName(), PATHINFO_FILENAME);
-            $fields = $this->processingImage($request, $category, 'image', $fileName, 'images/categories');
-            $category->update(['image' => $fields['image']]);
-        }
-        return redirect()->route('admin.categoryList');
-    }
-
-    /**
-     * Удаление категории
-     *
-     * @return [type] [description]
-     */
-    public function deleteCategory(Request $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|integer|exists:categories,id',
-        ]);
-        $category = Category::findOrFail($request->get('id'));
-        if ($category->image && file_exists($category->image)) {
-            File::delete($category->image);
-        }
-        $category->delete();
-        return response()->json(['success' => true]);
     }
 
     public function editTasting(Request $request)

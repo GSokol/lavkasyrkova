@@ -21,6 +21,7 @@
     "devDependencies": {
         "@babel/core": "^7.7.7",
         "@babel/preset-env": "^7.7.7",
+        "@pnotify/core": "^5.1.2",
         "bootstrap-sass": "^3.3.7",
         "cross-env": "^7.0",
         "laravel-mix": "^5.0.1",

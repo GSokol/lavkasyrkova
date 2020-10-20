@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Order;
-use App\ProductToOrder;
+use App\Models\Order;
+use App\Models\OrderStatus;
+use App\Models\ProductToOrder;
+use App\Product;
+use App\User;
 use Session;
 use Settings;
 use Helper;
@@ -100,8 +101,9 @@ class BasketController extends Controller
             else return $result;
         }
 
+        $statusNew = OrderStatus::code(OrderStatus::ORDER_STATUS_NEW)->first();
         $order = Order::create([
-            'status' => 1,
+            'status_id' => $statusNew->id,
             'user_id' => Auth::user()->id,
             'shop_id' => $request->input('delivery') == 2 ? $request->input('shop_id') : null,
             'tasting_id' => $request->has('tasting_id') && $request->input('tasting_id') ? $request->input('tasting_id') : null,
@@ -121,8 +123,8 @@ class BasketController extends Controller
         }
         Session::forget('basket');
 
-        $this->sendMessage($order->user->email, 'auth.emails.new_order', ['title' => 'Новый заказ', 'order' => $order], (string)Settings::getSettings()->email);
-//        $this->sendMessage('romis.nesmelov@gmail.com', 'auth.emails.new_order', ['title' => 'Новый заказ', 'order' => $order]);
+        $this->sendMessage($order->user->email, 'emails.new_order', ['title' => 'Новый заказ', 'order' => $order], (string)Settings::getSettings()->email);
+//        $this->sendMessage('romis.nesmelov@gmail.com', 'emails.new_order', ['title' => 'Новый заказ', 'order' => $order]);
 
         $result = ['success' => true, 'message' => 'Ваш заказ оформлен!'];
         if ($usingAjax) return response()->json($result);

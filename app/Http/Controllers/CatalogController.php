@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Config;
 use Illuminate\Http\Request;
 use App\Models\AddCategory;
 use App\Models\Category;

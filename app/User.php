@@ -2,9 +2,10 @@
 
 namespace App;
 
-use App\Ticket;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Order;
+use App\Ticket;
 
 class User extends Authenticatable
 {
@@ -28,10 +29,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Office');
     }
-    
+
     public function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany(Order::class);
     }
 
     public function userToTastings()
