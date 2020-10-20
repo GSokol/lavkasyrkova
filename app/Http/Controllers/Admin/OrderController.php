@@ -6,26 +6,21 @@ use Illuminate\Http\Request;
 use Coderello\SharedData\Facades\SharedData;
 use App\Models\Order;
 use App\Models\OrderStatus;
+use App\Notifications\NewOrder;
 
 class OrderController extends Controller
 {
-    public function __construct()
-    {
-        // $categories = Category::all();
-        // $this->data['seo'] = Settings::getSeoTags();
-        // $this->data['actions'] = Product::where(function($query) {
-        //     $query->where('action', 1)->orWhere('new', 1);
-        // })->where('active', 1)->get();
-        //
-        // View::share('data', $this->data);
-        // View::share('metas', $this->metas);
-        // View::share('mainMenu', $this->getMainMenu($categories));
+    /**
+     * Страница списка заказов
+     *
+     * @return Illuminate\Support\Facades\View
+     */
+    public function list() {
+        $orders = Order::with(['user', 'status', 'orderToProducts.product'])->latest()->get();
 
-        // View::share('prefix', $this->getPrefix());
-        // View::share('menus', $this->getMainMenu());
-        // View::share('breadcrumbs', $this->breadcrumbs);
-
-        parent::__construct();
+        return view('admin.pages.order.list', [
+            'orders' => $orders,
+        ]);
     }
 
     /**
@@ -33,7 +28,7 @@ class OrderController extends Controller
      *
      * @return Illuminate\Support\Facades\View
      */
-    public function item(int $id)
+    public function item($id)
     {
         $order = Order::with([
             'orderToProducts.product.category',
@@ -59,22 +54,26 @@ class OrderController extends Controller
         ]);
     }
 
-    // /**
-    //  * Страница категории товаров
-    //  *
-    //  * @param string $slug
-    //  * @return Illuminate\Support\Facades\View
-    //  */
-    // public function category($slug) {
-    //     $category = Category::where('slug', '=', $slug)->first() ?: AddCategory::where('slug', '=', $slug)->first();;
-    //     if (!$category) {
-    //         abort(404);
-    //     }
-    //     $this->data['products'] = $category->products;
-    //
-    //     return view('face.pages.category', [
-    //         'category' => $category,
-    //         'data' => $this->data,
-    //     ]);
-    // }
+    /**
+     * Редактировать данные заказа
+     *
+     * @param  Request $request [description]
+     * @see https://github.com/GSokol/lavkasyrkova/issues/11
+     * @return [type]           [description]
+     */
+    public function putOrder(Request $request)
+    {
+        $data = $this->validate($request, [
+            'id' => ['required'],
+            'discount_value' => ['sometimes', 'nullable', 'integer', 'max:50'],
+        ]);
+        $order = Order::with(['user'])->findOrFail($request->get('id'));
+        $data['status_id'] = OrderStatus::code(OrderStatus::ORDER_STATUS_PICKED)->first()->id;
+        $order->update($data);
+        $order = $order->fresh();
+        // notification email
+        $order->user->notify(new NewOrder($order));
+
+        return $this->response([MSG => 'Заказ успешно обновлен']);
+    }
 }

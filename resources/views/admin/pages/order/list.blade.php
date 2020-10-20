@@ -1,6 +1,6 @@
-@include('admin._modal_delete_block',['modalId' => 'delete-modal', 'function' => 'delete-order', 'head' => 'Вы действительно хотите удалить этот заказ?'])
-{{ csrf_field() }}
+@extends('admin.layouts.default')
 
+@section('content')
 <div class="panel panel-flat">
     <div class="panel-heading">
         <h3 class="panel-title">История заказов</h3>
@@ -17,12 +17,11 @@
                     <th class="text-center">Состав</th>
                     <th class="text-center">Статус заказа</th>
                     <th class="text-center">Стоимость</th>
-                    <th class="text-center">Удалить</th>
                 </tr>
                 @foreach ($orders as $order)
                     <tr role="row" id="{{ 'order_'.$order->id }}">
                         <td class="text-center id">{{ $order->id }}</td>
-                        <td class="text-center">{{ $order->created_at->format('d.m.Y H:i:s') }}</td>
+                        <td class="text-center"><a href="{{ route('admin.order', ['id' => $order->id]) }}">{{ $order->created_at->format('d.m.Y H:i:s') }}</a></td>
                         <td class="text-center">@include('admin._delivery_place_block', ['order' => $order])</td>
                         <td class="text-center">
                             @if ($order->user->office_id > 2 && !$order->delivery && !$order->shop_id)
@@ -35,14 +34,11 @@
                             @endif
                         </td>
                         <td class="text-left">{{ $order->description }}</td>
-                        <td class="text-left">@include('admin._order_content_block',['order' => $order])</td>
-                        <td class="text-center">@include('admin._status_block',['status' => $order->status_id, 'trueLabel' => 'новый', 'falseLabel' => 'выполнен'])</td>
-                        <td class="text-center">{{ $order->total_amount }} руб.</td>
-                        <td class="delete">
-                            @if (Auth::user()->is_admin || $order->status_id == 1)
-                                <span del-data="{{ $order->id }}" modal-data="delete-modal" class="glyphicon glyphicon-remove-circle"></span>
-                            @endif
+                        <td class="text-left">@include('admin._order_content_block', ['order' => $order])</td>
+                        <td class="text-center">
+                            <span class="label label-{{ $order->status->class_name }}">{{ $order->status->name }}</span>
                         </td>
+                        <td class="text-center">{{ $order->total_amount }} руб.</td>
                     </tr>
                 @endforeach
             </table>
@@ -51,3 +47,8 @@
         @endif
     </div>
 </div>
+@endsection
+
+@section('js')
+<script type="text/javascript" src="{{ mix('js/admin/order.js') }}"></script>
+@endsection

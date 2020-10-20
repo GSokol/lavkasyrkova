@@ -42,7 +42,6 @@ class HelperController extends Controller
     }
 
     public function productValue($value) {
-//        return str_replace('.',',',(string)$value);
         return $value;
     }
 

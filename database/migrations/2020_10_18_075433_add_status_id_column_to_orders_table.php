@@ -22,6 +22,10 @@ class AddStatusIdColumnToOrdersTable extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->foreign('status_id')->references('id')->on('order_status')->onUpdate('cascade');
         });
+        // удалить колонку status
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('status');
+        });
     }
 
     /**
@@ -31,6 +35,13 @@ class AddStatusIdColumnToOrdersTable extends Migration
      */
     public function down()
     {
+        // добавить колонку status
+        Schema::table('orders', function (Blueprint $table) {
+            $table->tinyInteger('status')->after('delivery');
+        });
+        // заполнить значения из status_id
+        DB::unprepared("UPDATE `orders` SET `status` = CASE `status_id` WHEN 1 THEN 1 WHEN 3 THEN 2 ELSE `status` END");
+        // удалить status_id
         Schema::table('orders', function (Blueprint $table) {
             $table->dropForeign(['status_id']);
             $table->dropColumn('status_id');

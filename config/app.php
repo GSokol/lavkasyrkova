@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://lavkasyrkova'),
+    'url' => env('APP_URL', 'http://lavkasyrkova.ru'),
 
     /* Main Title */
 

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import { get, keyBy, sumBy } from 'lodash';
+import { alert } from '@pnotify/core';
 
 new Vue({
     el: '#root',
@@ -24,21 +25,36 @@ new Vue({
     },
 
     methods: {
-        // onDelete: function(model, index) {
-        //     if (confirm(`Вы действительно хотите удалить категорию: ${model.name}?`)) {
-        //         axios({
-        //             method: 'delete',
-        //             url: '/admin/category/delete',
-        //             data: {
-        //                 id: model.id,
-        //             },
-        //         }).then((response) => {
-        //             if (response.status === 200) {
-        //                 this.collection.splice(index, 1);
-        //             }
-        //         });
-        //     }
-        // },
+        /**
+         * Отправка формы редактирования заказа
+         *
+         * @param  {Object} event [EventSubmit]
+         * @return {void}
+         */
+        onOrderSubmit: function(event) {
+            this.state.isLoading = true;
+            let param = _.pick(this.order, ['id', 'discount_value']);
+
+            axios({
+                method: 'put',
+                url: '/admin/orders/item',
+                data: param,
+            }).then((response) => {
+                this.state.isLoading = false;
+                alert({
+                    // title: "I'm an alert.",
+                    text: response.data.message,
+                    type: 'success',
+                });
+            }).catch((error) => {
+                this.state.isLoading = false
+                alert({
+                    title: error.response.data.message,
+                    text: error.response.data.description,
+                    type: 'error',
+                });
+            });
+        },
     },
 
     computed: {

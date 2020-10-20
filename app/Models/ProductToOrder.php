@@ -24,7 +24,7 @@ class ProductToOrder extends Model
      *
      * @return string
      */
-    public function getQuantityUnitAttribute() {
+    public function getQuantityUnitAttribute(): string {
         return $this->whole_value ? $this->whole_value . ' шт.' : $this->part_value . ' г.';
     }
 

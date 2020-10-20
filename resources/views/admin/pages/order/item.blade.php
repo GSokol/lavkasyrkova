@@ -7,7 +7,7 @@
     </div>
 
     <div class="panel-body">
-        <form class="form-horizontal" action="#">
+        <form class="form-horizontal" method="POST" @submit.prevent="onOrderSubmit">
             <div class="row">
                 <div class="col-lg-6">
                     <fieldset class="content-group">
@@ -135,6 +135,7 @@
                                             <div class="input-group">
 												<span class="input-group-addon">Скидка</span>
 												<input type="number" class="form-control" min="0" max="50" placeholder="Введите размер скидки" v-model.number="order.discount_value">
+                                                <span class="input-group-addon">%</span>
 											</div>
                                         </th>
 										<td class="text-right"><h5 v-text="discountAmount + ' руб.'">0</h5></td>
@@ -146,13 +147,17 @@
 								</tbody>
 							</table>
 						</div>
-
-						<div class="text-right">
-							<button type="button" class="btn btn-success btn-labeled"><b><i class="icon-paperplane"></i></b> Сохранить</button>
-						</div>
 					</div>
 				</div>
 			</div>
+            <div class="row">
+				<div class="col-sm-7">
+                    <small>* при нажатии кнопки "Сохранить" будет отправлено письмо клиенту о новом статусе заказа</small>
+                </div>
+				<div class="col-sm-5 text-right">
+                    <button type="submit" class="btn btn-success btn-labeled" :disabled="state.isLoading"><b><i class="icon-paperplane"></i></b> Сохранить</button>
+                </div>
+            </div>
         </form>
     </div>
 </div>

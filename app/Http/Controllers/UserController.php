@@ -131,10 +131,11 @@ class UserController extends Controller
         $order = Order::find($request->input('id'));
         $statusNew = OrderStatus::code(OrderStatus::ORDER_STATUS_NEW)->first();
         if (Auth::user()->is_admin || (Auth::user()->id == $order->user->id && $order->status_id == $statusNew->id)) {
-            $this->sendMessage($order->user->email, 'auth.emails.new_order', ['title' => 'Заказ удален', 'order' => $order], (string)Settings::getSettings()->email);
+            $this->sendMessage($order->user->email, 'emails.new_order', ['title' => 'Заказ удален', 'order' => $order], (string)Settings::getSettings()->email);
             $order->delete();
             return response()->json(['success' => true]);
-        } else return response()->json(['success' => false]);
+        }
+        return response()->json(['success' => false]);
     }
 
     protected function showView($view)

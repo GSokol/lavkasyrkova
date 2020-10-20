@@ -123,8 +123,8 @@ class BasketController extends Controller
         }
         Session::forget('basket');
 
-        $this->sendMessage($order->user->email, 'auth.emails.new_order', ['title' => 'Новый заказ', 'order' => $order], (string)Settings::getSettings()->email);
-//        $this->sendMessage('romis.nesmelov@gmail.com', 'auth.emails.new_order', ['title' => 'Новый заказ', 'order' => $order]);
+        $this->sendMessage($order->user->email, 'emails.new_order', ['title' => 'Новый заказ', 'order' => $order], (string)Settings::getSettings()->email);
+//        $this->sendMessage('romis.nesmelov@gmail.com', 'emails.new_order', ['title' => 'Новый заказ', 'order' => $order]);
 
         $result = ['success' => true, 'message' => 'Ваш заказ оформлен!'];
         if ($usingAjax) return response()->json($result);

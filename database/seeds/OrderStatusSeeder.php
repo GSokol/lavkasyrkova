@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 use App\Models\OrderStatus;
 
 class OrderStatusSeeder extends Seeder
@@ -13,7 +14,7 @@ class OrderStatusSeeder extends Seeder
     public function run()
     {
         $rows = [
-            ['code' => OrderStatus::ORDER_STATUS_NEW, 'name' => 'Новый', 'class_name' => 'indigo'],
+            ['code' => OrderStatus::ORDER_STATUS_NEW, 'name' => 'Новый', 'class_name' => 'default'],
             ['code' => OrderStatus::ORDER_STATUS_PICKED, 'name' => 'Собраный', 'class_name' => 'primary'],
             ['code' => OrderStatus::ORDER_STATUS_DONE, 'name' => 'Выполнен', 'class_name' => 'success'],
             ['code' => OrderStatus::ORDER_STATUS_CANCELED, 'name' => 'Отменен', 'class_name' => 'danger'],
@@ -30,7 +31,7 @@ class OrderStatusSeeder extends Seeder
         // 4 => Отменен
 
         foreach ($rows as $row) {
-            OrderStatus::updateOrCreate(array_only($row, ['code']), $row)->save();
+            OrderStatus::updateOrCreate(Arr::only($row, ['code']), $row)->save();
         }
     }
 }

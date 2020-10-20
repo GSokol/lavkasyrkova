@@ -54,10 +54,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth.admi
         Route::delete('/delete', 'CategoryController@deleteCategory')->name('deleteCategory');
     });
     // order
-    Route::group(['prefix' => 'orders'], function() {
-        Route::get('/', 'AdminController@orders');
-        Route::get('/{id}', 'Admin\OrderController@item')->name('order');
-        // Route::post('/{id}', 'AdminController@postOrder')->name('postOrder');
+    Route::group(['prefix' => 'orders', 'namespace' => 'Admin'], function() {
+        Route::get('/', 'OrderController@list')->name('orderList');
+        Route::get('/{id}', 'OrderController@item')->name('order');
+        Route::put('/item', 'OrderController@putOrder')->name('putOrder');
         // Route::delete('/delete', 'AdminController@deleteCategory')->name('deleteCategory');
     });
     Route::post('/delete-order', 'UserController@deleteOrder');

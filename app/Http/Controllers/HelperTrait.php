@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Config;
+use Session;
+use Settings;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use App\Tasting;
-use Session;
-use Settings;
-use Config;
 
 trait HelperTrait
 {
@@ -143,7 +144,7 @@ trait HelperTrait
 
             if ($name) $imageName = $name.'.'.$request->file($field)->getClientOriginalExtension();
             elseif ($info) $imageName = $info['filename'].'.'.$request->file($field)->getClientOriginalExtension();
-            else $imageName = str_random(10).'.'.$request->file($field)->getClientOriginalExtension();
+            else $imageName = Str::random(10).'.'.$request->file($field)->getClientOriginalExtension();
 
             if (!$path && $info) $path = $info ? $info['dirname'] : 'images';
 
@@ -185,7 +186,7 @@ trait HelperTrait
     private function convertColor($color)
     {
         if (preg_match('/^(hsv\(\d+\, \d+\%\, \d+\%\))$/',$color)) {
-            $hsv = explode(',',str_replace(['hsv','(',')','%',' '],'',$color));
+            $hsv = explode(',', Str::replace(['hsv','(',')','%',' '],'',$color));
             $color = $this->fGetRGB($hsv[0],$hsv[1],$hsv[2]);
         }
         return $color;
@@ -193,7 +194,7 @@ trait HelperTrait
 
     public function convertCompositeVal($val)
     {
-        return (int)str_replace([' ',' руб','шт.'],'',$val);
+        return (int)Str::replace([' ',' руб', 'шт.'], '', $val);
     }
 
     private function fGetRGB($iH, $iS, $iV)

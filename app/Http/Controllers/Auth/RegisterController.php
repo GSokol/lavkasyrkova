@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use Auth;
-use Session;
 use Config;
-use App\User;
-use App\Http\Controllers\Controller;
+use Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\HelperTrait;
+use App\User;
 
 class RegisterController extends Controller
 {
@@ -72,7 +73,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'phone' => $data['phone'],
             'password' => bcrypt($data['password']),
-            'confirm_token' => str_random(32),
+            'confirm_token' => Str::random(32),
             'office_id' => $data['office_id'],
             'address' => $data['address'],
             'active' => false,
