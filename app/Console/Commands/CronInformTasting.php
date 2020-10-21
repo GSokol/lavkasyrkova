@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Tasting;
+use App\Models\Tasting;
 
 class CronInformTasting extends Command
 {

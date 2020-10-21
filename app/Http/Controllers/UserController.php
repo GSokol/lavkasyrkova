@@ -30,7 +30,6 @@ class UserController extends Controller
     public function orders()
     {
         $this->breadcrumbs = ['orders' => 'Заказы'];
-        $this->getTastings();
         $this->data['orders'] = Auth::user()->is_admin ? Order::orderBy('id','desc')->get() : Order::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
         return $this->showView('orders');
     }
@@ -38,7 +37,6 @@ class UserController extends Controller
     public function user(Request $request)
     {
         $this->breadcrumbs = ['user' => 'Профиль пользователя'];
-        $this->getTastings();
         $this->data['user'] = Auth::user();
         $this->data['offices'] = Office::all();
         if ($request->has('unsubscribe') && $request->input('unsubscribe')) {

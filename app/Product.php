@@ -47,4 +47,11 @@ class Product extends Model
     {
         return $this->hasMany('App\ActionsToProduct');
     }
+
+    public static function getActions()
+    {
+        return static::where(function($query) {
+            $query->where('action', 1)->orWhere('new', 1);
+        })->where('active', 1)->get();
+    }
 }

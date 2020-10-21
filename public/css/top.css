@@ -71,7 +71,8 @@
 }
 
 .basket .dropdown-menu {
-    margin-left: -200%;
+    right: 0;
+    left: auto;
 }
 
 .navbar-toggle {

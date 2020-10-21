@@ -6,24 +6,16 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\AddCategory;
 use App\Models\Category;
 use App\Models\Store;
+use App\Models\Tasting;
 use App\Product;
-use App\Tasting;
 use Settings;
+use Session;
 
 class StaticController extends Controller
 {
     use HelperTrait;
 
     protected $data = [];
-
-    public function index()
-    {
-        $this->data['shops'] = Store::all();
-        $this->data['actions'] = Product::where(function($query){ $query->where('action',1)->orWhere('new',1); })->where('active',1)->get();
-        $this->data['products'] = Product::all();
-        $this->getTastings();
-        return $this->showView('face.pages.home');
-    }
 
     // deprecated
     public function getCategoryProducts(Request $request)

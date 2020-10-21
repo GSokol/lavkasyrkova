@@ -8,7 +8,7 @@
                 <div class="order-form"></div>
                 <div id="on-top-button"><i class="glyphicon glyphicon-upload"></i></div>
 
-                @if (count($data['products']))
+                @if (count($products))
                     @include('_products_block', ['data' => $data])
                 @else
                     <h4 class="text-center">Скоро здесь появятся новые товары</h4>

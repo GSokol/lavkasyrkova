@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Tasting;
 
 class UserToTasting extends Model
 {
@@ -18,7 +19,7 @@ class UserToTasting extends Model
 
     public function tasting()
     {
-        return $this->belongsTo('App\Tasting');
+        return $this->belongsTo(Tasting::class);
     }
 
     public $timestamps = false;

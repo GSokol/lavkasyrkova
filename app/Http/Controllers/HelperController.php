@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-class HelperController extends Controller
+class HelperController
 {
     use HelperTrait;
 
@@ -41,6 +41,11 @@ class HelperController extends Controller
     public function getPartsName()
     {
         return ' г';
+    }
+
+    public function getProductParts()
+    {
+        return $this->productParts;
     }
 
     public function randHash()

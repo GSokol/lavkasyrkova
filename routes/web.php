@@ -15,7 +15,7 @@ Route::auth();
 Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::as('face.')->group(function() {
-    Route::get('/', 'StaticController@index')->name('home');
+    Route::get('/', 'HomeController@index')->name('home');
     // profile
     Route::group(['prefix' => 'profile', 'middleware' => ['auth']], function() {
         Route::get('/', 'UserController@index');

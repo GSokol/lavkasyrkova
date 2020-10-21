@@ -82,7 +82,6 @@ class BasketController extends Controller
 
         if ($request->has('tasting_id') && $request->input('tasting_id')) $validationArr['tasting_id'] = $this->validationTasting;
         $this->validate($request, $validationArr);
-        $this->getTastings();
 
         $errors = [];
         if (Auth::guest()) $errors[] = 'Вам необходимо авторизоваться!';

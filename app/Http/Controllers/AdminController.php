@@ -8,9 +8,9 @@ use Illuminate\Support\Str;
 use App\Models\AddCategory;
 use App\Models\Category;
 use App\Models\Store;
+use App\Models\Tasting;
 use App\Office;
 use App\Product;
-use App\Tasting;
 use App\User;
 use App\UserToTasting;
 use Auth;
@@ -104,7 +104,7 @@ class AdminController extends UserController
             $this->breadcrumbs['tastings/add'] = 'Добавление дегустации';
             return $this->showView('tasting');
         } else {
-            $this->data['tastings'] = Tasting::orderBy('time','desc')->get();;
+            $this->data['tastings'] = Tasting::orderBy('time','desc')->get();
             return $this->showView('tastings');
         }
     }

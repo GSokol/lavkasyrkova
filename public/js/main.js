@@ -56,7 +56,7 @@ $(window).ready(function () {
     // maxHeight('product','action');
     bindDropdownMenu();
     $(window).resize(function() {
-        mainImageHeight();
+        // mainImageHeight();
         // maxHeight('action-product',null);
         // maxHeight('product','action');
         bindDropdownMenu();
