@@ -37,10 +37,10 @@
                 'differentially' => $product->parts,
                 'price' => Helper::productPrice($product),
                 'increment' => $product->parts ? json_encode(Helper::getProductParts()) : 1,
-                'value' => Helper::productValue($value)
+                'value' => $value,
             ])
         @else
-            <div class="disabled-value-container">{{ Helper::productValue($value).' '.Helper::productUnit($product) }}</div>
+            <div class="disabled-value-container">{{ $value .' '.Helper::productUnit($product) }}</div>
         @endif
 
         @if ($useCost)

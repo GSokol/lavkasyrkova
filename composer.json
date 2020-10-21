@@ -11,7 +11,8 @@
         "facade/ignition": "^1.4",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.18.35",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "mavinoo/laravel-batch": "^2.2"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

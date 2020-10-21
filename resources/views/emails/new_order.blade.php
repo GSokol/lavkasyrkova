@@ -12,7 +12,7 @@
     @endif
     <p><b>Примечание:</b> {{ $order->description }}</p>
     <h2>Состав заказа:</h2>
-    <p>@include('admin._order_content_block',['order' => $order])</p>
+    <p>@include('admin._order_content_block', ['order' => $order])</p>
     <hr>
     <p><strong>Стоимость заказа: </strong>{{ $order->total_amount }} руб.</p>
     @if ($order->discount_value)

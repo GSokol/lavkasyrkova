@@ -16,14 +16,6 @@ new Vue({
         }
     },
 
-    mounted() {
-        //
-    },
-
-    created: function() {
-        console.log('order');
-    },
-
     methods: {
         /**
          * Отправка формы редактирования заказа
@@ -33,7 +25,7 @@ new Vue({
          */
         onOrderSubmit: function(event) {
             this.state.isLoading = true;
-            let param = _.pick(this.order, ['id', 'discount_value']);
+            let param = _.pick(this.order, ['id', 'discount_value', 'order_to_products']);
 
             axios({
                 method: 'put',
@@ -68,17 +60,45 @@ new Vue({
             return 'bg-' + className + '-400';
         },
 
-        orderAmount() {
-            return _.sumBy(this.order.order_to_products, 'amount');
+        orderProducts() {
+            return _.each(this.order.order_to_products, (orderProduct) => {
+                // на вес
+                if (orderProduct.actual_value) {
+                    let price = orderProduct.product.action ? orderProduct.product.action_part_price : orderProduct.product.part_price;
+                    let weight = orderProduct.actual_value || orderProduct.part_value;
+                    orderProduct.calculate_amount = Math.round(weight / 100 * price)
+                } else {
+                    orderProduct.calculate_amount = orderProduct.amount;
+                }
+            });
         },
 
+        /**
+         * Сумма заказа (без учета скидки)
+         *
+         * @return {Number} [description]
+         */
+        totalAmount() {
+            return _.sumBy(this.orderProducts, 'calculate_amount');
+        },
+
+        /**
+         * Размер скидки в деньгах
+         *
+         * @return {Number} [description]
+         */
         discountAmount() {
             let discountValue = +_.get(this.order, 'discount_value', 0);
-            return this.orderAmount * discountValue / 100;
+            return this.totalAmount * discountValue / 100;
         },
 
-        totalAmount() {
-            return Math.round(this.orderAmount - this.discountAmount);
+        /**
+         * Сумма заказа (с учетом скидки)
+         *
+         * @return {Number} [description]
+         */
+        checkoutAmount() {
+            return Math.ceil(this.totalAmount - this.discountAmount);
         },
     },
 });

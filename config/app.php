@@ -213,6 +213,7 @@ return [
          */
         Barryvdh\Debugbar\ServiceProvider::class,
         Coderello\SharedData\Providers\SharedDataServiceProvider::class,
+        Mavinoo\Batch\BatchServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -277,5 +278,6 @@ return [
         'Settings' => App\Facades\SettingsFacades::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Str' => Illuminate\Support\Str::class,
+        'Batch' => Mavinoo\Batch\BatchFacade::class,
     ],
 ];

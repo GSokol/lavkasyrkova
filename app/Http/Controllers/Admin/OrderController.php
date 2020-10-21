@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Batch;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Coderello\SharedData\Facades\SharedData;
 use App\Models\Order;
 use App\Models\OrderStatus;
+use App\Models\ProductToOrder;
 use App\Notifications\NewOrder;
 
 class OrderController extends Controller
@@ -67,13 +70,37 @@ class OrderController extends Controller
             'id' => ['required'],
             'discount_value' => ['sometimes', 'nullable', 'integer', 'max:50'],
         ]);
+        // обновление данных заказа
         $order = Order::with(['user'])->findOrFail($request->get('id'));
         $data['status_id'] = OrderStatus::code(OrderStatus::ORDER_STATUS_PICKED)->first()->id;
         $order->update($data);
         $order = $order->fresh();
-        // notification email
+        // обновление значений товаров
+        $this->massUpdateOrderProducts($request);
+        // отправка уведомления клиенту
         $order->user->notify(new NewOrder($order));
 
         return $this->response([MSG => 'Заказ успешно обновлен']);
+    }
+
+    /**
+     * Обновление данных товаров в заказе (актуальный вес)
+     *
+     * @param  Request $request [description]
+     * @return boolean
+     */
+    private function massUpdateOrderProducts(Request $request): bool
+    {
+        $products = $request->get('order_to_products');
+        $values = array_reduce($products, function($carry, $orderProduct) {
+            if (!is_null($orderProduct['actual_value'])) {
+                array_push($carry, Arr::only($orderProduct, ['id', 'actual_value']));
+            }
+            return $carry;
+        }, []);
+        if (count($values)) {
+            return (bool)Batch::update(new ProductToOrder, $values, 'id');
+        }
+        return false;
     }
 }
