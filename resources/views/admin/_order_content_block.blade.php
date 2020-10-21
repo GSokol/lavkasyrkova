@@ -1,3 +1,3 @@
 @foreach($order->orderToProducts as $item)
-    {!! '<b>'.$item->product->name.'</b>'.' — '.($item->whole_value ? $item->whole_value.'шт.' : $item->part_value.' г.').' <i>('.Helper::orderItemCost($item).'р.)</i><br>' !!}
+    <strong>{{ $item->product->name }}</strong> — {{ $item->quantity_unit }} @if($item->actual_value) [реальный вес {{ $item->actual_value }} г.]  @endif<i>({{ $item->amount }} руб.)</i><br>
 @endforeach

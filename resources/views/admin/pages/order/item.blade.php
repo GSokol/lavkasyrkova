@@ -86,34 +86,36 @@
                 <legend class="text-bold">Состав заказа</legend>
 
                 <div class="table-responsive">
-                    <table class="table text-nowrap">
+                    <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
                                 <th style="width: 20px;">ID</th>
                                 <th>Наименование товара</th>
                                 <th>Категория товара</th>
                                 <th class="">Количество</th>
-                                <th class="text-right">Стоимость</th>
+                                <th class="">Фактический вес</th>
+                                <th class="col-sm-1 text-right">Стоимость</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($order->orderToProducts as $orderProduct)
-                                <tr>
-                                    <td><tt>{{ $orderProduct->product_id }}</tt></td>
-                                    <td>
-                                        <div class="media-left media-middle">
-                                            <a href="#"><img src="{{ asset($orderProduct->product->image) }}" class="img-circle img-xs" alt=""></a>
-                                        </div>
-                                        <div class="media-left">
-                                            <div class=""><a href="#" class="text-default text-semibold">{{ $orderProduct->product->name }}</a></div>
-                                            <div class="text-muted text-size-small text-truncate" style="max-width: 300px;">{{ $orderProduct->product->additionally ?: $orderProduct->product->description }}</div>
-                                        </div>
-                                    </td>
-                                    <td><span class="">{{ $orderProduct->product->category->name }}</span></td>
-                                    <td><span class="">{{ $orderProduct->quantity_unit }}</span></td>
-                                    <td class="text-right"><h6 class="text-semibold">{{ $orderProduct->amount }} руб.</h6></td>
-                                </tr>
-                            @endforeach
+                            <tr v-for="orderProduct in orderProducts">
+                                <td><tt v-text="orderProduct.product_id"></tt></td>
+                                <td>
+                                    <div class="media-left media-middle">
+                                        <a href="#"><img :src="'/' + orderProduct.product.image" class="img-circle img-xs" alt=""></a>
+                                    </div>
+                                    <div class="media-left">
+                                        <div class=""><a href="#" class="text-default text-semibold" v-text="orderProduct.product.name"></a></div>
+                                        <div class="text-muted text-size-small text-truncate" style="max-width: 300px;" v-text="orderProduct.product.additionally || orderProduct.product.description"></div>
+                                    </div>
+                                </td>
+                                <td><span class="" v-text="orderProduct.product.category.name"></span></td>
+                                <td><span class="" v-text="orderProduct.quantity_unit"></span></td>
+                                <td>
+                                    <input type="number" min="0" class="form-control" placeholder="Введите реальный вес (г.)..." v-model.number="orderProduct.actual_value" v-if="orderProduct.part_value">
+                                </td>
+                                <td class="text-right"><h6 class="text-semibold" v-text="orderProduct.calculate_amount + ' руб.'"></h6></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -128,11 +130,11 @@
 								<tbody>
 									<tr>
 										<th>Сумма:</th>
-										<td class="text-right"><h5 v-text="orderAmount + ' руб.'">0</h5></td>
+										<td class="text-right"><h5 v-text="totalAmount + ' руб.'">0</h5></td>
 									</tr>
 									<tr>
 										<th>
-                                            <div class="input-group">
+                                            <div class="input-group" style="max-width: 200px;">
 												<span class="input-group-addon">Скидка</span>
 												<input type="number" class="form-control" min="0" max="50" placeholder="Введите размер скидки" v-model.number="order.discount_value">
                                                 <span class="input-group-addon">%</span>
@@ -142,7 +144,7 @@
 									</tr>
 									<tr>
 										<th>Итого:</th>
-										<td class="text-right text-primary"><h5 class="text-semibold" v-text="totalAmount + ' руб.'">0</h5></td>
+										<td class="text-right text-primary"><h5 class="text-semibold" v-text="checkoutAmount + ' руб.'">0</h5></td>
 									</tr>
 								</tbody>
 							</table>
@@ -152,7 +154,7 @@
 			</div>
             <div class="row">
 				<div class="col-sm-7">
-                    <small>* при нажатии кнопки "Сохранить" будет отправлено письмо клиенту о новом статусе заказа</small>
+                    <small class="text-danger">* при нажатии кнопки "Сохранить" будет отправлено письмо клиенту с новым статусом заказа</small>
                 </div>
 				<div class="col-sm-5 text-right">
                     <button type="submit" class="btn btn-success btn-labeled" :disabled="state.isLoading"><b><i class="icon-paperplane"></i></b> Сохранить</button>

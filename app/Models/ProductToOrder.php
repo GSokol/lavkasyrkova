@@ -15,6 +15,7 @@ class ProductToOrder extends Model
     protected $fillable = [
         'whole_value',
         'part_value',
+        'actual_value',
         'product_id',
         'order_id',
     ];
@@ -29,17 +30,20 @@ class ProductToOrder extends Model
     }
 
     /**
-     * Стоимость товара в заказе с учетом количества
+     * Стоимость товара в заказе с учетом количества/веса
      *
      * @return string
      */
     public function getAmountAttribute() {
+        // целое количество
         if ($this->whole_value) {
             $wholePrice = $this->product->action ? $this->product->action_whole_price : $this->product->whole_price;
             return $this->whole_value * $wholePrice;
         }
+        // на вес
         $price = $this->product->action ? $this->product->action_part_price : $this->product->part_price;
-        return ceil($this->part_value / $this->productParts[0] * $price);
+        $weight = $this->actual_value ?: $this->part_value;
+        return round($weight / $this->productParts[0] * $price);
     }
 
     public function product()
