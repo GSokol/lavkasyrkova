@@ -29,11 +29,8 @@ class Controller extends BaseController
     public function __construct()
     {
         $categories = Category::all();
-        $actions = Product::getActions();
         $this->data['seo'] = Settings::getSeoTags();
-        $this->data['actions'] = Product::where(function($query) {
-            $query->where('action', 1)->orWhere('new', 1);
-        })->where('active', 1)->get();
+        $this->data['actions'] = Product::getActions();
         $this->data['products'] = Product::all();
         $this->data['shops'] = Store::all();
 
@@ -42,7 +39,6 @@ class Controller extends BaseController
         View::share('mainMenu', $this->getMainMenu($categories));
         View::share('stores', Store::all());
         View::share('categories', $categories);
-        View::share('actions', $actions);
     }
 
     public function getMainMenu($categories)
