@@ -1,4 +1,4 @@
-@include('admin._modal_delete_block',['modalId' => 'delete-modal', 'function' => 'delete-order', 'head' => 'Вы действительно хотите удалить этот заказ?'])
+@include('admin._modal_delete_block', ['modalId' => 'delete-modal', 'function' => 'delete-order', 'head' => 'Вы действительно хотите удалить этот заказ?'])
 {{ csrf_field() }}
 
 <div class="panel panel-flat">
@@ -36,7 +36,9 @@
                         </td>
                         <td class="text-left">{{ $order->description }}</td>
                         <td class="text-left">@include('admin._order_content_block',['order' => $order])</td>
-                        <td class="text-center">@include('admin._status_block',['status' => $order->status_id, 'trueLabel' => 'новый', 'falseLabel' => 'выполнен'])</td>
+                        <td class="text-center">
+                            <span class="label label-{{ $order->status->class_name }}">{{ $order->status->name }}</span>
+                        </td>
                         <td class="text-center">{{ $order->total_amount }} руб.</td>
                         <td class="delete">
                             @if (Auth::user()->is_admin || $order->status_id == 1)

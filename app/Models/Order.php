@@ -69,7 +69,7 @@ class Order extends Model
 
     public function store()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Store::class, 'shop_id');
     }
 
     /**

@@ -52,7 +52,7 @@ class Controller extends BaseController
         $subMenu = [];
         $subMenu = $this->getCategorySubMenu($subMenu, $categories, 'category');
         $subMenu = $this->getCategorySubMenu($subMenu, $addCategories, 'add_category');
-        $mainMenu[] = ['href' => route('face.catalog'), 'name' => 'Наши сыры', 'submenu' => $subMenu];
+        $mainMenu[] = ['href' => route('face.catalog'), 'name' => 'Наши сыры ▼', 'submenu' => $subMenu];
         $mainMenu[] = ['href' => '/#tastings', 'name' => 'Дегустации'];
         $mainMenu[] = ['href' => '/#shops', 'name' => 'Магазины'];
         return $mainMenu;

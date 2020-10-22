@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Store;
+use App\Models\Tasting;
 use App\Office;
 use App\Product;
 use App\User;
@@ -161,11 +162,14 @@ class UserController extends Controller
             ];
         } else $addMenus = [['href' => 'user', 'name' => 'Профиль пользователя', 'icon' => 'icon-profile']];
 
+        $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
+
         return view('admin.'.$view, [
             'breadcrumbs' => $this->breadcrumbs,
             'data' => $this->data,
             'prefix' => Auth::user()->is_admin ? 'admin' : 'profile',
-            'menus' => array_merge($menus, $addMenus)
+            'menus' => array_merge($menus, $addMenus),
+            'tastings' => $tastings,
         ]);
     }
 }

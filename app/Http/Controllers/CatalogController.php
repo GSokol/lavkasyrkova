@@ -15,7 +15,8 @@ class CatalogController extends Controller
      *
      * @return Illuminate\Support\Facades\View
      */
-    public function index() {
+    public function index()
+    {
         $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
 
         return view('face.pages.catalog', [
@@ -29,18 +30,19 @@ class CatalogController extends Controller
      * @param string $slug
      * @return Illuminate\Support\Facades\View
      */
-    public function category($slug) {
+    public function category($slug)
+    {
         $category = Category::where('slug', '=', $slug)->first() ?: AddCategory::where('slug', '=', $slug)->first();;
         if (!$category) {
             abort(404);
         }
-        $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
         $products = $category->products;
+        $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
 
         return view('face.pages.category', [
             'category' => $category,
-            'tastings' => $tastings,
             'products' => $products,
+            'tastings' => $tastings,
         ]);
     }
 }
