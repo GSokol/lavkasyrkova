@@ -15,8 +15,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Auth::loginUsingId(5);
-        
         $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
 
         return view('face.pages.home', [
