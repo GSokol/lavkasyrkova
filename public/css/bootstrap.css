@@ -6559,6 +6559,10 @@ button.close {
   display: none !important;
 }
 @media (max-width: 768px) {
+    .modal-body {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
   .visible-xs {
     display: block !important;
   }

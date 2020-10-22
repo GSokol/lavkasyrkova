@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Tasting;
 
 class Office extends Model
 {
@@ -14,7 +15,7 @@ class Office extends Model
 
     public function tastings()
     {
-        return $this->hasMany('App\Tasting');
+        return $this->hasMany(Tasting::class);
     }
 
     public function users()

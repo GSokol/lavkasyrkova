@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Store;
+use App\Models\Tasting;
 use App\Office;
 use App\Product;
 use App\User;
@@ -30,7 +31,6 @@ class UserController extends Controller
     public function orders()
     {
         $this->breadcrumbs = ['orders' => 'Заказы'];
-        $this->getTastings();
         $this->data['orders'] = Auth::user()->is_admin ? Order::orderBy('id','desc')->get() : Order::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
         return $this->showView('orders');
     }
@@ -38,7 +38,6 @@ class UserController extends Controller
     public function user(Request $request)
     {
         $this->breadcrumbs = ['user' => 'Профиль пользователя'];
-        $this->getTastings();
         $this->data['user'] = Auth::user();
         $this->data['offices'] = Office::all();
         if ($request->has('unsubscribe') && $request->input('unsubscribe')) {
@@ -163,11 +162,14 @@ class UserController extends Controller
             ];
         } else $addMenus = [['href' => 'user', 'name' => 'Профиль пользователя', 'icon' => 'icon-profile']];
 
+        $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
+
         return view('admin.'.$view, [
             'breadcrumbs' => $this->breadcrumbs,
             'data' => $this->data,
             'prefix' => Auth::user()->is_admin ? 'admin' : 'profile',
-            'menus' => array_merge($menus, $addMenus)
+            'menus' => array_merge($menus, $addMenus),
+            'tastings' => $tastings,
         ]);
     }
 }

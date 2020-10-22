@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\OrderStatus;
-use App\Tasting;
+use App\Models\Tasting;
 
 class CronCheckTasting extends Command
 {

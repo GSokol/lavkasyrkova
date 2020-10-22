@@ -71,7 +71,8 @@
 }
 
 .basket .dropdown-menu {
-    margin-left: -200%;
+    right: 0;
+    left: auto;
 }
 
 .navbar-toggle {
@@ -89,6 +90,7 @@
     border: 1px solid grey !important;
     position: absolute;
     z-index: 999;
+    display: none;
 }
 
 .nav > li:nth-child(2):before {

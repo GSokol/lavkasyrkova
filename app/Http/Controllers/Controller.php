@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\View;
 use App\Models\AddCategory;
 use App\Models\Category;
 use App\Models\Store;
+use App\Nodels\Tasting;
 use App\Product;
 use Settings;
+use Auth;
 
 class Controller extends BaseController
 {
@@ -27,16 +29,20 @@ class Controller extends BaseController
     public function __construct()
     {
         $categories = Category::all();
+        $actions = Product::getActions();
         $this->data['seo'] = Settings::getSeoTags();
         $this->data['actions'] = Product::where(function($query) {
             $query->where('action', 1)->orWhere('new', 1);
         })->where('active', 1)->get();
+        $this->data['products'] = Product::all();
+        $this->data['shops'] = Store::all();
 
         View::share('data', $this->data);
         View::share('metas', $this->metas);
         View::share('mainMenu', $this->getMainMenu($categories));
         View::share('stores', Store::all());
         View::share('categories', $categories);
+        View::share('actions', $actions);
     }
 
     public function getMainMenu($categories)
@@ -46,7 +52,7 @@ class Controller extends BaseController
         $subMenu = [];
         $subMenu = $this->getCategorySubMenu($subMenu, $categories, 'category');
         $subMenu = $this->getCategorySubMenu($subMenu, $addCategories, 'add_category');
-        $mainMenu[] = ['href' => route('face.catalog'), 'name' => 'Наши сыры', 'submenu' => $subMenu];
+        $mainMenu[] = ['href' => route('face.catalog'), 'name' => 'Наши сыры ▼', 'submenu' => $subMenu];
         $mainMenu[] = ['href' => '/#tastings', 'name' => 'Дегустации'];
         $mainMenu[] = ['href' => '/#shops', 'name' => 'Магазины'];
         return $mainMenu;

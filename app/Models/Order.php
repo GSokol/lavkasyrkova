@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\OrderStatus;
 use App\Models\ProductToOrder;
 use App\Models\Store;
+use App\Models\Tasting;
 
 class Order extends Model
 {
@@ -63,12 +64,12 @@ class Order extends Model
 
     public function tasting()
     {
-        return $this->belongsTo('App\Tasting');
+        return $this->belongsTo(Tasting::class);
     }
 
     public function store()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Store::class, 'shop_id');
     }
 
     /**

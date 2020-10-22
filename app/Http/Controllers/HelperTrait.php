@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use App\Tasting;
+use App\Models\Tasting;
 
 trait HelperTrait
 {
@@ -41,11 +41,6 @@ trait HelperTrait
         'meta_google_site_verification' => ['name' => 'robots', 'property' => false],
     ];
     public $productParts = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
-
-    public function getTastings()
-    {
-        if (!Auth::guest()) $this->data['tastings'] = Tasting::where('office_id',Auth::user()->office_id)->where('time','>',time()+(60 * 60 * 5))->where('active',1)->orderBy('time','desc')->get();
-    }
 
     public function getMasterMail()
     {

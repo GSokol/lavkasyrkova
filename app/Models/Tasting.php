@@ -1,9 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Order;
+use App\User;
 
 class Tasting extends Model
 {
@@ -27,5 +28,14 @@ class Tasting extends Model
     public function tastingToUsers()
     {
         return $this->hasMany('App\UserToTasting');
+    }
+
+    public static function getUserTasting(User $user)
+    {
+        return Tasting::where('office_id', $user->office_id)
+            ->where('time', '>', time() + (60 * 60 * 5))
+            ->where('active', 1)
+            ->orderBy('time', 'desc')
+            ->get();
     }
 }

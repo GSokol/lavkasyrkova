@@ -11,9 +11,9 @@ $(window).ready(function () {
     $('input[name=phone]').mask("+7(999)999-99-99");
 
     // Drop down menu
-    $('li.main-menu ul.dropdown-menu, .basket ul.dropdown-menu').bind('mouseleave', function () {
-        $(this).hide();
-    });
+    // $('li.main-menu ul.dropdown-menu, .basket ul.dropdown-menu').bind('mouseleave', function () {
+    //     $(this).hide();
+    // });
 
     // Click hover zone and menu
     $('a[data-scroll]').click(function (e) {
@@ -40,6 +40,10 @@ $(window).ready(function () {
         }
     });
 
+    $('.dropdown').click(function() {
+        $(this).toggleClass('open');
+    });
+
     // onTopButton.click(function() {
     //     goToScroll('home');
     // });
@@ -54,12 +58,12 @@ $(window).ready(function () {
     mainImageHeight();
     // maxHeight('action-product',null);
     // maxHeight('product','action');
-    bindDropdownMenu();
+    // bindDropdownMenu();
     $(window).resize(function() {
-        mainImageHeight();
+        // mainImageHeight();
         // maxHeight('action-product',null);
         // maxHeight('product','action');
-        bindDropdownMenu();
+        // bindDropdownMenu();
     });
 
     // Owlcarousel

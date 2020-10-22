@@ -15,7 +15,7 @@
             <div class="logo hidden-xs">
                 <a href="/"><img src="{{ asset('images/logo_small.svg') }}" /></a>
             </div>
-            <ul class="nav navbar-nav dropdown">
+            <ul class="nav navbar-nav">
                 @if ($data['actions'] && count($data['actions']))
                     <li class="main-menu">
                         <a href="#actions" data-scroll="actions">Предложения недели</a>
@@ -24,7 +24,7 @@
 
                 @foreach($mainMenu as $menu)
                     @if ($menu['name'])
-                        <li class="main-menu">
+                        <li class="main-menu @if (isset($menu['submenu']) && is_array($menu['submenu'])) {{'dropdown'}} @endif">
                             <a href="{{ $menu['href'] }}" @if (strpos($menu['href'], '#') !== false) data-scroll="{{ substr($menu['href'], 2) }}" @endif>{{ $menu['name'] }}</a>
 
                             @if (isset($menu['submenu']) && is_array($menu['submenu']))
