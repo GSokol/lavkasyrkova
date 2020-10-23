@@ -180,16 +180,16 @@ trait HelperTrait
 
     private function convertColor($color)
     {
-        if (preg_match('/^(hsv\(\d+\, \d+\%\, \d+\%\))$/',$color)) {
-            $hsv = explode(',', Str::replace(['hsv','(',')','%',' '],'',$color));
-            $color = $this->fGetRGB($hsv[0],$hsv[1],$hsv[2]);
+        if (preg_match('/^(hsv\(\d+\, \d+\%\, \d+\%\))$/', $color)) {
+            $hsv = explode(',', str_replace(['hsv', '(', ')', '%', ' '], '', $color));
+            $color = $this->fGetRGB($hsv[0], $hsv[1], $hsv[2]);
         }
         return $color;
     }
 
     public function convertCompositeVal($val)
     {
-        return (int)Str::replace([' ',' руб', 'шт.'], '', $val);
+        return (int)str_replace([' ',' руб', 'шт.'], '', $val);
     }
 
     private function fGetRGB($iH, $iS, $iV)
