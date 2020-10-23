@@ -95,6 +95,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth.admi
     Route::post('/delete-shop', 'AdminController@deleteShop');
 });
 
-Route::fallback(function() {
-    return '404';
-});
+// Route::fallback(function() {
+//     return '404';
+// });

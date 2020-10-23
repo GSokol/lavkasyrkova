@@ -50,6 +50,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if (config('app.debug')) {
+            $response['debug'][CODE] = $exception->getCode();
+            $response['debug'][MSG] = $exception->getMessage();
+            $response['debug'][FILE] = $exception->getFile();
+            $response['debug'][LINE] = $exception->getLine();
+            $response['debug']['exception'] = get_class($exception);
+            // for SQL Exceptions
+            if ($exception instanceof \PDOException) {
+                $response['debug'][SQL] = $exception->getSql(); // исходный sql запрос
+                $response['debug']['bindings'] = $exception->getBindings(); // параметры запроса
+            }
+        }
         // если запрос типа ajax вернуть REST ответ
         if ($request->isXmlHttpRequest() || $request->expectsJson()) {
             $response[ERR] = Response::HTTP_BAD_REQUEST;
