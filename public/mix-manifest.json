@@ -1,4 +1,6 @@
 {
-    "/js/admin/category.js": "/js/admin/category.js",
-    "/js/admin/order.js": "/js/admin/order.js"
+    "/js/admin/category.js": "/js/admin/category.js?id=5c4a45162ffece812624",
+    "/js/admin/order.js": "/js/admin/order.js?id=cb0dab661137a3d6944c",
+    "/js/face/profile-order.js": "/js/face/profile-order.js?id=2c534a307b52479b35c8",
+    "/style/common.css": "/style/common.css?id=04f50db97e0176c5ddb2"
 }

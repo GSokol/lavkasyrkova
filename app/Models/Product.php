@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\AddCategory;
@@ -41,11 +41,6 @@ class Product extends Model
     public function productToOrders()
     {
         return $this->hasMany(ProductToOrder::class);
-    }
-
-    public function productToActions()
-    {
-        return $this->hasMany('App\ActionsToProduct');
     }
 
     public static function getActions()

@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Office;
 use App\Models\Order;
+use App\Models\UserToTasting;
 use App\User;
 
 class Tasting extends Model
@@ -17,7 +19,7 @@ class Tasting extends Model
 
     public function office()
     {
-        return $this->belongsTo('App\Office');
+        return $this->belongsTo(Office::class);
     }
 
     public function orders()
@@ -27,7 +29,7 @@ class Tasting extends Model
 
     public function tastingToUsers()
     {
-        return $this->hasMany('App\UserToTasting');
+        return $this->hasMany(UserToTasting::class);
     }
 
     public static function getUserTasting(User $user)

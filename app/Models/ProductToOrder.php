@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\HelperTrait;
 use App\Models\Order;
+use App\Models\Product;
 
 class ProductToOrder extends Model
 {
@@ -19,6 +20,13 @@ class ProductToOrder extends Model
         'product_id',
         'order_id',
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['amount', 'quantity_unit'];
 
     /**
      * Количество с единицами измерения
@@ -48,7 +56,7 @@ class ProductToOrder extends Model
 
     public function product()
     {
-        return $this->belongsTo('App\Product');
+        return $this->belongsTo(Product::class);
     }
 
     public function order()

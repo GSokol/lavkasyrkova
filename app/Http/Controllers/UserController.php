@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Coderello\SharedData\Facades\SharedData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Office;
 use App\Models\Order;
 use App\Models\OrderStatus;
+use App\Models\Product;
 use App\Models\Store;
 use App\Models\Tasting;
-use App\Office;
-use App\Product;
+use App\Models\UserToTasting;
 use App\User;
-use App\UserToTasting;
 use Session;
 use Settings;
 
@@ -30,9 +31,28 @@ class UserController extends Controller
 
     public function orders()
     {
+        $tastings = Tasting::getUserTasting(Auth::user());
         $this->breadcrumbs = ['orders' => 'Заказы'];
-        $this->data['orders'] = Auth::user()->is_admin ? Order::orderBy('id','desc')->get() : Order::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
-        return $this->showView('orders');
+        $orders = Order::with(['status:id,name,class_name', 'orderToProducts.product'])
+            ->where('user_id', Auth::user()->id)
+            ->orderBy('id', 'desc')
+            ->get()
+            ->transform(function($order) {
+                $order->setAppends(['total_amount', 'delivery_info']);
+                return $order;
+            });
+
+        SharedData::put([
+            'collection' => $orders,
+        ]);
+
+        return view('face.pages.orders', [
+            'breadcrumbs' => $this->breadcrumbs,
+            'tastings' => $tastings,
+            'orders' => $orders,
+            'menus' => $this->getMenus(),
+            'prefix' => Auth::user()->is_admin ? 'admin' : 'profile',
+        ]);
     }
 
     public function user(Request $request)
@@ -53,7 +73,7 @@ class UserController extends Controller
         $tasting = $this->getNewTasting();
         if ($tasting) {
             UserToTasting::create(['user_id' => Auth::user()->id,'tasting_id' => $tasting->id]);
-            $this->sendMessage(Auth::user()->email, 'auth.emails.tasting', ['title' => 'Подписка на дегустацию', 'tasting' => $tasting], $this->getMasterMail());
+            $this->sendMessage(Auth::user()->email, 'emails.tasting', ['title' => 'Подписка на дегустацию', 'tasting' => $tasting], $this->getMasterMail());
             return response()->json(['success' => true, 'message' => 'Вы подписались на дегустацию!']);
         } else return response()->json(['success' => false, 'message' => 'Нет активных дегустаций!']);
     }
@@ -144,6 +164,19 @@ class UserController extends Controller
             if (!isset($this->data['shops'])) $this->data['shops'] = Store::all();
         }
 
+        $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
+
+        return view('admin.'.$view, [
+            'breadcrumbs' => $this->breadcrumbs,
+            'data' => $this->data,
+            'prefix' => Auth::user()->is_admin ? 'admin' : 'profile',
+            'menus' => $this->getMenus(),
+            'tastings' => $tastings,
+        ]);
+    }
+
+    public function getMenus()
+    {
         $menus = [
             ['href' => '/', 'name' => 'На главную страницу', 'icon' => 'icon-list-unordered'],
             ['href' => 'orders', 'name' => 'Заказы', 'icon' => 'icon-home']
@@ -160,16 +193,10 @@ class UserController extends Controller
                 ['href' => 'tastings', 'name' => 'Дегустации', 'icon' => 'icon-trophy2'],
                 ['href' => 'users', 'name' => 'Пользователи', 'icon' => 'icon-users']
             ];
-        } else $addMenus = [['href' => 'user', 'name' => 'Профиль пользователя', 'icon' => 'icon-profile']];
+        } else {
+            $addMenus = [['href' => 'user', 'name' => 'Профиль пользователя', 'icon' => 'icon-profile']];
+        }
 
-        $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
-
-        return view('admin.'.$view, [
-            'breadcrumbs' => $this->breadcrumbs,
-            'data' => $this->data,
-            'prefix' => Auth::user()->is_admin ? 'admin' : 'profile',
-            'menus' => array_merge($menus, $addMenus),
-            'tastings' => $tastings,
-        ]);
+        return array_merge($menus, $addMenus);
     }
 }

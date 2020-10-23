@@ -6,12 +6,13 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\View;
 use App\Models\AddCategory;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Store;
 use App\Nodels\Tasting;
-use App\Product;
 use Settings;
 use Auth;
 
@@ -29,11 +30,8 @@ class Controller extends BaseController
     public function __construct()
     {
         $categories = Category::all();
-        $actions = Product::getActions();
         $this->data['seo'] = Settings::getSeoTags();
-        $this->data['actions'] = Product::where(function($query) {
-            $query->where('action', 1)->orWhere('new', 1);
-        })->where('active', 1)->get();
+        $this->data['actions'] = Product::getActions();
         $this->data['products'] = Product::all();
         $this->data['shops'] = Store::all();
 
@@ -42,7 +40,22 @@ class Controller extends BaseController
         View::share('mainMenu', $this->getMainMenu($categories));
         View::share('stores', Store::all());
         View::share('categories', $categories);
-        View::share('actions', $actions);
+    }
+
+    /**
+     * Returns REST response
+     *
+     * @param array|integer $error Error Code or array of params
+     * @param array|null $params Array of additional params
+     *
+     * @return REST array
+     */
+    protected function response($params = array()) {
+        $response = Arr::only($params, [ERR, CODE, MSG, DATA]);
+        if (!isset($response[ERR])) {
+            $response[ERR] = Response::HTTP_OK;
+        }
+        return $response;
     }
 
     public function getMainMenu($categories)

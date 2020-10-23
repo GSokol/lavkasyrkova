@@ -1,12 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Tasting;
 
 class UserToTasting extends Model
 {
+    public $timestamps = false;
+
     protected $fillable = [
         'user_id',
         'tasting_id'
@@ -21,6 +23,4 @@ class UserToTasting extends Model
     {
         return $this->belongsTo(Tasting::class);
     }
-
-    public $timestamps = false;
 }

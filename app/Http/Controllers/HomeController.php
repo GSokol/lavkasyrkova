@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Models\Tasting;
-use App\Product;
 
 class HomeController extends Controller
 {

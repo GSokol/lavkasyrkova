@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\OrderStatus;
 use App\Models\ProductToOrder;
@@ -19,6 +20,22 @@ class Order extends Model
         'delivery',
         'discount_value',
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['total_amount'];
+
+    /**
+     * Дата создания заказа (форматированная)
+     *
+     * @return string
+     */
+    public function getCreatedAtAttribute($value): string {
+        return Carbon::parse($value)->format('d.m.Y H:i');
+    }
 
     /**
      * Сумма заказа (чистая. без учета скидок и вычетов)
@@ -50,6 +67,24 @@ class Order extends Model
      */
     public function getCheckoutAmountAttribute(): int {
         return $this->total_amount - $this->discount_amount;
+    }
+
+    /**
+     * Информация о доставке
+     *
+     * @return string
+     */
+    public function getDeliveryInfoAttribute(): string {
+        if ($this->delivery) {
+            return 'по адресу: ' . $this->user->address;
+        }
+        if ($this->shop_id) {
+            return 'в магазин: ' . $this->store->address;
+        }
+        if ($this->user->office->id > 2) {
+            return 'в офис: ' . $this->user->office->address;
+        }
+        return $this->user->office->address;
     }
 
     public function user()

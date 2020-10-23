@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label class="control-label col-lg-2">Доставка</label>
                             <div class="col-lg-10">
-                                <div class="form-control-static">@include('admin._delivery_place_block', ['order' => $order])</div>
+                                <div class="form-control-static">{{ $order->delivery_info }}</div>
                             </div>
                         </div>
 

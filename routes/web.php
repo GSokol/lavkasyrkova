@@ -20,10 +20,15 @@ Route::as('face.')->group(function() {
     Route::group(['prefix' => 'profile', 'middleware' => ['auth']], function() {
         Route::get('/', 'UserController@index');
         Route::get('/user', 'UserController@user');
-        Route::get('/orders', 'UserController@orders');
         Route::post('/user', 'UserController@editUser');
         Route::post('/checkout-order', 'UserController@checkoutOrder');
         Route::post('/signing-tasting', 'UserController@signingTasting');
+        // orders
+        Route::group(['prefix' => 'orders'], function() {
+            Route::get('/', 'UserController@orders')->name('orders');
+            Route::post('/repeat', 'OrderController@postOrderRepeat')->name('postOrderRepeat');
+            Route::delete('/item', 'OrderController@deleteOrder')->name('deleteOrder');
+        });
     });
     // catalog
     Route::group(['prefix' => 'category'], function() {
@@ -89,3 +94,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth.admi
     Route::post('/shops', 'AdminController@editShops');
     Route::post('/delete-shop', 'AdminController@deleteShop');
 });
+
+// Route::fallback(function() {
+//     return '404';
+// });

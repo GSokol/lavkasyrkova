@@ -50,6 +50,6 @@ class CronNotify extends Command
 
     private function notify()
     {
-        $this->sendMessage('romis.nesmelov@gmail.com', 'auth.emails.cron_informing', []);
+        $this->sendMessage('romis.nesmelov@gmail.com', 'emails.cron_informing', []);
     }
 }
