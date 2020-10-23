@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -31406,10 +31406,10 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./resources/js/admin/entry/order.js":
-/*!*******************************************!*\
-  !*** ./resources/js/admin/entry/order.js ***!
-  \*******************************************/
+/***/ "./resources/js/face/entry/profile-order.js":
+/*!**************************************************!*\
+  !*** ./resources/js/face/entry/profile-order.js ***!
+  \**************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -31431,8 +31431,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#root',
   data: function data() {
     return {
-      order: _.get(window.app, 'order'),
-      orderStatuses: _.get(window.app, 'orderStatuses') || [],
+      collection: _.get(window.app, 'collection') || [],
       state: {
         isLoading: false
       }
@@ -31440,21 +31439,25 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   },
   methods: {
     /**
-     * Отправка формы редактирования заказа
+     * Повторить заказ
      *
-     * @param  {Object} event [EventSubmit]
+     * @param  {Object} order [App\Models\Order]
      * @return {void}
      */
-    onOrderSubmit: function onOrderSubmit(event) {
+    onRepeatOrder: function onRepeatOrder(order) {
       var _this = this;
+
+      if (!confirm('Вы действительно хотите повторить заказ №' + order.id + ' ?')) {
+        return false;
+      }
 
       this.state.isLoading = true;
 
-      var param = _.pick(this.order, ['id', 'discount_value', 'order_to_products']);
+      var param = _.pick(order, ['id']);
 
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
-        method: 'put',
-        url: '/admin/orders/item',
+        method: 'post',
+        url: '/profile/orders/repeat',
         data: param
       }).then(function (response) {
         _this.state.isLoading = false;
@@ -31463,8 +31466,64 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           text: response.data.message,
           type: 'success'
         });
+
+        if (response.data.error === 201) {
+          var clone = response.data.data;
+          clone.isNew = true;
+
+          _this.collection.unshift(clone);
+
+          window.scrollTo(0, 0);
+        }
       })["catch"](function (error) {
         _this.state.isLoading = false;
+
+        _.flatMap(_.get(error, ['response', 'data', 'data'], []), function (n) {
+          return n;
+        }).map(function (msg) {
+          Object(_pnotify_core__WEBPACK_IMPORTED_MODULE_3__["alert"])({
+            title: error.response.data.message,
+            text: msg.message,
+            type: 'error'
+          });
+        });
+      });
+    },
+
+    /**
+     * Удалить заказ
+     *
+     * @param  {Object} order [App\Models\Order]
+     * @param  {Number} index [collection index]
+     * @return {void}
+     */
+    onDeleteOrder: function onDeleteOrder(order, index) {
+      var _this2 = this;
+
+      if (!confirm('Вы действительно хотите удалить заказ №' + order.id + ' ?')) {
+        return false;
+      }
+
+      this.state.isLoading = true;
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: 'delete',
+        url: '/profile/orders/item',
+        data: {
+          id: order.id
+        }
+      }).then(function (response) {
+        _this2.state.isLoading = false;
+        Object(_pnotify_core__WEBPACK_IMPORTED_MODULE_3__["alert"])({
+          // title: "I'm an alert.",
+          text: response.data.message,
+          type: 'success'
+        });
+
+        if (response.data.error === 200) {
+          _this2.collection.splice(index, 1);
+        }
+      })["catch"](function (error) {
+        _this2.state.isLoading = false;
         Object(_pnotify_core__WEBPACK_IMPORTED_MODULE_3__["alert"])({
           title: error.response.data.message,
           text: error.response.data.description,
@@ -31472,71 +31531,19 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         });
       });
     }
-  },
-  computed: {
-    orderStatusById: function orderStatusById() {
-      return _.keyBy(this.orderStatuses, 'id');
-    },
-    statusClassName: function statusClassName() {
-      var currentStatus = _.get(this.order, 'status_id');
-
-      var className = _.get(this.orderStatusById, [currentStatus, 'class_name'], 'default');
-
-      return 'bg-' + className + '-400';
-    },
-    orderProducts: function orderProducts() {
-      return _.each(this.order.order_to_products, function (orderProduct) {
-        // на вес
-        if (orderProduct.actual_value) {
-          var price = orderProduct.product.action ? orderProduct.product.action_part_price : orderProduct.product.part_price;
-          var weight = orderProduct.actual_value || orderProduct.part_value;
-          orderProduct.calculate_amount = Math.round(weight / 100 * price);
-        } else {
-          orderProduct.calculate_amount = orderProduct.amount;
-        }
-      });
-    },
-
-    /**
-     * Сумма заказа (без учета скидки)
-     *
-     * @return {Number} [description]
-     */
-    totalAmount: function totalAmount() {
-      return _.sumBy(this.orderProducts, 'calculate_amount');
-    },
-
-    /**
-     * Размер скидки в деньгах
-     *
-     * @return {Number} [description]
-     */
-    discountAmount: function discountAmount() {
-      var discountValue = +_.get(this.order, 'discount_value', 0);
-      return this.totalAmount * discountValue / 100;
-    },
-
-    /**
-     * Сумма заказа (с учетом скидки)
-     *
-     * @return {Number} [description]
-     */
-    checkoutAmount: function checkoutAmount() {
-      return Math.ceil(this.totalAmount - this.discountAmount);
-    }
   }
 });
 
 /***/ }),
 
-/***/ 2:
-/*!*************************************************!*\
-  !*** multi ./resources/js/admin/entry/order.js ***!
-  \*************************************************/
+/***/ 0:
+/*!********************************************************!*\
+  !*** multi ./resources/js/face/entry/profile-order.js ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/vitaliy/Documents/domains/lavkasyrkova.loc/resources/js/admin/entry/order.js */"./resources/js/admin/entry/order.js");
+module.exports = __webpack_require__(/*! /Users/vitaliy/Documents/domains/lavkasyrkova.loc/resources/js/face/entry/profile-order.js */"./resources/js/face/entry/profile-order.js");
 
 
 /***/ })

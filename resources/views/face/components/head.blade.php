@@ -9,19 +9,21 @@
     @endif
 @endforeach
 
-<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/bootstrap-switch.css') }}" rel="stylesheet">
-<link href="{{ asset('css/bootstrap-toggle.min.css') }}" rel="stylesheet">
-<link href="{{ asset('css/core.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/components.css') }}" rel="stylesheet" type="text/css">
+<!-- <link href=" asset('css/bootstrap.css') }}" rel="stylesheet" type="text/css">
+<link href=" asset('css/bootstrap-switch.css') }}" rel="stylesheet">
+<link href=" asset('css/bootstrap-toggle.min.css') }}" rel="stylesheet">
+<link href=" asset('css/core.css') }}" rel="stylesheet" type="text/css">
+<link href=" asset('css/components.css') }}" rel="stylesheet" type="text/css">
 
-<link href="{{ asset('css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/top.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/main.css').Helper::randHash() }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/products.css').Helper::randHash() }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/loader.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/owl.theme.default.min.css') }}" rel="stylesheet" type="text/css">
+<link href=" asset('css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
+<link href=" asset('css/top.css') }}" rel="stylesheet" type="text/css">
+<link href=" asset('css/main.css') }}" rel="stylesheet" type="text/css">
+<link href="{ asset('css/products.css') }}" rel="stylesheet" type="text/css">
+<link href="{ asset('css/loader.css') }}" rel="stylesheet" type="text/css">
+<link href="{ asset('css/owl.carousel.min.css') }}" rel="stylesheet" type="text/css">
+<link href="{ asset('css/owl.theme.default.min.css') }}" rel="stylesheet" type="text/css"> -->
+
+<link href="{{ mix('style/common.css') }}" rel="stylesheet" type="text/css">
 
 <script type="text/javascript" src="{{ asset('js/core/libraries/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/core/libraries/bootstrap.min.js') }}"></script>

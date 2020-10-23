@@ -6,7 +6,7 @@
     <p><strong>Статус:</strong> {{ $order->status->name }}</p>
     <p><b>Заказчик:</b> {{ $order->user->name ? $order->user->name : $order->user->email }}</p>
     <p><b>Контактный телефон:</b> {{ $order->user->phone ? $order->user->phone : 'не указан' }}<p>
-    <p><b>Доставка </b>@include('admin._delivery_place_block',['order' => $order])</p>
+    <p><b>Доставка </b>{{ $order->delivery_info }}</p>
     @if ($order->user->office_id > 2 && !$order->delivery && !$order->shop_id)
         <p><b>Получение заказа:</b> {{ date('d.m.Y',$order->tasting->time) }}</p>
     @endif

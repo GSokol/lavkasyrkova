@@ -71,7 +71,7 @@ class CronCheckTasting extends Command
         }
 
        // if (count($tastingsIds)) {
-       //     $this->sendMessage('romis.nesmelov@gmail.com', 'auth.emails.tasting_admin_informing', [
+       //     $this->sendMessage('romis.nesmelov@gmail.com', 'emails.tasting_admin_informing', [
        //         'tastings' => $tastingsIds,
        //         'orders' => $ordersIds
        //     ]);

@@ -6,10 +6,10 @@ use Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Coderello\SharedData\Facades\SharedData;
+use App\Events\OrderCreated;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\ProductToOrder;
-use App\Notifications\NewOrder;
 
 class OrderController extends Controller
 {
@@ -71,14 +71,14 @@ class OrderController extends Controller
             'discount_value' => ['sometimes', 'nullable', 'integer', 'max:50'],
         ]);
         // обновление данных заказа
-        $order = Order::with(['user'])->findOrFail($request->get('id'));
+        $order = Order::with(['user', 'status', 'orderToProducts.product'])->findOrFail($request->get('id'));
         $data['status_id'] = OrderStatus::code(OrderStatus::ORDER_STATUS_PICKED)->first()->id;
         $order->update($data);
         $order = $order->fresh();
         // обновление значений товаров
         $this->massUpdateOrderProducts($request);
-        // отправка уведомления клиенту
-        $order->user->notify(new NewOrder($order));
+        // сгенерировать событие => отправка уведомления клиенту
+        event(new OrderCreated($order));
 
         return $this->response([MSG => 'Заказ успешно обновлен']);
     }

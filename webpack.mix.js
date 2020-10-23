@@ -26,9 +26,23 @@ mix.options({
  |
  */
 
+mix.js('resources/js/face/entry/profile-order.js', 'public/js/face');
 mix.js('resources/js/admin/entry/category.js', 'public/js/admin');
 mix.js('resources/js/admin/entry/order.js', 'public/js/admin');
 
-if (mix.inProduction()) {
-    mix.version();
-}
+mix.styles([
+    'public/css/bootstrap.css',
+    'public/css/bootstrap-switch.css',
+    'public/css/bootstrap-toggle.min.css',
+    'public/css/core.css',
+    'public/css/components.css',
+    'public/css/icons/icomoon/styles.css',
+    'public/css/top.css',
+    'public/css/main.css',
+    'public/css/products.css',
+    'public/css/loader.css',
+    'public/css/owl.carousel.min.css',
+    'public/css/owl.theme.default.min.css',
+], 'public/style/common.css');
+
+mix.version();
