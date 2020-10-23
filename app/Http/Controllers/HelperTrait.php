@@ -168,8 +168,12 @@ trait HelperTrait
 
     public function unlinkFile($table, $file, $path='')
     {
-        $fullPath = base_path('public/'.$path.$table[$file]);
-        if (isset($table[$file]) && $table[$file] && file_exists($fullPath)) unlink($fullPath);
+        if (isset($table[$file]) && $table[$file]) {
+            $fullPath = base_path('public/'.$path.$table[$file]);
+            if(file_exists($fullPath)) {
+                unlink($fullPath);
+            }
+        }
     }
 
     private function convertTime($time)
