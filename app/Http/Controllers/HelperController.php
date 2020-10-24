@@ -47,9 +47,4 @@ class HelperController
     {
         return $this->productParts;
     }
-
-    public function randHash()
-    {
-        return '?'.md5(rand(0,100));
-    }
 }

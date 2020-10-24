@@ -9,40 +9,9 @@
     @endif
 @endforeach
 
-<!-- <link href=" asset('css/bootstrap.css') }}" rel="stylesheet" type="text/css">
-<link href=" asset('css/bootstrap-switch.css') }}" rel="stylesheet">
-<link href=" asset('css/bootstrap-toggle.min.css') }}" rel="stylesheet">
-<link href=" asset('css/core.css') }}" rel="stylesheet" type="text/css">
-<link href=" asset('css/components.css') }}" rel="stylesheet" type="text/css">
-
-<link href=" asset('css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
-<link href=" asset('css/top.css') }}" rel="stylesheet" type="text/css">
-<link href=" asset('css/main.css') }}" rel="stylesheet" type="text/css">
-<link href="{ asset('css/products.css') }}" rel="stylesheet" type="text/css">
-<link href="{ asset('css/loader.css') }}" rel="stylesheet" type="text/css">
-<link href="{ asset('css/owl.carousel.min.css') }}" rel="stylesheet" type="text/css">
-<link href="{ asset('css/owl.theme.default.min.css') }}" rel="stylesheet" type="text/css"> -->
-
 <link href="{{ mix('style/common.css') }}" rel="stylesheet" type="text/css">
 
-<script type="text/javascript" src="{{ asset('js/core/libraries/jquery.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/core/libraries/bootstrap.min.js') }}"></script>
-
-<script type="text/javascript" src="{{ asset('js/plugins/forms/styling/uniform.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/plugins/forms/styling/bootstrap-switch.js') }}"></script>
-
-<script type="text/javascript" src="{{ asset('js/plugins/media/fancybox.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/core/main.controls.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/scrollreveal.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.maskedinput.min.js') }}"></script>
-
-<script type="text/javascript" src="{{ asset('js/input-value.js').Helper::randHash() }}"></script>
-<script type="text/javascript" src="{{ asset('js/products.js').Helper::randHash() }}"></script>
-<script type="text/javascript" src="{{ asset('js/loader.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/owl.carousel.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/main.js?').Helper::randHash() }}"></script>
-
+<script type="text/javascript" src="{{ mix('js/face/app.js') }}"></script>
 <script type="text/javascript" src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
 <script type="text/javascript" src="{{ asset('js/map.js') }}"></script>
 

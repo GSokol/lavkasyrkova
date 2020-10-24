@@ -29,16 +29,15 @@ class Controller extends BaseController
      */
     public function __construct()
     {
-        $categories = Category::all();
+        $categories = Category::getCategories();
         $this->data['seo'] = Settings::getSeoTags();
         $this->data['actions'] = Product::getActions();
         $this->data['products'] = Product::all();
-        $this->data['shops'] = Store::all();
 
         View::share('data', $this->data);
         View::share('metas', $this->metas);
         View::share('mainMenu', $this->getMainMenu($categories));
-        View::share('stores', Store::all());
+        View::share('stores', Store::getStores());
         View::share('categories', $categories);
     }
 

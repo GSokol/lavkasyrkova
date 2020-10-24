@@ -56,12 +56,12 @@
             </div>
         @elseif ($d == 1)
             <div class="shops-block" style="display:none;">
-                @foreach($data['shops'] as $k => $shop)
+                @foreach($stores as $k => $store)
                     @include('_radio_simple_block',[
                         'name' => 'shop_id',
-                        'value' => $shop->id,
-                        'label' => $shop->address,
-                        'checked' => !$k
+                        'value' => $store->id,
+                        'label' => $store->address,
+                        'checked' => !$k,
                     ])
                 @endforeach
             </div>

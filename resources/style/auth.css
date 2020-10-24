@@ -1,5 +1,5 @@
 body {
-    background: url("../images/main_image.jpg") 50% 50% no-repeat;
+    background: url("/images/main_image.jpg") 50% 50% no-repeat;
     background-size: cover;
 }
 

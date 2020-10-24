@@ -2,5 +2,7 @@
     "/js/admin/category.js": "/js/admin/category.js?id=f178df3ed20d8785e8bd",
     "/js/admin/order.js": "/js/admin/order.js?id=0617ca7b039ca2d83408",
     "/js/face/profile-order.js": "/js/face/profile-order.js?id=fc90631a01e7649f2d1d",
-    "/style/common.css": "/style/common.css?id=04f50db97e0176c5ddb2"
+    "/style/common.css": "/style/common.css?id=7e0dd2af6472b87c340a",
+    "/style/auth.css": "/style/auth.css?id=0ce61fc7f18dc2ee5ae8",
+    "/js/face/app.js": "/js/face/app.js?id=1d809f1f310fb5c6175a"
 }

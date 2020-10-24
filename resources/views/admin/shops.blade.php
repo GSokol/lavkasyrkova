@@ -1,7 +1,7 @@
 @extends('admin.layouts.default')
 
 @section('content')
-    @include('admin._modal_delete_block',['modalId' => 'delete-modal', 'function' => 'delete-shop', 'head' => 'Вы действительно хотите удалить этот магазин?'])
+    @include('admin._modal_delete_block', ['modalId' => 'delete-modal', 'function' => 'delete-shop', 'head' => 'Вы действительно хотите удалить этот магазин?'])
 
     <div class="panel panel-flat">
         <div class="panel-body">

@@ -28,7 +28,7 @@
                             <a href="{{ $menu['href'] }}" @if (strpos($menu['href'], '#') !== false) data-scroll="{{ substr($menu['href'], 2) }}" @endif>{{ $menu['name'] }}</a>
 
                             @if (isset($menu['submenu']) && is_array($menu['submenu']))
-                                <ul class="dropdown-menu">
+                                <ul class="dropdown-menu hidden-xs">
                                     @foreach ($menu['submenu'] as $menu)
                                         <li><a href="{{ $menu['href'] }}">{{ $menu['name'] }}</a></li>
                                     @endforeach

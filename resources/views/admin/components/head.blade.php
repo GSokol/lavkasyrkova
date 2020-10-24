@@ -41,7 +41,7 @@
 <script type="text/javascript" src="{{ asset('js/pages/gallery.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/core/app.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/core/main.controls.js') }}"></script>
-<!-- /theme JS files -->
+
 <script type="text/javascript" src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.maskedinput.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/map.js') }}"></script>

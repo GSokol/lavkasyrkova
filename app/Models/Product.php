@@ -28,6 +28,30 @@ class Product extends Model
         'add_category_id'
     ];
 
+    /**
+     * Изображение товара
+     *
+     * @return string
+     */
+    public function getImageAttribute($value): string {
+        if (!file_exists(public_path($value))) {
+            return '/images/default.jpg';
+        }
+        return $value;
+    }
+
+    /**
+     * Изображение товара
+     *
+     * @return string
+     */
+    public function getBigImageAttribute($value): string {
+        if (!file_exists(public_path($value))) {
+            return '/images/default.jpg';
+        }
+        return $value;
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
