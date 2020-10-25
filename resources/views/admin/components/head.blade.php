@@ -4,14 +4,7 @@
 <title>{{ Settings::getSeoTags()['title'] ? Settings::getSeoTags()['title'] : '' }}. Админка</title>
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/core.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/components.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/colors.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/admin.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/products.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('css/loader.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ mix('style/managment.css') }}" rel="stylesheet" type="text/css">
 
 <script type="text/javascript" src="{{ asset('js/plugins/loaders/pace.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/core/libraries/jquery.min.js') }}"></script>

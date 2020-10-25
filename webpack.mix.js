@@ -50,7 +50,7 @@ mix.styles([
     'resources/style/owl.theme.default.min.css',
 ], 'public/style/common.css');
 
-// auth
+// face auth
 mix.styles([
     'resources/fonts/icomoon/styles.css',
     'resources/style/bootstrap.css',
@@ -60,6 +60,18 @@ mix.styles([
     'resources/style/main.css',
     'resources/style/auth.css',
 ], 'public/style/auth.css');
+
+// admin
+mix.styles([
+    'resources/fonts/icomoon/styles.css',
+    'resources/style/bootstrap.css',
+    'resources/style/core.css',
+    'resources/style/components.css',
+    'resources/style/colors.css',
+    'resources/style/admin.css',
+    'resources/style/products.css',
+    'resources/style/loader.css',
+], 'public/style/managment.css');
 
 mix.scripts([
     'public/js/core/libraries/jquery.min.js',
