@@ -22,12 +22,12 @@
                 @foreach ($orders as $order)
                     <tr role="row" id="{{ 'order_'.$order->id }}">
                         <td class="text-center id">{{ $order->id }}</td>
-                        <td class="text-center">{{ $order->created_at->format('d.m.Y H:i:s') }}</td>
+                        <td class="text-center">{{ $order->created_at }}</td>
                         <td class="text-center">{{ $order->delivery_info }}</td>
                         <td class="text-center">
                             @if ($order->user->office_id > 2 && !$order->delivery && !$order->shop_id)
                                 @foreach($order->user->office->tastings as $tasting)
-                                    @if ($tasting->time > $order->created_at->timestamp)
+                                    @if ($tasting->time > strtotime($order->created_at))
                                         {{ date('d.m.Y',$tasting->time) }}
                                         @break
                                     @endif
