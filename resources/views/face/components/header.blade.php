@@ -18,7 +18,7 @@
             <ul class="nav navbar-nav">
                 @if ($data['actions'] && count($data['actions']))
                     <li class="main-menu">
-                        <a href="/#actions">Предложения недели</a>
+                        <a href="/#actions" data-scroll="actions">Предложения недели</a>
                     </li>
                 @endif
 

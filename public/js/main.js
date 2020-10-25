@@ -17,7 +17,7 @@ $(window).ready(function () {
 
     // Click hover zone and menu
     $('a[data-scroll]').click(function (e) {
-        e.preventDefault();
+        // e.preventDefault();
         // if ($(this).attr('data-type')) getCategory($(this));
         window.menuClickFlag = true;
         goToScroll($(this).attr('data-scroll'));
