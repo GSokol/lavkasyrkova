@@ -3,7 +3,7 @@
 @section('content')
     <div class="cover" data-scroll-destination="cheeses">
         <div class="container">
-            <h1 class="head" id="cheeses-head">{{ $category->name }}</h1>
+            <h1 class="head" id="cheeses-head" style="margin-top: 90px;">{{ $category->name }}</h1>
             <div>
                 <div class="order-form"></div>
                 <div id="on-top-button"><i class="glyphicon glyphicon-upload"></i></div>

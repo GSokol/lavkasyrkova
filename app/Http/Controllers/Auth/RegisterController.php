@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HelperTrait;
+use App\Models\Office;
 use App\User;
 
 class RegisterController extends Controller
@@ -42,6 +43,20 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        $offices = Office::getOffices();
+
+        return view('auth.register', [
+            'offices' => $offices,
+        ]);
     }
 
     /**

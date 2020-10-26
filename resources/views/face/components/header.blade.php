@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-default navbar-static-top" data-scroll-destination="menu">
     @include('face.components._basket_block', ['className' => 'visible-xs'])
 
     <div class="navbar-header">

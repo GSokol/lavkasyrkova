@@ -88,7 +88,7 @@ function goToScroll(scrollData) {
     // resetColorHrefsMenu();
     // $('.main-menu > a[data-scroll=' + scrollData + ']').addClass('active');
     $('html,body').animate({
-        scrollTop: $('div[data-scroll-destination=' + scrollData + ']').offset().top - (scrollData == 'home' ? 0 : 65)
+        scrollTop: $('[data-scroll-destination=' + scrollData + ']').offset().top - (scrollData == 'menu' ? 10000 : 65)
     }, 1000, 'easeInOutQuint', function () {
         window.menuClickFlag = false;
     });

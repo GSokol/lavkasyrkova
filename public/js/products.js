@@ -1,21 +1,6 @@
 $(window).ready(function () {
-    // Click to category href
-    // $('.category').click(function () {
-    //     getCategory($(this));
-    // });
-
-    // Click back to categories
-    var productsContainer = $('#products');
-    // productsContainer.find('.back-to-categories > div').click(function () {
     $('#on-top-button').click(function () {
-        productsContainer.fadeOut('fast',function () {
-            $('.order-form').html('');
-            $('#cheeses-sub-head').html('');
-            $('#cheeses-head').fadeIn('fast');
-            $('#categories').fadeIn('fast',function () {
-                goToScroll('cheeses');
-            });
-        });
+        goToScroll('menu');
     });
 
     // Click checkout order
