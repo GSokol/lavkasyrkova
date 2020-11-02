@@ -60,10 +60,6 @@
                     @endif
                 @endforeach
             </div>
-            <div id="products">
-                <div class="order-form"></div>
-                <div id="on-top-button"><i class="glyphicon glyphicon-upload"></i></div>
-            </div>
         </div>
     </div>
 

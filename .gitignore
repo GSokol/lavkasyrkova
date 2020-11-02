@@ -10,6 +10,7 @@
 /.idea
 /.vagrant
 .env
+.env.testing
 .env.backup
 .phpunit.result.cache
 .htaccess

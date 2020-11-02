@@ -25,7 +25,7 @@
             <p class="small">{{ str_replace('Сыры', 'Сыр', $product->addCategory->name) }}</p>
         @endif
         <p class="description">{{ $product->description }}</p>
-        <p class="price {{ $product->action ? 'action' : '' }}">{!! Helper::productCostSting($product) !!}</p>
+        <p class="price">{!! Helper::productCostSting($product) !!}</p>
     </div>
     <div class="value">
         @if ($product->active)

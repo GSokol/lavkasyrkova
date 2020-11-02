@@ -1,9 +1,9 @@
 @extends('face.layouts.main')
 
 @section('content')
-    <div class="cover" data-scroll-destination="cheeses">
+    <div class="cover first" data-scroll-destination="cheeses">
         <div class="container">
-            <h1 class="head" id="cheeses-head" style="margin-top: 90px;">{{ $category->name }}</h1>
+            <h1 class="head" id="cheeses-head">{{ $category->name }}</h1>
             <div>
                 <div class="order-form"></div>
                 <div id="on-top-button"><i class="glyphicon glyphicon-upload"></i></div>
@@ -41,6 +41,22 @@
                 @else
                     <h4 class="text-center">Скоро здесь появятся новые товары</h4>
                 @endif
+            </div>
+        </div>
+    </div>
+
+    <div class="cover">
+        <div class="container">
+            <div style="padding-top: 20px;">
+                @foreach ($categories as $category)
+                    @if (count($category->products))
+                        <div class="col-md-3 col-sm-4 col-xs-12">
+                            <a href="{{ route('face.category', ['slug' => $category->slug]) }}">
+                                <h6>{{ $category->name }}</h6>
+                            </a>
+                        </div>
+                    @endif
+                @endforeach
             </div>
         </div>
     </div>

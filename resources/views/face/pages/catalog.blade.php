@@ -1,7 +1,7 @@
 @extends('face.layouts.main')
 
 @section('content')
-    <div class="cover" data-scroll-destination="cheeses">
+    <div class="cover first" data-scroll-destination="cheeses">
         <div class="container">
             <h1 class="head" id="cheeses-head">Наши сыры</h1>
             <h1 class="head" id="cheeses-sub-head"></h1>

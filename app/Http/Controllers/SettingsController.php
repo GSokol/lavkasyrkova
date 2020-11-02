@@ -8,12 +8,12 @@ use Config;
 class SettingsController extends Controller
 {
     use HelperTrait;
-    
+
     private $settings;
 
     public function __construct()
     {
-        $this->settings = simplexml_load_file(Config::get('app.settings_xml'));
+        $this->settings = simplexml_load_file(public_path(Config::get('app.settings_xml')));
     }
 
     // Seo
