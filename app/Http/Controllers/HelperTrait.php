@@ -127,21 +127,46 @@ trait HelperTrait
         return $fields;
     }
 
-    public function processingImage(Request $request, Model $model=null, $field=null, $name=null, $path=null)
-    {
+    public function processingImage(
+        Request $request,
+        Model $model=null,
+        $field=null,
+        $name=null,
+        $path=null,
+        string $modelPk='id'
+    ) {
         $imageField = [];
         $field = $field ? $field : 'image';
 
         if ($request->hasFile($field)) {
-            $this->unlinkFile($model, $field);
 
-            $info = $model && $model[$field] ? pathinfo($model[$field]) : null;
+            $info = null;
+            if ($model && !empty($model[$field])) {
+                $modelPath = $model[$field];
+                if ($modelPath !== '/images/default.jpg') {
+                    $info = pathinfo($model[$field]);
+                }
+            }
 
-            if ($name) $imageName = $name.'.'.$request->file($field)->getClientOriginalExtension();
-            elseif ($info) $imageName = $info['filename'].'.'.$request->file($field)->getClientOriginalExtension();
-            else $imageName = Str::random(10).'.'.$request->file($field)->getClientOriginalExtension();
+            if ($name) {
+                $imageName = $name . '.' . $request->file($field)->getClientOriginalExtension();
+            } elseif ($info) {
+                $imageName = $info['filename'] . '.' . $request->file($field)->getClientOriginalExtension();
+            } elseif ($model && !empty($model[$modelPk])) {
+                $imageName = $model[$modelPk] . '.' . $request->file($field)->getClientOriginalExtension();
+            } else {
+                $imageName = Str::random(10) . '.' . $request->file($field)->getClientOriginalExtension();
+            }
 
-            if (!$path && $info) $path = $info ? $info['dirname'] : 'images';
+            if (!$path) {
+                if ($info && isset($info['dirname'])) {
+                    $path = $info['dirname'];
+                } elseif ($model && get_class($model)) {
+                    $path = 'images/' . strtolower(rtrim(last(explode('\\', get_class($model))), 's')) . 's';
+                } else {
+                    $path = 'images';
+                }
+            }
 
             $request->file($field)->move(base_path('public/'.$path),$imageName);
             $imageField[$field] = $path.'/'.$imageName;
