@@ -2,15 +2,15 @@
 
 @section('content')
     <div id="main-image" data-scroll-destination="home">
-        <div class="logo">
+        <!-- <div class="logo">
             <div><img class="logo" src="{{ asset('images/logo.svg') }}" /></div>
-        </div>
-        <div class="text">
+        </div> -->
+        <!-- <div class="text">
             <div>
                 <p>РОССИЙСКИЙ ФЕРМЕРСКИЙ СЫР<br>от рикотты до пармезана</p>
             </div>
-        </div>
-        <div class="button">
+        </div> -->
+        <!-- <div class="button">
             <a href="#tasting" data-scroll="tastings">
                 @include('_button_block',[
                     'addClass' => 'big-button',
@@ -19,7 +19,7 @@
                      'text' => 'Бесплатные тематические дегустации'
                  ])
             </a>
-        </div>
+        </div> -->
     </div>
 
     @if (count($data['actions']))

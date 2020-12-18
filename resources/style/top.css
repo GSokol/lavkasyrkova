@@ -139,7 +139,8 @@
 #main-image {
     width: 100%;
     display: table;
-    background: url("/images/main_image.jpg") 50% 50% no-repeat;
+    /* background: url("/images/main_image.jpg") 50% 50% no-repeat; */
+    background: url("/images/new-year.jpg") 50% 50% no-repeat;
     background-size: cover;
 }
 
