@@ -140,8 +140,10 @@
     width: 100%;
     display: table;
     /* background: url("/images/main_image.jpg") 50% 50% no-repeat; */
-    background: url("/images/new-year.jpg") 50% 50% no-repeat;
-    background-size: cover;
+    background: url("/images/new-year.jpg") 50% 50% no-repeat #ffe8a8;
+    background-size: contain;
+    background-position: center;
+    margin-top: 40px;
 }
 
 #main-image > .logo {
@@ -241,6 +243,12 @@
         display: none;
     }
 }
+
+/* @media screen and (max-width: 480px) {
+    #main-image {
+        background-size: contain;
+    }
+} */
 
 @media screen and (max-height: 800px) {
     #main-image > .logo > div {
