@@ -34,6 +34,8 @@ class SettingsController extends Controller
 
     public function getAddress()
     {
+        $this->settings->address->phone1 = '7(985) 920-90-38';
+        $this->settings->address->phone2 = '7(916) 617-84-53';
         return $this->settings->address;
     }
 
