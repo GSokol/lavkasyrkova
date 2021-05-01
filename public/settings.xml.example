@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <seo>
+        <title>Магазин Лавка Сыркова</title>
+        <meta_description>Магазин Лавка Сыркова.  Фермерские сыры ручной работы в Москве.</meta_description>
+        <meta_keywords>Крафтовый сыр, фермерский сыр, фермерские сыры ручной работы.</meta_keywords>
+        <meta_twitter_card/>
+        <meta_twitter_size/>
+        <meta_twitter_creator/>
+        <meta_og_url/>
+        <meta_og_type/>
+        <meta_og_title>Магазин Лавка Сыркова</meta_og_title>
+        <meta_og_description>Магазин Лавка Сыркова.  Фермерские сыры ручной работы в Москве.</meta_og_description>
+        <meta_og_image>http://lavkasyrkova.ru/images/soc_net_image.jpg</meta_og_image>
+        <meta_robots/>
+        <meta_googlebot/>
+        <meta_google_site_verification/>
+    </seo>
+    <settings>
+        <email>lavkasyrkova@gmail.com</email>
+	<delivery_limit>1000</delivery_limit>
+    </settings>
+    <address>
+        <phone1>+7(985) 920-90-38</phone1>
+        <phone2>+7(916) 617-84-53</phone2>
+        <email>lavkasyrkova@gmail.com</email>
+    </address>
+</root>

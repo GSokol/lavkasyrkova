@@ -29,6 +29,10 @@ class AdminController extends UserController
         $this->breadcrumbs = ['seo' => 'SEO'];
         $this->data['metas'] = $this->metas;
         $this->data['seo'] = Settings::getSeoTags();
+        $this->data['address'] = [];
+        foreach(Settings::getAddress()->children() as $addresChild) {
+            $this->data['address'][$addresChild->getName()] = (string)$addresChild;
+        }
         return $this->showView('seo');
     }
 
@@ -126,6 +130,9 @@ class AdminController extends UserController
             'meta_robots' => 'max:255',
             'meta_googlebot' => 'max:255',
             'meta_google_site_verification' => 'max:255',
+            'address[phone1]' => 'max:255',
+            'address[phone2]' => 'max:255',
+            'address[email]' => 'max:255',
         ]);
         Settings::saveSeoTags($request);
         $this->saveCompleteMessage();

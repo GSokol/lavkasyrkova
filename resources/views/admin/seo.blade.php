@@ -36,6 +36,14 @@
                             ])
                         @endif
                     @endforeach
+                    @foreach($data['address'] as $fieldName => $fieldValue)
+                        @include('_input_block', [
+                            'label' => $fieldName,
+                            'name' => "address[$fieldName]",
+                            'type' => 'text',
+                            'value' => $fieldValue,
+                        ])
+                    @endforeach
                 </div>
 
                 <div class="col-md-12 col-sm-12 col-xs-12">

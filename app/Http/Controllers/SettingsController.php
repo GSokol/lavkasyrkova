@@ -34,8 +34,6 @@ class SettingsController extends Controller
 
     public function getAddress()
     {
-        $this->settings->address->phone1 = '7(985) 920-90-38';
-        $this->settings->address->phone2 = '7(916) 617-84-53';
         return $this->settings->address;
     }
 
@@ -44,6 +42,11 @@ class SettingsController extends Controller
         if ($request->has('title')) $this->settings->seo->title = $request->input('title');
         foreach ($this->metas as $meta => $params) {
             $this->settings->seo->$meta = $request->input($meta);
+        }
+        if ($request->has('address')) {
+            foreach ($request->get('address') as $key => $value) {
+                $this->settings->address->$key = $value;
+            }
         }
         $this->save();
     }
@@ -58,6 +61,6 @@ class SettingsController extends Controller
 
     private function save()
     {
-        $this->settings->asXML(Config::get('app.settings_xml'));
+        $this->settings->asXML(public_path(Config::get('app.settings_xml')));
     }
 }
