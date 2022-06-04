@@ -29,6 +29,18 @@ class Product extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'parts' => 'boolean',
+        'active' => 'boolean',
+        'new' => 'boolean',
+        'action' => 'boolean',
+    ];
+
+    /**
      * Изображение товара
      *
      * @return string

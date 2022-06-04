@@ -8,7 +8,6 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\View;
-use App\Models\AddCategory;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Store;
@@ -31,14 +30,13 @@ class Controller extends BaseController
     {
         $categories = Category::getCategories();
         $this->data['seo'] = Settings::getSeoTags();
-        $this->data['actions'] = Product::getActions();
         $this->data['products'] = Product::all();
 
         View::share('data', $this->data);
         View::share('metas', $this->metas);
-        View::share('mainMenu', $this->getMainMenu($categories));
         View::share('stores', Store::getStores());
         View::share('categories', $categories);
+        View::share('settings', Settings::getSettingsAll());
     }
 
     /**
@@ -55,31 +53,5 @@ class Controller extends BaseController
             $response[ERR] = Response::HTTP_OK;
         }
         return $response;
-    }
-
-    public function getMainMenu($categories)
-    {
-        $addCategories = AddCategory::all();
-        $mainMenu = [];
-        $subMenu = [];
-        $subMenu = $this->getCategorySubMenu($subMenu, $categories, 'category');
-        $subMenu = $this->getCategorySubMenu($subMenu, $addCategories, 'add_category');
-        $mainMenu[] = ['href' => route('face.catalog'), 'name' => 'Наши сыры ▼', 'submenu' => $subMenu];
-        $mainMenu[] = ['href' => '/#tastings', 'name' => 'Дегустации'];
-        $mainMenu[] = ['href' => '/#shops', 'name' => 'Магазины'];
-        return $mainMenu;
-    }
-
-    private function getCategorySubMenu($subMenu, $categories, $type)
-    {
-        foreach ($categories as $category) {
-            $subMenu[] = [
-                'href' => route('face.category', ['slug' => $category->slug]),
-                'id' => $category->id,
-                'type' => $type,
-                'name' => $category->name
-            ];
-        }
-        return $subMenu;
     }
 }

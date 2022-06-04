@@ -13,7 +13,7 @@ use App\Models\Product;
 use App\Models\Store;
 use App\Models\Tasting;
 use App\Models\UserToTasting;
-use App\User;
+use App\Models\User;
 use Session;
 use Settings;
 
@@ -46,7 +46,7 @@ class UserController extends Controller
             'collection' => $orders,
         ]);
 
-        return view('face.pages.orders', [
+        return view('pages.orders', [
             'breadcrumbs' => $this->breadcrumbs,
             'tastings' => $tastings,
             'orders' => $orders,

@@ -2,13 +2,22 @@
 
 namespace App\Exceptions;
 
-use Exception;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Response;
+use Settings;
+use App\Http\Controllers\HelperTrait;
 
 class Handler extends ExceptionHandler
 {
+    use HelperTrait;
+
+    protected $data = [];
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -29,6 +38,22 @@ class Handler extends ExceptionHandler
     ];
 
     /**
+     * Register the exception handling callbacks for the application.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        // $this->renderable(function (NotFoundHttpException $exception, $request) {
+        //     dump('register', $exception);
+        //     // dump('register', $request->is('dashboard', 'dashboard/*'));
+        //     // if (auth()->guard('dashboard')->check() && $request->is('dashboard', 'dashboard/*')) {
+        //     //     return response()->view('dashboard::errors.404', [], Response::HTTP_NOT_FOUND);
+        //     // }
+        // });
+    }
+
+    /**
      * Report or log an exception.
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
@@ -36,19 +61,19 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $exception)
-    {
-        parent::report($exception);
-    }
+    // public function report(Exception $exception)
+    // {
+    //     parent::report($exception);
+    // }
 
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, $exception)
     {
         if (config('app.debug')) {
             $response['debug'][CODE] = $exception->getCode();
@@ -115,7 +140,40 @@ class Handler extends ExceptionHandler
             return response()->json($response, $response[ERR]);
         }
 
+        // страница не найдена
+        if ($exception instanceof NotFoundHttpException || $exception instanceof ModelNotFoundException) {
+            // Meta::set('title', 'Page not found');
+            // если адрес в URL начинается с dashboard и аутентифицирован guard=dashboard
+            if (auth()->guard('dashboard')->check() && $request->is('dashboard', 'dashboard/*')) {
+                // View::composer('dashboard::components.header', 'Dashboard\Http\View\Composers\HeaderComposer');
+                return response()->view('dashboard::errors.404', [], Response::HTTP_NOT_FOUND);
+            }
+
+            // $this->data['seo'] = Settings::getSeoTags();
+            // View::share('data', $this->data);
+            View::share('settings', Settings::getSettingsAll());
+            return response()->view('errors.404', [], Response::HTTP_NOT_FOUND);
+        }
+
         return parent::render($request, $exception);
+    }
+
+    /**
+     * Convert an authentication exception into a response.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Auth\AuthenticationException $exception
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if ($this->shouldReturnJson($request, $exception)) {
+            return response()->json(['message' => $exception->getMessage()], 401);
+        }
+        if ($request->is('dashboard', 'dashboard/*')) {
+            return redirect()->guest(route('dashboard.login'));
+        }
+        return redirect()->guest(route('face.login'));
     }
 
     /**

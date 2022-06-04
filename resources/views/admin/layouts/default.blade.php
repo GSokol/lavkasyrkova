@@ -39,9 +39,9 @@
 
                     <div class="breadcrumb-line">
                         <ul class="breadcrumb">
-                            <li><a href="{{ url('/'.$prefix) }}"><i class="icon-home2 position-left"></i>Главная</a></li>
+                            <li><a href="{{ route('dashboard.home') }}"><i class="icon-home2 position-left"></i>Главная</a></li>
                             @foreach ($breadcrumbs as $href => $crumb)
-                                <li><a href="{{ url('/'.$prefix.'/'.$href) }}">{{ strip_tags($crumb) }}</a></li>
+                                <li><a href="{{ url('/'.$href) }}">{{ strip_tags($crumb) }}</a></li>
                             @endforeach
                         </ul>
                     </div>

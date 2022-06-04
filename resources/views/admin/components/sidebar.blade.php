@@ -17,8 +17,8 @@
                     @if ($menu['href'] == '/')
                         <li><a href="{{ url('/') }}"><i class="{{ $menu['icon'] }}"></i> <span>{{ Str::limit($menu['name'], 20) }}</span></a></li>
                     @else
-                        <li {{ preg_match('/^('.$prefix.'\/'.str_replace('/','\/',$menu['href']).')/', Request::path()) ? 'class=active' : '' }}>
-                            <a href="{{ url('/'.$prefix.'/'.$menu['href']) }}"><i class="{{ $menu['icon'] }}"></i> <span>{{ Str::limit($menu['name'], 20) }}</span></a>
+                        <li {{ preg_match('/^('.str_replace('/', '\/', $menu['href']).')/', Request::path()) ? 'class="active"' : '' }}>
+                            <a href="{{ $menu['href'] }}"><i class="{{ $menu['icon'] }}"></i> <span>{{ Str::limit($menu['name'], 20) }}</span></a>
                             @if (isset($menu['submenu']) && count($menu['submenu']))
                                 <ul>
                                     @foreach ($menu['submenu'] as $submenu)
@@ -30,8 +30,8 @@
                                             }
                                         }
                                         ?>
-                                        <li {{ (preg_match('/^('.$prefix.'\/'.str_replace('/','\/',$menu['href'].'/'.$submenu['href']).')/', Request::path())) || (Request::path() == $prefix.'/products' && Request::has('id') && Request::input('id') == (int)str_replace('?id=','',$submenu['href'])) ? 'class=active' : '' }}>
-                                            <a href="{{ url('/'.$prefix.'/'.$menu['href'].'/'.$submenu['href']) }}" {!! $addAttrStr !!}>{{ Str::limit($submenu['name'], 20) }}</a>
+                                        <li {{ (preg_match('/^('.str_replace('/','\/',$menu['href'].'/'.$submenu['href']).')/', Request::path())) || (Request::path() == $prefix.'/products' && Request::has('id') && Request::input('id') == (int)str_replace('?id=','',$submenu['href'])) ? 'class="active"' : '' }}>
+                                            <a href="{{ $menu['href'].'/'.$submenu['href'] }}" {!! $addAttrStr !!}>{{ Str::limit($submenu['name'], 20) }}</a>
                                         </li>
                                     @endforeach
                                 </ul>

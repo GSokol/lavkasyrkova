@@ -1,4 +1,4 @@
-@extends('face.layouts.mail')
+@extends('layouts.mail')
 
 @section('content')
     <h1 class="section-title">{{ trans('auth.confirm_register_head') }}</h1>

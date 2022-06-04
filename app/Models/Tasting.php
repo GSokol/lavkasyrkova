@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Office;
 use App\Models\Order;
 use App\Models\UserToTasting;
-use App\User;
+use App\Models\User;
 
 class Tasting extends Model
 {

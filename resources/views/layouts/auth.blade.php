@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('face.components.head_auth')
+    @include('components.head_auth')
 </head>
 
 <body class="login-container">

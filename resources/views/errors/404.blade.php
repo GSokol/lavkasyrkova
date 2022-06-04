@@ -1,4 +1,4 @@
-@extends('face.layouts.main')
+@extends('layouts.main')
 
 @section('content')
     <div class="cover" data-scroll-destination="cheeses">

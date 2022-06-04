@@ -1,4 +1,4 @@
-@extends('face.layouts.mail')
+@extends('layouts.mail')
 
 @section('content')
     <h1 class="section-title">{{ $title }} на сайте <a href="{{ Config::get('app.url') }}">{{ Config::get('app.name') }}</a></h1>

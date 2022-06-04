@@ -5,7 +5,7 @@ namespace App\Policies;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Models\Order;
-use App\User;
+use App\Models\User;
 
 class OrderPolicy
 {
@@ -24,7 +24,7 @@ class OrderPolicy
     /**
      * Клонирование заказа из личного кабинета
      *
-     * @param App\User $user
+     * @param App\Models\User $user
      * @param App\Models\Order $order
      * @return bool|AuthorizationException
      */
@@ -40,7 +40,7 @@ class OrderPolicy
     /**
      * Удаление заказа из личного кабинета
      *
-     * @param App\User $user
+     * @param App\Models\User $user
      * @param App\Models\Order $order
      * @return bool|AuthorizationException
      */

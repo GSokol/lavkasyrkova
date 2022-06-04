@@ -22,7 +22,7 @@ class StaticController extends Controller
     {
         $this->validate($request,['type' => 'required|in:category,add_category']);
         $type = $request->input('type');
-        $this->validate($request,['id' => ($type == 'category' ? $this->validationCategory : $this->validationAddCategory)]);
+        $this->validate($request,['id' => ($type == 'category' ? 'required|integer|exists:categories,id' : $this->validationAddCategory)]);
         $head = $type == 'category' ? Category::where('id',$request->input('id'))->pluck('name')->first() : AddCategory::where('id',$request->input('id'))->pluck('name')->first();
         $this->data['products'] = Product::where($type.'_id',$request->input('id'))->get();
 

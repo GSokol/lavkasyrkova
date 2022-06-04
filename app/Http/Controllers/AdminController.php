@@ -12,18 +12,13 @@ use App\Models\Product;
 use App\Models\Store;
 use App\Models\Tasting;
 use App\Models\UserToTasting;
-use App\User;
+use App\Models\User;
 use Auth;
 use Session;
 use Settings;
 
 class AdminController extends UserController
 {
-    public function index()
-    {
-        return redirect('/admin/orders');
-    }
-
     public function seo()
     {
         $this->breadcrumbs = ['seo' => 'SEO'];
@@ -155,14 +150,14 @@ class AdminController extends UserController
             'name' => 'required|unique:products,name',
             'additionally' => 'max:255',
             'description' => 'required|min:3|max:500',
-            'whole_price' => $this->validationPrice,
+            'whole_price' => 'integer',
             'whole_weight' => 'required|integer|min:1|max:5000',
-            'part_price' => $this->validationPrice,
-            'action_whole_price' => $this->validationPrice,
-            'action_part_price' => $this->validationPrice,
-            'image' => $this->validationImage,
-            'big_image' => $this->validationImage,
-            'category_id' => $this->validationCategory
+            'part_price' => 'integer',
+            'action_whole_price' => 'integer',
+            'action_part_price' => 'integer',
+            'image' => 'image|min:5|max:5000',
+            'big_image' => 'image|min:5|max:5000',
+            'category_id' => 'required|integer|exists:categories,id',
         ];
         $fields = $this->processingFields(
             $request,
@@ -187,8 +182,8 @@ class AdminController extends UserController
             $product->update($fields);
 
         } else {
-            $validationArr['image'] = 'required|'.$this->validationImage;
-            $validationArr['big_image'] = 'required|'.$this->validationImage;
+            $validationArr['image'] = 'required|image|min:5|max:5000';
+            $validationArr['big_image'] = 'required|image|min:5|max:5000';
 
             $this->validate($request, $validationArr);
             $fields = array_merge(

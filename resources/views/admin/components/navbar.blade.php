@@ -67,7 +67,7 @@
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="{{ url('/logout') }}"><i class="icon-switch2"></i> {{ trans('auth.logout') }}</a></li>
+                        <li><a href="{{ route('dashboard.logout') }}"><i class="icon-switch2"></i> {{ trans('auth.logout') }}</a></li>
                     </ul>
                 </li>
             </ul>

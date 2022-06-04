@@ -1,0 +1,151 @@
+.navigation > li.active > a,
+.navigation > li.active > a:hover,
+.navigation > li.active > a:focus {
+    background-color: #ff9100;
+}
+
+.error {
+    color: red;
+}
+
+.id {
+    width: 20px;
+}
+
+.dataTables_wrapper {
+    margin-bottom: 20px;
+}
+
+td.image {
+    width: 10%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+td.image img,
+.edit-image-preview img,
+.image img {
+    width: 100%;
+    border: 2px solid grey;
+}
+
+.delete {
+    text-align: center;
+}
+
+td.delete > span {
+    cursor: pointer;
+}
+
+/*.range-input {*/
+    /*width: 100%;*/
+/*}*/
+
+/*.range-input td {*/
+    /*text-align: center;*/
+    /*vertical-align: middle;*/
+/*}*/
+
+/*.range-input .min-max {*/
+    /*width: 70px;*/
+/*}*/
+
+/*.range-input .value {*/
+    /*width: 100px;*/
+    /*font-weight: bold;*/
+/*}*/
+
+/*.range-input .value input {*/
+    /*width: 100%;*/
+    /*text-align: center;*/
+    /*padding: 0;*/
+    /*float: left;*/
+/*}*/
+
+/*.range-input .value div {*/
+    /*padding-top: 5px;*/
+    /*margin-left: 5px;*/
+    /*float: left;*/
+/*}*/
+
+textarea {
+    width: 100%;
+    resize: vertical;
+}
+
+.delivery .simple-radio, .delivery label.checkbox-inline {
+    font-size: 16px;
+}
+
+.simple-radio .choice {
+    margin-right: 10px;
+
+}
+
+.address-block {
+    display: table;
+    padding: 7px 0;
+    border-bottom: 1px solid lightgrey;
+}
+
+.modal-body {
+    width: 100%;
+    background-color: #f1f1f1;
+    border: 1px solid #eaeaea;
+    display: table;
+    margin-bottom: 20px;
+}
+
+.modal-body .address-block {
+    display: block;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+    background-color: #ff9100;
+    border-color: #c57000;
+}
+
+.btn-primary {
+    background-color: #ff9100;
+    border-color: #c57000;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #c57000;
+    border-color: #ff9100;
+}
+
+.total-cost {
+    text-align: right;
+}
+
+.total-cost > span {
+    font-weight: bold;
+}
+
+.map {
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    border: 3px solid #ff9100;
+}
+
+.add-block {
+    display: none;
+}
+
+.add-block.visible {
+    display: block;
+}
+
+@media screen and (max-width: 1024px) {
+    .total-cost {
+        text-align: left;
+    }
+}

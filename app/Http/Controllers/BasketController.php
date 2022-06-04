@@ -8,7 +8,7 @@ use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Product;
 use App\Models\ProductToOrder;
-use App\User;
+use App\Models\User;
 use Session;
 use Settings;
 use Helper;

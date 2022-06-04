@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +13,14 @@ mix.options({
     terser: {
         extractComments: false,
     }
+}).webpackConfig((webpack) => {
+    return {
+        resolve: {
+            alias: {
+                // vue: 'vue/dist/vue.js',
+            }
+        },
+    };
 });
 
 /*
@@ -30,9 +38,10 @@ mix.options({
 mix.copyDirectory('resources/fonts', 'public/fonts');
 
 // scripts
-mix.js('resources/js/face/entry/profile-order.js', 'public/js/face');
-mix.js('resources/js/admin/entry/category.js', 'public/js/admin');
-mix.js('resources/js/admin/entry/order.js', 'public/js/admin');
+mix.js('resources/js/entry/profile-order.js', 'public/js/face').vue({version: 3});
+mix.js('dashboard/resources/js/entry/category.js', 'public/js/dashboard').vue({version: 3});
+mix.js('dashboard/resources/js/entry/order.js', 'public/js/dashboard').vue({version: 3});
+mix.js('dashboard/resources/js/entry/product-item/index.js', 'public/js/dashboard/product-item.js').vue({version: 3});
 
 // face
 mix.styles([
@@ -61,17 +70,18 @@ mix.styles([
     'resources/style/auth.css',
 ], 'public/style/auth.css');
 
-// admin
+// dashboard
 mix.styles([
     'resources/fonts/icomoon/styles.css',
     'resources/style/bootstrap.css',
     'resources/style/core.css',
     'resources/style/components.css',
     'resources/style/colors.css',
-    'resources/style/admin.css',
+    'resources/style/dashboard.css',
     'resources/style/products.css',
     'resources/style/loader.css',
 ], 'public/style/managment.css');
+mix.sass('dashboard/resources/style/entry/product-item.scss', 'public/style/dashboard');
 
 mix.scripts([
     'public/js/core/libraries/jquery.min.js',
