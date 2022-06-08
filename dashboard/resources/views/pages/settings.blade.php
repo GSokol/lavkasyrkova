@@ -1,4 +1,4 @@
-@extends('admin.layouts.default')
+@extends('dashboard::layouts.default')
 
 @section('content')
     <div class="panel panel-flat">
@@ -6,7 +6,7 @@
             <h4 class="panel-title">Настройки</h4>
         </div>
         <div class="panel-body">
-            <form class="form-horizontal" enctype="multipart/form-data" action="{{ url('/admin/settings') }}" method="post">
+            <form class="form-horizontal" enctype="multipart/form-data" method="post">
                 {{ csrf_field() }}
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -19,7 +19,7 @@
                                     'type' => 'email',
                                     'max' => 100,
                                     'placeholder' => 'Основной E-mail',
-                                    'value' => Settings::getSettings()->email
+                                    'value' => Settings::getSettings()->email,
                                 ])
 
                                 @include('_input_block', [
@@ -27,7 +27,7 @@
                                     'name' => 'delivery_limit',
                                     'type' => 'number',
                                     'max' => 1000000,
-                                    'value' => Settings::getSettings()->delivery_limit
+                                    'value' => Settings::getSettings()->delivery_limit,
                                 ])
                             </div>
                         </div>

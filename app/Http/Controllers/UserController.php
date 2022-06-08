@@ -83,7 +83,7 @@ class UserController extends Controller
         $validationArr = [
             'email' => 'required|email|unique:users,email',
             'phone' => $this->validationPhone,
-            'office_id' => $this->validationOffice
+            'office_id' => 'required|integer|exists:offices,id',
         ];
 
         $fields = $this->processingFields(
@@ -97,7 +97,7 @@ class UserController extends Controller
         if ($request->has('id')) {
             $validationArr['id'] = $this->validationUser;
             $validationArr['email'] .= ','.$request->input('id');
-            if (Auth::user()->is_admin && $request->has('office_id')) $validationArr['office_id'] = $this->validationOffice;
+            if (Auth::user()->is_admin && $request->has('office_id')) $validationArr['office_id'] = 'required|integer|exists:offices,id';
 
             if ($request->has('password') && $request->input('password')) {
                 if (!Auth::user()->is_admin) $validationArr['old_password'] = 'required|min:3|max:50';
@@ -117,7 +117,7 @@ class UserController extends Controller
 
         } elseif (Auth::user()->is_admin) {
             $validationArr['password'] = $this->validationPassword;
-            $validationArr['office_id'] = $this->validationOffice;
+            $validationArr['office_id'] = 'required|integer|exists:offices,id';
             $this->validate($request, $validationArr);
             User::create($fields);
         }
@@ -159,17 +159,19 @@ class UserController extends Controller
 
     protected function showView($view)
     {
-        if (!Auth::user()->is_admin) {
-            $this->data['products'] = Product::where('active',1)->get();
-            if (!isset($this->data['shops'])) $this->data['shops'] = Store::all();
-        }
+        // dump(Auth::guard('web'));
+
+        // if (!Auth::user()->is_admin) {
+        //     $this->data['products'] = Product::where('active',1)->get();
+        //     if (!isset($this->data['shops'])) $this->data['shops'] = Store::all();
+        // }
 
         $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
 
         return view('admin.'.$view, [
             'breadcrumbs' => $this->breadcrumbs,
             'data' => $this->data,
-            'prefix' => Auth::user()->is_admin ? 'admin' : 'profile',
+            // 'prefix' => Auth::user()->is_admin ? 'admin' : 'profile',
             'menus' => $this->getMenus(),
             'tastings' => $tastings,
         ]);

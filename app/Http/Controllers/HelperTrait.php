@@ -16,12 +16,9 @@ trait HelperTrait
 {
     public $validationPhone = 'required|regex:/^((\+)?(\d)(\s)?(\()?[0-9]{3}(\))?(\s)?([0-9]{3})(\-)?([0-9]{2})(\-)?([0-9]{2}))$/';
     public $validationUser = 'required|integer|exists:users,id';
-    public $validationTasting = 'required|integer|exists:tastings,id';
-    public $validationOffice = 'required|integer|exists:offices,id';
     public $validationShop = 'required|integer|exists:shops,id';
     public $validationAddCategory = 'required|integer|exists:add_categories,id';
     public $validationPassword = 'required|confirmed|min:6|max:50';
-    public $validationCoordinates = 'regex:/^(\d{2}\.\d{5,6})$/';
     public $metas = [
         'meta_description' => ['name' => 'description', 'property' => false],
         'meta_keywords' => ['name' => 'keywords', 'property' => false],
@@ -52,12 +49,6 @@ trait HelperTrait
     public function notExist($item)
     {
         Session::flash('message',$item.' с таким id не существует!');
-        return redirect()->back();
-    }
-
-    public function youHaveNoRights()
-    {
-        Session::flash('message','У вас нет прав на данную операцию!');
         return redirect()->back();
     }
 

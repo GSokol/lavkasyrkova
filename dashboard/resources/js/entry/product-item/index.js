@@ -41,7 +41,9 @@ const app = createApp({
             });
         };
         const postProduct = (model) => {
-            return api.postInternal(route('api.dashboard.postProduct'), model).then(({response}) => {
+            return api.post(route('api.dashboard.postProduct'), model, {
+                notify: true,
+            }).then(({response}) => {
 
             });
 

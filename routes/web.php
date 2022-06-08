@@ -58,26 +58,6 @@ Route::as('face.')->group(function() {
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
     Route::post('/delete-order', 'UserController@deleteOrder');
-    // settings
-    Route::get('/settings', 'AdminController@settings')->name('settings');
-    Route::post('/settings', 'AdminController@editSettings');
-    // user
-    Route::get('/users/{slug?}', 'AdminController@users')->name('users');
-    Route::post('/delete-user', 'AdminController@deleteUser');
-    // offices
-    Route::get('/offices', 'AdminController@offices')->name('offices');
-    Route::post('/offices', 'AdminController@editOffices');
-    Route::post('/delete-office', 'AdminController@deleteOffice');
-    // tasting
-    Route::get('/tastings/{slug?}', 'AdminController@tastings')->name('tastings');
-    Route::post('/tasting', 'AdminController@editTasting');
-    Route::post('/tasting-images', 'AdminController@editTastingsImages');
-    Route::post('/delete-tasting', 'AdminController@deleteTasting');
-    Route::post('/delete-tasting-user', 'AdminController@deleteTastingUser');
-    // shops
-    Route::get('/shops', 'AdminController@shops')->name('shops');
-    Route::post('/shops', 'AdminController@editShops');
-    Route::post('/delete-shop', 'AdminController@deleteShop');
     // home page
     Route::get('/', 'AdminController@index');
 });

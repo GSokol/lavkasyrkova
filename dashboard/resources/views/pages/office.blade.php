@@ -1,4 +1,4 @@
-@extends('admin.layouts.default')
+@extends('dashboard::layouts.default')
 
 @section('content')
     @include('admin._modal_delete_block',['modalId' => 'delete-modal', 'function' => 'delete-office', 'head' => 'Вы действительно хотите удалить этот офис?'])
@@ -9,7 +9,7 @@
                 <h4 class="panel-title">Офисы</h4>
             </div>
             @include('admin._places_form_block',[
-                'places' => $data['offices'],
+                'places' => $offices,
                 'url' => 'offices',
                 'placeName' => 'офис'
             ])

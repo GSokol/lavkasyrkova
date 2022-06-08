@@ -1,23 +1,23 @@
-@extends('admin.layouts.default')
+@extends('dashboard::layouts.default')
 
 @section('content')
     <div class="panel panel-flat">
         <div class="panel-heading">
-            <h4 class="panel-title">{{ isset($data['user']) ? 'Редактирование пользователя '.$data['user']->email : 'Добавление пользователя' }}</h4>
+            <h4 class="panel-title">{{ isset($user) ? 'Редактирование пользователя '.$user->email : 'Добавление пользователя' }}</h4>
         </div>
         <div class="panel-body">
             <form class="form-horizontal" enctype="multipart/form-data" action="{{ url('/profile/user') }}" method="post">
                 {{ csrf_field() }}
-                @if (isset($data['user']))
-                    <input type="hidden" name="id" value="{{ $data['user']->id }}">
+                @if (isset($user))
+                    <input type="hidden" name="id" value="{{ $user->id }}">
                 @endif
 
-                @if (Auth::user()->is_admin && ((isset($data['user']) && $data['user']->office_id) || !isset($data['user'])))
+                @if (Auth::user()->is_admin && ((isset($user) && $user->office_id) || !isset($user)))
                     @include('admin._select_block',[
                         'label' => 'Привязка к офису',
                         'name' => 'office_id',
-                        'values' => $data['offices'],
-                        'selected' => isset($data['user']) && $data['user']->office_id ? $data['user']->office_id : 1
+                        'values' => $offices,
+                        'selected' => isset($user) && $user->office_id ? $user->office_id : 1
                     ])
                 @endif
 
@@ -27,7 +27,7 @@
                     'type' => 'email',
                     'max' => 100,
                     'placeholder' => 'E-mail пользователя',
-                    'value' => isset($data['user']) ? $data['user']->email : ''
+                    'value' => isset($user) ? $user->email : ''
                 ])
 
                 @include('_input_block', [
@@ -36,7 +36,7 @@
                     'type' => 'text',
                     'max' => 255,
                     'placeholder' => 'Имя пользователя',
-                    'value' => isset($data['user']) ? $data['user']->name : ''
+                    'value' => isset($user) ? $user->name : ''
                 ])
 
                 @include('_input_block', [
@@ -44,7 +44,7 @@
                     'name' => 'phone',
                     'type' => 'tel',
                     'placeholder' => 'Телефон пользователя',
-                    'value' => isset($data['user']) ? $data['user']->phone : ''
+                    'value' => isset($user) ? $user->phone : ''
                 ])
 
                 @include('_input_block', [
@@ -52,25 +52,25 @@
                     'name' => 'address',
                     'type' => 'text',
                     'placeholder' => 'Адрес для доставки',
-                    'value' => isset($data['user']) ? $data['user']->address : ''
+                    'value' => isset($user) ? $user->address : ''
                 ])
 
                 @include('admin._select_block',[
                     'label' => 'Привязка к офису',
                     'name' => 'office_id',
-                    'values' => $data['offices'],
-                    'selected' => isset($data['user']) ? $data['user']->office_id : ''
+                    'values' => $offices,
+                    'selected' => isset($user) ? $user->office_id : ''
                 ])
 
                 <div class="panel panel-flat">
-                    @if (isset($data['user']))
+                    @if (isset($user))
                         <div class="panel-heading">
                             <h4 class="text-grey-300">Если вы не хотите менять пароль, то оставьте эти поля пустыми</h4>
                         </div>
                     @endif
 
                     <div class="panel-body">
-                        @if (isset($data['user']) && !Auth::user()->is_admin)
+                        @if (isset($user) && !Auth::user()->is_admin)
                             @include('_input_block', [
                                 'label' => 'Старый пароль',
                                 'name' => 'old_password',
@@ -105,20 +105,20 @@
                 @include('admin._checkbox_block',[
                     'label' => 'Отправлять письма',
                     'name' => 'send_mail',
-                    'checked' => isset($data['user']) ? $data['user']->send_mail : true
+                    'checked' => isset($user) ? $user->send_mail : true
                 ])
 
                 @if (Auth::user()->is_admin)
                     @include('admin._checkbox_block',[
                         'label' => 'Пользователь активен',
                         'name' => 'active',
-                        'checked' => isset($data['user']) ? $data['user']->active : true
+                        'checked' => isset($user) ? $user->active : true
                     ])
 
                     @include('admin._checkbox_block',[
                         'label' => 'Пользователь является админом',
                         'name' => 'is_admin',
-                        'checked' => isset($data['user']) ? $data['user']->is_admin : false
+                        'checked' => isset($user) ? $user->is_admin : false
                     ])
                 @endif
 
@@ -129,8 +129,8 @@
         </div>
     </div>
 
-    @if (isset($data['user']))
-        @include('admin._orders_block',['orders' => $data['user']->orders, 'user' => $data['user']])
+    @if (isset($user))
+        @include('admin._orders_block',['orders' => $user->orders, 'user' => $user])
     @endif
 
 @endsection

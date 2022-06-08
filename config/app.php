@@ -220,7 +220,7 @@ return [
          */
         Dashboard\Providers\DashboardServiceProvider::class,
         Dashboard\Providers\RouteServiceProvider::class,
-        // Dashboard\Providers\ViewServiceProvider::class,
+        Dashboard\Providers\ViewServiceProvider::class,
     ],
 
     /*

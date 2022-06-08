@@ -1,4 +1,4 @@
-<form class="form-horizontal complex-form" enctype="multipart/form-data" action="{{ url('/admin/'.$url) }}" method="post">
+<form class="form-horizontal complex-form" enctype="multipart/form-data" action="{{ url('/dashboard/'.$url) }}" method="post">
     {{ csrf_field() }}
     <div class="panel-body">
         <div class="panel panel-flat">

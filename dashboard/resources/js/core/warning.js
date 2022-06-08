@@ -116,31 +116,14 @@ export const appendRequestMetaInfo = function(element, error, groups) {
 export const getRequestWarningText = function(error, groups, props = {}) {
     let parts = [];
     let {appendMeta = true} = props;
-
-    if (props.title) {
-        parts.push(tap(document.createElement('h3'), (headerEl) => {
-            headerEl.setAttribute('class', 'uk-text-global');
-            headerEl.appendChild(document.createTextNode(props.title));
-        }).outerHTML);
-    }
-
-    if (props.icon) {
-        parts.push(tap(document.createElement('i'), (iconEl) => {
-            iconEl.setAttribute('class', `tm-modal-icon ${props.icon}`);
-        }).outerHTML);
-    }
-
     parts.push(tap(document.createElement('div'), (warningEl) => {
         warningEl.setAttribute('class', `tm-modal-message-warning ${props.className || ''}`);
-
         // error description
         warningEl.appendChild(getDescriptionEl(props.description));
-
         if (appendMeta) {
             appendRequestMetaInfo(warningEl, error, groups);
         }
     }).outerHTML);
-
     return parts.join('');
 };
 
@@ -178,7 +161,7 @@ export const warningModal = function (props, confirmOption = {}, error = {}, gro
     props.labels = props.labels || {ok: 'Retry', cancel: 'Cancel'};
 
     let modal = ElMessageBox[props.modal || 'confirm'](getRequestWarningText(error, groups, props), props.title, {
-
+        dangerouslyUseHTMLString: true,
     });
 
     // TODO need refactoring

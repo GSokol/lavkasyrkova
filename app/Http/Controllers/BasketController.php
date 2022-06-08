@@ -80,7 +80,7 @@ class BasketController extends Controller
             'shop_id' => $this->validationShop,
         ];
 
-        if ($request->has('tasting_id') && $request->input('tasting_id')) $validationArr['tasting_id'] = $this->validationTasting;
+        if ($request->has('tasting_id') && $request->input('tasting_id')) $validationArr['tasting_id'] = 'required|integer|exists:tastings,id';
         $this->validate($request, $validationArr);
 
         $errors = [];

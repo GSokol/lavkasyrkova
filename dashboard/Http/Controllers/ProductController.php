@@ -5,6 +5,7 @@ namespace Dashboard\Http\Controllers;
 use Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Symfony\Component\HttpFoundation\Response;
 use Coderello\SharedData\Facades\SharedData;
 use App\Models\AddCategory;
 use App\Models\Category;
@@ -99,6 +100,7 @@ class ProductController extends Controller
         $payload = $this->validate($request, [
             'name' => ['required', 'unique:products,name,'.$request->get('id')],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
+            'add_category_id' => ['required', 'integer', 'exists:add_categories,id'],
             'additionally' => ['max:255'],
             'description' => ['required', 'min:3', 'max:500'],
             'whole_price' => ['integer'],
@@ -106,9 +108,25 @@ class ProductController extends Controller
             'part_price' => ['integer'],
             'action_whole_price' => ['integer'],
             'action_part_price' => ['integer'],
+            'parts' => ['sometimes', 'nullable', 'boolean'],
+            'active' => ['sometimes', 'nullable', 'boolean'],
+            'new' => ['sometimes', 'nullable', 'boolean'],
+            'action' => ['sometimes', 'nullable', 'boolean'],
             // 'image' => ['sometimes', 'nullable', 'image', 'min:5', 'max:5000'],
             // 'big_image' => ['sometimes', 'nullable', 'image', 'min:5', 'max:5000'],
         ]);
+        $product = Product::updateOrCreate(['id' => $request->get('id')], $payload);
+        if ($product->wasRecentlyCreated) {
+            return $this->response([
+                ERR => Response::HTTP_CREATED,
+                MSG => 'Товар успешно создан',
+            ]);
+        }
+        return $this->response([
+            MSG => 'Товар успешно обновлен',
+        ]);
+
+        
         return $this->response([
             DATA => [123, 45],
             MSG => 'Товар успешно изменен',

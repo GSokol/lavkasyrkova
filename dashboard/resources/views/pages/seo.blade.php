@@ -19,11 +19,14 @@
                 </div>
                 <div class="panel-body">
                     @foreach($settings['seo'] as $name => $value)
+                        @if ($name === 'title')
+                            @continue
+                        @endif
                         @if (in_array($name, ['meta_description', 'meta_keywords', 'meta_og_description']))
                             @include('admin._textarea_block', [
                                 'label' => $name,
                                 'name' => $name,
-                                'value' => $value,
+                                'value' => $value ?: '',
                                 'simple' => true
                             ])
                         @else
@@ -32,13 +35,11 @@
                                 'name' => $name,
                                 'type' => 'text',
                                 'placeholder' => $name,
-                                'value' => $value,
+                                'value' => $value ?: '',
                             ])
                         @endif
                     @endforeach
-
                 </div>
-
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     @include('admin._button_block', ['type' => 'submit', 'icon' => ' icon-floppy-disk', 'text' => trans('admin_content.save'), 'addClass' => 'pull-right'])
                 </div>

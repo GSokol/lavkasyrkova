@@ -1,9 +1,10 @@
 import config from './config.js';
 import axios from 'axios';
-import { guid, tap, debouncePromise } from '../core/helper.js';
-import { createErrorDescriptionDOM, warningModal } from '../core/warning.js';
+import { tap, guid, debouncePromise } from './helper.js';
+import { createErrorDescriptionDOM, warningModal } from './warning.js';
 import { debounce } from 'lodash';
 import {
+    API_DEFAULT_TIMEOUT,
     CODE_EXCEPTION_CSRF,
     CODE_EXCEPTION_INCOMPLETE_POST,
     CODE_EXCEPTION_AUTHORIZATION,
@@ -20,8 +21,16 @@ export const http = axios.create({
         'X-CSRF-TOKEN': document.head.querySelector('[name=csrf]') ? document.head.querySelector('[name=csrf]').content : (window.app ? window.app.csrf : null),
         'X-Requested-With': 'XMLHttpRequest',
     },
-    timeout: 8000,
+    timeout: API_DEFAULT_TIMEOUT,
+    maxRetries: 2,
 });
+
+// сменить Guid запроса, чтобы бэкэнд не ответил из кэша
+export const setNewGuid = function(config, requestConfig) {
+    let newGuid = guid();
+    _.set(config, ['headers', 'Guid'], newGuid);
+    _.set(requestConfig, ['headers', 'Guid'], newGuid);
+};
 
 export const getErrorMessage = function(error) {
     return _.get(error, ['response', 'data', 'data', 'message']) || _.get(error, ['response', 'data', 'message']) || _.get(error, ['response', 'message']) || _.get(error, 'message');
@@ -133,6 +142,8 @@ const AttemptModeAction = {
     },
 
     [AttemptMode.CSRF](requestWrap, error, config) {
+        setNewGuid(config, requestWrap.requestConfig);
+
         return registerRequestWarning(config, error, {
             title: 'Token Mismatch error',
             description: createErrorDescriptionDOM({
@@ -155,7 +166,31 @@ const AttemptModeAction = {
         });
     },
 
+    [AttemptMode.INCOMPLETE_POST](requestWrap, error, config) {
+        setNewGuid(config, requestWrap.requestConfig);
+
+        if (config.retries < config.maxRetries) {
+            config.attemptDelay = 2000;
+            ++config.retries;
+            return requestWrap.preparedRequestor(config);
+        } else {
+            return registerRequestWarning(config, error, {
+                title: 'Post body is incomplete',
+                description: createErrorDescriptionDOM({
+                    descriptionText: 'The following request cannot be successfully recieved by the server. If the problem persists, please report it.',
+                    pleaseCopy: true,
+                    errorText: [
+                        getRequestSummaryText(config),
+                    ].join('\n')
+                }),
+                icon: 'icon-file-empty',
+            });
+        }
+    },
+
     [AttemptMode.AUTH](requestWrap, error, config) {
+        setNewGuid(config, requestWrap.requestConfig);
+
         return registerRequestWarning(config, error, {
             title: 'Auth error',
             description: createErrorDescriptionDOM({
@@ -168,6 +203,8 @@ const AttemptModeAction = {
     },
 
     [AttemptMode.ACCESS](requestWrap, error, config) {
+        setNewGuid(config, requestWrap.requestConfig);
+
         return registerRequestWarning(config, error, {
             title: 'Access denied',
             description: createErrorDescriptionDOM({
@@ -180,6 +217,8 @@ const AttemptModeAction = {
     },
 
     [AttemptMode.EXCEPTION](requestWrap, error, config) {
+        setNewGuid(config, requestWrap.requestConfig);
+
         return registerRequestWarning(config, error, {
             title: 'Oops, server error has occurred!',
             description: createErrorDescriptionDOM({
@@ -194,21 +233,70 @@ const AttemptModeAction = {
         });
     },
 
+    [AttemptMode.AUTO_RETRY](requestWrap, error, config) {
+        if (config.retries < config.maxRetries) {
+            ++config.retries;
+            return requestWrap.preparedRequestor(config);
+        } else {
+            return registerRequestWarning(config, error, {
+                title: 'Request timed out',
+                description: createErrorDescriptionDOM({
+                    descriptionText: 'Request timed out due to application failure or connection is lost due to network problems',
+                }),
+                icon: 'icon-database-time2',
+            });
+        }
+    },
+
     [AttemptMode.MANUAL_RETRY](requestWrap, error, config) {
+        ++config.retries;
         return requestWrap.preparedRequestor(config);
     },
 
+    [AttemptMode.ACCEPTED_202](requestWrap, error, config) {
+        if (!config.cancelProgress) {
+            if (config.retries < config.maxRetries) {
+                config.attemptDelay = +_.get(error, 'headers.x-retry-after') || 4000;
+
+                return httpPromiseWrapper
+                    .runHandlerChain(error, 'onProgress')
+                    .then(() => requestWrap.preparedRequestor(config));
+            } else {
+                return registerRequestWarning(config, error, {
+                    title: 'Processing error',
+                    description: createErrorDescriptionDOM({
+                        descriptionText: 'Server is processing the request for too long and it probably failed. It is probably a bug, report it to us, so we can improve.',
+                        errorText: getRequestSummaryText(config),
+                        pleaseCopy: true,
+                    }),
+                    icon: 'icon-database-time2',
+                    onConfirm() {
+                        config.retries = 0;
+                    },
+                });
+            }
+        }
+    },
+
     [AttemptMode.NETWORK_ERROR](requestWrap, error, config) {
-        return registerRequestWarning(config, error, {
-            title: 'Network connection error',
-            description: createErrorDescriptionDOM({
-                descriptionText: 'Check your network connection or try again later.',
-            }),
-            icon: 'icon-power-cord',
-        });
+        if (config.retries < config.maxRetries) {
+            config.attemptDelay = 5000;
+            ++config.retries;
+            return requestWrap.preparedRequestor(config);
+        } else {
+            return registerRequestWarning(config, error, {
+                title: 'Network connection error',
+                description: createErrorDescriptionDOM({
+                    descriptionText: 'Check your network connection or try again later.',
+                }),
+                icon: 'icon-power-cord',
+            });
+        }
     },
 
     [AttemptMode.MESSAGE](requestWrap, error, config) {
+        setNewGuid(config, requestWrap.requestConfig);
+
         return registerRequestWarning(config, error, {
             title: 'Message',
             description: createErrorDescriptionDOM({
@@ -224,6 +312,14 @@ const AttemptModeAction = {
     },
 
     [AttemptMode.REHANDLE](requestWrap, error, config) {
+        setNewGuid(config, requestWrap.requestConfig);
+
+        if (config.retries < config.maxRetries) {
+            ++config.retries;
+            // перепосыл запроса после того, как handler ошибки что-то поменял
+            return requestWrap.preparedRequestor(config);
+        }
+
         return registerRequestWarning(config, error, {
             title: 'Oops, looks like a bug',
             description: createErrorDescriptionDOM({
@@ -236,11 +332,16 @@ const AttemptModeAction = {
             }),
             icon: 'icon-cancel-circle2 uk-text-danger',
             labels: {ok: 'Recover', cancel: 'Cancel'},
-            onConfirm() {},
+            onConfirm() {
+                // для последующих попыток сбросить счётчик
+                config.retries = 0;
+            },
         });
     },
 
     [AttemptMode.NOMODE](requestWrap, error, config) {
+        setNewGuid(config, requestWrap.requestConfig);
+
         return registerRequestWarning(config, error, {
             title: 'Oops, frontend error in detection of error!',
             description: createErrorDescriptionDOM({
@@ -274,23 +375,24 @@ http.interceptors.request.use(function(request) {
     if (!request.url) {
         ElNotification({
             message: 'Request not have url',
-            type: 'danger',
+            type: 'error',
         });
     }
     if (api.affectedTokenMismatch) {
         return false;
     }
     if (request.state) {
-        request.state.isLoading = true;
+        const loadingFieldName = request.loading || 'isLoading';
+        request.state[loadingFieldName] = true;
     }
     return request;
 });
 
 const responseInterceptor = function(response) {
-    let guid = _.get(response, ['config', 'headers', 'Guid']);
-    if (guid) {
-        httpPromiseWrapper.allPendingRequests[guid] && httpPromiseWrapper.allPendingRequests[guid].resolve();
-        delete httpPromiseWrapper.allPendingRequests[guid];
+    let guidValue = _.get(response, ['config', 'headers', 'Guid']);
+    if (guidValue) {
+        httpPromiseWrapper.allPendingRequests[guidValue] && httpPromiseWrapper.allPendingRequests[guidValue].resolve();
+        delete httpPromiseWrapper.allPendingRequests[guidValue];
     }
 
     // произошёл таймаут
@@ -301,20 +403,23 @@ const responseInterceptor = function(response) {
     let logEntry = _.get(response, ['config', 'logEntry']);
     if (logEntry && response.status !== 200 && response.status !== 202) logEntry.response = JSON.stringify(response.data);
     if (_.has(response, ['config', 'state'])) {
-        response.config.state.isLoading = false;
+        const loadingFieldName = response.config.loading || 'isLoading';
+        response.config.state[loadingFieldName] = false;
     }
 
     return httpPromiseWrapper.responseHandlerChainer(response);
 };
 
 const errorInterceptor = function (error) {
-    let guid = _.get(error, ['config', 'headers', 'Guid']);
-
-    if (guid) {
-        httpPromiseWrapper.allPendingRequests[guid] && httpPromiseWrapper.allPendingRequests[guid].resolve();
-        delete httpPromiseWrapper.allPendingRequests[guid];
+    let guidValue = _.get(error, ['config', 'headers', 'Guid']);
+    if (guidValue) {
+        httpPromiseWrapper.allPendingRequests[guidValue] && httpPromiseWrapper.allPendingRequests[guidValue].resolve();
+        delete httpPromiseWrapper.allPendingRequests[guidValue];
     }
-
+    if (_.has(error, ['config', 'state'])) {
+        const loadingFieldName = error.config.loading || 'isLoading';
+        error.config.state[loadingFieldName] = false;
+    }
     if (error.status === 502 || error.message === 'Request failed with status code 502') {
         return error.config.attempter(AttemptMode.AUTO_RETRY, error);
     } else if (error.response) {
@@ -322,12 +427,8 @@ const errorInterceptor = function (error) {
         if (logEntry) {
             logEntry.response = JSON.stringify(_.get(error, ['response', 'data']) || '');
         }
-        if (error.response.status === 422) {
-            httpPromiseWrapper.defaultHandlerValidation(error);
-        }
-        return Promise.resolve(error);
         // The request was made and the server responded with a status code
-        // return httpPromiseWrapper.exceptionHandlerChainer(error);
+        return httpPromiseWrapper.exceptionHandlerChainer(error);
     } else if (error && error.code === 'ECONNABORTED') {
         // произошёл таймаут
         if (!error.config) {
@@ -378,7 +479,7 @@ const api = {
      * @callback {Function} config['onError'] - при неудаче (объект error|undefined}
      * @return {Promise} - success(result|undefined)
      */
-    get: function(url, data, config = {}) {
+    get: function(url, data = {}, config = {}) {
         let method = 'api.get';
         config.params = data || null;
         return httpPromiseWrapper.wrap((config) => {
@@ -391,7 +492,7 @@ const api = {
      * Запрос типа POST
      *
      * @param {String} url - адрес запроса
-     * @param {Object} data -  данные
+     * @param {Object} data - данные
      * @param {Object} config - параметры запроса
      * @param {boolean} config['notify'] - вывод уведомления об успехе
      * @param {boolean} config['notifyMessage'] - текст уведомления об успехе
@@ -400,16 +501,14 @@ const api = {
      * @callback {Function} config['onError'] - при неудаче (объект error|undefined}
      * @return {Promise} - success(result|undefined)
      */
-    post: function(url, data, config = {}) {
+    post: function(url, data = {}, config = {}) {
         let method = 'api.post';
         return httpPromiseWrapper.wrap((config) => {
             let request = httpPromiseWrapper.requestModifier({url, data, config}, method);
-            return http.post(request.url, request.data, request.config);
+            return http.post(request.url, request.data, request.config).catch((error) => {
+                console.log(error.message, error);
+            });
         }, data, config, method, url);
-    },
-
-    postInternal: function(url, data, config = {}) {
-        return http.post(url, data, config);
     },
 
     /**
@@ -425,7 +524,7 @@ const api = {
      * @callback {Function} config['onError'] - при неудаче (объект error|undefined}
      * @return {Promise} - success(result|undefined)
      */
-    put: function(url, data, config = {}) {
+    put: function(url, data = {}, config = {}) {
         let method = 'api.put';
         return httpPromiseWrapper.wrap((config) => {
             let request = httpPromiseWrapper.requestModifier({url, data, config}, method);
@@ -446,7 +545,7 @@ const api = {
      * @callback {Function} config['onError'] - при неудаче (объект error|undefined}
      * @return {Promise} - success(result|undefined)
      */
-    delete: function(url, data, config = {}) {
+    delete: function(url, data = {}, config = {}) {
         let method = 'api.delete';
         config.data = data || null;
         return httpPromiseWrapper.wrap((config) => {
@@ -496,7 +595,7 @@ const api = {
     },
 
     // вызов окна предупреждения незавершенных запросов
-    waitPendingRequests: function() { //rename
+    waitPendingRequests: function() {
         let dialog, blockTimeout = setTimeout(
             () => dialog = ElMessageBox({
                 message: 'Waiting for pending requests...',
@@ -567,8 +666,10 @@ const api = {
  * - затем проекто-независимый handler
  *
  * Процесс обработки ретраев:
+ * - в случае, если config.retries >= config.maxRetries, повтора не делается и выводится модальное окно, шлются логи
  * - при запросе, оставшемся без ответа в течение config.timeout секунд делается повторная попытка
  * - при нажатии Cancel в модальном окне выводится сообщение об ошибке и ответ ожидаться перестаёт
+ * - при нажатии Retry в модальном окне повтор посылается, даже если config.retries >= config.maxRetries
  * - если при обработке handler'а ошибки был вызван метод config.setReHandle, то делается повторная попытка
  *
  * Handler onSuccess получит только успешные результаты
@@ -784,11 +885,9 @@ const httpPromiseWrapper = {
     showWarningModal: _.debounce(function(error, props) {
         if (this.pausePending) return;
 
-        let dialog, blockTimeout = setTimeout(
-            () => dialog = ElMessageBox({
-                message: 'Waiting for pending requests...',
-            }
-        ), 300);
+        let dialog, blockTimeout = setTimeout(() => dialog = ElMessageBox({
+            message: 'Waiting for pending requests...',
+        }), 300);
 
         this.pausePending = this.waitPendingSample(false).then(() => {
             let groups = _.uniq(_.flatMap(this.modalWarningBuffer, (warning) => {
@@ -798,10 +897,8 @@ const httpPromiseWrapper = {
                         : (warning.config.group || warning.config.object)
                     ) : [];
             }));
-
             clearTimeout(blockTimeout);
             dialog && dialog.hide();
-
             let modalWarnings;
             return warningModal(props, {
                 customConfirm: (isConfirm) => {
@@ -818,7 +915,8 @@ const httpPromiseWrapper = {
                         _.each(modalWarnings, (warning) => {
                             warning.reject(warning.error);
                             if (_.has(warning, ['config', 'state'])) {
-                                warning.config.state.isLoading = false;
+                                const loadingFieldName = warning.config.loading || 'isLoading';
+                                warning.config.state[loadingFieldName] = false;
                             }
                         });
                     }
@@ -866,8 +964,6 @@ const httpPromiseWrapper = {
 
         // если один из handler'ов задаст config.reHandle = true, то будет сделана новая попытка запроса
         return this.runHandlerChain(response, 'onError', this.responseException).then((handlerResult) => {
-            // for debugging
-            // console.log(`error[${errorGuid}] reHandle`, reHandle);
             if (reHandle !== false) {
                 return config.attempter(reHandle, error);
             }
@@ -882,10 +978,12 @@ const httpPromiseWrapper = {
     wrap: function(requestor, data, config, method, url) {
         let wrapper = this;
         let wrapRequest = new WrapRequest(requestor, config, wrapper);
+        config.retries = 0;
+        _.set(config, ['headers', 'Guid'], guid());
         config.getProperties = function() {
             return {data, method, url};
         };
-        // attempter это сущность, которая вызовет запрос, когда очередь запросов по этому объекту будет свободна
+        // attempter это такая сущность, которая вызовет запрос, когда очередь запросов по этому объекту будет свободна
         config.attempter = function (mode = AttemptMode.INITIAL_ATTEMPT, error) {
             let attemptConfig = _.get(error, 'config') || config;
             let attemptFunc;

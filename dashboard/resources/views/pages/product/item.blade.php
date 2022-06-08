@@ -126,6 +126,7 @@
                                         multiple
                                         filterable
                                         remote
+                                        placeholder="Выберите один или несколько товаров"
                                         :remote-method="fetchProducts"
                                         :loading="state.isLoading"
                                         v-model="same"

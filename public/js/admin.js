@@ -4,7 +4,7 @@ $(document).ready(function() {
     });
 
     $('input[name=phone]').mask("+7(999)999-99-99");
-    
+
     // Preview upload image
     $('input[type=file]').change(function () {
         var input = $(this)[0];
@@ -32,9 +32,10 @@ $(document).ready(function() {
         $('#'+localStorage.getItem('delete_modal')).modal('hide');
         addLoaderScreen();
 
-        $.post('/admin/'+localStorage.getItem('delete_function'), {
+        $.post('/dashboard/'+localStorage.getItem('delete_function'), {
             '_token': $('input[name=_token]').val(),
-            'id': localStorage.getItem('delete_id')
+            'id': localStorage.getItem('delete_id'),
+            'row_id': localStorage.getItem('row_id'),
         }, function (data) {
             if (data.success) {
                 removeLoaderScreen();

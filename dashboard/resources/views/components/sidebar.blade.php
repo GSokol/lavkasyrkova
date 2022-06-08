@@ -4,7 +4,7 @@
             <div class="media">
                 <div class="media-body">
                     <div class="text-size-mini text-muted">
-                        <i class="glyphicon glyphicon-user text-size-small"></i> Добро пожаловать<br>{{ Auth::user()->email }}
+                        <i class="glyphicon glyphicon-user text-size-small"></i> Добро пожаловать<br>{{ auth()->guard('dashboard')->user()->email }}
                     </div>
                 </div>
             </div>

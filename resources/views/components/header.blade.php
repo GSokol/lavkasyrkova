@@ -44,7 +44,7 @@
                 @else
                     <li class="main-menu"><a href="/profile">Профиль</a></li>
                 @endif
-                @if (Auth::user()->is_admin)
+                @if (auth()->guard('dashboard')->check() && auth()->user() && auth()->user()->is_admin)
                     <li class="main-menu"><a href="{{ route('dashboard.home') }}">Админка</a></li>
                 @endif
             </ul>

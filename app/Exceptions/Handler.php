@@ -10,11 +10,18 @@ use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
 use Settings;
-use App\Http\Controllers\HelperTrait;
 
 class Handler extends ExceptionHandler
 {
-    use HelperTrait;
+    // эти коды должны быть уникальными, а у разных Exception'ов могут быть свои отдельные наборы кодов
+    // формируются так: сначала 1, затем категория по статусу (400 или 403 и т.д.), затем порядковый номер
+    const CODE_EXCEPTION_VALIDATION = 140001;
+    const CODE_EXCEPTION_CSRF = 140101;
+    const CODE_EXCEPTION_AUTHORIZATION = 140301;
+    const CODE_EXCEPTION_UNAUTHORIZED = 140302;
+    const CODE_EXCEPTION_ACCESS_DENIED = 140303;
+    const CODE_EXCEPTION_WITH_MESSAGE = 140305;
+    const CODE_EXCEPTION_UNKNOWN_ROUTE = 140401;
 
     protected $data = [];
 
@@ -96,22 +103,26 @@ class Handler extends ExceptionHandler
             // Ошибка авторизация. Утрачен token
             if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
                 $response[ERR] = Response::HTTP_UNAUTHORIZED;
+                $response[CODE] = self::CODE_EXCEPTION_CSRF;
                 $response[MSG] = 'AUTH_ERROR: csrf token mismatch';
             }
             // Остальные ошибки авторизации
             if ($exception instanceof \Illuminate\Auth\Access\AuthorizationException) {
                 $response[ERR] = Response::HTTP_FORBIDDEN;
+                $response[CODE] = self::CODE_EXCEPTION_AUTHORIZATION;
                 $response[MSG] = 'Action is unauthorized';
                 $response[DESC] = $exception->getMessage();
             }
             // Ошибка запрещения неавторизованного доступа
             if ($exception instanceof \Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException) {
                 $response[ERR] = Response::HTTP_FORBIDDEN;
+                $response[CODE] = self::CODE_EXCEPTION_UNAUTHORIZED;
                 $response[MSG] = 'Access denied';
             }
             // Ошибки запрещения доступа по отсутствию пермиссий
             if ($exception instanceof \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException) {
                 $response[ERR] = Response::HTTP_FORBIDDEN;
+                $response[CODE] = self::CODE_EXCEPTION_ACCESS_DENIED;
                 $response[MSG] = 'Action is not permitted';
                 if ($message = $exception->getMessage()) {
                     $response[DATA] = compact('message');
@@ -120,6 +131,7 @@ class Handler extends ExceptionHandler
             // Роут не найден
             if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
                 $response[ERR] = Response::HTTP_NOT_FOUND;
+                $response[CODE] = self::CODE_EXCEPTION_UNKNOWN_ROUTE;
                 $response[MSG] = "API route [{$request->path()}] not found";
             }
             // Синтаксическая ошибка
@@ -134,6 +146,7 @@ class Handler extends ExceptionHandler
             // Ошибки валидации
             if ($exception instanceof \Illuminate\Validation\ValidationException) {
                 $response[ERR] = Response::HTTP_UNPROCESSABLE_ENTITY;
+                $response[CODE] = self::CODE_EXCEPTION_VALIDATION;
                 $response[MSG] = 'Validation error: incorrect field(s)';
                 $response[DATA] = $this->formatValidationErrors($exception->validator->getMessageBag()->toArray());
             }
@@ -142,15 +155,12 @@ class Handler extends ExceptionHandler
 
         // страница не найдена
         if ($exception instanceof NotFoundHttpException || $exception instanceof ModelNotFoundException) {
-            // Meta::set('title', 'Page not found');
             // если адрес в URL начинается с dashboard и аутентифицирован guard=dashboard
             if (auth()->guard('dashboard')->check() && $request->is('dashboard', 'dashboard/*')) {
                 // View::composer('dashboard::components.header', 'Dashboard\Http\View\Composers\HeaderComposer');
                 return response()->view('dashboard::errors.404', [], Response::HTTP_NOT_FOUND);
             }
-
-            // $this->data['seo'] = Settings::getSeoTags();
-            // View::share('data', $this->data);
+            // TODO вынести в view/composers
             View::share('settings', Settings::getSettingsAll());
             return response()->view('errors.404', [], Response::HTTP_NOT_FOUND);
         }

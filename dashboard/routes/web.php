@@ -45,7 +45,29 @@ Route::as('dashboard.')->prefix('dashboard')->group(function() {
         });
         // seo
         Route::get('seo', 'SeoController@index')->name('seo');
-        Route::post('seo', 'SeoController@edit')->name('postSeo');
+        Route::post('seo', 'SeoController@edit')->name('editSeo');
+        // settings
+        Route::get('/settings', 'SettingController@index')->name('settings');
+        Route::post('/settings', 'SettingController@editSettings');
+        // offices
+        Route::get('offices', 'OfficeController@index')->name('offices');
+        Route::post('offices', 'OfficeController@editOffices');
+        Route::post('delete-office', 'OfficeController@deleteOffice');
+        // shops
+        Route::get('/shops', 'ShopController@index')->name('shops');
+        Route::post('/shops', 'ShopController@editShops')->name('editShops');
+        Route::post('/delete-shop', 'ShopController@deleteShop')->name('deleteShop');
+        // tasting
+        Route::get('/tastings', 'TastingController@index')->name('tastings');
+        Route::get('/tastings/{id}', 'TastingController@item')->name('tasting');
+        Route::post('/tastings/{id}', 'TastingController@postTasting')->name('postTasting');
+        Route::post('/tasting-images', 'TastingController@editTastingsImages');
+        Route::post('/delete-tasting', 'TastingController@deleteTasting');
+        Route::post('/delete-tasting-user', 'TastingController@deleteTastingUser');
+        // user
+        Route::get('/users', 'UserController@users')->name('users');
+        Route::post('/user/delete', 'UserController@deleteUser')->name('deleteUser');
+        Route::get('/user/{id}', 'UserController@user')->name('user');
         // home page
         Route::get('/', 'HomeController@index')->name('home');
     });

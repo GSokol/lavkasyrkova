@@ -49,14 +49,8 @@ class SettingsController extends Controller
 
     public function saveSeoTags(Request $request)
     {
-        if ($request->has('title')) $this->settings->seo->title = $request->input('title');
-        foreach ($this->metas as $meta => $params) {
-            $this->settings->seo->$meta = $request->input($meta);
-        }
-        if ($request->has('address')) {
-            foreach ($request->get('address') as $key => $value) {
-                $this->settings->address->$key = $value;
-            }
+        foreach ($request->all() as $key => $value) {
+            $this->settings->seo->$key = $value;
         }
         $this->save();
     }

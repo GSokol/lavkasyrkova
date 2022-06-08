@@ -19,18 +19,6 @@ use Settings;
 
 class AdminController extends UserController
 {
-    public function seo()
-    {
-        $this->breadcrumbs = ['seo' => 'SEO'];
-        $this->data['metas'] = $this->metas;
-        $this->data['seo'] = Settings::getSeoTags();
-        $this->data['address'] = [];
-        foreach(Settings::getAddress()->children() as $addresChild) {
-            $this->data['address'][$addresChild->getName()] = (string)$addresChild;
-        }
-        return $this->showView('seo');
-    }
-
     public function users(Request $request, $slug=null)
     {
         $this->breadcrumbs = ['users' => 'Пользователи'];
@@ -44,9 +32,6 @@ class AdminController extends UserController
         } else if ($slug && $slug == 'add') {
             $this->breadcrumbs['users/add'] = 'Добавление пользователя';
             return $this->showView('user');
-        } else {
-            $this->data['users'] = User::orderBy('id','desc')->get();
-            return $this->showView('users');
         }
     }
 
@@ -69,27 +54,7 @@ class AdminController extends UserController
         }
     }
 
-    public function settings()
-    {
-        $this->breadcrumbs = ['settings' => 'Настройки'];
-        return $this->showView('settings');
-    }
-
-    public function offices()
-    {
-        $this->breadcrumbs = ['offices' => 'Офисы'];
-        $this->data['offices'] = Office::all();
-        return $this->showView('offices');
-    }
-
-    public function shops()
-    {
-        $this->breadcrumbs = ['shops' => 'Магазины'];
-        $this->data['shops'] = Store::all();
-        return $this->showView('shops');
-    }
-
-    public function tastings(Request $request, $slug=null)
+    public function tastings(Request $request, $slug = null)
     {
         $this->breadcrumbs = ['tastings' => 'Дегустации'];
         if ($request->has('id')) {
@@ -102,46 +67,7 @@ class AdminController extends UserController
             $this->data['offices'] = Office::where('id','!=',1)->where('id','!=',2)->get();
             $this->breadcrumbs['tastings/add'] = 'Добавление дегустации';
             return $this->showView('tasting');
-        } else {
-            $this->data['tastings'] = Tasting::orderBy('time','desc')->get();
-            return $this->showView('tastings');
         }
-    }
-
-    public function editSeo(Request $request)
-    {
-        $this->validate($request, [
-            'title' => 'max:255',
-            'meta_description' => 'max:4000',
-            'meta_keywords' => 'max:4000',
-            'meta_twitter_card' => 'max:255',
-            'meta_twitter_size' => 'max:255',
-            'meta_twitter_creator' => 'max:255',
-            'meta_og_url' => 'max:255',
-            'meta_og_type' => 'max:255',
-            'meta_og_title' => 'max:255',
-            'meta_og_description' => 'max:4000',
-            'meta_og_image' => 'max:255',
-            'meta_robots' => 'max:255',
-            'meta_googlebot' => 'max:255',
-            'meta_google_site_verification' => 'max:255',
-            'address[phone1]' => 'max:255',
-            'address[phone2]' => 'max:255',
-            'address[email]' => 'max:255',
-        ]);
-        Settings::saveSeoTags($request);
-        $this->saveCompleteMessage();
-        return redirect('/admin/seo');
-    }
-
-    public function editSettings(Request $request)
-    {
-        $this->validate($request, [
-            'email' => 'required|email'
-        ]);
-        Settings::saveSettings($this->processingFields($request));
-        $this->saveCompleteMessage();
-        return redirect()->back();
     }
 
     public function editProduct(Request $request)
@@ -203,12 +129,12 @@ class AdminController extends UserController
     {
         $validationArr = [
             'time' => 'required',
-            'office_id' => $this->validationOffice
+            'office_id' => 'required|integer|exists:offices,id'
         ];
         $fields = $this->processingFields($request, 'active', null, 'time');
 
         if ($request->has('id')) {
-            $validationArr['id'] = $this->validationTasting;
+            $validationArr['id'] = 'required|integer|exists:tastings,id';
             $this->validate($request, $validationArr);
             $tasting = Tasting::find($request->input('id'));
             $tasting->update($fields);
@@ -246,11 +172,6 @@ class AdminController extends UserController
         return redirect('/admin/tastings');
     }
 
-    public function editOffices(Request $request)
-    {
-        return $this->editPlace($request, new Office(), 'offices');
-    }
-
     public function editShops(Request $request)
     {
         return $this->editPlace($request, new Store(), 'shops');
@@ -266,19 +187,9 @@ class AdminController extends UserController
         return $this->deleteSomething($request, new Product(), 'image');
     }
 
-    public function deleteOffice(Request $request)
-    {
-        return $this->deleteSomething($request, new Office());
-    }
-
-    public function deleteShop(Request $request)
-    {
-        return $this->deleteSomething($request, new Store());
-    }
-
     public function deleteTasting(Request $request)
     {
-        $this->validate($request, ['id' => $this->validationTasting]);
+        $this->validate($request, ['id' => 'required|integer|exists:tastings,id']);
         $tasting = Tasting::find($request->input('id'));
         if (count($tasting->tastingToUsers)) {
             foreach ($tasting->tastingToUsers as $item) {
@@ -300,8 +211,8 @@ class AdminController extends UserController
         $addPlace = $request->has('address');
         if ($addPlace) {
             if ($request->input('latitude') || $request->input('longitude')) {
-                $validationArr['latitude'] = $this->validationCoordinates;
-                $validationArr['longitude'] = $this->validationCoordinates;
+                $validationArr['latitude'] = 'regex:/^(\d{2}\.\d{5,6})$/';
+                $validationArr['longitude'] = 'regex:/^(\d{2}\.\d{5,6})$/';
             }
             $validationArr['address'] = 'required|max:255';
         }
@@ -309,8 +220,8 @@ class AdminController extends UserController
         $places = $model->all();
         foreach ($places as $place) {
             if ($request->input('latitude') || $request->input('longitude')) {
-                $validationArr['latitude_' . $place->id] = $this->validationCoordinates;
-                $validationArr['latitude_' . $place->id] = $this->validationCoordinates;
+                $validationArr['latitude_' . $place->id] = 'regex:/^(\d{2}\.\d{5,6})$/';
+                $validationArr['latitude_' . $place->id] = 'regex:/^(\d{2}\.\d{5,6})$/';
             }
             $validationArr['address_'.$place->id] = 'required|max:255';
         }
