@@ -32,8 +32,8 @@
                             <td class="id">{{ $product->id }}</td>
                             <td class="text-center image"><a class="img-preview" href="{{ asset($product->image) }}"><img src="{{ asset($product->image) }}" /></a></td>
                             <td class="text-center"><a href="{{ route('dashboard.product', ['id' => $product->id]) }}">{{ $product->name }}</a></td>
-                            <td class="text-center">@include('_price_block',['price' => $product->whole_price])</td>
-                            <td class="text-center">@include('_price_block',['price' => $product->part_price])</td>
+                            <td class="text-center">{{ number_format($product->whole_price, 0, '', ' ').'р.' }}</td>
+                            <td class="text-center">{{ number_format($product->part_price, 0, '', ' ').'р.' }}</td>
                             <td class="text-center">@include('admin._status_block',['status' => $product->action, 'trueLabel' => 'Да', 'falseLabel' => 'Нет'])</td>
                             <td class="text-center">@include('admin._status_block',['status' => $product->active, 'trueLabel' => 'активен', 'falseLabel' => 'не активен'])</td>
                             <td class="delete"><span del-data="{{ $product->id }}" modal-data="delete-modal" class="glyphicon glyphicon-remove-circle"></span></td>

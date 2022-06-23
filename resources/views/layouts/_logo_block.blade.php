@@ -1,1 +1,0 @@
-<a href="#" data-scroll="home"><img src="{{ asset('images/logo.png') }}" /></a>

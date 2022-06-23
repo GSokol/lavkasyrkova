@@ -51,7 +51,8 @@ class BasketController extends Controller
         if (!$totalCost) Session::forget('basket');
         else {
             $basket['total'] = $totalCost;
-            Session::put('basket',$basket);
+            $basket['delivery'] = $totalCost ? (int)Settings::getSettings()->delivery_limit : 300;
+            Session::put('basket', $basket);
         }
 
         return response()->json([

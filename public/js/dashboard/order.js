@@ -36756,9 +36756,9 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!*********************************************!*\
-  !*** ./resources/js/entry/profile-order.js ***!
-  \*********************************************/
+/*!***********************************************!*\
+  !*** ./dashboard/resources/js/entry/order.js ***!
+  \***********************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -36771,10 +36771,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
   data: function data() {
     return {
-      collection: _.get(window.app, 'collection') || [],
+      order: _.get(window.app, 'order'),
+      orderStatuses: _.get(window.app, 'orderStatuses') || [],
       state: {
         isLoading: false
       }
@@ -36782,25 +36785,21 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
   },
   methods: {
     /**
-     * Повторить заказ
+     * Отправка формы редактирования заказа
      *
-     * @param  {Object} order [App\Models\Order]
+     * @param  {Object} event [EventSubmit]
      * @return {void}
      */
-    onRepeatOrder: function onRepeatOrder(order) {
+    onOrderSubmit: function onOrderSubmit(event) {
       var _this = this;
-
-      if (!confirm('Вы действительно хотите повторить заказ №' + order.id + ' ?')) {
-        return false;
-      }
 
       this.state.isLoading = true;
 
-      var param = _.pick(order, ['id']);
+      var param = _.pick(this.order, ['id', 'discount_value', 'order_to_products']);
 
       axios__WEBPACK_IMPORTED_MODULE_1___default()({
-        method: 'post',
-        url: '/profile/orders/repeat',
+        method: 'put',
+        url: '/dashboard/orders/item',
         data: param
       }).then(function (response) {
         _this.state.isLoading = false;
@@ -36809,70 +36808,66 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
           text: response.data.message,
           type: 'success'
         });
-
-        if (response.data.error === 201) {
-          var clone = response.data.data;
-          clone.isNew = true;
-
-          _this.collection.unshift(clone);
-
-          window.scrollTo(0, 0);
-        }
       })["catch"](function (error) {
         _this.state.isLoading = false;
-
-        _.flatMap(_.get(error, ['response', 'data', 'data'], []), function (n) {
-          return n;
-        }).map(function (msg) {
-          (0,_pnotify_core__WEBPACK_IMPORTED_MODULE_3__.alert)({
-            title: error.response.data.message,
-            text: msg.message,
-            type: 'error'
-          });
-        });
-      });
-    },
-
-    /**
-     * Удалить заказ
-     *
-     * @param  {Object} order [App\Models\Order]
-     * @param  {Number} index [collection index]
-     * @return {void}
-     */
-    onDeleteOrder: function onDeleteOrder(order, index) {
-      var _this2 = this;
-
-      if (!confirm('Вы действительно хотите удалить заказ №' + order.id + ' ?')) {
-        return false;
-      }
-
-      this.state.isLoading = true;
-      axios__WEBPACK_IMPORTED_MODULE_1___default()({
-        method: 'delete',
-        url: '/profile/orders/item',
-        data: {
-          id: order.id
-        }
-      }).then(function (response) {
-        _this2.state.isLoading = false;
-        (0,_pnotify_core__WEBPACK_IMPORTED_MODULE_3__.alert)({
-          // title: "I'm an alert.",
-          text: response.data.message,
-          type: 'success'
-        });
-
-        if (response.data.error === 200) {
-          _this2.collection.splice(index, 1);
-        }
-      })["catch"](function (error) {
-        _this2.state.isLoading = false;
         (0,_pnotify_core__WEBPACK_IMPORTED_MODULE_3__.alert)({
           title: error.response.data.message,
           text: error.response.data.description,
           type: 'error'
         });
       });
+    }
+  },
+  computed: {
+    orderStatusById: function orderStatusById() {
+      return _.keyBy(this.orderStatuses, 'id');
+    },
+    statusClassName: function statusClassName() {
+      var currentStatus = _.get(this.order, 'status_id');
+
+      var className = _.get(this.orderStatusById, [currentStatus, 'class_name'], 'default');
+
+      return 'bg-' + className + '-400';
+    },
+    orderProducts: function orderProducts() {
+      return _.each(this.order.order_to_products, function (orderProduct) {
+        // на вес
+        if (orderProduct.actual_value) {
+          var price = orderProduct.product.action ? orderProduct.product.action_part_price : orderProduct.product.part_price;
+          var weight = orderProduct.actual_value || orderProduct.part_value;
+          orderProduct.calculate_amount = Math.round(weight / 100 * price);
+        } else {
+          orderProduct.calculate_amount = orderProduct.amount;
+        }
+      });
+    },
+
+    /**
+     * Сумма заказа (без учета скидки)
+     *
+     * @return {Number} [description]
+     */
+    totalAmount: function totalAmount() {
+      return _.sumBy(this.orderProducts, 'calculate_amount');
+    },
+
+    /**
+     * Размер скидки в деньгах
+     *
+     * @return {Number} [description]
+     */
+    discountAmount: function discountAmount() {
+      var discountValue = +_.get(this.order, 'discount_value', 0);
+      return this.totalAmount * discountValue / 100;
+    },
+
+    /**
+     * Сумма заказа (с учетом скидки)
+     *
+     * @return {Number} [description]
+     */
+    checkoutAmount: function checkoutAmount() {
+      return Math.ceil(this.totalAmount - this.discountAmount);
     }
   }
 }).mount('#root');

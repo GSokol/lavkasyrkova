@@ -23,9 +23,9 @@ Route::as('face.')->group(function() {
         Route::post('/register', 'RegisterController@register')->name('postRegistration');
     });
     // profile
-    Route::group(['prefix' => 'profile', 'middleware' => ['auth:web']], function() {
+    Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['auth:web']], function() {
         Route::get('/', 'UserController@index');
-        Route::get('/user', 'UserController@user');
+        Route::get('/user', 'UserController@user')->name('user');
         Route::post('/user', 'UserController@editUser');
         Route::post('/checkout-order', 'UserController@checkoutOrder');
         Route::post('/signing-tasting', 'UserController@signingTasting');
@@ -58,6 +58,4 @@ Route::as('face.')->group(function() {
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
     Route::post('/delete-order', 'UserController@deleteOrder');
-    // home page
-    Route::get('/', 'AdminController@index');
 });

@@ -1,4 +1,4 @@
-@extends('dashboard::layouts.default')
+@extends('layouts.profile')
 
 @section('content')
 

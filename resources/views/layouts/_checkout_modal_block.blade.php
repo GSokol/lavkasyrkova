@@ -20,9 +20,16 @@
         @endif
     </div>
     <hr>
-    <p class="total-cost-basket"><b>Итоговая сумма: </b><span>{{ Session::has('basket') ? Session::get('basket')['total'] : '0' }} руб</span></p>
+    <p class="mb-15">
+        <strong>Доставка:</strong>
+        <span>{{ Session::has('basket') ? Session::get('basket')['delivery'] : 0 }} руб.</span>
+    </p>
+    <p class="total-cost-basket">
+        <b>Итоговая сумма: </b>
+        <span>{{ Session::has('basket') ? Session::get('basket')['total'] : '0' }} руб</span>
+    </p>
 
-    <h3>Доставка</h3>
+    <h3>Доставка {{ (int)Settings::getSettings()->delivery_limit }}</h3>
     <?php $displayAddress = Session::has('basket') && Session::get('basket')['total'] > (int)Settings::getSettings()->delivery_limit || !count($tastings); ?>
     <div class="error"></div>
 
@@ -38,7 +45,7 @@
                 'name' => 'delivery',
                 'value' => $d+1,
                 'label' => $delivery,
-                'checked' => (!$displayAddress && !$d) || ($displayAddress && $d == 2)
+                'checked' => (!$displayAddress && !$d) || ($displayAddress && $d == 0)
             ])
         @endif
 

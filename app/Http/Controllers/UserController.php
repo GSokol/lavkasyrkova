@@ -34,7 +34,7 @@ class UserController extends Controller
         $tastings = Tasting::getUserTasting(Auth::user());
         $this->breadcrumbs = ['orders' => 'Заказы'];
         $orders = Order::with(['status:id,name,class_name', 'orderToProducts.product'])
-            ->where('user_id', Auth::user()->id)
+            ->where('user_id', auth()->id())
             ->orderBy('id', 'desc')
             ->get()
             ->transform(function($order) {
@@ -50,22 +50,24 @@ class UserController extends Controller
             'breadcrumbs' => $this->breadcrumbs,
             'tastings' => $tastings,
             'orders' => $orders,
-            'menus' => $this->getMenus(),
-            'prefix' => Auth::user()->is_admin ? 'admin' : 'profile',
         ]);
     }
 
     public function user(Request $request)
     {
         $this->breadcrumbs = ['user' => 'Профиль пользователя'];
-        $this->data['user'] = Auth::user();
-        $this->data['offices'] = Office::all();
+        $user = Auth::user();
+        $offices = Office::all();
         if ($request->has('unsubscribe') && $request->input('unsubscribe')) {
-            $this->data['user']->send_mail = 0;
-            $this->data['user']->save();
-            Session::flash('message','Вы отписались от автоматической рассылки!');
+            $user->send_mail = 0;
+            $user->save();
+            Session::flash('message', 'Вы отписались от автоматической рассылки!');
         }
-        return $this->showView('user');
+        return view('pages.user', [
+            'breadcrumbs' => $this->breadcrumbs,
+            'offices' => $offices,
+            'user' => $user,
+        ]);
     }
 
     public function signingTasting()
@@ -172,7 +174,7 @@ class UserController extends Controller
             'breadcrumbs' => $this->breadcrumbs,
             'data' => $this->data,
             // 'prefix' => Auth::user()->is_admin ? 'admin' : 'profile',
-            'menus' => $this->getMenus(),
+            // 'menus' => $this->getMenus(),
             'tastings' => $tastings,
         ]);
     }

@@ -1,9 +1,9 @@
-@extends('dashboard::layouts.default')
+@extends('layouts.profile')
 
 @section('content')
     <div class="panel panel-flat">
         <div class="panel-heading">
-            <h4 class="panel-title">{{ isset($user) ? 'Редактирование пользователя '.$user->email : 'Добавление пользователя' }}</h4>
+            <h4 class="panel-title">Редактирование пользователя {{ $user->email }}</h4>
         </div>
         <div class="panel-body">
             <form class="form-horizontal" enctype="multipart/form-data" method="post">

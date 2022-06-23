@@ -40,7 +40,7 @@ class SidebarComposer
             ['href' => route('dashboard.offices'), 'name' => 'Офисы', 'icon' => 'icon-office'],
             ['href' => route('dashboard.shops'), 'name' => 'Магазины', 'icon' => 'icon-basket'],
             ['href' => route('dashboard.tastings'), 'name' => 'Дегустации', 'icon' => 'icon-trophy2'],
-            ['href' => route('dashboard.users'), 'name' => 'Пользователи', 'icon' => 'icon-users']
+            ['href' => route('dashboard.users'), 'name' => 'Пользователи', 'icon' => 'icon-users'],
         ];
         return $menus;
     }

@@ -5,4 +5,4 @@
 </div>
 
 <?php $content = ob_get_clean(); ?>
-@include('layouts._modal_block',['id' => 'product-modal', 'title' => 'Купить продукт', 'content' => $content])
+@include('layouts._modal_block', ['id' => 'product-modal', 'title' => 'Купить продукт', 'content' => $content])

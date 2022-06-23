@@ -34,30 +34,21 @@ mix.options({
  |
  */
 
+mix.setPublicPath('public');
 // copy directories
 mix.copyDirectory('resources/fonts', 'public/fonts');
 
 // scripts
-mix.js('resources/js/entry/profile-order.js', 'public/js/face').vue({version: 3});
-mix.js('dashboard/resources/js/entry/category.js', 'public/js/dashboard').vue({version: 3});
-mix.js('dashboard/resources/js/entry/order.js', 'public/js/dashboard').vue({version: 3});
-mix.js('dashboard/resources/js/entry/product-item/index.js', 'public/js/dashboard/product-item.js').vue({version: 3});
+mix.js('resources/js/entry/store/index.js', 'js/face/store.js').vue({version: 3});
+mix.js('resources/js/entry/profile-order.js', 'js/face').vue({version: 3});
+mix.js('dashboard/resources/js/entry/category.js', 'js/dashboard').vue({version: 3});
+mix.js('dashboard/resources/js/entry/order.js', 'js/dashboard').vue({version: 3});
+mix.js('dashboard/resources/js/entry/product-item/index.js', 'js/dashboard/product-item.js').vue({version: 3});
 
 // face
-mix.styles([
-    'resources/style/bootstrap.css',
-    'resources/style/bootstrap-switch.css',
-    'resources/style/bootstrap-toggle.min.css',
-    'resources/style/core.css',
-    'resources/style/components.css',
-    'resources/fonts/icomoon/styles.css',
-    'resources/style/top.css',
-    'resources/style/main.css',
-    'resources/style/products.css',
-    'resources/style/loader.css',
-    'resources/style/owl.carousel.min.css',
-    'resources/style/owl.theme.default.min.css',
-], 'public/style/common.css');
+mix.sass('resources/style/entry/common.scss', 'style/face').options({
+    processCssUrls: false,
+});
 
 // face auth
 mix.styles([
@@ -68,7 +59,7 @@ mix.styles([
     'resources/style/colors.css',
     'resources/style/main.css',
     'resources/style/auth.css',
-], 'public/style/auth.css');
+], 'style/auth.css');
 
 // dashboard
 mix.styles([
@@ -80,7 +71,7 @@ mix.styles([
     'resources/style/dashboard.css',
     'resources/style/products.css',
     'resources/style/loader.css',
-], 'public/style/managment.css');
+], 'style/managment.css');
 mix.sass('dashboard/resources/style/entry/product-item.scss', 'public/style/dashboard');
 
 mix.scripts([
@@ -98,6 +89,6 @@ mix.scripts([
     'public/js/loader.js',
     'public/js/owl.carousel.js',
     'public/js/main.js',
-], 'public/js/face/app.js');
+], 'js/face/app.js');
 
 mix.version();

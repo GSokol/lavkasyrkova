@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    @include('dashboard::components.head')
+    @include('components.head-profile')
 </head>
 
 <body>
@@ -18,11 +18,11 @@
 @endif
 
 <div id="root">
-    @include('dashboard::components.navbar')
+    @include('components.navbar')
     <div class="page-container">
         <div class="page-content">
             <div class="sidebar sidebar-main">
-                @include('dashboard::components.sidebar')
+                @include('components.sidebar')
             </div>
             <div class="content-wrapper">
                 <div class="page-header page-header-default">
@@ -38,7 +38,6 @@
                              </h4>
                         </div>
                     </div>
-
                     <div class="breadcrumb-line">
                         <ul class="breadcrumb">
                             <li><a href="{{ url('/') }}"><i class="icon-home2 position-left"></i>Главная</a></li>
@@ -56,7 +55,7 @@
     </div>
 </div>
 
-@routes('dashboard')
+@routes('face')
 @shared
 @yield('js')
 </body>
