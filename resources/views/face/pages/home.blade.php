@@ -117,6 +117,8 @@
                 <p>{!! $store->address !!}</p>
                 <script>window.map.push({coords:[parseFloat("{{ $store->latitude }}"),parseFloat("{{ $store->longitude }}")],'address':"{{ strip_tags($store->address) }}"});</script>
             @endforeach
+            <p>ИП Ковальчук Александра Александровна</p>
+            <p>ИНН 774317338424</p>
             <p>Тел: {{ Settings::getAddress()->phone1.'; '.Settings::getAddress()->phone2 }}</p>
             <p><a href="mailto:{{ Settings::getAddress()->email }}">{{ Settings::getAddress()->email }}</a></p>
         </div>
