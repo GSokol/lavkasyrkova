@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin.layouts.default')
 
 @section('content')
     @include('admin._modal_delete_block',['modalId' => 'delete-modal', 'function' => 'delete-tasting', 'head' => 'Вы действительно хотите удалить эту дегустацию?'])
@@ -7,7 +7,6 @@
     <div class="panel panel-flat">
         <div class="panel-heading">
             <h3 class="panel-title">Изображения на главной странице</h3>
-            @include('admin._heading_elements_block')
         </div>
         <div class="panel-body">
             <form class="form-horizontal complex-form" enctype="multipart/form-data" action="{{ url('/admin/tasting-images') }}" method="post">
@@ -27,7 +26,6 @@
     <div class="panel panel-flat">
         <div class="panel-heading">
             <h3 class="panel-title">Дегустации</h3>
-            @include('admin._heading_elements_block')
         </div>
         <div class="panel-body">
             @if (count($data['tastings']))

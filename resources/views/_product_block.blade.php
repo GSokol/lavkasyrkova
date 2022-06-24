@@ -11,7 +11,7 @@
         @if (!$product->image)
             <img src="{{ asset('images/products/empty.jpg') }}" />
         @elseif ($product->image && $product->active)
-            @include('_product_preview_block',['image' => $product->image])
+            @include('_product_preview_block', ['image' => $product->image])
         @else
             <img src="{{ asset($product->image) }}" />
         @endif
@@ -22,10 +22,10 @@
             <h4>{{ $product->additionally }}</h4>
         @endif
         @if ($product->addCategory && isset($product->addCategory->name))
-            <p class="small">{{ str_replace('Сыры','Сыр',$product->addCategory->name) }}</p>
+            <p class="small">{{ str_replace('Сыры', 'Сыр', $product->addCategory->name) }}</p>
         @endif
         <p class="description">{{ $product->description }}</p>
-        <p class="price {{ $product->action ? 'action' : '' }}">{!! Helper::productCostSting($product) !!}</p>
+        <p class="price">{!! Helper::productCostSting($product) !!}</p>
     </div>
     <div class="value">
         @if ($product->active)
@@ -37,14 +37,14 @@
                 'differentially' => $product->parts,
                 'price' => Helper::productPrice($product),
                 'increment' => $product->parts ? json_encode(Helper::getProductParts()) : 1,
-                'value' => Helper::productValue($value)
+                'value' => $value,
             ])
         @else
-            <div class="disabled-value-container">{{ Helper::productValue($value).' '.Helper::productUnit($product) }}</div>
+            <div class="disabled-value-container">{{ $value .' '.Helper::productUnit($product) }}</div>
         @endif
 
         @if ($useCost)
-            <p class="cost">{{ Helper::productCost($product,$value) }} руб</p>
+            <p class="cost">{{ Helper::productCost($product, $value) }} руб</p>
         @endif
     </div>
 </div>

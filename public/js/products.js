@@ -1,23 +1,8 @@
 $(window).ready(function () {
-    // Click to category href
-    $('.category').click(function () {
-        getCategory($(this));
+    $('#on-top-button').click(function () {
+        goToScroll('menu');
     });
 
-    // Click back to categories
-    var productsContainer = $('#products');
-    // productsContainer.find('.back-to-categories > div').click(function () {
-    $('#on-top-button').click(function () {
-        productsContainer.fadeOut('fast',function () {
-            $('.order-form').html('');
-            $('#cheeses-sub-head').html('');
-            $('#cheeses-head').fadeIn('fast');
-            $('#categories').fadeIn('fast',function () {
-                goToScroll('cheeses');
-            });
-        });
-    });
-    
     // Click checkout order
     $('button#checkout').click(
         function (e) {
@@ -32,7 +17,8 @@ $(window).ready(function () {
                 'delivery': $('input[name=delivery]:checked').val(),
                 'tasting_id': $('input[name=tasting_id]:checked').val(),
                 'shop_id': $('input[name=shop_id]:checked').val(),
-                'address': $('input[name=address]').val()
+                'address': $('input[name=address]').val(),
+                'description': $('textarea[name=description]').val(),
             }, function (data) {
                 removeLoaderScreen();
                 if (data.success) {
@@ -70,7 +56,7 @@ $(window).ready(function () {
         var timesBlock = $('.times-block'),
             shopsBlock = $('.shops-block'),
             addressBlock = $('.address-block');
-        
+
         if ($(this).val() == 1) {
             timesBlock.show();
             shopsBlock.hide();
@@ -164,6 +150,7 @@ function orderComplete(data) {
     modal.modal('show');
 }
 
+// deprecated
 function getCategory(obj) {
     var id = obj.attr('data-id'),
         type = obj.attr('data-type');

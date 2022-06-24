@@ -23,12 +23,12 @@
     <p class="total-cost-basket"><b>Итоговая сумма: </b><span>{{ Session::has('basket') ? Session::get('basket')['total'] : '0' }} руб</span></p>
 
     <h3>Доставка</h3>
-    <?php $displayAddress = Session::has('basket') && Session::get('basket')['total'] > (int)Settings::getSettings()->delivery_limit || !count($data['tastings']); ?>
+    <?php $displayAddress = Session::has('basket') && Session::get('basket')['total'] > (int)Settings::getSettings()->delivery_limit || !count($tastings); ?>
     <div class="error"></div>
 
     @foreach(
         [
-            (Auth::user()->office->id == 1 || Auth::user()->office->id == 2 || count($data['tastings']) ? Auth::user()->office->address : (count($data['tastings']) ? 'Доставка в офис ('.Auth::user()->office->address.')' : null)),
+            (Auth::user()->office->id == 1 || Auth::user()->office->id == 2 || count($tastings) ? Auth::user()->office->address : (count($tastings) ? 'Доставка в офис ('.Auth::user()->office->address.')' : null)),
             'Доставка в магазин',
             'Доставка по адресу <span class="error">(при заказе свыше '.Settings::getSettings()->delivery_limit.' руб!)</span>'
         ] as $d => $delivery)
@@ -42,10 +42,10 @@
             ])
         @endif
 
-        @if (!$d && count($data['tastings']))
+        @if (!$d && count($tastings))
             <div class="times-block">
                 <h6>Дата доставки</h6>
-                @foreach($data['tastings'] as $k => $tasting)
+                @foreach($tastings as $k => $tasting)
                     @include('_radio_simple_block',[
                         'name' => 'tasting_id',
                         'value' => $tasting->id,
@@ -56,12 +56,12 @@
             </div>
         @elseif ($d == 1)
             <div class="shops-block" style="display:none;">
-                @foreach($data['shops'] as $k => $shop)
+                @foreach($stores as $k => $store)
                     @include('_radio_simple_block',[
                         'name' => 'shop_id',
-                        'value' => $shop->id,
-                        'label' => $shop->address,
-                        'checked' => !$k
+                        'value' => $store->id,
+                        'label' => $store->address,
+                        'checked' => !$k,
                     ])
                 @endforeach
             </div>
@@ -75,6 +75,16 @@
             'type' => 'text',
             'placeholder' => 'Напишите ваш адрес',
             'value' => !Auth::guest() && Auth::user()->address ? Auth::user()->address : ''
+        ])
+    </div>
+
+    <div class="description-block">
+        @include('_textarea_block', [
+            'label' => 'Примечание:',
+            'name' => 'description',
+            'placeholder' => 'Укажите примечание к заказу',
+            'rows' => 3,
+            'value' => '',
         ])
     </div>
 </div>

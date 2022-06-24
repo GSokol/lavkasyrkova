@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin.layouts.default')
 
 @section('content')
     <div class="panel panel-flat">
@@ -21,7 +21,9 @@
                     ])
                     @include('admin._image_block',[
                         'col' => 12,
-                        'preview' => isset($data['product']) ? $data['product']->image : null
+                        'preview' => isset($data['product']) ? $data['product']->image : null,
+                        'name' => 'image',
+                        'label' => 'Картинка'
                     ])
                 </div>
 

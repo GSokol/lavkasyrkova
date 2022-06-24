@@ -67,8 +67,8 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://lavkasyrkova'),
-    
+    'url' => env('APP_URL', 'http://lavkasyrkova.ru'),
+
     /* Main Title */
 
     'main_title' => env('MAIN_TITLE', 'Лавка Сыркова'),
@@ -211,6 +211,9 @@ return [
         /*
          * Package Service Providers...
          */
+        Barryvdh\Debugbar\ServiceProvider::class,
+        Coderello\SharedData\Providers\SharedDataServiceProvider::class,
+        Mavinoo\Batch\BatchServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -220,11 +223,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Yangqi\Htmldom\HtmldomServiceProvider::class,
-
         App\Providers\SettingsProvider::class,
         App\Providers\HelperProvider::class
-
     ],
 
     /*
@@ -273,8 +273,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Htmldom' => Yangqi\Htmldom\Htmldom::class,
-        'Settings' => Illuminate\Support\Facades\Settings::class,
-        'Helper' => Illuminate\Support\Facades\Helper::class,
+
+        'Helper' => App\Facades\HelperFacades::class,
+        'Settings' => App\Facades\SettingsFacades::class,
+        'Arr' => Illuminate\Support\Arr::class,
+        'Str' => Illuminate\Support\Str::class,
+        'Batch' => Mavinoo\Batch\BatchFacade::class,
     ],
 ];

@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -49,6 +50,87 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if (config('app.debug')) {
+            $response['debug'][CODE] = $exception->getCode();
+            $response['debug'][MSG] = $exception->getMessage();
+            $response['debug'][FILE] = $exception->getFile();
+            $response['debug'][LINE] = $exception->getLine();
+            $response['debug']['exception'] = get_class($exception);
+            // for SQL Exceptions
+            if ($exception instanceof \PDOException) {
+                $response['debug'][SQL] = $exception->getSql(); // исходный sql запрос
+                $response['debug']['bindings'] = $exception->getBindings(); // параметры запроса
+            }
+        }
+        // если запрос типа ajax вернуть REST ответ
+        if ($request->isXmlHttpRequest() || $request->expectsJson()) {
+            $response[ERR] = Response::HTTP_BAD_REQUEST;
+            $response[MSG] = 'Server error';
+            $response[DESC] = $exception->getMessage();
+
+            // Ошибка авторизация. Утрачен token
+            if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
+                $response[ERR] = Response::HTTP_UNAUTHORIZED;
+                $response[MSG] = 'AUTH_ERROR: csrf token mismatch';
+            }
+            // Остальные ошибки авторизации
+            if ($exception instanceof \Illuminate\Auth\Access\AuthorizationException) {
+                $response[ERR] = Response::HTTP_FORBIDDEN;
+                $response[MSG] = 'Action is unauthorized';
+                $response[DESC] = $exception->getMessage();
+            }
+            // Ошибка запрещения неавторизованного доступа
+            if ($exception instanceof \Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException) {
+                $response[ERR] = Response::HTTP_FORBIDDEN;
+                $response[MSG] = 'Access denied';
+            }
+            // Ошибки запрещения доступа по отсутствию пермиссий
+            if ($exception instanceof \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException) {
+                $response[ERR] = Response::HTTP_FORBIDDEN;
+                $response[MSG] = 'Action is not permitted';
+                if ($message = $exception->getMessage()) {
+                    $response[DATA] = compact('message');
+                }
+            }
+            // Роут не найден
+            if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+                $response[ERR] = Response::HTTP_NOT_FOUND;
+                $response[MSG] = "API route [{$request->path()}] not found";
+            }
+            // Синтаксическая ошибка
+            if ($exception instanceof \Symfony\Component\Debug\Exception\FatalThrowableError) {
+                $response[ERR] = Response::HTTP_INTERNAL_SERVER_ERROR;
+                $response[MSG] = 'Fatal error';
+            }
+            // SQL Exceptions
+            if ($exception instanceof \Illuminate\Database\QueryException || $exception instanceof \PDOException) {
+                $response[MSG] = 'SQL_ERROR';
+            }
+            // Ошибки валидации
+            if ($exception instanceof \Illuminate\Validation\ValidationException) {
+                $response[ERR] = Response::HTTP_UNPROCESSABLE_ENTITY;
+                $response[MSG] = 'Validation error: incorrect field(s)';
+                $response[DATA] = $this->formatValidationErrors($exception->validator->getMessageBag()->toArray());
+            }
+            return response()->json($response, $response[ERR]);
+        }
+
         return parent::render($request, $exception);
+    }
+
+    /**
+     * формат вывод ошибок валидации
+     *
+     * @param array $errors
+     * @return array
+     */
+    private function formatValidationErrors($errors) {
+        $result = [];
+        foreach ($errors as $field => $messages) {
+            foreach ($messages as $message) {
+                $result[] = ['field' => $field, 'message' => $message];
+            }
+        }
+        return $result;
     }
 }

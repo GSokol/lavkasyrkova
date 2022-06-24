@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use Auth;
-use Session;
 use Config;
-use App\User;
-use App\Http\Controllers\Controller;
+use Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\HelperTrait;
+use App\Models\Office;
+use App\User;
 
 class RegisterController extends Controller
 {
@@ -44,6 +46,20 @@ class RegisterController extends Controller
     }
 
     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        $offices = Office::getOffices();
+
+        return view('auth.register', [
+            'offices' => $offices,
+        ]);
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -72,7 +88,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'phone' => $data['phone'],
             'password' => bcrypt($data['password']),
-            'confirm_token' => str_random(32),
+            'confirm_token' => Str::random(32),
             'office_id' => $data['office_id'],
             'address' => $data['address'],
             'active' => false,

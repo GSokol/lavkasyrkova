@@ -13,12 +13,12 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-//        Schema::create('orders', function (Blueprint $table) {
-//            $table->increments('id');
-//            $table->boolean('delivery');
-//            $table->boolean('status');
-//            $table->timestamps();
-//        });
+       Schema::create('orders', function (Blueprint $table) {
+           $table->increments('id');
+           $table->boolean('delivery');
+           $table->boolean('status');
+           $table->timestamps();
+       });
     }
 
     /**
@@ -28,6 +28,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-//        Schema::dropIfExists('orders');
+       Schema::dropIfExists('orders');
     }
 }

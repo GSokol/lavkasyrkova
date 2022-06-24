@@ -13,9 +13,9 @@ class CreateUserToTastingsTable extends Migration
      */
     public function up()
     {
-//        Schema::create('user_to_tastings', function (Blueprint $table) {
-//            $table->increments('id');
-//        });
+       Schema::create('user_to_tastings', function (Blueprint $table) {
+           $table->increments('id');
+       });
     }
 
     /**
@@ -25,6 +25,6 @@ class CreateUserToTastingsTable extends Migration
      */
     public function down()
     {
-//        Schema::dropIfExists('user_to_tastings');
+       Schema::dropIfExists('user_to_tastings');
     }
 }

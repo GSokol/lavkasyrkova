@@ -10,54 +10,91 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+
 Route::auth();
 Route::get('/logout', 'Auth\LoginController@logout');
-Route::get('/send-confirm-mail', 'Auth\RegisterController@sendConfirmMail');
-Route::get('/confirm-registration/{token}', 'Auth\RegisterController@confirmRegistration');
 
-Route::get('/admin', 'AdminController@index');
-Route::get('/profile', 'UserController@index');
+Route::as('face.')->group(function() {
+    Route::get('/', 'HomeController@index')->name('home');
+    // profile
+    Route::group(['prefix' => 'profile', 'middleware' => ['auth']], function() {
+        Route::get('/', 'UserController@index');
+        Route::get('/user', 'UserController@user');
+        Route::post('/user', 'UserController@editUser');
+        Route::post('/checkout-order', 'UserController@checkoutOrder');
+        Route::post('/signing-tasting', 'UserController@signingTasting');
+        // orders
+        Route::group(['prefix' => 'orders'], function() {
+            Route::get('/', 'UserController@orders')->name('orders');
+            Route::post('/repeat', 'OrderController@postOrderRepeat')->name('postOrderRepeat');
+            Route::delete('/item', 'OrderController@deleteOrder')->name('deleteOrder');
+        });
+    });
+    // catalog
+    Route::group(['prefix' => 'category'], function() {
+        Route::get('/', 'CatalogController@index')->name('catalog');
+        Route::get('/{slug}', 'CatalogController@category')->name('category');
+    });
+    // basket
+    Route::post('/basket', 'BasketController@editBasket');
+    Route::post('/empty-basket', 'BasketController@emptyBasket');
+    Route::post('/checkout-order', 'BasketController@checkoutOrder');
+    // mail
+    Route::get('/send-confirm-mail', 'Auth\RegisterController@sendConfirmMail');
+    Route::get('/confirm-registration/{token}', 'Auth\RegisterController@confirmRegistration');
+    // product
+    Route::post('/get-product', 'StaticController@getProduct');
+    // deprecated (delete after merge feature groups)
+    Route::post('/get-category-products', 'StaticController@getCategoryProducts');
+});
 
-Route::get('/admin/seo', 'AdminController@seo');
-Route::post('/admin/seo', 'AdminController@editSeo');
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth.admin']], function() {
+    // home page
+    Route::get('/', 'AdminController@index');
+    // category
+    Route::group(['prefix' => 'category', 'namespace' => 'Admin'], function() {
+        Route::get('/', 'CategoryController@categories')->name('categoryList');
+        Route::get('/{id}', 'CategoryController@category')->name('category');
+        Route::post('/{id}', 'CategoryController@postCategory')->name('postCategory');
+        Route::delete('/delete', 'CategoryController@deleteCategory')->name('deleteCategory');
+    });
+    // order
+    Route::group(['prefix' => 'orders', 'namespace' => 'Admin'], function() {
+        Route::get('/', 'OrderController@list')->name('orderList');
+        Route::get('/{id}', 'OrderController@item')->name('order');
+        Route::put('/item', 'OrderController@putOrder')->name('putOrder');
+        // Route::delete('/delete', 'AdminController@deleteCategory')->name('deleteCategory');
+    });
+    Route::post('/delete-order', 'UserController@deleteOrder');
+    // seo
+    Route::get('seo', 'AdminController@seo');
+    Route::post('seo', 'AdminController@editSeo');
+    // settings
+    Route::get('/settings', 'AdminController@settings');
+    Route::post('/settings', 'AdminController@editSettings');
+    // product
+    Route::get('/products/{slug?}', 'AdminController@products');
+    Route::post('/product', 'AdminController@editProduct');
+    Route::post('/delete-product', 'AdminController@deleteProduct');
+    // user
+    Route::get('/users/{slug?}', 'AdminController@users');
+    Route::post('/delete-user', 'AdminController@deleteUser');
+    // offices
+    Route::get('/offices', 'AdminController@offices');
+    Route::post('/offices', 'AdminController@editOffices');
+    Route::post('/delete-office', 'AdminController@deleteOffice');
+    // tasting
+    Route::get('/tastings/{slug?}', 'AdminController@tastings');
+    Route::post('/tasting', 'AdminController@editTasting');
+    Route::post('/tasting-images', 'AdminController@editTastingsImages');
+    Route::post('/delete-tasting', 'AdminController@deleteTasting');
+    Route::post('/delete-tasting-user', 'AdminController@deleteTastingUser');
+    // shops
+    Route::get('/shops', 'AdminController@shops');
+    Route::post('/shops', 'AdminController@editShops');
+    Route::post('/delete-shop', 'AdminController@deleteShop');
+});
 
-Route::get('/admin/users/{slug?}', 'AdminController@users');
-Route::get('/profile/user', 'UserController@user');
-Route::post('/profile/user', 'UserController@editUser');
-Route::post('/admin/delete-user', 'AdminController@deleteUser');
-Route::post('/profile/signing-tasting', 'UserController@signingTasting');
-
-Route::get('/profile/orders', 'UserController@orders');
-Route::get('/admin/orders', 'AdminController@orders');
-
-Route::post('/basket', 'BasketController@editBasket');
-Route::post('/empty-basket', 'BasketController@emptyBasket');
-Route::post('/checkout-order', 'BasketController@checkoutOrder');
-
-Route::post('/profile/checkout-order', 'UserController@checkoutOrder');
-Route::post('/admin/delete-order', 'UserController@deleteOrder');
-
-Route::get('/admin/products/{slug?}', 'AdminController@products');
-Route::post('/admin/product', 'AdminController@editProduct');
-Route::post('/admin/delete-product', 'AdminController@deleteProduct');
-
-Route::get('/admin/tastings/{slug?}', 'AdminController@tastings');
-Route::post('/admin/tasting', 'AdminController@editTasting');
-Route::post('/admin/tasting-images', 'AdminController@editTastingsImages');
-Route::post('/admin/delete-tasting', 'AdminController@deleteTasting');
-Route::post('/admin/delete-tasting-user', 'AdminController@deleteTastingUser');
-
-Route::get('/admin/settings', 'AdminController@settings');
-Route::post('/admin/settings', 'AdminController@editSettings');
-
-Route::get('/admin/offices', 'AdminController@offices');
-Route::post('/admin/offices', 'AdminController@editOffices');
-Route::post('/admin/delete-office', 'AdminController@deleteOffice');
-
-Route::get('/admin/shops', 'AdminController@shops');
-Route::post('/admin/shops', 'AdminController@editShops');
-Route::post('/admin/delete-shop', 'AdminController@deleteShop');
-
-Route::get('/', 'StaticController@index');
-Route::post('/get-category-products', 'StaticController@getCategoryProducts');
-Route::post('/get-product', 'StaticController@getProduct');
+// Route::fallback(function() {
+//     return '404';
+// });

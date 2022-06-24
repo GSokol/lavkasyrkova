@@ -13,10 +13,10 @@ class AddProductIdToProductToOrdersTable extends Migration
      */
     public function up()
     {
-//        Schema::table('product_to_orders', function (Blueprint $table) {
-//            $table->integer('product_id', false, true);
-//            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
-//        });
+       Schema::table('product_to_orders', function (Blueprint $table) {
+           $table->integer('product_id', false, true);
+           $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
+       });
     }
 
     /**
@@ -26,9 +26,9 @@ class AddProductIdToProductToOrdersTable extends Migration
      */
     public function down()
     {
-//        Schema::table('product_to_orders', function (Blueprint $table) {
-//            $table->dropForeign('product_to_orders_product_id_foreign');
-//            $table->dropColumn('product_id');
-//        });
+       Schema::table('product_to_orders', function (Blueprint $table) {
+           $table->dropForeign('product_to_orders_product_id_foreign');
+           $table->dropColumn('product_id');
+       });
     }
 }

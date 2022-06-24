@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Order;
-use App\ProductToOrder;
+use App\Models\Order;
+use App\Models\OrderStatus;
+use App\Models\Product;
+use App\Models\ProductToOrder;
+use App\User;
 use Session;
 use Settings;
 use Helper;
@@ -15,7 +16,7 @@ use Helper;
 class BasketController extends Controller
 {
     use HelperTrait;
-    
+
     public function editBasket(Request $request)
     {
         $this->validate($request, [
@@ -60,34 +61,33 @@ class BasketController extends Controller
                 'value' => $value,
                 'price' => $price,
                 'productParts' => $this->productParts
-            ])->render() : false, 
+            ])->render() : false,
             'total' => $totalCost,
             'cost' => $cost
         ]);
     }
-    
+
     public function emptyBasket()
     {
         Session::forget('basket');
         return response()->json(['success' => true]);
     }
-    
+
     public function checkoutOrder(Request $request, $usingAjax = true)
     {
         $validationArr = [
             'delivery' => 'required|integer|min:1|max:3',
-            'shop_id' => $this->validationShop
+            'shop_id' => $this->validationShop,
         ];
 
         if ($request->has('tasting_id') && $request->input('tasting_id')) $validationArr['tasting_id'] = $this->validationTasting;
         $this->validate($request, $validationArr);
-        $this->getTastings();
-        
+
         $errors = [];
         if (Auth::guest()) $errors[] = 'Вам необходимо авторизоваться!';
-        
+
         if (!Session::has('basket')) $errors[] = 'Ваша корзина пуста!';
-        elseif ($request->input('delivery') == 1 && Auth::user()->office->id != 1 && Auth::user()->office->id != 2 && !count($this->data['tastings'])) $errors[] = 'Нет доступных дегустаций!'; 
+        elseif ($request->input('delivery') == 1 && Auth::user()->office->id != 1 && Auth::user()->office->id != 2 && !count($this->data['tastings'])) $errors[] = 'Нет доступных дегустаций!';
         elseif ($request->input('delivery') == 3) {
             if (Session::get('basket')['total'] < (int)Settings::getSettings()->delivery_limit) $errors[] = 'Доставка по адресу возможна только при заказе от '.((string)Settings::getSettings()->delivery_limit).'р.!';
             elseif (!Auth::user()->address && !$request->input('address')) $errors[] = 'Вы должны указать адрес!';
@@ -100,12 +100,14 @@ class BasketController extends Controller
             else return $result;
         }
 
+        $statusNew = OrderStatus::code(OrderStatus::ORDER_STATUS_NEW)->first();
         $order = Order::create([
-            'status' => 1,
+            'status_id' => $statusNew->id,
             'user_id' => Auth::user()->id,
             'shop_id' => $request->input('delivery') == 2 ? $request->input('shop_id') : null,
             'tasting_id' => $request->has('tasting_id') && $request->input('tasting_id') ? $request->input('tasting_id') : null,
-            'delivery' => $request->input('delivery') == 3
+            'delivery' => $request->input('delivery') == 3,
+            'description' => $request->input('description'),
         ]);
 
         foreach (Session::get('basket') as $id => $item) {
@@ -120,8 +122,8 @@ class BasketController extends Controller
         }
         Session::forget('basket');
 
-        $this->sendMessage($order->user->email, 'auth.emails.new_order', ['title' => 'Новый заказ', 'order' => $order], (string)Settings::getSettings()->email);
-//        $this->sendMessage('romis.nesmelov@gmail.com', 'auth.emails.new_order', ['title' => 'Новый заказ', 'order' => $order]);
+        $this->sendMessage($order->user->email, 'emails.new_order', ['title' => 'Новый заказ', 'order' => $order], (string)Settings::getSettings()->email);
+//        $this->sendMessage('romis.nesmelov@gmail.com', 'emails.new_order', ['title' => 'Новый заказ', 'order' => $order]);
 
         $result = ['success' => true, 'message' => 'Ваш заказ оформлен!'];
         if ($usingAjax) return response()->json($result);

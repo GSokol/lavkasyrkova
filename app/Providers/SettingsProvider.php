@@ -24,7 +24,7 @@ class SettingsProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('settings', function(){
+        $this->app->bind('settings', function() {
             return new SettingsController();
         });
     }

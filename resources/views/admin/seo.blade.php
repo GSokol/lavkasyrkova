@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin.layouts.default')
 
 @section('content')
     <div class="panel panel-flat">
@@ -35,6 +35,14 @@
                                 'value' => $data['seo'][$meta]
                             ])
                         @endif
+                    @endforeach
+                    @foreach($data['address'] as $fieldName => $fieldValue)
+                        @include('_input_block', [
+                            'label' => $fieldName,
+                            'name' => "address[$fieldName]",
+                            'type' => 'text',
+                            'value' => $fieldValue,
+                        ])
                     @endforeach
                 </div>
 

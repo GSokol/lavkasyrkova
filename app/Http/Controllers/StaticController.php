@@ -3,29 +3,21 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Category;
-use App\AddCategory;
-use App\Product;
-use App\Tasting;
-//use App\UserToTasting;
-use App\Shop;
+use App\Models\AddCategory;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Store;
+use App\Models\Tasting;
 use Settings;
+use Session;
 
 class StaticController extends Controller
 {
     use HelperTrait;
-    
+
     protected $data = [];
 
-    public function index()
-    {   
-        $this->data['shops'] = Shop::all();
-        $this->data['actions'] = Product::where(function($query){ $query->where('action',1)->orWhere('new',1); })->where('active',1)->get();
-        $this->data['products'] = Product::all();
-        $this->getTastings();
-        return $this->showView('home');
-    }
-    
+    // deprecated
     public function getCategoryProducts(Request $request)
     {
         $this->validate($request,['type' => 'required|in:category,add_category']);
@@ -61,46 +53,8 @@ class StaticController extends Controller
 
     private function showView($view)
     {
-        $this->data['seo'] = Settings::getSeoTags();
-        $this->data['categories'] = Category::all();
-        $addCategories = AddCategory::all();
-
-        $mainMenu = [];
-        if (count($this->data['actions'])) $mainMenu[] = ['href' => 'actions', 'name' => 'Предложения недели'];
-
-        $subMenu = [];
-        $subMenu = $this->getCategorySubMenu($subMenu, $this->data['categories'], 'category');
-        $subMenu = $this->getCategorySubMenu($subMenu, $addCategories, 'add_category');
-        $mainMenu[] = ['href' => 'cheeses', 'name' => 'Наши сыры', 'submenu' => $subMenu];
-        $mainMenu[] = ['href' => 'tastings', 'name' => 'Дегустации'];
-        $mainMenu[] = ['href' => 'shops', 'name' => 'Магазины'];
-
-        if (Auth::guest()) {
-            $mainMenu[] = ['href' => 'login', 'name' => 'Войти'];
-            $mainMenu[] = ['href' => 'register', 'name' => 'Регистрация'];
-        } elseif (Auth::user()->is_admin) {
-            $mainMenu[] = ['href' => 'admin', 'name' => 'Админка'];
-        } else {
-            $mainMenu[] = ['href' => 'profile', 'name' => 'Профиль'];
-        }
-
         return view($view, [
-            'mainMenu' => $mainMenu,
-            'data' => $this->data,
             'metas' => $this->metas
         ]);
-    }
-
-    private function getCategorySubMenu($subMenu, $categories, $type)
-    {
-        foreach ($categories as $category) {
-            $subMenu[] = [
-                'href' => 'cheeses',
-                'id' => $category->id,
-                'type' => $type,
-                'name' => $category->name
-            ];
-        }
-        return $subMenu;
     }
 }

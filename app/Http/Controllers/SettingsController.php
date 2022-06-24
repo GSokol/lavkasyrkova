@@ -8,12 +8,12 @@ use Config;
 class SettingsController extends Controller
 {
     use HelperTrait;
-    
+
     private $settings;
 
     public function __construct()
     {
-        $this->settings = simplexml_load_file(Config::get('app.settings_xml'));
+        $this->settings = simplexml_load_file(public_path(Config::get('app.settings_xml')));
     }
 
     // Seo
@@ -43,6 +43,11 @@ class SettingsController extends Controller
         foreach ($this->metas as $meta => $params) {
             $this->settings->seo->$meta = $request->input($meta);
         }
+        if ($request->has('address')) {
+            foreach ($request->get('address') as $key => $value) {
+                $this->settings->address->$key = $value;
+            }
+        }
         $this->save();
     }
 
@@ -56,6 +61,6 @@ class SettingsController extends Controller
 
     private function save()
     {
-        $this->settings->asXML(Config::get('app.settings_xml'));
+        $this->settings->asXML(public_path(Config::get('app.settings_xml')));
     }
 }
