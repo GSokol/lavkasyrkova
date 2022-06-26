@@ -42,17 +42,5 @@
         </div>
     </div>
 
-    <div class="cover map" data-scroll-destination="shops">
-        <div id="map"></div>
-        <div>
-            <h1 class="head">Магазины</h1>
-            <script>window.map = [];</script>
-            @foreach($stores as $store)
-                <p>{!! $store->address !!}</p>
-                <script>window.map.push({coords:[parseFloat("{{ $store->latitude }}"), parseFloat("{{ $store->longitude }}")],'address':"{{ strip_tags($store->address) }}"});</script>
-            @endforeach
-            <p>Тел: {{ Settings::getAddress()->phone1.'; '.Settings::getAddress()->phone2 }}</p>
-            <p><a href="mailto:{{ Settings::getAddress()->email }}">{{ Settings::getAddress()->email }}</a></p>
-        </div>
-    </div>
+    @include('components.info')
 @endsection

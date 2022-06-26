@@ -43,31 +43,18 @@
 
         <div class="navbar-right">
             <ul class="nav navbar-nav">
-
-                @if (!auth()->check())
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle total-cost-basket" data-toggle="dropdown" aria-expanded="false">
-                            <i class="icon-cart5"></i>
-                            <span class="badge bg-warning-400">{{ Session::has('basket') ? Session::get('basket')['total'] : '0' }}р.</span>
-                        </a>
-
-                        <div class="dropdown-menu dropdown-content width-200">
-                            <ul class="media-list dropdown-content-body">
-                                <li class="media"><a href="#checkout-modal" data-toggle="modal" class="media-heading">Оформить заказ</a></li>
-                                <li class="media"><a href="#" id="empty-basket" class="media-heading">Очистить корзину</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                @endif
-
                 <li class="dropdown dropdown-user">
                     <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-cart5"></i>
+                        <span class="badge bg-warning-400">{{ Session::has('basket') ? Session::get('basket')['total'] : '0' }}р.</span>
                         <span>{{ auth()->user()->email }}</span>
                         <i class="caret"></i>
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="{{ route('dashboard.logout') }}"><i class="icon-switch2"></i> {{ trans('auth.logout') }}</a></li>
+                        <li><a href="#checkout-modal" data-toggle="modal" class="media-heading">Оформить заказ</a></li>
+                        <li><a href="#" id="empty-basket" class="media-heading">Очистить корзину</a></li>
+                        <li><a href="{{ route('face.logout') }}"><i class="icon-switch2"></i> {{ trans('auth.logout') }}</a></li>
                     </ul>
                 </li>
             </ul>

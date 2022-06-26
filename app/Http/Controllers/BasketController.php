@@ -45,7 +45,7 @@ class BasketController extends Controller
 
         $totalCost = 0;
         foreach ($basket as $key => $item) {
-            if ($key != 'total') $totalCost += $item['cost'];
+            if ($key != 'total') $totalCost += (int)$item['cost'];
         }
 
         if (!$totalCost) Session::forget('basket');
@@ -124,10 +124,11 @@ class BasketController extends Controller
         Session::forget('basket');
 
         $this->sendMessage($order->user->email, 'emails.new_order', ['title' => 'Новый заказ', 'order' => $order], (string)Settings::getSettings()->email);
-//        $this->sendMessage('romis.nesmelov@gmail.com', 'emails.new_order', ['title' => 'Новый заказ', 'order' => $order]);
 
         $result = ['success' => true, 'message' => 'Ваш заказ оформлен!'];
-        if ($usingAjax) return response()->json($result);
-        else return $result;
+        if ($usingAjax) {
+            return response()->json($result);
+        }
+        return $result;
     }
 }

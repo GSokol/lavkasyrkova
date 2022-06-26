@@ -69,10 +69,10 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'phone' => $this->validationPhone,
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->validationPassword,
-            'office_id' => 'required|integer|exists:offices,id',
-            'g-recaptcha-response' => 'required|string',
+            'office_id' => ['required', 'integer', 'exists:offices,id'],
+            'g-recaptcha-response' => ['required', 'string'],
         ]);
     }
 

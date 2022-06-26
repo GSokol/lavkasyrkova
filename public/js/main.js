@@ -8,7 +8,7 @@ $(window).ready(function () {
     $('a.img-preview').fancybox({padding: 3});
 
     window.phoneRegExp = /^((\+)[0-9]{11})$/gi;
-    $('input[name=phone]').mask("+7(999)999-99-99");
+    $('input[name=phone]').mask("+7(9nn)nnn-nn-nn");
 
     // Drop down menu
     // $('li.main-menu ul.dropdown-menu, .basket ul.dropdown-menu').bind('mouseleave', function () {

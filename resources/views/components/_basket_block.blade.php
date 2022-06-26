@@ -5,6 +5,7 @@
             <li><a {{ Auth::guest() ? '' : 'data-toggle=modal' }} href="{{ Auth::guest() ? url('/login') : '#checkout-modal' }}">Оформить заказ</a></li>
             <li><a href="#" @click.prevent="showBasket">Оформить заказ</a></li>
             <li><a id="empty-basket" href="#">Очистить корзину</a></li>
+            <li><a href="{{ route('face.logout') }}"><i class="icon-switch2"></i> {{ trans('auth.logout') }}</a></li>
         </ul>
     </div>
 <!-- @ endif -->

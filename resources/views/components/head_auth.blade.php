@@ -28,7 +28,7 @@
 
 <script type="text/javascript" src="{{ asset('js/core/libraries/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/core/libraries/bootstrap.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.maskedinput.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.maskedinput.min.js?t=1') }}"></script>
 <script type="text/javascript" src="{{ asset('js/plugins/loaders/blockui.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/plugins/forms/styling/uniform.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/core/app.js') }}"></script>

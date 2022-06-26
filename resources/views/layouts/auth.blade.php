@@ -20,7 +20,7 @@
 
 <script>
     $('.styled').uniform();
-    $('input[name=phone]').mask("+7(999)999-99-99");
+    $('input[name=phone]').mask("+7(9nn)nnn-nn-nn");
 </script>
 
 </body>
