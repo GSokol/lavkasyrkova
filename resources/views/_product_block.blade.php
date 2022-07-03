@@ -4,20 +4,20 @@
             @if ($product->image)
                 @include('_product_preview_block',['image' => 'images/not-available.png', 'imageClass' => 'not-available'])
             @else
-                <img class="not-available" src="{{ asset('images/not-available.png') }}" />
+                <img class="not-available" src="{{ asset('images/not-available.png') }}" onerror="this.src='/images/default.jpg'" />
             @endif
         @endif
 
         @if (!$product->image)
-            <img src="{{ asset('images/products/empty.jpg') }}" />
+            <img src="{{ asset('images/products/empty.jpg') }}" onerror="this.src='/images/default.jpg'" />
         @elseif ($product->image && $product->active)
             @include('_product_preview_block', ['image' => $product->image])
         @else
-            <img src="{{ asset($product->image) }}" />
+            <img src="{{ asset($product->image) }}" loading="lazy" onerror="this.src='/images/default.jpg'" />
         @endif
     </div>
     <div class="text-block" {{ isset($textBlockHeight) && $textBlockHeight ? 'style=height:'.$textBlockHeight.'px' : '' }}>
-        <h3>{{ $product->name }}</h3>
+        <h3><a href="{{ route('face.product', ['slug' => $product->slug]) }}">{{ $product->name }}</a></h3>
         @if ($product->additionally)
             <h4>{{ $product->additionally }}</h4>
         @endif

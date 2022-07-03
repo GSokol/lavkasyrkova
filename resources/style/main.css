@@ -56,9 +56,9 @@ a.button {
     width: 100%;
 }
 
-/*.image {*/
-    /*border: 1px solid #a76622;*/
-/*}*/
+#root {
+    padding-top: 62px;
+}
 
 .error {
     width: 100%;

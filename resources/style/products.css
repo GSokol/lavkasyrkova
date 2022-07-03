@@ -195,6 +195,9 @@
     text-align: left;
     margin-bottom: 0;
 }
+.product h3 a {
+    color: inherit;
+}
 
 .category h3 {
     text-align: center;
@@ -298,7 +301,7 @@
     display: table;
     text-align: center;
     padding: 20px;
-    background: url("../images/white.png") repeat;
+    background: rgba(255, 255, 255, 0.6);
 }
 
 .action-product h1 {

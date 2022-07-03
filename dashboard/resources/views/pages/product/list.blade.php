@@ -30,7 +30,7 @@
                     @foreach ($category->products as $product)
                         <tr role="row" id="{{ 'product_'.$product->id }}">
                             <td class="id">{{ $product->id }}</td>
-                            <td class="text-center image"><a class="img-preview" href="{{ asset($product->image) }}"><img src="{{ asset($product->image) }}" /></a></td>
+                            <td class="text-center image"><a class="img-preview" href="{{ asset($product->image) }}"><img src="{{ asset($product->image) }}" onerror="this.src='/images/default.jpg'" /></a></td>
                             <td class="text-center"><a href="{{ route('dashboard.product', ['id' => $product->id]) }}">{{ $product->name }}</a></td>
                             <td class="text-center">{{ number_format($product->whole_price, 0, '', ' ').'р.' }}</td>
                             <td class="text-center">{{ number_format($product->part_price, 0, '', ' ').'р.' }}</td>

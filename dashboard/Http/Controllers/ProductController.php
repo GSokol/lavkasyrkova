@@ -2,9 +2,8 @@
 
 namespace Dashboard\Http\Controllers;
 
-use Batch;
+use File;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Symfony\Component\HttpFoundation\Response;
 use Coderello\SharedData\Facades\SharedData;
 use App\Models\AddCategory;
@@ -33,9 +32,12 @@ class ProductController extends Controller
      * @param string|int $id
      * @return Illuminate\Support\Facades\View
      */
-    public function productItem($id)
+    public function product($id)
     {
-        $product = Product::with(['category'])->findOrNew($id);
+        $product = Product::query()
+            ->with(['category', 'related:id,category_id,name,image', 'related.category:id,name'])
+            ->findOrNew($id);
+        $product->related_products = $product->related->pluck('id');
         $categories = Category::all();
         $addCategories = AddCategory::all();
 
@@ -60,32 +62,16 @@ class ProductController extends Controller
      * @param int $request.limit [deault 10]
      * @return array
      */
-    public function getProducts(Request $request)
+    public function getProductSuggest(Request $request)
     {
         $products = Product::select(['id', 'category_id', 'name', 'image'])
             ->with(['category:id,name'])
+            ->applyFilter($request)
             ->limit(10)
             ->get();
 
-        // dump($products);
-
-        // $data = $this->validate($request, [
-        //     'id' => ['required'],
-        //     'discount_value' => ['sometimes', 'nullable', 'integer', 'max:50'],
-        // ]);
-        // // обновление данных заказа
-        // $order = Order::with(['user', 'status', 'orderToProducts.product'])->findOrFail($request->get('id'));
-        // $data['status_id'] = OrderStatus::code(OrderStatus::ORDER_STATUS_PICKED)->first()->id;
-        // $order->update($data);
-        // $order = $order->fresh();
-        // // обновление значений товаров
-        // $this->massUpdateOrderProducts($request);
-        // // сгенерировать событие => отправка уведомления клиенту
-        // event(new OrderCreated($order));
-
         return $this->response([
             DATA => $products,
-            MSG => 'Заказ успешно обновлен',
         ]);
     }
 
@@ -101,8 +87,14 @@ class ProductController extends Controller
             'name' => ['required', 'unique:products,name,'.$request->get('id')],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
             'add_category_id' => ['required', 'integer', 'exists:add_categories,id'],
-            'additionally' => ['max:255'],
+            'additionally' => ['sometimes', 'nullable', 'max:255'],
             'description' => ['required', 'min:3', 'max:500'],
+            'short_description' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'gastro_combination' => ['sometimes', 'nullable', 'string'],
+            'alcohol_combination' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'rennet_type' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'nutrients' => ['sometimes', 'nullable', 'string'],
+            'aging' => ['sometimes', 'nullable', 'string', 'max:255'],
             'whole_price' => ['integer'],
             'whole_weight' => ['required', 'integer', 'min:1', 'max:5000'],
             'part_price' => ['integer'],
@@ -112,12 +104,16 @@ class ProductController extends Controller
             'active' => ['sometimes', 'nullable', 'boolean'],
             'new' => ['sometimes', 'nullable', 'boolean'],
             'action' => ['sometimes', 'nullable', 'boolean'],
-            // 'image' => ['sometimes', 'nullable', 'image', 'min:5', 'max:5000'],
-            // 'big_image' => ['sometimes', 'nullable', 'image', 'min:5', 'max:5000'],
+            'related_products' => ['sometimes', 'nullable', 'array'],
+            'related_products.*' => ['integer', 'min:1'],
         ]);
         $product = Product::updateOrCreate(['id' => $request->get('id')], $payload);
+        if ($request->related_products) {
+            $product->related()->sync($payload['related_products']);
+        }
         if ($product->wasRecentlyCreated) {
             return $this->response([
+                DATA => $product->id,
                 ERR => Response::HTTP_CREATED,
                 MSG => 'Товар успешно создан',
             ]);
@@ -125,40 +121,53 @@ class ProductController extends Controller
         return $this->response([
             MSG => 'Товар успешно обновлен',
         ]);
+    }
 
-        
-        return $this->response([
-            DATA => [123, 45],
-            MSG => 'Товар успешно изменен',
+    /**
+     * Загрузка изображения товара
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function postProductImageUpload(Request $request)
+    {
+        $this->validate($request, [
+            'file' => ['required', 'file', 'image'],
+            'id' => ['required', 'numeric', 'min:1'],
+        ]);
+        $product = Product::find($request->id);
+        $extension = $request->file('file')->extension();
+        $path = $request->file('file')->storeAs('images/products', $product->slug.'.'.$extension, 'shared');
+        $product->update([
+            'image' => $path,
         ]);
 
-        $fields = $this->processingFields(
-            $request,
-            ['new','action','active','parts'],
-            ['image','big_image'],
-            null,
-            ['whole_price','part_price','action_whole_price','action_part_price']
-        );
+        return $this->response([
+            DATA => [
+                'path' => $path,
+            ],
+            MSG => 'Изображение успешно загружено',
+        ]);
+    }
 
-        if ($request->has('id')) {
-            $product = Product::find($request->input('id'));
-
-            if ($request->hasFile('image'))
-                $fields = array_merge($fields, $this->processingImage($request, $product, 'image'));
-            if ($request->hasFile('big_image'))
-                $fields = array_merge($fields, $this->processingImage($request, $product, 'big_image'));
-
-            $product->update($fields);
-
-        } else {
-            $fields = array_merge(
-                $fields,
-                $this->processingImage($request, null, 'image', Str::slug($fields['name']), 'images/products'),
-                $this->processingImage($request, null, 'big_image', Str::slug($fields['name']).'_big', 'images/products')
-            );
-
-            Product::create($fields);
+    /**
+     * Удаление товара
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function deleteProduct(Request $request)
+    {
+        $this->validate($request, [
+            'id' => ['required', 'min:1'],
+        ]);
+        $product = Product::query()->findOrFail($request->get('id'));
+        if ($product->image || $product->big_image) {
+            if (file_exists($product->getRawOriginal('image'))) {
+                File::delete($product->getRawOriginal('image'));
+            }
         }
-        return redirect(route('dashboard.products'));
+        $product->delete();
+        return $this->response([MSG => 'Товар успешно удален']);
     }
 }

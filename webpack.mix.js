@@ -62,17 +62,8 @@ mix.styles([
 ], 'style/auth.css');
 
 // dashboard
-mix.styles([
-    'resources/fonts/icomoon/styles.css',
-    'resources/style/bootstrap.css',
-    'resources/style/core.css',
-    'resources/style/components.css',
-    'resources/style/colors.css',
-    'resources/style/dashboard.css',
-    'resources/style/products.css',
-    'resources/style/loader.css',
-], 'style/managment.css');
-mix.sass('dashboard/resources/style/entry/product-item.scss', 'public/style/dashboard');
+mix.sass('resources/style/entry/dashboard.scss', 'style');
+mix.sass('dashboard/resources/style/entry/product-item.scss', 'style/dashboard');
 
 mix.scripts([
     'public/js/core/libraries/jquery.min.js',

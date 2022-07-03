@@ -41,6 +41,10 @@ Route::as('face.')->group(function() {
         Route::get('/', 'CatalogController@index')->name('catalog');
         Route::get('/{slug}', 'CatalogController@category')->name('category');
     });
+    // product
+    Route::group(['prefix' => 'product'], function() {
+        Route::get('/{slug}', 'ProductController@product')->name('product');
+    });
     // basket
     Route::post('/basket', 'BasketController@editBasket');
     Route::post('/empty-basket', 'BasketController@emptyBasket');

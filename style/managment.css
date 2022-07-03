@@ -15372,7 +15372,7 @@ a.badge,
   }
 }
 .content {
-  padding: 0 20px 60px 20px;
+  padding: 0 20px 20px 20px;
 }
 .content:after {
   content: '';
@@ -36445,37 +36445,6 @@ td.delete > span {
     cursor: pointer;
 }
 
-/*.range-input {*/
-    /*width: 100%;*/
-/*}*/
-
-/*.range-input td {*/
-    /*text-align: center;*/
-    /*vertical-align: middle;*/
-/*}*/
-
-/*.range-input .min-max {*/
-    /*width: 70px;*/
-/*}*/
-
-/*.range-input .value {*/
-    /*width: 100px;*/
-    /*font-weight: bold;*/
-/*}*/
-
-/*.range-input .value input {*/
-    /*width: 100%;*/
-    /*text-align: center;*/
-    /*padding: 0;*/
-    /*float: left;*/
-/*}*/
-
-/*.range-input .value div {*/
-    /*padding-top: 5px;*/
-    /*margin-left: 5px;*/
-    /*float: left;*/
-/*}*/
-
 textarea {
     width: 100%;
     resize: vertical;
@@ -36755,6 +36724,9 @@ textarea {
     text-align: left;
     margin-bottom: 0;
 }
+.product h3 a {
+    color: inherit;
+}
 
 .category h3 {
     text-align: center;
@@ -36858,7 +36830,7 @@ textarea {
     display: table;
     text-align: center;
     padding: 20px;
-    background: url("../images/white.png") repeat;
+    background: rgba(255, 255, 255, 0.6);
 }
 
 .action-product h1 {

@@ -7,23 +7,31 @@ import { get } from 'lodash';
 import {
     ElButton,
     ElCheckbox,
+    ElIcon,
     ElInput,
+    ElLink,
     ElSelect,
+    ElSwitch,
     ElOption,
+    ElUpload,
 } from 'element-plus';
 
 const app = createApp({
     components: {
         ElButton,
         ElCheckbox,
+        ElIcon,
         ElInput,
+        ElLink,
         ElSelect,
+        ElSwitch,
         ElOption,
+        ElUpload,
     },
 
     setup() {
         const product = reactive(window.app.product || {});
-        const recommendedList = ref([]);
+        const recommendedList = ref(product.related || []);
         const state = ref({
             isLoading: false,
         });
@@ -34,26 +42,16 @@ const app = createApp({
             return window.app.addCategories;
         });
         const onSubmit = () => {
-            console.log('submit', product);
-
-            postProduct(product).then((response) => {
-                console.log('response sss', response);
-            });
-        };
-        const postProduct = (model) => {
-            return api.post(route('api.dashboard.postProduct'), model, {
+            return api.post(route('api.dashboard.postProduct'), product, {
                 notify: true,
-            }).then(({response}) => {
-
-            });
-
-            // return axios({
-            //     method: 'post',
-            //     url: route('api.dashboard.postProduct'),
-            //     data: model,
-            // }).then((response) => {
-            //     console.log('response', response);
-            // });
+            }).then(({data: response}) => {
+                console.log('response', response);
+                if (response.error == 201) {
+                    window.location.href = route('dashboard.product', {id: response.data});
+                }
+            }).catch((error) => {
+                console.log('error', error);
+            })
         };
         const same = ref([]);
 
@@ -65,40 +63,56 @@ const app = createApp({
             recommendedList,
             state,
             same,
+            route,
         };
     },
 
-    mounted() {
-        //
-    },
-
-    created: function() {
-        // console.log('created product item', this);
-    },
-
     methods: {
-        fetchProducts: function() {
-            this.state.isLoading = true;
-            axios({
-                method: 'get',
-                url: '/api/dashboard/product/fetch',
-                params: {
-                    q: 'бел',
-                },
+        suggestProducts: function(query) {
+            const payload = {
+                q: query,
+            };
+            this.state.isSuggestLoading = true;
+            api.get(route('api.dashboard.getProductSuggest'), payload, {
                 headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': document.head.querySelector('[name=csrf]') ? document.head.querySelector('[name=csrf]').content : (window.app ? window.app.csrf : null),
+                    'Content-Type': 'multipart/form-data',
                 },
-            }).then((response) => {
-                this.state.isLoading = false;
-                if (response.status === 200) {
-                    this.recommendedList = response.data;
-                }
+            }).then(({data: response}) => {
+                this.state.isSuggestLoading = false;
+                this.recommendedList = response.data;
             });
         },
 
-        getProducts: function() {
-            //
+        postImageUpload: function(request) {
+            const payload = new FormData();
+            payload.append('id', this.product.id);
+            payload.append('file', request.file);
+            api.post(route('api.dashboard.postProductImageUpload'), payload, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }).then(({data: response}) => {
+                this.product.image = '/' + response.data.path;
+            });
+        },
+
+        handleImageRemove: function(model) {
+            console.log('delete', model);
+        },
+
+        /**
+         * Удаление товара
+         *
+         * @return {Promise} [description]
+         */
+        removeProduct() {
+            if (!confirm('Вы действительно хотите удалить товар?')) {
+                return Promise.resolve();
+            }
+            const payload = {id: this.product.id};
+            return api.delete(route('api.dashboard.deleteProduct'), payload).then((response) => {
+                window.location.href = route('dashboard.products');
+            });
         },
     },
 

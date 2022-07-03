@@ -5,7 +5,7 @@
 <title>{{ Settings::getSeoTags()['title'] ? Settings::getSeoTags()['title'] : '' }}. Личный кабинет</title>
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-<link href="{{ mix('style/managment.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ mix('style/dashboard.css') }}" rel="stylesheet" type="text/css">
 @yield('style')
 
 <script type="text/javascript" src="{{ asset('js/plugins/loaders/pace.min.js') }}"></script>

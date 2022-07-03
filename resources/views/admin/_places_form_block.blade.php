@@ -16,3 +16,8 @@
     @include('admin._button_block', ['type' => 'button', 'icon' => 'icon-database-add', 'text' => 'Добавить '.$placeName, 'addClass' => 'add-button pull-left'])
     @include('admin._button_block', ['type' => 'submit', 'icon' => ' icon-floppy-disk', 'text' => trans('admin_content.save'), 'addClass' => 'pull-right'])
 </form>
+
+@section('script')
+<script type="text/javascript" src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+<script type="text/javascript" src="{{ asset('js/map.js') }}"></script>
+@endsection

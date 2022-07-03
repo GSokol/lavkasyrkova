@@ -47,7 +47,8 @@ Route::prefix('api/dashboard')->as('api.dashboard.')->group(function() {
     // product
     Route::group(['prefix' => 'product'], function() {
         Route::get('suggest', 'ProductController@getProductSuggest')->name('getProductSuggest');
-        Route::post('item', 'ProductController@postProduct')->name('postProduct');
-        // Route::delete('item', 'ProductController@deleteProduct')->name('deleteProduct');
+        Route::post('post-product', 'ProductController@postProduct')->name('postProduct');
+        Route::post('upload', 'ProductController@postProductImageUpload')->name('postProductImageUpload');
+        Route::delete('delete-product', 'ProductController@deleteProduct')->name('deleteProduct');
     });
 });

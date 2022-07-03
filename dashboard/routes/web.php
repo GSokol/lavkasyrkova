@@ -36,12 +36,8 @@ Route::as('dashboard.')->prefix('dashboard')->group(function() {
         // product
         Route::group(['prefix' => 'product'], function() {
             Route::get('/', 'ProductController@productList')->name('products');
-            Route::get('/{id}', 'ProductController@productItem')->name('product');
+            Route::get('/{id}', 'ProductController@product')->name('product');
             Route::post('/', 'ProductController@postProduct');
-
-            // Route::get('/products/{slug?}', 'AdminController@products')->name('products');
-            // Route::post('/delete-product', 'AdminController@deleteProduct');
-
         });
         // seo
         Route::get('seo', 'SeoController@index')->name('seo');

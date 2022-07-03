@@ -5,7 +5,7 @@
 <title>{{ Settings::getSeoTags()['title'] ? Settings::getSeoTags()['title'] : '' }}. Админка</title>
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-<link href="{{ mix('style/managment.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ mix('style/dashboard.css') }}" rel="stylesheet" type="text/css">
 @yield('style')
 
 <script type="text/javascript" src="{{ asset('js/plugins/loaders/pace.min.js') }}"></script>
@@ -39,10 +39,9 @@
 
 <script type="text/javascript" src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.maskedinput.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/map.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/input-value.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/products.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/loader.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/admin.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin.js?v=2') }}"></script>
 
-<script type="text/javascript" src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+@yield('script')
