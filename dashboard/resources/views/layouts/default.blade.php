@@ -7,10 +7,6 @@
 <body>
 @include('layouts._message_modal_block')
 
-@if (!auth()->check())
-    @include('layouts._checkout_modal_block', ['usingAjax' => true])
-@endif
-
 @if (count($errors))
     @foreach ($errors as $error)
         {{ $error }}

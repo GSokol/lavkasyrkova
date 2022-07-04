@@ -39,6 +39,7 @@ Route::as('dashboard.')->prefix('dashboard')->group(function() {
             Route::get('/{id}', 'ProductController@product')->name('product');
             Route::post('/', 'ProductController@postProduct');
         });
+        Route::post('delete-product', '\App\Http\Controllers\AdminController@deleteProduct')->name('deleteProduct');
         // seo
         Route::get('seo', 'SeoController@index')->name('seo');
         Route::post('seo', 'SeoController@edit')->name('editSeo');
@@ -58,12 +59,13 @@ Route::as('dashboard.')->prefix('dashboard')->group(function() {
         Route::get('/tastings/{id}', 'TastingController@item')->name('tasting');
         Route::post('/tastings/{id}', 'TastingController@postTasting')->name('postTasting');
         Route::post('/tasting-images', 'TastingController@editTastingsImages');
-        Route::post('/delete-tasting', 'TastingController@deleteTasting');
+        Route::post('/delete-tasting', 'TastingController@deleteTasting'); // TODO удалить
         Route::post('/delete-tasting-user', 'TastingController@deleteTastingUser');
         // user
         Route::get('/users', 'UserController@users')->name('users');
         Route::post('/user/delete', 'UserController@deleteUser')->name('deleteUser');
         Route::get('/user/{id}', 'UserController@user')->name('user');
+        Route::post('/user/{id}', '\App\Http\Controllers\UserController@editUser')->name('postUser');
         // home page
         Route::get('/', 'HomeController@index')->name('home');
     });

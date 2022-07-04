@@ -1,7 +1,7 @@
 @extends('dashboard::layouts.default')
 
 @section('content')
-    @include('admin._modal_delete_block',['modalId' => 'delete-modal', 'function' => 'delete-product', 'head' => 'Вы действительно хотите удалить этот продукт?'])
+    @include('admin._modal_delete_block', ['modalId' => 'delete-modal', 'function' => 'delete-product', 'head' => 'Вы действительно хотите удалить этот продукт?'])
     {{ csrf_field() }}
 
     <div class="panel panel-flat">
@@ -30,7 +30,7 @@
                     @foreach ($category->products as $product)
                         <tr role="row" id="{{ 'product_'.$product->id }}">
                             <td class="id">{{ $product->id }}</td>
-                            <td class="text-center image"><a class="img-preview" href="{{ asset($product->image) }}"><img src="{{ asset($product->image) }}" onerror="this.src='/images/default.jpg'" /></a></td>
+                            <td class="text-center image"><a class="img-preview" href="{{ asset($product->image) }}"><img src="{{ asset($product->image) }}" loading="lazy" onerror="this.src='/images/default.jpg'" /></a></td>
                             <td class="text-center"><a href="{{ route('dashboard.product', ['id' => $product->id]) }}">{{ $product->name }}</a></td>
                             <td class="text-center">{{ number_format($product->whole_price, 0, '', ' ').'р.' }}</td>
                             <td class="text-center">{{ number_format($product->part_price, 0, '', ' ').'р.' }}</td>
@@ -40,7 +40,10 @@
                         </tr>
                     @endforeach
                 </table>
-                @include('admin._add_button_block',['href' => 'products/add?category_id='.$category->id, 'text' => 'Добавить продукт'])
+
+                <div class="text-right">
+                    <a class="btn bg-success-600" href="{{ route('dashboard.product', ['id' => 'new', 'category' => $category->id]) }}"><i class="icon-database-add mr-10"></i>Добавить продукт</a>
+                </div>
             </div>
         </div>
     @endforeach

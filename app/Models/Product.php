@@ -12,6 +12,11 @@ use App\Models\RelatedProduct;
 
 class Product extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name',
         'additionally',
@@ -86,13 +91,10 @@ class Product extends Model
      * @return string
      */
     public function getImageAttribute($value) {
-        // if (!file_exists(public_path($value))) {
-        //     return '/images/default.jpg';
-        // }
         if ($value) {
             return asset($value);
         }
-        return $value;
+        return '/images/default.jpg';
     }
 
     /**

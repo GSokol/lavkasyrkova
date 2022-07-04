@@ -12,9 +12,12 @@
         </div>
         <div class="panel-body">
             @include('admin._users_table_block', ['users' => $users])
-            @if (Auth::user()->is_admin)
-                @include('admin._add_button_block', ['href' => 'users/add', 'text' => 'Добавить пользователя'])
-            @endif
+
+            <div class="text-right">
+                <a class="btn bg-success-600" href="{{ route('dashboard.user', ['id' => 'new']) }}">
+                    <i class="icon-add-to-list mr-10"></i>Добавить пользователя
+                </a>
+            </div>
         </div>
     </div>
 @endsection

@@ -44,6 +44,7 @@ mix.js('resources/js/entry/profile-order.js', 'js/face').vue({version: 3});
 mix.js('dashboard/resources/js/entry/category.js', 'js/dashboard').vue({version: 3});
 mix.js('dashboard/resources/js/entry/order.js', 'js/dashboard').vue({version: 3});
 mix.js('dashboard/resources/js/entry/product-item/index.js', 'js/dashboard/product-item.js').vue({version: 3});
+mix.js('dashboard/resources/js/entry/tasting-list/index.js', 'js/dashboard/tasting-list.js').vue({version: 3});
 
 // face
 mix.sass('resources/style/entry/common.scss', 'style/face').options({

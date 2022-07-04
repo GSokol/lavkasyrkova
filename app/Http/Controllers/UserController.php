@@ -125,8 +125,8 @@ class UserController extends Controller
         }
 
         $this->saveCompleteMessage();
-        if (Auth::user()->is_admin) return redirect('/admin/users');
-        else return redirect('/profile/user');
+        if (Auth::user()->is_admin) return redirect(route('dashboard.users'));
+        else return redirect(route('face.profile.user'));
     }
 
     public function checkoutOrder(Request $request)
@@ -173,34 +173,7 @@ class UserController extends Controller
         return view('admin.'.$view, [
             'breadcrumbs' => $this->breadcrumbs,
             'data' => $this->data,
-            // 'prefix' => Auth::user()->is_admin ? 'admin' : 'profile',
-            // 'menus' => $this->getMenus(),
             'tastings' => $tastings,
         ]);
-    }
-
-    public function getMenus()
-    {
-        $menus = [
-            ['href' => '/', 'name' => 'На главную страницу', 'icon' => 'icon-list-unordered'],
-            ['href' => 'orders', 'name' => 'Заказы', 'icon' => 'icon-home']
-        ];
-
-        if (Auth::user()->is_admin) {
-            $addMenus = [
-                ['href' => 'seo', 'name' => 'SEO', 'icon' => 'icon-price-tags'],
-                ['href' => 'products', 'name' => 'Продукты', 'icon' => 'icon-pie5'],
-                ['href' => 'category', 'name' => 'Категории', 'icon' => 'icon-folder'],
-                ['href' => 'settings', 'name' => 'Настройки', 'icon' => 'icon-gear'],
-                ['href' => 'offices', 'name' => 'Офисы', 'icon' => 'icon-office'],
-                ['href' => 'shops', 'name' => 'Магазины', 'icon' => 'icon-basket'],
-                ['href' => 'tastings', 'name' => 'Дегустации', 'icon' => 'icon-trophy2'],
-                ['href' => 'users', 'name' => 'Пользователи', 'icon' => 'icon-users']
-            ];
-        } else {
-            $addMenus = [['href' => 'user', 'name' => 'Профиль пользователя', 'icon' => 'icon-profile']];
-        }
-
-        return array_merge($menus, $addMenus);
     }
 }

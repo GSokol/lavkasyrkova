@@ -34,8 +34,10 @@
                             </span>
                         </div>
                         <template v-else>
-                            <i class="el-icon el-icon--upload icon-plus2"></i>
-                            <div class="el-upload__text">Перетащите файл или <em>нажмите для загрузки</em></div>
+                            <div style="padding: 60px 0;">
+                                <i class="el-icon el-icon--upload icon-plus2"></i>
+                                <div class="el-upload__text">Перетащите файл или <em>нажмите для загрузки</em></div>
+                            </div>
                         </template>
                     </el-upload>
                 </div>

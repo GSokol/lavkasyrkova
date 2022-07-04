@@ -31,19 +31,12 @@ Route::prefix('api/dashboard')->as('api.dashboard.')->group(function() {
     //     Route::post('item', 'UserController@postUser')->name('postUser');
     //     Route::get('fetch', 'UserController@getUsers')->name('getUsers');
     // });
-    // article
-    // Route::group(['prefix' => 'article'], function() {
+    // tasting
+    Route::group(['prefix' => 'tasting'], function() {
     //     Route::get('fetch', 'ArticleController@getArticles')->name('getArticles');
     //     Route::post('item', 'ArticleController@postArticle')->name('postArticle');
-    //     Route::post('duplicate', 'ArticleController@postArticleDuplicate')->name('postArticleDuplicate');
-    //     Route::delete('item', 'ArticleController@deleteArticle')->name('deleteArticle');
-    // });
-    // catalog
-    // Route::group(['prefix' => 'catalog'], function() {
-    //     Route::post('category', 'CatalogController@postCategory')->name('postCategory');
-    //     Route::put('order', 'CatalogController@putCategoryOrder')->name('putCategoryOrder');
-    //     Route::delete('category', 'CatalogController@deleteCategory')->name('deleteCategory');
-    // });
+        Route::delete('tasting-delete', 'TastingController@deleteTasting')->name('deleteTasting');
+    });
     // product
     Route::group(['prefix' => 'product'], function() {
         Route::get('suggest', 'ProductController@getProductSuggest')->name('getProductSuggest');

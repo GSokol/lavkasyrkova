@@ -35,25 +35,6 @@ class AdminController extends UserController
         }
     }
 
-    public function products(Request $request, $slug=null)
-    {
-        $this->breadcrumbs = ['products' => 'Продукты'];
-        $this->data['product_parts'] = $this->productParts;
-        $this->data['categories'] = Category::all();
-        $this->data['add_categories'] = AddCategory::all();
-        if ($request->has('id')) {
-            $this->data['product'] = Product::find($request->input('id'));
-            if (!$this->data['product']) return $this->notExist('Продукта');
-            $this->breadcrumbs['products?id='.$this->data['product']->id] = $this->data['product']->name;
-            return $this->showView('product');
-        } else if ($slug && $slug == 'add') {
-            $this->breadcrumbs['products/add'] = 'Добавление продукта';
-            return $this->showView('product');
-        } else {
-            return $this->showView('products');
-        }
-    }
-
     public function tastings(Request $request, $slug = null)
     {
         $this->breadcrumbs = ['tastings' => 'Дегустации'];
@@ -68,61 +49,6 @@ class AdminController extends UserController
             $this->breadcrumbs['tastings/add'] = 'Добавление дегустации';
             return $this->showView('tasting');
         }
-    }
-
-    public function editProduct(Request $request)
-    {
-        $validationArr = [
-            'name' => 'required|unique:products,name',
-            'additionally' => 'max:255',
-            'description' => 'required|min:3|max:500',
-            'whole_price' => 'integer',
-            'whole_weight' => 'required|integer|min:1|max:5000',
-            'part_price' => 'integer',
-            'action_whole_price' => 'integer',
-            'action_part_price' => 'integer',
-            'image' => 'image|min:5|max:5000',
-            'big_image' => 'image|min:5|max:5000',
-            'category_id' => 'required|integer|exists:categories,id',
-        ];
-        $fields = $this->processingFields(
-            $request,
-            ['new','action','active','parts'],
-            ['image','big_image'],
-            null,
-            ['whole_price','part_price','action_whole_price','action_part_price']
-        );
-
-        if ($request->has('id')) {
-            $validationArr['id'] = 'required|integer|exists:products,id';
-            $validationArr['name'] .= ','.$request->input('id');
-
-            $this->validate($request, $validationArr);
-            $product = Product::find($request->input('id'));
-
-            if ($request->hasFile('image'))
-                $fields = array_merge($fields, $this->processingImage($request, $product, 'image'));
-            if ($request->hasFile('big_image'))
-                $fields = array_merge($fields, $this->processingImage($request, $product, 'big_image'));
-
-            $product->update($fields);
-
-        } else {
-            $validationArr['image'] = 'required|image|min:5|max:5000';
-            $validationArr['big_image'] = 'required|image|min:5|max:5000';
-
-            $this->validate($request, $validationArr);
-            $fields = array_merge(
-                $fields,
-                $this->processingImage($request, null, 'image', Str::slug($fields['name']), 'images/products'),
-                $this->processingImage($request, null, 'big_image', Str::slug($fields['name']).'_big', 'images/products')
-            );
-
-            Product::create($fields);
-        }
-
-        $this->saveCompleteMessage();
-        return redirect('/admin/products');
     }
 
     public function editTasting(Request $request)
@@ -185,19 +111,6 @@ class AdminController extends UserController
     public function deleteProduct(Request $request)
     {
         return $this->deleteSomething($request, new Product(), 'image');
-    }
-
-    public function deleteTasting(Request $request)
-    {
-        $this->validate($request, ['id' => 'required|integer|exists:tastings,id']);
-        $tasting = Tasting::find($request->input('id'));
-        if (count($tasting->tastingToUsers)) {
-            foreach ($tasting->tastingToUsers as $item) {
-                $item->delete();
-            }
-        }
-        $tasting->delete();
-        return response()->json(['success' => true]);
     }
 
     public function deleteTastingUser(Request $request)

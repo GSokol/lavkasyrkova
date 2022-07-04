@@ -1,7 +1,7 @@
 @extends('dashboard::layouts.default')
 
 @section('content')
-    @include('admin._modal_delete_block',['modalId' => 'delete-modal', 'function' => 'delete-tasting', 'head' => 'Вы действительно хотите удалить эту дегустацию?'])
+    @include('admin._modal_delete_block', ['modalId' => 'delete-modal', 'function' => 'delete-tasting', 'head' => 'Вы действительно хотите удалить эту дегустацию?'])
     {{ csrf_field() }}
 
     <div class="panel panel-flat">
@@ -28,36 +28,35 @@
             <h3 class="panel-title">Дегустации</h3>
         </div>
         <div class="panel-body">
-            @if (count($tastings))
-                <table class="table datatable-basic table-items">
-                    <tr>
-                        <th class="id">id</th>
-                        <th class="text-center">Время проведения</th>
-                        <th class="text-center">Место проведения</th>
-                        <th class="text-center">Дата создания</th>
-                        <th class="text-center">Прошла рассылка</th>
-                        <th class="text-center">Новая/прошедшая</th>
-                        <th class="text-center">Статус</th>
-                        <th class="text-center">Удалить</th>
-                    </tr>
-                    @foreach ($tastings as $tasting)
-                        <tr role="row" id="{{ 'tasting_'.$tasting->id }}">
-                            <td class="id">{{ $tasting->id }}</td>
-                            <td class="text-center"><a href="{{ route('dashboard.tasting', ['id' => $tasting->id]) }}">{{ date('d.m.Y', $tasting->time) }}</a></td>
-                            <td class="text-center">{{ $tasting->office->address }}</td>
-                            <td class="text-center">{{ $tasting->created_at->format('d.m.Y') }}</td>
-                            <td class="text-center">@include('admin._status_block',['status' => $tasting->informed > time(), 'trueLabel' => 'Да', 'falseLabel' => 'Нет'])</td>
-                            <td class="text-center">@include('admin._status_block',['status' => $tasting->time > time(), 'trueLabel' => 'Новая', 'falseLabel' => 'прошедшая'])</td>
-                            <td class="text-center">@include('admin._status_block',['status' => $tasting->active, 'trueLabel' => 'активна', 'falseLabel' => 'не активна'])</td>
-                            <td class="delete"><span del-data="{{ $tasting->id }}" modal-data="delete-modal" class="glyphicon glyphicon-remove-circle"></span></td>
-                        </tr>
-                    @endforeach
-                </table>
-            @else
-                <h1 class="text-center">Нет дегустаций</h1>
-            @endif
+            <table class="table datatable-basic table-items" v-if="collection.length">
+                <tr>
+                    <th class="id">id</th>
+                    <th class="text-center">Время проведения</th>
+                    <th class="text-center">Место проведения</th>
+                    <th class="text-center">Дата создания</th>
+                    <th class="text-center">Прошла рассылка</th>
+                    <th class="text-center">Новая/прошедшая</th>
+                    <th class="text-center">Статус</th>
+                    <th class="text-center">Удалить</th>
+                </tr>
+                <tr role="row" v-for="(row, index) in collection">
+                    <td class="id" v-text="row.id"></td>
+                    <td class="text-center"><a :href="route('dashboard.tasting', {id: row.id})" v-text="row.time_format"></a></td>
+                    <td class="text-center" v-text="row.office.address"></td>
+                    <td class="text-center" v-text="row.created_at"></td>
+                    <td class="text-center"><span class="label" :class="[row.informed ? 'label-success' : 'label-info']" v-text="row.informed ? 'Да' : 'Нет'"></span></td>
+                    <td class="text-center"><span class="label" :class="[row.in_time ? 'label-success' : 'label-info']" v-text="row.in_time ? 'Новая' : 'прошедшая'"></span></td>
+                    <td class="text-center"><span class="label" :class="[row.active ? 'label-success' : 'label-info']" v-text="row.active ? 'активна' : 'не активна'"></span></td>
+                    <td class="delete"><span class="glyphicon glyphicon-remove-circle" @click="removeTasting(row, index)"></span></td>
+                </tr>
+            </table>
+            <h1 class="text-center" v-else>Нет дегустаций</h1>
 
-            @include('admin._add_button_block',['href' => 'tastings/add', 'text' => 'Добавить дегустацию'])
+            @include('admin._add_button_block', ['href' => 'tastings/add', 'text' => 'Добавить дегустацию'])
         </div>
     </div>
+@endsection
+
+@section('js')
+<script type="text/javascript" src="{{ mix('js/dashboard/tasting-list.js') }}"></script>
 @endsection

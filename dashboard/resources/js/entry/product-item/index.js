@@ -1,7 +1,7 @@
 'use strict';
 
 import { computed, createApp, reactive, ref } from 'vue';
-import axios from 'axios';
+import { createRouter, createWebHistory, useRouter } from 'vue-router';
 import api from '../../core/api.js';
 import { get } from 'lodash';
 import {
@@ -15,6 +15,11 @@ import {
     ElOption,
     ElUpload,
 } from 'element-plus';
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes: [],
+});
 
 const app = createApp({
     components: {
@@ -30,7 +35,10 @@ const app = createApp({
     },
 
     setup() {
-        const product = reactive(window.app.product || {});
+        const router = useRouter();
+        const product = reactive(Object.assign({
+            category_id: +router.currentRoute.value.query.category || null,
+        }, window.app.product));
         const recommendedList = ref(product.related || []);
         const state = ref({
             isLoading: false,
@@ -64,6 +72,7 @@ const app = createApp({
             state,
             same,
             route,
+            router,
         };
     },
 
@@ -115,8 +124,8 @@ const app = createApp({
             });
         },
     },
+}).use(router);
 
-    computed: {
-        //
-    },
-}).mount('#root');
+router.isReady().then(() => {
+    app.mount('#root')
+});

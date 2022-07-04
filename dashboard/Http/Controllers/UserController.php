@@ -38,16 +38,17 @@ class UserController extends Controller
     }
 
     /**
-     * Dashboard tasting item page
+     * Save user
      *
+     * @param Illuminate\Http\Request $request
      * @return Illuminate\Support\Facades\View
      */
-    // public function postTasting(TastingPostRequest $request)
-    // {
-    //     $payload = $request->validated();
-    //     $tasting = Tasting::updateOrCreate(['id' => $request->get('id')], $payload);
-    //     return redirect(route('dashboard.tasting', ['id' => $request->get('id')]));
-    // }
+    public function postUser(Request $request)
+    {
+        // $payload = $request->validated();
+        // $tasting = Tasting::updateOrCreate(['id' => $request->get('id')], $payload);
+        // return redirect(route('dashboard.tasting', ['id' => $request->get('id')]));
+    }
 
     /**
      * Delete tasting user

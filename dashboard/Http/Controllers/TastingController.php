@@ -3,6 +3,7 @@
 namespace Dashboard\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Coderello\SharedData\Facades\SharedData;
 use Dashboard\Http\Requests\TastingPostRequest;
 use App\Models\Office;
 use App\Models\Tasting;
@@ -16,7 +17,18 @@ class TastingController extends Controller
      */
     public function index()
     {
-        $tastings = Tasting::orderBy('time', 'desc')->get();
+        $tastings = Tasting::with(['office'])
+            ->orderBy('time', 'desc')
+            ->get()
+            ->map(function($row) {
+                $row->time_format = date('d.m.Y', $row->time);
+                $row->in_time = $row->time > time();
+                return $row;
+            });
+        SharedData::put([
+            'tastings' => $tastings,
+        ]);
+
         return view('dashboard::pages.tasting.list', [
             'tastings' => $tastings,
         ]);
@@ -48,6 +60,21 @@ class TastingController extends Controller
         $payload = $request->validated();
         $tasting = Tasting::updateOrCreate(['id' => $request->get('id')], $payload);
         return redirect(route('dashboard.tasting', ['id' => $request->get('id')]));
+    }
+
+    /**
+     * Delete tasting
+     *
+     * @param Illuminate\Http\Request $request
+     * @return Illuminate\Support\Facades\View
+     */
+    public function deleteTasting(Request $request)
+    {
+        $this->validate($request, [
+            'id' => ['required', 'exists:tastings,id'],
+        ]);
+        Tasting::destroy($request->get('id'));
+        return $this->response([MSG => 'Дегустация успешно удалена']);
     }
 
     /**

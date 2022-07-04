@@ -36518,7 +36518,7 @@ a.button {
 }
 
 .cover.pattern {
-    background: url('../images/cheeses_pattern.png') #ffd180 repeat;
+    background: url('/images/cheeses_pattern.png') #ffd180 repeat;
 }
 
 .new-tasting {

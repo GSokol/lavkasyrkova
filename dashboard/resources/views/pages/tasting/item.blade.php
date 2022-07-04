@@ -11,7 +11,7 @@
     <form class="form-horizontal complex-form" enctype="multipart/form-data" method="post">
         {{ csrf_field() }}
         @if (isset($tasting))
-            <input type="hidden" name="id" value="{{ $tasting->id }}">
+            <input type="hidden" name="id" value="{{ $tasting->id ?: 'new' }}">
         @endif
 
         <div class="panel panel-flat">

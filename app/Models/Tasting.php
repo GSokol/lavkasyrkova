@@ -10,11 +10,25 @@ use App\Models\User;
 
 class Tasting extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'time',
         'active',
         'informed',
         'office_id'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'created_at' => 'datetime:d.m.Y',
     ];
 
     public function office()

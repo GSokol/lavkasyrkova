@@ -6,7 +6,7 @@
             <h4 class="panel-title">{{ isset($user) ? 'Редактирование пользователя '.$user->email : 'Добавление пользователя' }}</h4>
         </div>
         <div class="panel-body">
-            <form class="form-horizontal" enctype="multipart/form-data" method="post">
+            <form class="form-horizontal" method="POST">
                 {{ csrf_field() }}
                 @if (isset($user))
                     <input type="hidden" name="id" value="{{ $user->id }}">
@@ -122,15 +122,15 @@
                     ])
                 @endif
 
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    @include('admin._button_block', ['type' => 'submit', 'icon' => ' icon-floppy-disk', 'text' => trans('admin_content.save'), 'addClass' => 'pull-right'])
+                <div class="col-md-12 col-sm-12 col-xs-12 text-right">
+                    <button type="submit" class="btn bg-success-600"><i class="icon-floppy-disk mr-10"></i>Сохранить</button>
                 </div>
             </form>
         </div>
     </div>
 
     @if (isset($user))
-        @include('admin._orders_block',['orders' => $user->orders, 'user' => $user])
+        @include('admin._orders_block', ['orders' => $user->orders, 'user' => $user])
     @endif
 
 @endsection

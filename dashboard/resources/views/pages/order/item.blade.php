@@ -142,6 +142,10 @@
                                         </th>
 										<td class="text-right"><h5 v-text="discountAmount + ' руб.'"></h5></td>
 									</tr>
+                                    <tr>
+										<th>Доставка:</th>
+										<td class="text-right"><h5 v-text="deliveryAmount + ' руб.'"></h5></td>
+									</tr>
 									<tr>
 										<th>Итого:</th>
 										<td class="text-right text-primary"><h5 class="text-semibold" v-text="checkoutAmount + ' руб.'"></h5></td>

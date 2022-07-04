@@ -5,13 +5,13 @@
         <h1>{{ $product->name }}</h1>
         <h6>{{ $product->category->name }}</h6>
         <div class="col-md-5 image">
-            <img src="{{ asset($product->image) }}" title="{{ $product->name }}" />
+            <img src="{{ asset($product->image) }}" title="{{ $product->name }}" onerror="this.src='/images/default.jpg'" />
         </div>
         <div class="col-md-7">
             <div class="">{{ $product->description }}</div>
         </div>
     </div>
-    
+
     @include('components.tasting')
     @include('components.info')
 @endsection
