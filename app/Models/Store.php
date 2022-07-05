@@ -42,14 +42,11 @@ class Store extends Model
     {
         return Cache::remember('stores', $seconds = 60 * 60 * 12, function() {
             return self::all()->map(function($store) {
-                return [
-                    'id' => $store->id,
-                    'address' => $store->address,
-                    'coords' => [
-                        'latitude' => $store->latitude,
-                        'longitude' => $store->longitude,
-                    ],
+                $store->coords = [
+                    'latitude' => $store->latitude,
+                    'longitude' => $store->longitude,
                 ];
+                return $store;
             });
         });
     }

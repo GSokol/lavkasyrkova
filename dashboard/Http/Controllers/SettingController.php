@@ -23,6 +23,7 @@ class SettingController extends Controller
         $payload = $this->validate($request, [
             'email' => ['required', 'email'],
             'delivery_limit' => ['sometimes', 'nullable', 'integer'],
+            'delivery_amount' => ['sometimes', 'nullable', 'integer'],
         ]);
         Settings::saveSettings($payload);
         return redirect(route('dashboard.settings'));

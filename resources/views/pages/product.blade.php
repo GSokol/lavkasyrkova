@@ -8,7 +8,11 @@
             <img src="{{ asset($product->image) }}" title="{{ $product->name }}" onerror="this.src='/images/default.jpg'" />
         </div>
         <div class="col-md-7">
-            <div class="">{{ $product->description }}</div>
+            <div class="mb-20">{{ $product->description }}</div>
+
+            <button class="btn btn-success" type="button">
+                <i class="icon-cart mr-10"></i>Добавить в корзину
+            </button>
         </div>
     </div>
 

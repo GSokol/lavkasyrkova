@@ -5,7 +5,7 @@
 </head>
 <body>
     <div id="root">
-    @if (!Auth::guest() && !Auth::user()->is_admin)
+    @if (!Auth::guest())
         @include('layouts._checkout_modal_block', ['usingAjax' => true])
     @endif
 

@@ -15,7 +15,6 @@ use App\Models\Tasting;
 trait HelperTrait
 {
     public $validationPhone = 'required|regex:/^((\+)?(\d)(\s)?(\()?[0-9]{3}(\))?(\s)?([0-9]{3})(\-)?([0-9]{2})(\-)?([0-9]{2}))$/';
-    public $validationUser = 'required|integer|exists:users,id';
     public $validationShop = 'required|integer|exists:shops,id';
     public $validationAddCategory = 'required|integer|exists:add_categories,id';
     public $validationPassword = 'required|confirmed|min:6|max:50';

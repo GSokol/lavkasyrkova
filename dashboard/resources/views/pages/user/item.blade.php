@@ -7,6 +7,16 @@
         </div>
         <div class="panel-body">
             <form class="form-horizontal" method="POST">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 {{ csrf_field() }}
                 @if (isset($user))
                     <input type="hidden" name="id" value="{{ $user->id }}">

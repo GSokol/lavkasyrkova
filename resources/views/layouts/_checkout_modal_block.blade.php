@@ -4,7 +4,7 @@
         @if (Session::has('basket'))
             @foreach (Session::get('basket') as $id => $item)
                 @foreach ($data['products'] as $product)
-                    @if ($id != 'total' && isset($item['value']) && $item['value'] && $id == $product->id)
+                    @if (!in_array($id, ['total', 'delivery']) && isset($item['value']) && $item['value'] && $id == $product->id)
                         <div id="basket-product-{{ $product->id }}" class="product-basket">
                             @include('_basket_product_block', [
                                 'product' => $product,
@@ -21,7 +21,7 @@
     </div>
     <hr>
     <p class="mb-15">
-        <strong>Доставка:</strong>
+        <strong>Доставка: </strong>
         <span>{{ Session::has('basket') ? Session::get('basket')['delivery'] : 0 }} руб.</span>
     </p>
     <p class="total-cost-basket">
@@ -29,7 +29,6 @@
         <span>{{ Session::has('basket') ? Session::get('basket')['total'] : '0' }} руб</span>
     </p>
 
-    <h3>Доставка {{ (int)Settings::getSettings()->delivery_limit }}</h3>
     <?php $displayAddress = Session::has('basket') && Session::get('basket')['total'] > (int)Settings::getSettings()->delivery_limit || !count($tastings); ?>
     <div class="error"></div>
 
@@ -64,7 +63,7 @@
         @elseif ($d == 1)
             <div class="shops-block" style="display:none;">
                 @foreach($stores as $k => $store)
-                    @include('_radio_simple_block',[
+                    @include('_radio_simple_block', [
                         'name' => 'shop_id',
                         'value' => $store->id,
                         'label' => $store->address,
@@ -100,7 +99,7 @@
 </div>
 
 <?php $content = ob_get_clean(); ?>
-@include('layouts._modal_block',['id' => 'checkout-modal', 'title' => 'Оформление заказа', 'content' => $content, 'addClass' => isset($addClass) ? $addClass : null])
+@include('layouts._modal_block', ['id' => 'checkout-modal', 'title' => 'Оформление заказа', 'content' => $content, 'addClass' => isset($addClass) ? $addClass : null])
 
 @if (Session::has('basket') && Session::get('basket')['total'] && Request::has('basket') && Request::input('basket'))
     <script>

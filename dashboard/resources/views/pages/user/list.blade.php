@@ -2,7 +2,7 @@
 
 @section('content')
     @if (Auth::user()->is_admin)
-        @include('admin._modal_delete_block', ['modalId' => 'delete-user-modal', 'function' => 'delete-user', 'head' => 'Вы действительно хотите удалить этого пользователя?'])
+        @include('admin._modal_delete_block', ['modalId' => 'delete-user-modal', 'function' => 'user/delete', 'head' => 'Вы действительно хотите удалить этого пользователя?'])
         {{ csrf_field() }}
     @endif
 

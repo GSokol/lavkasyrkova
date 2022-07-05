@@ -45,13 +45,15 @@ class BasketController extends Controller
 
         $totalCost = 0;
         foreach ($basket as $key => $item) {
-            if ($key != 'total') $totalCost += (int)$item['cost'];
+            if (!in_array($key, ['total', 'delivery'])) {
+                $totalCost += $item['cost'];
+            }
         }
 
         if (!$totalCost) Session::forget('basket');
         else {
             $basket['total'] = $totalCost;
-            $basket['delivery'] = $totalCost ? (int)Settings::getSettings()->delivery_limit : 300;
+            $basket['delivery'] = $totalCost > (int)Settings::getSettings()->delivery_limit ? 0 : (int)Settings::getSettings()->delivery_amount;
             Session::put('basket', $basket);
         }
 

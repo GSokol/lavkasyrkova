@@ -96,8 +96,8 @@ class UserController extends Controller
 
         $fields['password'] = bcrypt($fields['password']);
 
-        if ($request->has('id')) {
-            $validationArr['id'] = $this->validationUser;
+        if ($request->filled('id')) {
+            $validationArr['id'] = 'required|exists:users,id';
             $validationArr['email'] .= ','.$request->input('id');
             if (Auth::user()->is_admin && $request->has('office_id')) $validationArr['office_id'] = 'required|integer|exists:offices,id';
 
@@ -117,7 +117,7 @@ class UserController extends Controller
 
             $user->update($fields);
 
-        } elseif (Auth::user()->is_admin) {
+        } elseif (auth('dashboard')->user()->is_admin) {
             $validationArr['password'] = $this->validationPassword;
             $validationArr['office_id'] = 'required|integer|exists:offices,id';
             $this->validate($request, $validationArr);
@@ -125,8 +125,10 @@ class UserController extends Controller
         }
 
         $this->saveCompleteMessage();
-        if (Auth::user()->is_admin) return redirect(route('dashboard.users'));
-        else return redirect(route('face.profile.user'));
+        if (Auth::user()->is_admin) {
+            return redirect(route('dashboard.users'));
+        }
+        return redirect(route('face.profile.user'));
     }
 
     public function checkoutOrder(Request $request)

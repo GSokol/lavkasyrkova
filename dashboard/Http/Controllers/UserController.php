@@ -51,6 +51,23 @@ class UserController extends Controller
     }
 
     /**
+     * Delete user
+     *
+     * @param Illuminate\Http\Request $request
+     * @return array
+     */
+    public function deleteUser(Request $request)
+    {
+        $this->validate($request, [
+            'id' => ['required', 'integer', 'exists:users,id'],
+        ]);
+        $model = User::findOrFail($request->get('id'));
+        $model->delete();
+        return response()->json(['success' => true]);
+        // return $this->response(['success' => true]);
+    }
+
+    /**
      * Delete tasting user
      *
      * @return array

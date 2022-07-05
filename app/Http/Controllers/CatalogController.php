@@ -18,10 +18,10 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
+        // $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
 
         return view('pages.catalog', [
-            'tastings' => $tastings,
+            // 'tastings' => $tastings,
         ]);
     }
 

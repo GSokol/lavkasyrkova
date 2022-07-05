@@ -42,6 +42,6 @@
 <script type="text/javascript" src="{{ asset('js/input-value.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/products.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/loader.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/admin.js?v=2') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin.js?v=4') }}"></script>
 
 @yield('script')

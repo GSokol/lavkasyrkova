@@ -12,7 +12,7 @@ use Coderello\SharedData\Facades\SharedData;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Store;
-use App\Nodels\Tasting;
+use App\Models\Tasting;
 use Settings;
 use Auth;
 
@@ -30,6 +30,7 @@ class Controller extends BaseController
     public function __construct()
     {
         $categories = Category::getCategories();
+        $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
         $stores = Store::getStores();
         $this->data['seo'] = Settings::getSeoTags();
         $this->data['products'] = Product::all();
@@ -38,8 +39,9 @@ class Controller extends BaseController
         View::share('metas', $this->metas);
         View::share('stores', $stores);
         View::share('categories', $categories);
+        View::share('tastings', $tastings);
         View::share('settings', Settings::getSettingsAll());
-        
+
         SharedData::put([
             'csrf' => csrf_token(),
             'stores' => $stores,

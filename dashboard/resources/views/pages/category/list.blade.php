@@ -27,7 +27,7 @@
                 <tbody>
                     <tr role="row" v-for="(row, index) in collection">
                         <td class="id" v-text="row.id"></td>
-                        <td class="text-center image"><a v-if="row.image" class="img-preview" :href="'/' + row.image"><img :src="'/' + row.image" /></a></td>
+                        <td class="text-center image"><a v-if="row.image" class="img-preview" :href="'/' + row.image"><img :src="'/' + row.image" onerror="this.src='/images/default.jpg'" loading="lazy" /></a></td>
                         <td class=""><a :href="'/dashboard/category/' + row.id" v-text="row.name"></a></td>
                         <td class=""><span v-text="row.slug"></span></td>
                         <td class=""><span v-text="row.updated_at"></span></td>

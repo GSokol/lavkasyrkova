@@ -29,6 +29,14 @@
                                     'max' => 1000000,
                                     'value' => Settings::getSettings()->delivery_limit,
                                 ])
+
+                                @include('_input_block', [
+                                    'label' => 'Стоимость достаки',
+                                    'name' => 'delivery_amount',
+                                    'type' => 'number',
+                                    'max' => 10000,
+                                    'value' => Settings::getSettings()->delivery_amount,
+                                ])
                             </div>
                         </div>
                     </div>
