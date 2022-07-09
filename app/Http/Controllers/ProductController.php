@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Coderello\SharedData\Facades\SharedData;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -17,10 +18,14 @@ class ProductController extends Controller
     {
         // current product
         $product = Product::query()
-            ->with(['category'])
+            ->with(['category', 'related'])
             ->where('slug', $slug)
-            ->where('active', true)
+            // ->where('active', true)
             ->firstOrFail();
+
+        SharedData::put([
+            'product' => $product,
+        ]);
 
         return view('pages.product', [
             'product' => $product,

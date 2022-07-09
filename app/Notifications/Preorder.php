@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\Order;
 
-class NewOrder extends Notification
+class Preorder extends Notification
 {
     use Queueable;
 
@@ -47,7 +47,7 @@ class NewOrder extends Notification
         return (new MailMessage)
             ->subject('Новый заказ')
             ->from(config('app.master_mail'), $title)
-            ->view('emails.new_order', [
+            ->view('emails.preorder', [
                 'order' => $this->order,
             ]);
     }

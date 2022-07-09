@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Events\PreorderCreated;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Product;
@@ -52,8 +53,8 @@ class BasketController extends Controller
 
         if (!$totalCost) Session::forget('basket');
         else {
-            $basket['total'] = $totalCost;
             $basket['delivery'] = $totalCost > (int)Settings::getSettings()->delivery_limit ? 0 : (int)Settings::getSettings()->delivery_amount;
+            $basket['total'] = $totalCost + $basket['delivery'];
             Session::put('basket', $basket);
         }
 
@@ -111,10 +112,11 @@ class BasketController extends Controller
             'tasting_id' => $request->has('tasting_id') && $request->input('tasting_id') ? $request->input('tasting_id') : null,
             'delivery' => $request->input('delivery') == 3,
             'description' => $request->input('description'),
+            'payment_type' => $request->input('payment_type'),
         ]);
 
         foreach (Session::get('basket') as $id => $item) {
-            if ($id != 'total') {
+            if (!in_array($id, ['total', 'delivery'])) {
                 ProductToOrder::create([
                     'whole_value' => $item['parts'] ? null : $item['value'],
                     'part_value' => $item['parts'] ? $item['value'] : null,
@@ -125,7 +127,10 @@ class BasketController extends Controller
         }
         Session::forget('basket');
 
-        $this->sendMessage($order->user->email, 'emails.new_order', ['title' => 'Новый заказ', 'order' => $order], (string)Settings::getSettings()->email);
+        // загрузка реляций
+        $order->load('status', 'orderToProducts.product');
+        // отправить уведомление (пользователю/менеджеру)
+        event(new PreorderCreated($order));
 
         $result = ['success' => true, 'message' => 'Ваш заказ оформлен!'];
         if ($usingAjax) {

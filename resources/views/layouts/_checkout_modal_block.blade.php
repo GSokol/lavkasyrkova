@@ -93,6 +93,22 @@
             'value' => '',
         ])
     </div>
+
+    <div class="">
+        <label>Способ оплаты:</label>
+        @include('_radio_simple_block',[
+            'name' => 'payment_type',
+            'value' => 'card',
+            'label' => 'Оплата картой',
+            'checked' => true,
+        ])
+        @include('_radio_simple_block',[
+            'name' => 'payment_type',
+            'value' => 'cash',
+            'label' => 'Оплата наличными курьеру',
+            'checked' => false,
+        ])
+    </div>
 </div>
 <div class="modal-footer">
     @include('_button_block', ['addAttr' => $usingAjax ? ['id' => 'checkout'] : null, 'type' => $usingAjax ? 'button' : 'submit', 'text' => 'Оформить заказ', 'icon' => 'icon-mail5'])

@@ -102,10 +102,10 @@
                                 <td><tt v-text="orderProduct.product_id"></tt></td>
                                 <td>
                                     <div class="media-left media-middle">
-                                        <a href="#"><img :src="'/' + orderProduct.product.image" class="img-circle img-xs" alt=""></a>
+                                        <a href="#"><img :src="orderProduct.product.image" class="img-circle img-xs" alt=""></a>
                                     </div>
                                     <div class="media-left">
-                                        <div class=""><a href="#" class="text-default text-semibold" v-text="orderProduct.product.name"></a></div>
+                                        <div class=""><a target="_blank" :href="route('face.product', {slug: orderProduct.product.slug})" class="text-default text-semibold" v-text="orderProduct.product.name"></a></div>
                                         <div class="text-muted text-size-small text-truncate" style="max-width: 300px;" v-text="orderProduct.product.additionally || orderProduct.product.description"></div>
                                     </div>
                                 </td>

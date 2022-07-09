@@ -63,3 +63,8 @@ Route::as('face.')->group(function() {
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
     Route::post('/delete-order', 'UserController@deleteOrder');
 });
+
+Route::group(['prefix' => 'mail', 'as' => 'mail.'], function() {
+    Route::get('/new-order', 'TestMailController@newOrder');
+    Route::get('/preorder', 'TestMailController@preorder');
+});

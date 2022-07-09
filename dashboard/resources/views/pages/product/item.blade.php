@@ -137,7 +137,7 @@
 							</div>
                             <!-- Похожие товары -->
                             <div class="form-group">
-								<label class="col-md-3 col-lg-3 control-label text-semibold">Похожие товары</label>
+								<label class="col-md-3 col-lg-3 control-label text-semibold"><i class="icon-tree6 mr-10"></i>Похожие товары</label>
 								<div class="col-md-9 col-lg-9">
                                     <el-select
                                         multiple

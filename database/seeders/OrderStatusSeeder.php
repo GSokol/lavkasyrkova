@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use App\Models\OrderStatus;
@@ -18,6 +20,8 @@ class OrderStatusSeeder extends Seeder
             ['code' => OrderStatus::ORDER_STATUS_PICKED, 'name' => 'Собраный', 'class_name' => 'primary'],
             ['code' => OrderStatus::ORDER_STATUS_DONE, 'name' => 'Выполнен', 'class_name' => 'success'],
             ['code' => OrderStatus::ORDER_STATUS_CANCELED, 'name' => 'Отменен', 'class_name' => 'danger'],
+            ['code' => OrderStatus::ORDER_STATUS_PAID, 'name' => 'Оплачен', 'class_name' => 'success'],
+            ['code' => OrderStatus::ORDER_STATUS_NOT_PAID, 'name' => 'Неоплачен', 'class_name' => 'danger'],
         ];
 
         // Старые статусы:

@@ -10,6 +10,8 @@ class OrderStatus extends Model
     const ORDER_STATUS_PICKED = 'picked';
     const ORDER_STATUS_DONE = 'done';
     const ORDER_STATUS_CANCELED = 'canceled';
+    const ORDER_STATUS_PAID = 'paid';
+    const ORDER_STATUS_NOT_PAID = 'not-paid';
 
     protected $table = 'order_status';
 
@@ -21,9 +23,9 @@ class OrderStatus extends Model
 
     /**
      * scope code
-     * 
-     * @param  [type] $query [description]
-     * @param  [type] $code  [description]
+     *
+     * @param [type] $query [description]
+     * @param [type] $code  [description]
      * @return [type]        [description]
      */
     public function scopeCode($query, $code)

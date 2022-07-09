@@ -9,6 +9,7 @@
 <meta property="og:image" content="{{ $settings['seo']['meta_og_image'] }}">
 
 <link href="{{ mix('style/face/common.css') }}" rel="stylesheet" type="text/css">
+@yield('style')
 
 <script type="text/javascript" src="{{ mix('js/face/app.js') }}"></script>
 <!-- <script type="text/javascript" src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script> -->

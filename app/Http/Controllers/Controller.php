@@ -45,6 +45,7 @@ class Controller extends BaseController
         SharedData::put([
             'csrf' => csrf_token(),
             'stores' => $stores,
+            'user' => Auth::user(),
         ]);
     }
 

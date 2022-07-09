@@ -71,7 +71,6 @@ class RegisterController extends Controller
             'phone' => $this->validationPhone,
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->validationPassword,
-            'office_id' => ['required', 'integer', 'exists:offices,id'],
             'g-recaptcha-response' => ['required', 'string'],
         ]);
     }
@@ -89,7 +88,7 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'password' => bcrypt($data['password']),
             'confirm_token' => Str::random(32),
-            'office_id' => $data['office_id'],
+            'office_id' => isset($data['office_id']) ? $data['office_id'] : 1,
             'address' => $data['address'],
             'active' => false,
             'send_mail' => 1

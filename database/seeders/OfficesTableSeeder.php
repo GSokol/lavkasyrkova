@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use App\Office;
 use App\Tasting;
@@ -31,7 +33,7 @@ class OfficesTableSeeder extends Seeder
             ['address' => 'Московская обл, Одинцовский район, д.Сколково, ул. Новая д 100, офис компании, столовая', 'latitude' => 55.692754, 'longitude' => 37.384558],
             ['address' => 'г.Москва, ул.Сергея Макеева д 13. БЦ «МАРР ПЛАЗА», Кафетера', 'latitude' => 55.763356, 'longitude' => 37.551259]
         ];
-        
+
         foreach ($data as $item) {
             Office::create($item);
         }

@@ -66,6 +66,9 @@ mix.styles([
 mix.sass('resources/style/entry/dashboard.scss', 'style');
 mix.sass('dashboard/resources/style/entry/product-item.scss', 'style/dashboard');
 
+// face
+mix.sass('resources/style/entry/product.scss', 'style/face');
+
 mix.scripts([
     'public/js/core/libraries/jquery.min.js',
     'public/js/core/libraries/bootstrap.min.js',

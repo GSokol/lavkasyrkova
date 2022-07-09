@@ -16,6 +16,10 @@ const app = createApp({
         }
     },
 
+    created() {
+        this.route = window.route;
+    },
+
     methods: {
         /**
          * Отправка формы редактирования заказа

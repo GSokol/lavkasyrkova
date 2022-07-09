@@ -7,7 +7,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Office;
 use App\Models\Order;
 use App\Models\UserToTasting;
-use App\Ticket;
 
 class User extends Authenticatable
 {
@@ -36,7 +35,11 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = [
+        'password',
+        'confirm_token',
+        'remember_token',
+    ];
 
     public function office()
     {
