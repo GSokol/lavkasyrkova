@@ -12,7 +12,7 @@ const app = createApp({
             isLoading: false,
         });
 
-        console.log('setup');
+        // console.log('setup');
 
         return {
             state,

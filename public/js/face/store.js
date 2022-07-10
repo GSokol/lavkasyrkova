@@ -18730,8 +18730,8 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
   setup: function setup() {
     var state = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({
       isLoading: false
-    });
-    console.log('setup');
+    }); // console.log('setup');
+
     return {
       state: state
     };
@@ -18776,10 +18776,34 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/style/entry/dashboard.scss":
+/*!**********************************************!*\
+  !*** ./resources/style/entry/dashboard.scss ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./dashboard/resources/style/entry/product-item.scss":
 /*!***********************************************************!*\
   !*** ./dashboard/resources/style/entry/product-item.scss ***!
   \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/style/entry/product.scss":
+/*!********************************************!*\
+  !*** ./resources/style/entry/product.scss ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -63985,7 +64009,9 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/js/face/store": 0,
+/******/ 			"style/face/product": 0,
 /******/ 			"style/dashboard/product-item": 0,
+/******/ 			"style/dashboard": 0,
 /******/ 			"style/face/common": 0
 /******/ 		};
 /******/ 		
@@ -64036,9 +64062,11 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["style/dashboard/product-item","style/face/common"], () => (__webpack_require__("./resources/js/entry/store/index.js")))
-/******/ 	__webpack_require__.O(undefined, ["style/dashboard/product-item","style/face/common"], () => (__webpack_require__("./resources/style/entry/common.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["style/dashboard/product-item","style/face/common"], () => (__webpack_require__("./dashboard/resources/style/entry/product-item.scss")))
+/******/ 	__webpack_require__.O(undefined, ["style/face/product","style/dashboard/product-item","style/dashboard","style/face/common"], () => (__webpack_require__("./resources/js/entry/store/index.js")))
+/******/ 	__webpack_require__.O(undefined, ["style/face/product","style/dashboard/product-item","style/dashboard","style/face/common"], () => (__webpack_require__("./resources/style/entry/common.scss")))
+/******/ 	__webpack_require__.O(undefined, ["style/face/product","style/dashboard/product-item","style/dashboard","style/face/common"], () => (__webpack_require__("./resources/style/entry/dashboard.scss")))
+/******/ 	__webpack_require__.O(undefined, ["style/face/product","style/dashboard/product-item","style/dashboard","style/face/common"], () => (__webpack_require__("./dashboard/resources/style/entry/product-item.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["style/face/product","style/dashboard/product-item","style/dashboard","style/face/common"], () => (__webpack_require__("./resources/style/entry/product.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

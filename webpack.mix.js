@@ -39,7 +39,7 @@ mix.setPublicPath('public');
 mix.copyDirectory('resources/fonts', 'public/fonts');
 
 // scripts
-mix.js('resources/js/entry/store/index.js', 'js/face/store.js').vue({version: 3});
+// mix.js('resources/js/entry/store/index.js', 'js/face/store.js').vue({version: 3});
 mix.js('resources/js/entry/profile-order.js', 'js/face').vue({version: 3});
 mix.js('dashboard/resources/js/entry/category.js', 'js/dashboard').vue({version: 3});
 mix.js('dashboard/resources/js/entry/order.js', 'js/dashboard').vue({version: 3});

@@ -36783,6 +36783,9 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
       }
     };
   },
+  created: function created() {
+    this.route = window.route;
+  },
   methods: {
     /**
      * Отправка формы редактирования заказа
@@ -36852,6 +36855,17 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
     },
 
     /**
+     * Сумма доставки
+     * если итоговая сумма > 3К то доставка 0 руб. иначе 300 руб.
+     *
+     * @see feature-20
+     * @return {Number} [сумма в рублях]
+     */
+    deliveryAmount: function deliveryAmount() {
+      return this.totalAmount > 3000 ? 0 : 300;
+    },
+
+    /**
      * Размер скидки в деньгах
      *
      * @return {Number} [description]
@@ -36862,12 +36876,12 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
     },
 
     /**
-     * Сумма заказа (с учетом скидки)
+     * Сумма заказа (с учетом скидки + доставка)
      *
-     * @return {Number} [description]
+     * @return {Number} [итоговая сумма в рублях]
      */
     checkoutAmount: function checkoutAmount() {
-      return Math.ceil(this.totalAmount - this.discountAmount);
+      return Math.ceil(this.totalAmount - this.discountAmount + this.deliveryAmount);
     }
   }
 }).mount('#root');

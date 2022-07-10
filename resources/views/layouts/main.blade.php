@@ -22,7 +22,7 @@
     </div>
 
     @shared
-    <script src="{{ mix('js/face/store.js') }}"></script>
+    <!-- <script src="{ { mix('js/face/store.js') }}"></script> -->
     @yield('js')
 </body>
 </html>
