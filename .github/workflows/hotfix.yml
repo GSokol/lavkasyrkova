@@ -1,0 +1,23 @@
+name: remote sync pull
+
+on:
+  workflow_dispatch:
+    inputs:
+      home:
+        description: 'location'
+        required: false
+        default: ''
+
+jobs:
+  sync_production:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ssh git pull
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd ${{ secrets.ROOT_DIRECTORY }}
+            git pull

@@ -5,7 +5,9 @@
         @foreach($stores as $store)
             <p>{!! $store['address'] !!}</p>
         @endforeach
-        <p>Тел: {{ Settings::getAddress()->phone2.'; '.Settings::getAddress()->phone1 }}</p>
+        <p>ИП Ковальчук Александра Александровна</p>
+        <p>ИНН 774317338424</p>
+        <p>Тел: {{ Settings::getAddress()->phone1.'; '.Settings::getAddress()->phone2 }}</p>
         <p><a href="mailto:{{ Settings::getAddress()->email }}">{{ Settings::getAddress()->email }}</a></p>
     </div>
 </div>
