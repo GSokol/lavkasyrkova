@@ -235,14 +235,15 @@
     margin-bottom: 0;
 }
 
-.product p.price {
+.product p.price, .price-block {
     font-size: 15px;
     padding-bottom: 10px;
     font-weight: bold;
 }
 
 .product p.price > span,
-.product p.cost {
+.product p.cost,
+.price-block > span {
     font-style: italic;
     font-weight: normal;
 }

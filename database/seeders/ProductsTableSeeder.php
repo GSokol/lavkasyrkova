@@ -3,9 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Category;
-use App\AddCategory;
-use App\Product;
+use App\Models\Category;
+use App\Models\Product;
 
 class ProductsTableSeeder extends Seeder
 {
@@ -24,11 +23,6 @@ class ProductsTableSeeder extends Seeder
             ['name' => 'Подарочные корзины','image' => ''],
             ['name' => 'Сырные тарелки','image' => ''],
             ['name' => 'Молочные продукты','image' => ''],
-        ];
-        $additionalCategories = [
-            ['name' => 'Сыры из козьего молока'],
-            ['name' => 'Сыры из коровьего молока'],
-            ['name' => 'Сыры из овечьего молока'],
         ];
 
         $products = [
@@ -89,10 +83,6 @@ class ProductsTableSeeder extends Seeder
         foreach ($categories as $category) {
           $category['image'] = isset($category['image']) && $category['image'] ? $prodPath.$category['image'].'.jpg' : '';
           Category::create($category);
-        }
-
-        foreach ($additionalCategories as $category) {
-            AddCategory::create($category);
         }
 
         foreach ($products as $k => $product) {

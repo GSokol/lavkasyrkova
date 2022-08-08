@@ -35,7 +35,12 @@ class ProductController extends Controller
     public function product($id)
     {
         $product = Product::query()
-            ->with(['category', 'related:id,category_id,name,image', 'related.category:id,name'])
+            ->with([
+                'category',
+                'gallery',
+                'related:id,category_id,name,image',
+                'related.category:id,name',
+            ])
             ->findOrNew($id);
         $product->related_products = $product->related->pluck('id');
         $categories = Category::all();
@@ -95,6 +100,7 @@ class ProductController extends Controller
             'rennet_type' => ['sometimes', 'nullable', 'string', 'max:255'],
             'nutrients' => ['sometimes', 'nullable', 'string'],
             'aging' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'shelf_life' => ['sometimes', 'nullable', 'string', 'max:255'],
             'whole_price' => ['integer'],
             'whole_weight' => ['required', 'integer', 'min:1', 'max:5000'],
             'part_price' => ['integer'],

@@ -6,16 +6,32 @@
 
 @section('content')
     <div class="container" style="padding-bottom: 100px;">
-        <h1>{{ $product->name }}</h1>
-        <h6><a href="{{ route('face.category', ['slug' => $product->category->slug]) }}">{{ $product->category->name }}</a></h6>
+        <h1>
+            {{ $product->name }}
+            <img src="{{ asset('images/' . $product->addCategory->image) }}" alt="{{ $product->addCategory->name }}" title="{{ $product->addCategory->name }}" style="margin-left: 20px;">
+        </h1>
+        <h6>
+            <a href="{{ route('face.category', ['slug' => $product->category->slug]) }}">{{ $product->category->name }}</a>
+        </h6>
         <div class="row">
             <div class="col-md-6 image">
                 <img src="{{ asset($product->image) }}" title="{{ $product->name }}" onerror="this.src='/images/default.jpg'" />
+                <div class="mt-10">
+                    <in-agile>
+                        <div class="slide">
+                            <h3>slide 1</h3>
+                        </div>
+
+                        <div class="slide">
+                            <h3>slide n</h3>
+                        </div>
+                    </in-agile>
+                </div>
             </div>
             <div class="col-md-6">
                 <span class="price-block">{!! Helper::productCostSting($product) !!}</span>
 
-                <div class="mb-20">{{ $product->additionally }}</div>
+                <div class="mb-20">{{ $product->description }}</div>
 
                 @if ($product->active)
                     @include('_input_value_block', [
@@ -33,45 +49,40 @@
                     <h5>Товара нет в наличии</h5>
                 @endif
 
-                @if ($product->aging)
-                    <div class="mt-10">
-                        <img class="iconograph" src="/images/icon-time.svg" alt="Выдержка">
-                        <span class="param-title">Выдержка:</span> {{ $product->aging }}
-                    </div>
-                @endif
+                <div class="mt-10">
+                    <img class="iconograph" src="/images/icon-time.svg" alt="Выдержка">
+                    <span class="param-title">Выдержка:</span> {{ $product->aging ?: '-' }}
+                </div>
 
-                @if ($product->rennet_type)
-                    <div class="mt-10">
-                        <img class="iconograph" src="/images/icon-cheese.svg" alt="Сычужный тип">
-                        <span class="param-title">Сычужный тип:</span> {{ $product->rennet_type }}
-                    </div>
-                @endif
+                <div class="mt-10">
+                    <img class="iconograph" src="/images/icon-cheese.svg" alt="Сычужный тип">
+                    <span class="param-title">Сычужный тип:</span> {{ $product->rennet_type ?: '-' }}
+                </div>
 
-                @if ($product->gastro_combination)
-                    <div class="mt-10">
-                        <img class="iconograph" src="/images/icon-dish.svg" alt="Гастрономическое сочетание">
-                        <span class="param-title">Гастрономическое сочетание:</span> {{ $product->gastro_combination }}
-                    </div>
-                @endif
+                <div class="mt-10">
+                    <img class="iconograph" src="/images/icon-shelf-life.svg" alt="Срок хранения">
+                    <span class="param-title">Срок хранения:</span> {{ $product->shelf_life ?: '-' }}
+                </div>
 
-                @if ($product->nutrients)
-                    <div class="mt-10">
-                        <img class="iconograph" src="/images/icon-drop.svg" alt="Питательные вещества">
-                        <span class="param-title">Питательные вещества:</span> {{ $product->nutrients }}
-                    </div>
-                @endif
+                <div class="mt-10">
+                    <img class="iconograph" src="/images/icon-drop.svg" alt="Питательные вещества">
+                    <span class="param-title">Питательные вещества:</span> {{ $product->nutrients ?: '-' }}
+                </div>
 
-                @if ($product->alcohol_combination)
-                    <div class="alcohol-combination-block">
-                        <img class="iconograph" src="/images/icon-wine.svg" alt="Белое и красное сухое вино">
-                        <span class="param-title">Белое красное сухое вино</span>
-                        <div class="description">{{ $product->alcohol_combination }}</div>
-                    </div>
-                @endif
+                <div class="alcohol-combination-block">
+                    <img class="iconograph" src="/images/icon-wine.svg" alt="Белое и красное сухое вино">
+                    <span class="param-title">Белое красное сухое вино</span>
+                    <div class="description">{{ $product->alcohol_combination ?: '-' }}</div>
+                </div>
             </div>
         </div>
 
-        <div class="mt-20">{{ $product->description }}</div>
+        <!-- <div class="mt-20">{ { $product->additionally }}</div> -->
+
+        <div class="mt-10">
+            <img class="iconograph" src="/images/icon-dish.svg" alt="Гастрономическое сочетание">
+            <span class="param-title">Гастрономическое сочетание:</span> {{ $product->gastro_combination ?: '-' }}
+        </div>
 
         @if (count($product->related))
             <h3>Рекомендуем</h3>

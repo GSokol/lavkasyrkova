@@ -40,6 +40,40 @@
                             </div>
                         </template>
                     </el-upload>
+
+                    <el-upload
+                        class="mt-20"
+                        v-model:file-list="mediaList"
+                        :http-request="postMediaUploadFile"
+                        :limit="6"
+                        list-type="picture-card"
+                    >
+                        <el-icon><el-icon-plus /></el-icon>
+                        <template #file="{file}">
+                            <div>
+                                <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+                                <span class="el-upload-list__item-actions">
+                                    <span
+                                        class="el-upload-list__item-preview"
+                                        @click="handlePictureCardPreview(file)"
+                                    >
+                                        <el-icon><el-icon-zoom-in /></el-icon>
+                                    </span>
+                                    <span
+                                        v-if="true"
+                                        class="el-upload-list__item-delete"
+                                        @click="handleRemove(file)"
+                                    >
+                                        <el-icon><el-icon-delete /></el-icon>
+                                    </span>
+                                </span>
+                            </div>
+                        </template>
+                    </el-upload>
+
+                    <el-dialog v-model="dialogVisible">
+                        <img :src="dialogImageUrl" alt="Preview Image" style="max-width: 100%;" />
+                    </el-dialog>
                 </div>
 
                 <div class="col-md-9 col-sm-12 col-xs-12">
@@ -66,7 +100,19 @@
 								<label class="col-md-3 col-lg-3 control-label text-semibold">Подкатегория товара</label>
 								<div class="col-md-9 col-lg-9">
                                     <el-select filterable clearable class="el-width-1-1" v-model="product.add_category_id">
-                                        <el-option v-for="category in addCategories" :key="category.id" :value="category.id" :label="category.name"></el-option>
+                                        <el-option
+                                            v-for="category in addCategories"
+                                            :key="category.id"
+                                            :value="category.id"
+                                            :label="category.name"
+                                        >
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <img :src="'/images/' + category.image" :alt="category.name">
+                                                </div>
+                                                <div class="col-md-11" v-text="category.name"></div>
+                                            </div>
+                                        </el-option>
                                     </el-select>
 								</div>
 							</div>
@@ -194,6 +240,13 @@
 								<label class="col-md-3 col-lg-3 control-label text-semibold"><i class="icon-watch2 mr-10"></i>Выдержка</label>
 								<div class="col-md-9 col-lg-9">
                                     <el-input type="text" placeholder="Срок выдержки" class="el-width-1-1" maxlength="255" show-word-limit v-model="product.aging"></el-input>
+								</div>
+							</div>
+                            <!-- Выдержка -->
+                            <div class="form-group">
+								<label class="col-md-3 col-lg-3 control-label text-semibold"><i class="icon-watch2 mr-10"></i>Срок хранения</label>
+								<div class="col-md-9 col-lg-9">
+                                    <el-input type="text" placeholder="2 недели" class="el-width-1-1" maxlength="255" show-word-limit v-model="product.shelf_life"></el-input>
 								</div>
 							</div>
                             <!-- Активность товара -->

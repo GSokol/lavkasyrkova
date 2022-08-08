@@ -44,4 +44,9 @@ Route::prefix('api/dashboard')->as('api.dashboard.')->group(function() {
         Route::post('upload', 'ProductController@postProductImageUpload')->name('postProductImageUpload');
         Route::delete('delete-product', 'ProductController@deleteProduct')->name('deleteProduct');
     });
+    // media
+    Route::group(['prefix' => 'media'], function() {
+        Route::post('upload', 'MediaController@postMediaUploadFile')->name('postMediaUploadFile');
+        Route::delete('delete', 'MediaController@deleteMedia')->name('deleteMedia');
+    });
 });

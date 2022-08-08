@@ -13,11 +13,13 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "dependencies": {
+        "@element-plus/icons-vue": "^2.0.6",
         "axios": "^0.18.0",
         "element-plus": "^2.2.2",
         "jquery": "^3.4.1",
         "lodash": "^4.17.13",
         "vue": "^3.2.6",
+        "vue-agile": "^2.0.0",
         "vue-router": "^4.0.16"
     },
     "devDependencies": {

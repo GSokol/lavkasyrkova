@@ -22,6 +22,7 @@ class AddProductDetailInfo extends Migration
             $table->string('rennet_type')->nullable()->after('alcohol_combination'); // Сычужный тип
             $table->text('nutrients')->nullable()->after('rennet_type'); // Питательные вещества
             $table->string('aging')->nullable()->after('nutrients'); // Выдержка
+            $table->string('shelf_life')->nullable()->after('aging'); // Срок хранения
         });
         $products = Product::all();
         foreach ($products as $product) {
@@ -41,6 +42,7 @@ class AddProductDetailInfo extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->dropUnique('products_slug_unique');
+            $table->dropColumn('shelf_life');
             $table->dropColumn('aging');
             $table->dropColumn('nutrients');
             $table->dropColumn('rennet_type');

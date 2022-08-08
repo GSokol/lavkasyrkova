@@ -7,6 +7,7 @@ import { get } from 'lodash';
 import {
     ElButton,
     ElCheckbox,
+    ElDialog,
     ElIcon,
     ElInput,
     ElLink,
@@ -15,6 +16,7 @@ import {
     ElOption,
     ElUpload,
 } from 'element-plus';
+import { Delete, Plus, ZoomIn } from '@element-plus/icons-vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -25,6 +27,7 @@ const app = createApp({
     components: {
         ElButton,
         ElCheckbox,
+        ElDialog,
         ElIcon,
         ElInput,
         ElLink,
@@ -32,6 +35,10 @@ const app = createApp({
         ElSwitch,
         ElOption,
         ElUpload,
+
+        ElIconDelete: Delete,
+        ElIconPlus: Plus,
+        ElIconZoomIn: ZoomIn,
     },
 
     setup() {
@@ -43,6 +50,8 @@ const app = createApp({
         const state = ref({
             isLoading: false,
         });
+        const dialogImageUrl = ref('');
+        const dialogVisible = ref(false);
         const categories = computed(() => {
             return window.app.categories;
         });
@@ -61,11 +70,23 @@ const app = createApp({
                 console.log('error', error);
             })
         };
+        const handlePictureCardPreview = (file) => {
+            dialogImageUrl.value = file.url;
+            dialogVisible.value = true;
+        };
         const same = ref([]);
+        const mediaList = ref(product.gallery.map((media) => ({
+            name: media.path,
+            url: '/' + media.path,
+        })));
 
         return {
             addCategories,
             categories,
+            dialogImageUrl,
+            dialogVisible,
+            handlePictureCardPreview,
+            mediaList,
             onSubmit,
             product,
             recommendedList,
@@ -102,6 +123,20 @@ const app = createApp({
                 },
             }).then(({data: response}) => {
                 this.product.image = '/' + response.data.path;
+            });
+        },
+
+        postMediaUploadFile: function(request) {
+            const payload = new FormData();
+            payload.append('model_id', this.product.id);
+            payload.append('model_type', 'product');
+            payload.append('file', request.file);
+            api.post(route('api.dashboard.postMediaUploadFile'), payload, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }).then(({data: response}) => {
+                console.log('response', response);
             });
         },
 

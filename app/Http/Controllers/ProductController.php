@@ -18,7 +18,12 @@ class ProductController extends Controller
     {
         // current product
         $product = Product::query()
-            ->with(['category', 'related'])
+            ->with([
+                'category',
+                'gallery:id,model_id,model_type,path',
+                'addCategory:id,name,image',
+                'related',
+            ])
             ->where('slug', $slug)
             // ->where('active', true)
             ->firstOrFail();

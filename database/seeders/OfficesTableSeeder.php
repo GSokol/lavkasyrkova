@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Office;
-use App\Tasting;
+use App\Models\Office;
+use App\Models\Tasting;
 
 class OfficesTableSeeder extends Seeder
 {

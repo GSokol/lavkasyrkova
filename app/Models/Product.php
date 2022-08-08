@@ -27,6 +27,7 @@ class Product extends Model
         'rennet_type',
         'nutrients',
         'aging',
+        'shelf_life',
         'image',
         'big_image',
         'parts',
@@ -130,6 +131,14 @@ class Product extends Model
     public function related()
     {
         return $this->belongsToMany(Product::class, 'related_products', 'product_id', 'related_product_id');
+    }
+
+    /**
+     * Get the gallery image.
+     */
+    public function gallery()
+    {
+        return $this->morphMany(Media::class, 'model');
     }
 
     public static function getActions()
