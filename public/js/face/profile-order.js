@@ -19003,6 +19003,134 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./resources/js/entry/profile-order.js":
+/*!*********************************************!*\
+  !*** ./resources/js/entry/profile-order.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _pnotify_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @pnotify/core */ "./node_modules/@pnotify/core/dist/PNotify.js");
+/* harmony import */ var _pnotify_core__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_pnotify_core__WEBPACK_IMPORTED_MODULE_3__);
+/* provided dependency */ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+
+
+
+
+var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
+  data: function data() {
+    return {
+      collection: _.get(window.app, 'collection') || [],
+      state: {
+        isLoading: false
+      }
+    };
+  },
+  methods: {
+    /**
+     * Повторить заказ
+     *
+     * @param  {Object} order [App\Models\Order]
+     * @return {void}
+     */
+    onRepeatOrder: function onRepeatOrder(order) {
+      var _this = this;
+
+      if (!confirm('Вы действительно хотите повторить заказ №' + order.id + ' ?')) {
+        return false;
+      }
+
+      this.state.isLoading = true;
+
+      var param = _.pick(order, ['id']);
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: 'post',
+        url: '/profile/orders/repeat',
+        data: param
+      }).then(function (response) {
+        _this.state.isLoading = false;
+        (0,_pnotify_core__WEBPACK_IMPORTED_MODULE_3__.alert)({
+          // title: "I'm an alert.",
+          text: response.data.message,
+          type: 'success'
+        });
+
+        if (response.data.error === 201) {
+          var clone = response.data.data;
+          clone.isNew = true;
+
+          _this.collection.unshift(clone);
+
+          window.scrollTo(0, 0);
+        }
+      })["catch"](function (error) {
+        _this.state.isLoading = false;
+
+        _.flatMap(_.get(error, ['response', 'data', 'data'], []), function (n) {
+          return n;
+        }).map(function (msg) {
+          (0,_pnotify_core__WEBPACK_IMPORTED_MODULE_3__.alert)({
+            title: error.response.data.message,
+            text: msg.message,
+            type: 'error'
+          });
+        });
+      });
+    },
+
+    /**
+     * Удалить заказ
+     *
+     * @param  {Object} order [App\Models\Order]
+     * @param  {Number} index [collection index]
+     * @return {void}
+     */
+    onDeleteOrder: function onDeleteOrder(order, index) {
+      var _this2 = this;
+
+      if (!confirm('Вы действительно хотите удалить заказ №' + order.id + ' ?')) {
+        return false;
+      }
+
+      this.state.isLoading = true;
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: 'delete',
+        url: '/profile/orders/item',
+        data: {
+          id: order.id
+        }
+      }).then(function (response) {
+        _this2.state.isLoading = false;
+        (0,_pnotify_core__WEBPACK_IMPORTED_MODULE_3__.alert)({
+          // title: "I'm an alert.",
+          text: response.data.message,
+          type: 'success'
+        });
+
+        if (response.data.error === 200) {
+          _this2.collection.splice(index, 1);
+        }
+      })["catch"](function (error) {
+        _this2.state.isLoading = false;
+        (0,_pnotify_core__WEBPACK_IMPORTED_MODULE_3__.alert)({
+          title: error.response.data.message,
+          text: error.response.data.description,
+          type: 'error'
+        });
+      });
+    }
+  }
+}).mount('#root');
+
+/***/ }),
+
 /***/ "./node_modules/is-buffer/index.js":
 /*!*****************************************!*\
   !*** ./node_modules/is-buffer/index.js ***!
@@ -36236,6 +36364,58 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
+/***/ "./resources/style/entry/common.scss":
+/*!*******************************************!*\
+  !*** ./resources/style/entry/common.scss ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/style/entry/dashboard.scss":
+/*!**********************************************!*\
+  !*** ./resources/style/entry/dashboard.scss ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./dashboard/resources/style/entry/product-item.scss":
+/*!***********************************************************!*\
+  !*** ./dashboard/resources/style/entry/product-item.scss ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/style/entry/product.scss":
+/*!********************************************!*\
+  !*** ./resources/style/entry/product.scss ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -36689,7 +36869,42 @@ function compileToFunction(template, options) {
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/chunk loaded */
+/******/ 	(() => {
+/******/ 		var deferred = [];
+/******/ 		__webpack_require__.O = (result, chunkIds, fn, priority) => {
+/******/ 			if(chunkIds) {
+/******/ 				priority = priority || 0;
+/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
+/******/ 				deferred[i] = [chunkIds, fn, priority];
+/******/ 				return;
+/******/ 			}
+/******/ 			var notFulfilled = Infinity;
+/******/ 			for (var i = 0; i < deferred.length; i++) {
+/******/ 				var [chunkIds, fn, priority] = deferred[i];
+/******/ 				var fulfilled = true;
+/******/ 				for (var j = 0; j < chunkIds.length; j++) {
+/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
+/******/ 						chunkIds.splice(j--, 1);
+/******/ 					} else {
+/******/ 						fulfilled = false;
+/******/ 						if(priority < notFulfilled) notFulfilled = priority;
+/******/ 					}
+/******/ 				}
+/******/ 				if(fulfilled) {
+/******/ 					deferred.splice(i--, 1)
+/******/ 					var r = fn();
+/******/ 					if (r !== undefined) result = r;
+/******/ 				}
+/******/ 			}
+/******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -36751,132 +36966,74 @@ function compileToFunction(template, options) {
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		// no baseURI
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"/js/face/profile-order": 0,
+/******/ 			"style/face/product": 0,
+/******/ 			"style/dashboard/product-item": 0,
+/******/ 			"style/dashboard": 0,
+/******/ 			"style/face/common": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
+/******/ 		
+/******/ 		// install a JSONP callback for chunk loading
+/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
+/******/ 			var [chunkIds, moreModules, runtime] = data;
+/******/ 			// add "moreModules" to the modules object,
+/******/ 			// then flag all "chunkIds" as loaded and fire callback
+/******/ 			var moduleId, chunkId, i = 0;
+/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
+/******/ 				for(moduleId in moreModules) {
+/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 					}
+/******/ 				}
+/******/ 				if(runtime) var result = runtime(__webpack_require__);
+/******/ 			}
+/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
+/******/ 			for(;i < chunkIds.length; i++) {
+/******/ 				chunkId = chunkIds[i];
+/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 					installedChunks[chunkId][0]();
+/******/ 				}
+/******/ 				installedChunks[chunkId] = 0;
+/******/ 			}
+/******/ 			return __webpack_require__.O(result);
+/******/ 		}
+/******/ 		
+/******/ 		var chunkLoadingGlobal = self["webpackChunklavkasyrkova_ru"] = self["webpackChunklavkasyrkova_ru"] || [];
+/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
+/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 	})();
+/******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
-"use strict";
-/*!*********************************************!*\
-  !*** ./resources/js/entry/profile-order.js ***!
-  \*********************************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _pnotify_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @pnotify/core */ "./node_modules/@pnotify/core/dist/PNotify.js");
-/* harmony import */ var _pnotify_core__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_pnotify_core__WEBPACK_IMPORTED_MODULE_3__);
-
-
-
-
-var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
-  data: function data() {
-    return {
-      collection: _.get(window.app, 'collection') || [],
-      state: {
-        isLoading: false
-      }
-    };
-  },
-  methods: {
-    /**
-     * Повторить заказ
-     *
-     * @param  {Object} order [App\Models\Order]
-     * @return {void}
-     */
-    onRepeatOrder: function onRepeatOrder(order) {
-      var _this = this;
-
-      if (!confirm('Вы действительно хотите повторить заказ №' + order.id + ' ?')) {
-        return false;
-      }
-
-      this.state.isLoading = true;
-
-      var param = _.pick(order, ['id']);
-
-      axios__WEBPACK_IMPORTED_MODULE_1___default()({
-        method: 'post',
-        url: '/profile/orders/repeat',
-        data: param
-      }).then(function (response) {
-        _this.state.isLoading = false;
-        (0,_pnotify_core__WEBPACK_IMPORTED_MODULE_3__.alert)({
-          // title: "I'm an alert.",
-          text: response.data.message,
-          type: 'success'
-        });
-
-        if (response.data.error === 201) {
-          var clone = response.data.data;
-          clone.isNew = true;
-
-          _this.collection.unshift(clone);
-
-          window.scrollTo(0, 0);
-        }
-      })["catch"](function (error) {
-        _this.state.isLoading = false;
-
-        _.flatMap(_.get(error, ['response', 'data', 'data'], []), function (n) {
-          return n;
-        }).map(function (msg) {
-          (0,_pnotify_core__WEBPACK_IMPORTED_MODULE_3__.alert)({
-            title: error.response.data.message,
-            text: msg.message,
-            type: 'error'
-          });
-        });
-      });
-    },
-
-    /**
-     * Удалить заказ
-     *
-     * @param  {Object} order [App\Models\Order]
-     * @param  {Number} index [collection index]
-     * @return {void}
-     */
-    onDeleteOrder: function onDeleteOrder(order, index) {
-      var _this2 = this;
-
-      if (!confirm('Вы действительно хотите удалить заказ №' + order.id + ' ?')) {
-        return false;
-      }
-
-      this.state.isLoading = true;
-      axios__WEBPACK_IMPORTED_MODULE_1___default()({
-        method: 'delete',
-        url: '/profile/orders/item',
-        data: {
-          id: order.id
-        }
-      }).then(function (response) {
-        _this2.state.isLoading = false;
-        (0,_pnotify_core__WEBPACK_IMPORTED_MODULE_3__.alert)({
-          // title: "I'm an alert.",
-          text: response.data.message,
-          type: 'success'
-        });
-
-        if (response.data.error === 200) {
-          _this2.collection.splice(index, 1);
-        }
-      })["catch"](function (error) {
-        _this2.state.isLoading = false;
-        (0,_pnotify_core__WEBPACK_IMPORTED_MODULE_3__.alert)({
-          title: error.response.data.message,
-          text: error.response.data.description,
-          type: 'error'
-        });
-      });
-    }
-  }
-}).mount('#root');
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
+/******/ 	__webpack_require__.O(undefined, ["style/face/product","style/dashboard/product-item","style/dashboard","style/face/common"], () => (__webpack_require__("./resources/js/entry/profile-order.js")))
+/******/ 	__webpack_require__.O(undefined, ["style/face/product","style/dashboard/product-item","style/dashboard","style/face/common"], () => (__webpack_require__("./resources/style/entry/common.scss")))
+/******/ 	__webpack_require__.O(undefined, ["style/face/product","style/dashboard/product-item","style/dashboard","style/face/common"], () => (__webpack_require__("./resources/style/entry/dashboard.scss")))
+/******/ 	__webpack_require__.O(undefined, ["style/face/product","style/dashboard/product-item","style/dashboard","style/face/common"], () => (__webpack_require__("./dashboard/resources/style/entry/product-item.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["style/face/product","style/dashboard/product-item","style/dashboard","style/face/common"], () => (__webpack_require__("./resources/style/entry/product.scss")))
+/******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
+/******/ 	
 /******/ })()
 ;

@@ -42962,6 +42962,10 @@ label.display-block {
 @use "~element-plus/theme-chalk/src/common/transition";
 @use "~element-plus/theme-chalk/src/overlay.scss";
 @use "~element-plus/theme-chalk/src/message-box.scss";
+:root {
+  --vc-clr-primary: #faa54c !important;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: white;
@@ -43581,14 +43585,15 @@ input, select {
   margin-bottom: 0;
 }
 
-.product p.price {
+.product p.price, .price-block {
   font-size: 15px;
   padding-bottom: 10px;
   font-weight: bold;
 }
 
 .product p.price > span,
-.product p.cost {
+.product p.cost,
+.price-block > span {
   font-style: italic;
   font-weight: normal;
 }
