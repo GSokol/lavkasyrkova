@@ -33,6 +33,7 @@
         "sass": "^1.52.1",
         "sass-loader": "^12.1.0",
         "vue-loader": "^16.2.0",
-        "vue-template-compiler": "^2.6.11"
+        "vue-template-compiler": "^2.6.11",
+        "vue3-carousel": "^0.1.40"
     }
 }

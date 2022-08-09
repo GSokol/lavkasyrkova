@@ -15,17 +15,23 @@
         </h6>
         <div class="row">
             <div class="col-md-6 image">
-                <img src="{{ asset($product->image) }}" title="{{ $product->name }}" onerror="this.src='/images/default.jpg'" />
-                <div class="mt-10">
-                    <in-agile>
-                        <div class="slide">
-                            <h3>slide 1</h3>
-                        </div>
+                <div class="mt-20">
+                    <in-carousel :wrap-around="true">
+                        <in-slide v-for="(media, index) in slides" :key="index">
+                            <div class="carousel__item">
+                                <img :src="media.path" alt="" onerror="this.src='/images/default.jpg'">
+                            </div>
+                        </in-slide>
+                        <template #addons>
+                            <in-navigation />
+                            <in-pagination />
+                        </template>
+                    </in-carousel>
+                </div>
 
-                        <div class="slide">
-                            <h3>slide n</h3>
-                        </div>
-                    </in-agile>
+                <div class="mt-20">
+                    <img class="iconograph" src="/images/icon-dish.svg" alt="Гастрономическое сочетание">
+                    <span class="param-title">Гастрономическое сочетание:</span> {{ $product->gastro_combination ?: '-' }}
                 </div>
             </div>
             <div class="col-md-6">
@@ -79,11 +85,6 @@
 
         <!-- <div class="mt-20">{ { $product->additionally }}</div> -->
 
-        <div class="mt-10">
-            <img class="iconograph" src="/images/icon-dish.svg" alt="Гастрономическое сочетание">
-            <span class="param-title">Гастрономическое сочетание:</span> {{ $product->gastro_combination ?: '-' }}
-        </div>
-
         @if (count($product->related))
             <h3>Рекомендуем</h3>
             <div class="row">
@@ -122,4 +123,8 @@
 
     @include('components.tasting')
     @include('components.info')
+@endsection
+
+@section('js')
+<script type="text/javascript" src="{{ mix('js/face/product-item.js') }}"></script>
 @endsection

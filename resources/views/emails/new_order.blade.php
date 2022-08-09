@@ -29,6 +29,9 @@
         <p><strong>Скидка: </strong>{{ $order->discount_value }}% ({{ $order->discount_amount }} руб.)</p>
         <p><strong>Итого к оплате: </strong>{{ $order->checkout_amount }} руб.</p>
     @endif
+    @if ($order->payment_link)
+        <p><strong>Ссылка на оплату: <a href="{{ $order->payment_link }}" style="font-weight: normal;">{{ $order->payment_link }}</a> </strong></p>
+    @endif
 @endsection
 
 @section('footer')

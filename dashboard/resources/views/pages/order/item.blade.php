@@ -122,7 +122,12 @@
             </fieldset>
 
             <div class="row invoice-payment">
-				<div class="col-sm-7"></div>
+				<div class="col-sm-7">
+                    <div class="input-group" style="max-width: 60%;">
+                        <span class="input-group-addon">Ссылка на оплату</span>
+                        <input type="text" class="form-control" placeholder="Введите ссылку на оплату заказа" v-model="order.payment_link">
+                    </div>
+                </div>
 				<div class="col-sm-5">
 					<div class="content-group">
 						<div class="table-responsive no-border">
@@ -170,5 +175,5 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{ mix('js/dashboard/order.js') }}"></script>
+<script type="text/javascript" src="{{ mix('js/dashboard/order-item.js') }}"></script>
 @endsection

@@ -36411,6 +36411,10 @@ label.display-block {
 @use '~element-plus/theme-chalk/src/overlay.scss';
 @use '~element-plus/theme-chalk/src/message-box.scss';
 
+:root {
+    --vc-clr-primary: #faa54c !important;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: white;

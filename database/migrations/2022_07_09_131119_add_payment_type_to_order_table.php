@@ -15,7 +15,10 @@ class AddPaymentTypeToOrderTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->enum('payment_type', Order::PAYMENT_TYPES)->nullable()->after('delivery');
+            $table->after('delivery', function ($table) {
+                $table->enum('payment_type', Order::PAYMENT_TYPES)->nullable();
+                $table->string('payment_link')->nullable();
+            });
         });
     }
 
@@ -28,6 +31,7 @@ class AddPaymentTypeToOrderTable extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             $table->dropColumn('payment_type');
+            $table->dropColumn('payment_link');
         });
     }
 }

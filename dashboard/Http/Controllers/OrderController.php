@@ -62,18 +62,19 @@ class OrderController extends Controller
      *
      * @param  Request $request [description]
      * @see https://github.com/GSokol/lavkasyrkova/issues/11
-     * @return [type]           [description]
+     * @return [array]
      */
     public function putOrder(Request $request)
     {
-        $data = $this->validate($request, [
+        $payload = $this->validate($request, [
             'id' => ['required'],
             'discount_value' => ['sometimes', 'nullable', 'integer', 'max:50'],
+            'payment_link' => ['sometimes', 'nullable', 'string', 'max:255'],
         ]);
         // обновление данных заказа
         $order = Order::with(['user', 'status', 'orderToProducts.product'])->findOrFail($request->get('id'));
-        $data['status_id'] = OrderStatus::code(OrderStatus::ORDER_STATUS_PICKED)->first()->id;
-        $order->update($data);
+        $payload['status_id'] = OrderStatus::code(OrderStatus::ORDER_STATUS_PICKED)->first()->id;
+        $order->update($payload);
         $order = $order->fresh();
         // обновление значений товаров
         $this->massUpdateOrderProducts($request);

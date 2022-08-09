@@ -24,12 +24,12 @@ const app = createApp({
         /**
          * Отправка формы редактирования заказа
          *
-         * @param  {Object} event [EventSubmit]
+         * @param {Object} event [EventSubmit]
          * @return {void}
          */
         onOrderSubmit: function(event) {
             this.state.isLoading = true;
-            let param = _.pick(this.order, ['id', 'discount_value', 'order_to_products']);
+            let param = _.pick(this.order, ['id', 'discount_value', 'payment_link', 'order_to_products']);
 
             axios({
                 method: 'put',

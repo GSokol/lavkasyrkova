@@ -26,6 +26,7 @@ class Order extends Model
         'shop_id',
         'delivery',
         'payment_type',
+        'payment_link',
         'discount_value',
     ];
 
