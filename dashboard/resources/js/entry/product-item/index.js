@@ -11,6 +11,7 @@ import {
     ElIcon,
     ElInput,
     ElLink,
+    ElMessage,
     ElSelect,
     ElSwitch,
     ElOption,
@@ -31,6 +32,7 @@ const app = createApp({
         ElIcon,
         ElInput,
         ElLink,
+        ElMessage,
         ElSelect,
         ElSwitch,
         ElOption,
@@ -76,6 +78,7 @@ const app = createApp({
         };
         const same = ref([]);
         const mediaList = ref(product.gallery.map((media) => ({
+            id: media.id,
             name: media.path,
             url: '/' + media.path,
         })));
@@ -140,8 +143,18 @@ const app = createApp({
             });
         },
 
-        handleImageRemove: function(model) {
-            console.log('delete', model);
+        onMediaRemove: function(file) {
+            if (!confirm('Вы действительно хотите удалить изображение?')) {
+                return Promise.resolve();
+            }
+            const payload = {id: file.id};
+            return api.delete(route('api.dashboard.deleteMedia'), payload).then((response) => {
+                const index = this.mediaList.findIndex((media) => media.id === file.id);
+                if (index >= 0) {
+                    this.mediaList.splice(index, 1);
+                    ElMessage({message: 'Media success delete', type: 'success'});
+                }
+            });
         },
 
         /**

@@ -36413,6 +36413,8 @@ label.display-block {
 
 :root {
     --vc-clr-primary: #faa54c !important;
+    --vc-nav-background-color: #ffffff !important;
+    --vc-nav-color: #000 !important;
 }
 
 body {

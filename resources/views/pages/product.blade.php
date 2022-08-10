@@ -14,27 +14,37 @@
             <a href="{{ route('face.category', ['slug' => $product->category->slug]) }}">{{ $product->category->name }}</a>
         </h6>
         <div class="row">
-            <div class="col-md-6 image">
-                <div class="mt-20">
-                    <in-carousel :wrap-around="true">
-                        <in-slide v-for="(media, index) in slides" :key="index">
-                            <div class="carousel__item">
-                                <img :src="media.path" alt="" onerror="this.src='/images/default.jpg'">
-                            </div>
-                        </in-slide>
-                        <template #addons>
-                            <in-navigation />
-                            <in-pagination />
-                        </template>
-                    </in-carousel>
-                </div>
+            <div class="col-md-6 image" style="padding-right: 15px;">
+                <in-carousel ref="mainCarousel" :wrap-around="true">
+                    <in-slide v-for="(media, index) in slides" :key="index">
+                        <div class="carousel__item">
+                            <img :src="media.path" alt="" onerror="this.src='/images/default.jpg'">
+                        </div>
+                    </in-slide>
+                    <template #addons>
+                        <in-navigation />
+                        <in-pagination />
+                    </template>
+                </in-carousel>
+
+                <in-carousel class="carousel-thumbnails" :settings="thumbnailSettings" :breakpoints="thumbnailBreakpoints">
+                    <in-slide v-for="(media, index) in slides" :key="index">
+                        <div class="carousel__item" @click="onThumbnailClick(index)">
+                            <img :src="media.path" alt="" onerror="this.src='/images/default.jpg'">
+                        </div>
+                    </in-slide>
+                    <template #addons>
+                        <in-navigation />
+                        <in-pagination />
+                    </template>
+                </in-carousel>
 
                 <div class="mt-20">
                     <img class="iconograph" src="/images/icon-dish.svg" alt="Гастрономическое сочетание">
                     <span class="param-title">Гастрономическое сочетание:</span> {{ $product->gastro_combination ?: '-' }}
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" style="padding-left: 15px;">
                 <span class="price-block">{!! Helper::productCostSting($product) !!}</span>
 
                 <div class="mb-20">{{ $product->description }}</div>

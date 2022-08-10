@@ -16,9 +16,32 @@ createApp({
             })
             .value();
 
+        const mainCarousel = ref(null);
+        const thumbnailSettings = {
+            itemsToShow: 4,
+            wrapAround: true,
+        };
+        const thumbnailBreakpoints = {
+            320: {
+                itemsToShow: 2,
+                snapAlign: 'start',
+            },
+            640: {
+                itemsToShow: 3,
+                snapAlign: 'center',
+            },
+            1024: {
+                itemsToShow: 4,
+                snapAlign: 'center',
+            },
+        };
+
         return {
+            mainCarousel,
             product,
             slides,
+            thumbnailBreakpoints,
+            thumbnailSettings,
         };
     },
 
@@ -40,6 +63,8 @@ createApp({
     },
 
     methods: {
-        //
+        onThumbnailClick: function(index) {
+            this.mainCarousel.slideTo(index);
+        },
     },
 }).mount('#root');

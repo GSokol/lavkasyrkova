@@ -62,7 +62,7 @@
                                     <span
                                         v-if="true"
                                         class="el-upload-list__item-delete"
-                                        @click="handleRemove(file)"
+                                        @click="onMediaRemove(file)"
                                     >
                                         <el-icon><el-icon-delete /></el-icon>
                                     </span>
