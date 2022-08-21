@@ -8,7 +8,9 @@
     <div class="container" style="padding-bottom: 100px;">
         <h1>
             {{ $product->name }}
-            <img src="{{ asset('images/' . $product->addCategory->image) }}" alt="{{ $product->addCategory->name }}" title="{{ $product->addCategory->name }}" style="margin-left: 20px;">
+            @if ($product->addCategory)
+                <img src="{{ asset('images/' . $product->addCategory->image) }}" alt="{{ $product->addCategory->name }}" title="{{ $product->addCategory->name }}" style="margin-left: 20px;">
+            @endif
         </h1>
         <h6>
             <a href="{{ route('face.category', ['slug' => $product->category->slug]) }}">{{ $product->category->name }}</a>
@@ -21,13 +23,13 @@
                             <img :src="media.path" alt="" onerror="this.src='/images/default.jpg'">
                         </div>
                     </in-slide>
-                    <template #addons>
+                    <template #addons v-if="slides.length > 1">
                         <in-navigation />
                         <in-pagination />
                     </template>
                 </in-carousel>
 
-                <in-carousel class="carousel-thumbnails" :settings="thumbnailSettings" :breakpoints="thumbnailBreakpoints">
+                <in-carousel class="carousel-thumbnails" :settings="thumbnailSettings" :breakpoints="thumbnailBreakpoints" v-if="slides.length > 1">
                     <in-slide v-for="(media, index) in slides" :key="index">
                         <div class="carousel__item" @click="onThumbnailClick(index)">
                             <img :src="media.path" alt="" onerror="this.src='/images/default.jpg'">

@@ -58,10 +58,6 @@ createApp({
         }
     },
 
-    created() {
-        console.log('created');
-    },
-
     methods: {
         onThumbnailClick: function(index) {
             this.mainCarousel.slideTo(index);
