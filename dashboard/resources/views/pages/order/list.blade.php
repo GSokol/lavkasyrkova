@@ -50,5 +50,5 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{ mix('js/dashboard/order.js') }}"></script>
+<!-- <script type="text/javascript" src="{ { mix('js/dashboard/order.js') }}"></script> -->
 @endsection
