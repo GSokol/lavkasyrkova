@@ -70,7 +70,7 @@ class AdminController extends UserController
             Tasting::create($fields);
         }
         $this->saveCompleteMessage();
-        return redirect('/admin/tastings');
+        return redirect('/dashboard/tastings');
     }
 
     public function editTastingsImages(Request $request)
@@ -95,7 +95,7 @@ class AdminController extends UserController
             }
             $this->saveCompleteMessage();
         }
-        return redirect('/admin/tastings');
+        return redirect('/dashboard/tastings');
     }
 
     public function editShops(Request $request)
@@ -157,6 +157,6 @@ class AdminController extends UserController
             ]);
         }
         $this->saveCompleteMessage();
-        return redirect('/admin/'.$redirect);
+        return redirect('/dashboard/'.$redirect);
     }
 }
