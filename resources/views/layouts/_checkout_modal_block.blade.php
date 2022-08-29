@@ -34,7 +34,7 @@
 
     @foreach(
         [
-            (Auth::user()->office->id == 1 || Auth::user()->office->id == 2 || count($tastings) ? Auth::user()->office->address : (count($tastings) ? 'Доставка в офис ('.Auth::user()->office->address.')' : null)),
+            ((Auth::user()->office && (Auth::user()->office->id == 1 || Auth::user()->office->id == 2)) || count($tastings) ? Auth::user()->office->address : (count($tastings) ? 'Доставка в офис ('.Auth::user()->office->address.')' : null)),
             'Доставка в магазин',
             'Доставка по адресу <span class="error">(при заказе свыше '.Settings::getSettings()->delivery_limit.' руб!)</span>'
         ] as $d => $delivery)
