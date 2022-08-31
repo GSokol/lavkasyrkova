@@ -324,7 +324,7 @@ input, select {
     width: 100%;
     padding: 10px 0;
     border-top: 1px solid white;
-    background: url("../images/top_menu_bg.jpg") 50% 50% no-repeat;
+    background: url("/images/top_menu_bg.jpg") 50% 50% no-repeat;
 }
 
 #footer a {

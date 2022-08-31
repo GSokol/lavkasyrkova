@@ -1,7 +1,7 @@
 'use strict';
 
 import { createApp } from 'vue';
-import axios from 'axios';
+import api from '../../core/api.js';
 import { get, keyBy, sumBy } from 'lodash';
 import { alert } from '@pnotify/core';
 
@@ -31,11 +31,7 @@ const app = createApp({
             this.state.isLoading = true;
             let param = _.pick(this.order, ['id', 'discount_value', 'payment_link', 'order_to_products']);
 
-            axios({
-                method: 'put',
-                url: '/dashboard/orders/item',
-                data: param,
-            }).then((response) => {
+            return api.put(window.route('api.dashboard.putOrder'), param).then((response) => {
                 this.state.isLoading = false;
                 alert({
                     text: response.data.message,

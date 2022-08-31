@@ -90,6 +90,6 @@ mix.scripts([
     'public/js/loader.js',
     'public/js/owl.carousel.js',
     'public/js/main.js',
-], 'js/face/app.js');
+], 'public/js/face/app.js');
 
 mix.version();

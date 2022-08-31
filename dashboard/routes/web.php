@@ -24,7 +24,6 @@ Route::as('dashboard.')->prefix('dashboard')->group(function() {
         Route::group(['prefix' => 'orders'], function() {
             Route::get('/', 'OrderController@list')->name('orders');
             Route::get('/{id}', 'OrderController@item')->name('order');
-            Route::put('/item', 'OrderController@putOrder')->name('putOrder');
         });
         // category
         Route::group(['prefix' => 'category'], function() {
