@@ -38,7 +38,6 @@ const app = createApp({
             }).then((response) => {
                 this.state.isLoading = false;
                 alert({
-                    // title: "I'm an alert.",
                     text: response.data.message,
                     type: 'success',
                 });

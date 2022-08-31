@@ -7,6 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use App\Events\PreorderCreated;
 use App\Notifications\Preorder;
 use App\Models\User;
+use Settings;
 
 class PreorderCreatedNotification
 {

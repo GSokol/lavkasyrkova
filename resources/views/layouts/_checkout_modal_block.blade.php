@@ -44,7 +44,7 @@
                 'name' => 'delivery',
                 'value' => $d+1,
                 'label' => $delivery,
-                'checked' => (!$displayAddress && !$d) || ($displayAddress && $d == 0)
+                'checked' => (!$displayAddress && !$d) || ($displayAddress && $d == 2)
             ])
         @endif
 
