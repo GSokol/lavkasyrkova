@@ -116,9 +116,9 @@
                                     </el-select>
 								</div>
 							</div>
-                            <!-- Короткое описание -->
+                            <!-- Краткое описание -->
                             <div class="form-group">
-								<label class="col-md-3 col-lg-3 control-label text-semibold">Короткое описание</label>
+								<label class="col-md-3 col-lg-3 control-label text-semibold">Краткое описание</label>
 								<div class="col-md-9 col-lg-9">
                                     <el-input type="textarea" placeholder="Короткое описание товара" class="el-width-1-1" :rows="2" :autosize="{minRows: 2, maxRows: 4}" maxlength="255" show-word-limit v-model="product.short_description"></el-input>
 								</div>
@@ -128,6 +128,13 @@
 								<label class="col-md-3 col-lg-3 control-label text-semibold">Описание*</label>
 								<div class="col-md-9 col-lg-9">
                                     <el-input required type="textarea" placeholder="Описание товара" class="el-width-1-1" :rows="2" :autosize="{minRows: 2, maxRows: 4}" v-model="product.description"></el-input>
+								</div>
+							</div>
+                            <!-- Художественное описание -->
+                            <div class="form-group">
+								<label class="col-md-3 col-lg-3 control-label text-semibold">Художественное описание</label>
+								<div class="col-md-9 col-lg-9">
+                                    <el-input type="textarea" placeholder="Художественное описание товара" class="el-width-1-1" :rows="2" :autosize="{minRows: 2, maxRows: 4}" v-model="product.art_description"></el-input>
 								</div>
 							</div>
                             <!-- Цена за целое (p) -->

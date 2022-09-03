@@ -21,6 +21,7 @@ class Product extends Model
         'name',
         'additionally',
         'description',
+        'art_description',
         'short_description',
         'gastro_combination',
         'alcohol_combination',

@@ -94,6 +94,7 @@ class ProductController extends Controller
             'add_category_id' => ['required', 'integer', 'exists:add_categories,id'],
             'description' => ['required'],
             'additionally' => ['sometimes', 'nullable', 'max:255'],
+            'art_description' => ['sometimes', 'nullable', 'string'],
             'short_description' => ['sometimes', 'nullable', 'string', 'max:255'],
             'gastro_combination' => ['sometimes', 'nullable', 'string'],
             'alcohol_combination' => ['sometimes', 'nullable', 'string', 'max:255'],

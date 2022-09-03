@@ -95,6 +95,7 @@
             </div>
         </div>
 
+        <div class="mt-20">{{ $product->art_description }}</div>
         <div class="mt-20">{{ $product->additionally }}</div>
 
         @if (count($product->related))

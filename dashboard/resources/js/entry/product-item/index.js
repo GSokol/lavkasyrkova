@@ -77,11 +77,11 @@ const app = createApp({
             dialogVisible.value = true;
         };
         const same = ref([]);
-        const mediaList = ref(product.gallery.map((media) => ({
+        const mediaList = ref(product.gallery ? product.gallery.map((media) => ({
             id: media.id,
             name: media.path,
             url: '/' + media.path,
-        })));
+        })) : []);
 
         return {
             addCategories,
