@@ -95,7 +95,7 @@
             </div>
         </div>
 
-        <div class="mt-20">{ { $product->additionally }}</div>
+        <div class="mt-20">{{ $product->additionally }}</div>
 
         @if (count($product->related))
             <h3>Рекомендуем</h3>
