@@ -82,11 +82,11 @@ class LoginController extends Controller
         $user = User::where($this->username(), $request->email)->first();
 
         // проверка прав на доступ в админ панель
-        // if ($user && !$user->hasPermission('postLoginDashboard')) {
-        //     return redirect()->back()
-        //         ->withInput($request->only($this->username(), 'remember'))
-        //         ->withErrors([$this->username() => ['Access denied']]);
-        // }
+        if ($user && !$user->is_admin) {
+            return redirect()->back()
+                ->withInput($request->only($this->username(), 'remember'))
+                ->withErrors([$this->username() => ['Access denied']]);
+        }
         $credentials = [$this->username() => $request->email, 'password' => $request->password];
         if (Auth::guard($this->guard)->attempt($credentials, $request->has('remember'))) {
             // Event::fire('admin.login', [$request, $user]);
