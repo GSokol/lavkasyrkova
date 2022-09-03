@@ -85,7 +85,8 @@
 
                 <div class="mt-10">
                     <img class="iconograph" src="/images/icon-drop.svg" alt="Питательные вещества">
-                    <span class="param-title width">Питательные вещества</span> {!! $product->nutrients ?: '-' !!}
+                    <span class="param-title width">Питательные вещества</span>
+                    <div class="" style="display: inline-block; vertical-align: top;">{!! nl2br($product->nutrients) ?: '-' !!}</div>
                 </div>
 
                 <div class="alcohol-combination-block">
