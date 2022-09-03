@@ -12,6 +12,11 @@ h6 a {
 }
 .param-title {
     border-bottom: 2px solid #faa54c;
+    margin-right: 10px;
+    &.width {
+        min-width: 165px;
+        display: inline-block;
+    }
 }
 
 .price-block {

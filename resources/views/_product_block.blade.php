@@ -24,7 +24,7 @@
         @if ($product->addCategory && isset($product->addCategory->name))
             <p class="small">{{ str_replace('Сыры', 'Сыр', $product->addCategory->name) }}</p>
         @endif
-        <p class="description">{{ $product->description }}</p>
+        <p class="description">{{ $product->short_description }}</p>
         <p class="price">{!! Helper::productCostSting($product) !!}</p>
     </div>
     <div class="value">

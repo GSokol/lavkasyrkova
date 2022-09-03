@@ -41,9 +41,10 @@
                     </template>
                 </in-carousel>
 
-                <div class="mt-20">
+                <div class="mt-20 alcohol-combination-block">
                     <img class="iconograph" src="/images/icon-dish.svg" alt="Гастрономическое сочетание">
-                    <span class="param-title">Гастрономическое сочетание:</span> {{ $product->gastro_combination ?: '-' }}
+                    <span class="param-title">Гастрономическое сочетание</span>
+                    <div class="description">{{ $product->gastro_combination ?: '-' }}</div>
                 </div>
             </div>
             <div class="col-md-6" style="padding-left: 15px;">
@@ -69,22 +70,22 @@
 
                 <div class="mt-10">
                     <img class="iconograph" src="/images/icon-time.svg" alt="Выдержка">
-                    <span class="param-title">Выдержка:</span> {{ $product->aging ?: '-' }}
+                    <span class="param-title width">Выдержка</span> {{ $product->aging ?: '-' }}
                 </div>
 
                 <div class="mt-10">
                     <img class="iconograph" src="/images/icon-cheese.svg" alt="Сычужный тип">
-                    <span class="param-title">Сычужный тип:</span> {{ $product->rennet_type ?: '-' }}
+                    <span class="param-title width">Сычужный тип</span> {{ $product->rennet_type ?: '-' }}
                 </div>
 
                 <div class="mt-10">
                     <img class="iconograph" src="/images/icon-shelf-life.svg" alt="Срок хранения">
-                    <span class="param-title">Срок хранения:</span> {{ $product->shelf_life ?: '-' }}
+                    <span class="param-title width">Срок хранения</span> {{ $product->shelf_life ?: '-' }}
                 </div>
 
                 <div class="mt-10">
                     <img class="iconograph" src="/images/icon-drop.svg" alt="Питательные вещества">
-                    <span class="param-title">Питательные вещества:</span> {{ $product->nutrients ?: '-' }}
+                    <span class="param-title width">Питательные вещества</span> {!! $product->nutrients ?: '-' !!}
                 </div>
 
                 <div class="alcohol-combination-block">
