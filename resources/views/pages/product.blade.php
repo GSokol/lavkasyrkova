@@ -85,16 +85,16 @@
                     <div class="" style="display: inline-block; vertical-align: top;">{!! nl2br($product->nutrients) ?: '-' !!}</div>
                 </div>
 
-                <div class="alcohol-combination-block">
-                    <img class="iconograph" src="/images/icon-wine.svg" alt="Белое и красное сухое вино">
-                    <span class="param-title">Алкоголь к сыру</span>
-                    <div class="description">{{ $product->alcohol_combination ?: '-' }}</div>
-                </div>
-
                 <div class="mt-20 alcohol-combination-block">
                     <img class="iconograph" src="/images/icon-dish.svg" alt="Гастрономическое сочетание">
                     <span class="param-title">Гастрономическое сочетание</span>
                     <div class="description">{{ $product->gastro_combination ?: '-' }}</div>
+                </div>
+
+                <div class="mt-20 alcohol-combination-block">
+                    <img class="iconograph" src="/images/icon-wine.svg" alt="Белое и красное сухое вино">
+                    <span class="param-title">Алкоголь к сыру</span>
+                    <div class="description">{{ $product->alcohol_combination ?: '-' }}</div>
                 </div>
             </div>
         </div>
