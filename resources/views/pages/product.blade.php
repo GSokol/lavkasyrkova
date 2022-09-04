@@ -42,6 +42,8 @@
                 </in-carousel>
 
                 <div class="mt-20">{{ $product->description }}</div>
+
+                <div class="mb-20">{{ $product->art_description }}</div>
             </div>
             <div class="col-md-6" style="padding-left: 15px;">
                 <span class="price-block">{!! Helper::productCostSting($product) !!}</span>
@@ -61,8 +63,6 @@
                 @else
                     <h5>Товара нет в наличии</h5>
                 @endif
-
-                <div class="mb-20">{{ $product->art_description }}</div>
 
                 <div class="mt-20">
                     <img class="iconograph" src="/images/icon-time.svg" alt="Выдержка">
