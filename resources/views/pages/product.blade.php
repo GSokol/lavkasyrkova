@@ -31,7 +31,7 @@
 
                 <in-carousel class="carousel-thumbnails" :settings="thumbnailSettings" :breakpoints="thumbnailBreakpoints" v-if="slides.length > 1">
                     <in-slide v-for="(media, index) in slides" :key="index">
-                        <div class="carousel__item" @click="onThumbnailClick(index)">
+                        <div class="carousel__item" @mouseover="onThumbnailClick(index)">
                             <img :src="media.path" alt="" onerror="this.src='/images/default.jpg'">
                         </div>
                     </in-slide>
@@ -41,23 +41,17 @@
                     </template>
                 </in-carousel>
 
-                <div class="mt-20 alcohol-combination-block">
-                    <img class="iconograph" src="/images/icon-dish.svg" alt="Гастрономическое сочетание">
-                    <span class="param-title">Гастрономическое сочетание</span>
-                    <div class="description">{{ $product->gastro_combination ?: '-' }}</div>
-                </div>
+                <div class="mt-20">{{ $product->description }}</div>
             </div>
             <div class="col-md-6" style="padding-left: 15px;">
                 <span class="price-block">{!! Helper::productCostSting($product) !!}</span>
-
-                <div class="mb-20">{{ $product->description }}</div>
 
                 @if ($product->active)
                     @include('_input_value_block', [
                         'name' => 'product_'.$product->id,
                         'min' => 0,
                         'max' => $product->parts ? Helper::getProductParts()[count(Helper::getProductParts())-1] : 100,
-                        'class' => 'inline',
+                        'class' => 'narrow',
                         'unit' => Helper::productUnit($product),
                         'differentially' => $product->parts,
                         'price' => Helper::productPrice($product),
@@ -68,7 +62,9 @@
                     <h5>Товара нет в наличии</h5>
                 @endif
 
-                <div class="mt-10">
+                <div class="mb-20">{{ $product->art_description }}</div>
+
+                <div class="mt-20">
                     <img class="iconograph" src="/images/icon-time.svg" alt="Выдержка">
                     <span class="param-title width">Выдержка</span> {{ $product->aging ?: '-' }}
                 </div>
@@ -91,13 +87,18 @@
 
                 <div class="alcohol-combination-block">
                     <img class="iconograph" src="/images/icon-wine.svg" alt="Белое и красное сухое вино">
-                    <span class="param-title">Белое красное сухое вино</span>
+                    <span class="param-title">Алкоголь к сыру</span>
                     <div class="description">{{ $product->alcohol_combination ?: '-' }}</div>
+                </div>
+
+                <div class="mt-20 alcohol-combination-block">
+                    <img class="iconograph" src="/images/icon-dish.svg" alt="Гастрономическое сочетание">
+                    <span class="param-title">Гастрономическое сочетание</span>
+                    <div class="description">{{ $product->gastro_combination ?: '-' }}</div>
                 </div>
             </div>
         </div>
 
-        <div class="mt-20">{{ $product->art_description }}</div>
         <div class="mt-20">{{ $product->additionally }}</div>
 
         @if (count($product->related))

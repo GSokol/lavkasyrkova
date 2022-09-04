@@ -19,7 +19,8 @@ createApp({
         const mainCarousel = ref(null);
         const thumbnailSettings = {
             itemsToShow: 4,
-            wrapAround: true,
+            wrapAround: false,
+            snapAlign: 'start',
         };
         const thumbnailBreakpoints = {
             320: {
