@@ -42,10 +42,10 @@
                 </in-carousel>
 
                 <div class="mt-20">{{ $product->art_description }}</div>
-
                 <div class="mt-20">{{ $product->description }}</div>
             </div>
             <div class="col-md-6" style="padding-left: 15px;">
+                <span class="info-block">Бесплатная доставка при заказе от 3000 руб.</span>
                 <span class="price-block">{!! Helper::productCostSting($product) !!}</span>
 
                 @if ($product->active)
