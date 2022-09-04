@@ -43,7 +43,7 @@
 
                 <div class="mt-20">{{ $product->description }}</div>
 
-                <div class="mb-20">{{ $product->art_description }}</div>
+                <div class="mt-20">{{ $product->art_description }}</div>
             </div>
             <div class="col-md-6" style="padding-left: 15px;">
                 <span class="price-block">{!! Helper::productCostSting($product) !!}</span>
