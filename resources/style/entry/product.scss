@@ -45,13 +45,17 @@ h6 a {
         width: 100%;
         float: none;
     }
+    .input-value-container.narrow {
+        display: inline-block;
+        margin-bottom: -10px;
+        margin-left: 20px;
+    }
 }
 
 .alcohol-combination-block {
     background-color: #fffaf3;
     border-radius: 4px;
     padding: 20px;
-    margin-top: 20px;
     .description {
         margin-top: 20px;
     }

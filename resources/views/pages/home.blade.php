@@ -63,50 +63,7 @@
         </div>
     </div>
 
-    <div class="cover pattern" data-scroll-destination="tastings">
-        <div class="container">
-            <h1 class="head">Дегустации</h1>
-
-            <div>
-                @include('_framed_image_block',[
-                    'addClass' => 'tastings col-md-4 col-sm-2 col-xs-12',
-                    'preview' => asset('images/tastings/photo_1.jpg'),
-                    'description' => 'Нашим покупателям в БЦ "Романов двор" больше всего нравится буратта и козьи сыры.',
-                ])
-                @include('_framed_image_block',[
-                    'addClass' => 'tastings col-md-4 col-sm-2 col-xs-12',
-                    'preview' => asset('images/tastings/photo_2.jpg'),
-                    'description' => '"Взрослейте с нашим сыром!" - дегустация в молодежном коллективе.',
-                ])
-                @include('_framed_image_block',[
-                    'addClass' => 'tastings col-md-4 col-sm-2 col-xs-12',
-                    'preview' => asset('images/tastings/photo_3.jpg'),
-                    'description' => 'Любители пикантных сыров в БЦ "Цветной"',
-                ])
-            </div>
-
-            <div style="margin-top: 40px; display: inline-block;">
-                @include('_tasting_block',['icon' => 'icon_star.svg','head' => 'Место проведения','text' => 'Столовые или специальные места для мероприятий в офисных центрах Москвы и Подмосковья'])
-                @include('_tasting_block',['icon' => 'icon_gift.svg','head' => 'Что будет','text' => 'Дегустация 9 - 10 видов вкусного сыра. Мы расскажем о каждом виде, сочетаниях с винами и продуктами, сезонных рецептах и интересных способах подачи сыра.'])
-                @include('_tasting_block',['icon' => 'icon_clock.svg','head' => 'Время проведения','text' => 'Будние дни с 12 до 16 часов'])
-                @include('_tasting_block',['icon' => 'icon_clouds.svg','head' => 'Уже хотите?','text' => 'Напишите нам на почту: <a href="mailto:lavkasyrkov@gmail.com">lavkasyrkov@gmail.com</a>.<br>Согласуем время и место и ждите в гости!'])
-            </div>
-
-            {{--@if (isset($data['tasting_new']) && $data['tasting_new'])--}}
-                {{--<div class="new-tasting {{ count($data['tastings']) }} col-md-12 col-sm-12 col-xs-12">--}}
-                    {{--<h4>{{ $data['tasting_new']->name }} состоится {{ date('d.m.Y',$data['tasting_new']->time) }}</h4>--}}
-                    {{--<p>По адресу: {{ $data['tasting_new']->place }}</p>--}}
-                    {{--@if (isset($data['tasting_new']) && $data['tasting_new'] && (!isset($data['tasting_signed']) || !$data['tasting_signed']))--}}
-                        {{--@if (Auth::guest())--}}
-                            {{--<a href="/login">@include('_get_tasting_button_block')</a>--}}
-                        {{--@else--}}
-                            {{--<a id="get-tasting" href="#">@include('_get_tasting_button_block')</a>--}}
-                        {{--@endif--}}
-                    {{--@endif--}}
-                {{--</div>--}}
-            {{--@endif--}}
-        </div>
-    </div>
+    <!-- @ include('components.tasting') -->
 
     @include('components.info')
 @endsection

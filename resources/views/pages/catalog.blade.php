@@ -23,6 +23,6 @@
             </div>
         </div>
     </div>
-    @include('components.tasting')
+    <!-- @ include('components.tasting') -->
     @include('components.info')
 @endsection

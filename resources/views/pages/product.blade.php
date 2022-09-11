@@ -16,7 +16,7 @@
             <a href="{{ route('face.category', ['slug' => $product->category->slug]) }}">{{ $product->category->name }}</a>
         </h6>
         <div class="row">
-            <div class="col-md-6 image" style="padding-right: 15px;">
+            <div class="col-md-6 image">
                 <in-carousel ref="mainCarousel" :wrap-around="true">
                     <in-slide v-for="(media, index) in slides" :key="index">
                         <div class="carousel__item">
@@ -40,11 +40,8 @@
                         <in-pagination />
                     </template>
                 </in-carousel>
-
-                <div class="mt-20">{{ $product->art_description }}</div>
-                <div class="mt-20">{{ $product->description }}</div>
             </div>
-            <div class="col-md-6" style="padding-left: 15px;">
+            <div class="col-md-6">
                 <span class="info-block">Бесплатная доставка при заказе от 3000 руб.</span>
                 <span class="price-block">{!! Helper::productCostSting($product) !!}</span>
 
@@ -64,42 +61,56 @@
                     <h5>Товара нет в наличии</h5>
                 @endif
 
-                <div class="mt-20">
+                <div class="mb-20">
                     <img class="iconograph" src="/images/icon-time.svg" alt="Выдержка">
                     <span class="param-title width">Выдержка</span> {{ $product->aging ?: '-' }}
                 </div>
 
-                <div class="mt-10">
+                <div class="mb-10">
                     <img class="iconograph" src="/images/icon-cheese.svg" alt="Сычужный тип">
                     <span class="param-title width">Сычужный тип</span> {{ $product->rennet_type ?: '-' }}
                 </div>
 
-                <div class="mt-10">
+                <div class="mb-10">
                     <img class="iconograph" src="/images/icon-shelf-life.svg" alt="Срок хранения">
                     <span class="param-title width">Срок хранения</span> {{ $product->shelf_life ?: '-' }}
                 </div>
 
-                <div class="mt-10">
+                <div class="mb-20">
                     <img class="iconograph" src="/images/icon-drop.svg" alt="Питательные вещества">
                     <span class="param-title width">Питательные вещества</span>
                     <div class="" style="display: inline-block; vertical-align: top;">{!! nl2br($product->nutrients) ?: '-' !!}</div>
                 </div>
+            </div>
 
-                <div class="mt-20 alcohol-combination-block">
+            <div class="col-md-6">
+                <div class="mb-20 alcohol-combination-block">
                     <img class="iconograph" src="/images/icon-dish.svg" alt="Гастрономическое сочетание">
                     <span class="param-title">Гастрономическое сочетание</span>
                     <div class="description">{{ $product->gastro_combination ?: '-' }}</div>
                 </div>
+            </div>
 
-                <div class="mt-20 alcohol-combination-block">
+            <div class="col-md-6">
+                <div class="mb-20">{{ $product->art_description }}</div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-20 alcohol-combination-block">
                     <img class="iconograph" src="/images/icon-wine.svg" alt="Белое и красное сухое вино">
                     <span class="param-title">Алкоголь к сыру</span>
                     <div class="description">{{ $product->alcohol_combination ?: '-' }}</div>
                 </div>
             </div>
-        </div>
 
-        <div class="mt-20">{{ $product->additionally }}</div>
+            <div class="col-md-6">
+                <div class="mb-20">{{ $product->description }}</div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mt-20">{{ $product->additionally }}</div>
+            </div>
+        </div>
 
         @if (count($product->related))
             <h3>Рекомендуем</h3>
@@ -137,7 +148,7 @@
         @endif
     </div>
 
-    @include('components.tasting')
+    <!-- @ include('components.tasting') -->
     @include('components.info')
 @endsection
 
