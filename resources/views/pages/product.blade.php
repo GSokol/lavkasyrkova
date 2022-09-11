@@ -16,7 +16,7 @@
             <a href="{{ route('face.category', ['slug' => $product->category->slug]) }}">{{ $product->category->name }}</a>
         </h6>
         <div class="row">
-            <div class="col-md-6 image">
+            <div class="col-md-6 mb-20 image">
                 <in-carousel ref="mainCarousel" :wrap-around="true">
                     <in-slide v-for="(media, index) in slides" :key="index">
                         <div class="carousel__item">
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 float-md-right">
                 <div class="mb-20 alcohol-combination-block">
                     <img class="iconograph" src="/images/icon-dish.svg" alt="Гастрономическое сочетание">
                     <span class="param-title">Гастрономическое сочетание</span>
@@ -95,7 +95,7 @@
                 <div class="mb-20">{{ $product->art_description }}</div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 float-md-right">
                 <div class="mb-20 alcohol-combination-block">
                     <img class="iconograph" src="/images/icon-wine.svg" alt="Белое и красное сухое вино">
                     <span class="param-title">Алкоголь к сыру</span>
