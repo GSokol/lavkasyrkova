@@ -91,7 +91,7 @@ class ProductController extends Controller
         $payload = $this->validate($request, [
             'name' => ['required', 'unique:products,name,'.$request->get('id')],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
-            'add_category_id' => ['required', 'integer', 'exists:add_categories,id'],
+            'add_category_id' => ['sometimes', 'nullable', 'integer', 'exists:add_categories,id'],
             'description' => ['required'],
             'additionally' => ['sometimes', 'nullable', 'max:255'],
             'art_description' => ['sometimes', 'nullable', 'string'],
