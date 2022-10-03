@@ -41,7 +41,7 @@ class HeaderComposer
         $subMenu = $this->getCategorySubMenu($subMenu, $categories, 'category');
         $subMenu = $this->getCategorySubMenu($subMenu, $addCategories, 'add_category');
         $mainMenu[] = ['href' => route('face.catalog'), 'name' => 'Наши сыры ▼', 'submenu' => $subMenu];
-        $mainMenu[] = ['href' => '/category/podarochnye-korziny', 'name' => 'Дарите подарки'];
+        $mainMenu[] = ['href' => '/category/podarochnye-korziny', 'name' => 'Дарите вкусные подарки'];
         $mainMenu[] = ['href' => '/#shops', 'name' => 'Магазины'];
         return $mainMenu;
     }

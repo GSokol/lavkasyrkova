@@ -15,8 +15,9 @@
         <h6>
             <a href="{{ route('face.category', ['slug' => $product->category->slug]) }}">{{ $product->category->name }}</a>
         </h6>
-        <div class="row">
-            <div class="col-md-6 mb-20 image">
+        <div class="row el-flex@sm el-flex-column@sm">
+            <!-- slider -->
+            <div class="col-md-6 mb-20 el-flex-overfirst image">
                 <in-carousel ref="mainCarousel" :wrap-around="true">
                     <in-slide v-for="(media, index) in slides" :key="index">
                         <div class="carousel__item">
@@ -41,10 +42,13 @@
                     </template>
                 </in-carousel>
             </div>
-            <div class="col-md-6">
+            <!-- delivery info -->
+            <div class="col-md-6 el-flex-overfirst">
                 <span class="info-block">Бесплатная доставка при заказе от 3000 руб.</span>
+            </div>
+            <!-- price -->
+            <div class="col-md-6 el-flex-overfirst">
                 <span class="price-block">{!! Helper::productCostSting($product) !!}</span>
-
                 @if ($product->active)
                     @include('_input_value_block', [
                         'name' => 'product_'.$product->id,
@@ -60,7 +64,9 @@
                 @else
                     <h5>Товара нет в наличии</h5>
                 @endif
-
+            </div>
+            <!-- params -->
+            <div class="col-md-6 el-flex-last@sm">
                 <div class="mb-20">
                     <img class="iconograph" src="/images/icon-time.svg" alt="Выдержка">
                     <span class="param-title width">Выдержка</span> {{ $product->aging ?: '-' }}
@@ -91,10 +97,11 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <!-- Фантазийное описание -->
+            <div class="col-md-6 el-flex-first@sm">
                 <div class="mb-20">{{ $product->art_description }}</div>
             </div>
-
+            <!-- Алкоголь -->
             <div class="col-md-6 float-md-right">
                 <div class="mb-20 alcohol-combination-block">
                     <img class="iconograph" src="/images/icon-wine.svg" alt="Белое и красное сухое вино">
@@ -102,8 +109,8 @@
                     <div class="description">{{ $product->alcohol_combination ?: '-' }}</div>
                 </div>
             </div>
-
-            <div class="col-md-6">
+            <!-- Полное описание -->
+            <div class="col-md-6 el-flex-first@sm">
                 <div class="mb-20">{{ $product->description }}</div>
             </div>
 

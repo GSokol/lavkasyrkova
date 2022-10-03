@@ -169,14 +169,6 @@ input, select {
     line-height: 1.428571429;
 }
 
-/*select {*/
-    /*margin-bottom: 25px;*/
-/*}*/
-
-/*input[name=phone] {*/
-    /*letter-spacing: 0.1em;*/
-/*}*/
-
 .modal-header .close {
     width: 10px;
     top: 15px;
@@ -343,6 +335,14 @@ input, select {
     padding: 0;
 }
 
+.el-flex-overfirst {
+    order: -2;
+}
+
+.el-flex-first {
+    order: -1;
+}
+
 @media screen and (max-width: 768px) {
     /*.radio-buttons-container {*/
         /*margin-left: auto;*/
@@ -399,5 +399,18 @@ input, select {
     .btn-primary, .btn-primary.big-button {
         width: 90% !important;
         font-size: 13px;
+    }
+
+    .el-flex\@sm {
+        display: flex;
+    }
+    .el-flex-column\@sm {
+        flex-direction: column;
+    }
+    .el-flex-first\@sm {
+        order: -1;
+    }
+    .el-flex-last\@sm {
+        order: 99;
     }
 }
