@@ -11,12 +11,12 @@
             </div>
         </div>
         <div class="button">
-            <a href="#tasting" data-scroll="tastings">
+            <a href="/category/podarochnye-korziny">
                 @include('_button_block', [
                     'addClass' => 'big-button',
                     'type' => 'button',
                     'icon' => null,
-                    'text' => 'Бесплатные тематические дегустации',
+                    'text' => 'Дарите вкусные подарки',
                 ])
             </a>
         </div>
