@@ -16,7 +16,7 @@
                     'addClass' => 'big-button',
                     'type' => 'button',
                     'icon' => null,
-                    'text' => 'Дарите вкусные подарки',
+                    'text' => 'Дарите вкусные подарки!',
                 ])
             </a>
         </div>
