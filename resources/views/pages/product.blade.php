@@ -44,7 +44,7 @@
             </div>
             <!-- delivery info -->
             <div class="col-md-6 el-flex-overfirst">
-                <span class="info-block">Бесплатная доставка при заказе от 3000 руб.</span>
+                <span class="info-block">Доставка по Москве на следующий день после размещения заказа.</span>
             </div>
             <!-- price -->
             <div class="col-md-6 el-flex-overfirst">
