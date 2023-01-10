@@ -13,7 +13,7 @@ use App\Models\Product;
 use App\Models\Store;
 use App\Models\Tasting;
 use App\Models\UserToTasting;
-use App\User;
+use App\Models\User;
 use Session;
 use Settings;
 
@@ -34,7 +34,7 @@ class UserController extends Controller
         $tastings = Tasting::getUserTasting(Auth::user());
         $this->breadcrumbs = ['orders' => 'Заказы'];
         $orders = Order::with(['status:id,name,class_name', 'orderToProducts.product'])
-            ->where('user_id', Auth::user()->id)
+            ->where('user_id', auth()->id())
             ->orderBy('id', 'desc')
             ->get()
             ->transform(function($order) {
@@ -46,26 +46,28 @@ class UserController extends Controller
             'collection' => $orders,
         ]);
 
-        return view('face.pages.orders', [
+        return view('pages.orders', [
             'breadcrumbs' => $this->breadcrumbs,
             'tastings' => $tastings,
             'orders' => $orders,
-            'menus' => $this->getMenus(),
-            'prefix' => Auth::user()->is_admin ? 'admin' : 'profile',
         ]);
     }
 
     public function user(Request $request)
     {
         $this->breadcrumbs = ['user' => 'Профиль пользователя'];
-        $this->data['user'] = Auth::user();
-        $this->data['offices'] = Office::all();
+        $user = Auth::user();
+        $offices = Office::all();
         if ($request->has('unsubscribe') && $request->input('unsubscribe')) {
-            $this->data['user']->send_mail = 0;
-            $this->data['user']->save();
-            Session::flash('message','Вы отписались от автоматической рассылки!');
+            $user->send_mail = 0;
+            $user->save();
+            Session::flash('message', 'Вы отписались от автоматической рассылки!');
         }
-        return $this->showView('user');
+        return view('pages.user', [
+            'breadcrumbs' => $this->breadcrumbs,
+            'offices' => $offices,
+            'user' => $user,
+        ]);
     }
 
     public function signingTasting()
@@ -83,7 +85,7 @@ class UserController extends Controller
         $validationArr = [
             'email' => 'required|email|unique:users,email',
             'phone' => $this->validationPhone,
-            'office_id' => $this->validationOffice
+            'office_id' => 'required|integer|exists:offices,id',
         ];
 
         $fields = $this->processingFields(
@@ -94,10 +96,10 @@ class UserController extends Controller
 
         $fields['password'] = bcrypt($fields['password']);
 
-        if ($request->has('id')) {
-            $validationArr['id'] = $this->validationUser;
+        if ($request->filled('id')) {
+            $validationArr['id'] = 'required|exists:users,id';
             $validationArr['email'] .= ','.$request->input('id');
-            if (Auth::user()->is_admin && $request->has('office_id')) $validationArr['office_id'] = $this->validationOffice;
+            if (Auth::user()->is_admin && $request->has('office_id')) $validationArr['office_id'] = 'required|integer|exists:offices,id';
 
             if ($request->has('password') && $request->input('password')) {
                 if (!Auth::user()->is_admin) $validationArr['old_password'] = 'required|min:3|max:50';
@@ -115,16 +117,18 @@ class UserController extends Controller
 
             $user->update($fields);
 
-        } elseif (Auth::user()->is_admin) {
+        } elseif (auth('dashboard')->user()->is_admin) {
             $validationArr['password'] = $this->validationPassword;
-            $validationArr['office_id'] = $this->validationOffice;
+            $validationArr['office_id'] = 'required|integer|exists:offices,id';
             $this->validate($request, $validationArr);
             User::create($fields);
         }
 
         $this->saveCompleteMessage();
-        if (Auth::user()->is_admin) return redirect('/admin/users');
-        else return redirect('/profile/user');
+        if (Auth::user()->is_admin) {
+            return redirect(route('dashboard.users'));
+        }
+        return redirect(route('face.profile.user'));
     }
 
     public function checkoutOrder(Request $request)
@@ -159,44 +163,19 @@ class UserController extends Controller
 
     protected function showView($view)
     {
-        if (!Auth::user()->is_admin) {
-            $this->data['products'] = Product::where('active',1)->get();
-            if (!isset($this->data['shops'])) $this->data['shops'] = Store::all();
-        }
+        // dump(Auth::guard('web'));
+
+        // if (!Auth::user()->is_admin) {
+        //     $this->data['products'] = Product::where('active',1)->get();
+        //     if (!isset($this->data['shops'])) $this->data['shops'] = Store::all();
+        // }
 
         $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
 
         return view('admin.'.$view, [
             'breadcrumbs' => $this->breadcrumbs,
             'data' => $this->data,
-            'prefix' => Auth::user()->is_admin ? 'admin' : 'profile',
-            'menus' => $this->getMenus(),
             'tastings' => $tastings,
         ]);
-    }
-
-    public function getMenus()
-    {
-        $menus = [
-            ['href' => '/', 'name' => 'На главную страницу', 'icon' => 'icon-list-unordered'],
-            ['href' => 'orders', 'name' => 'Заказы', 'icon' => 'icon-home']
-        ];
-
-        if (Auth::user()->is_admin) {
-            $addMenus = [
-                ['href' => 'seo', 'name' => 'SEO', 'icon' => 'icon-price-tags'],
-                ['href' => 'products', 'name' => 'Продукты', 'icon' => 'icon-pie5'],
-                ['href' => 'category', 'name' => 'Категории', 'icon' => 'icon-folder'],
-                ['href' => 'settings', 'name' => 'Настройки', 'icon' => 'icon-gear'],
-                ['href' => 'offices', 'name' => 'Офисы', 'icon' => 'icon-office'],
-                ['href' => 'shops', 'name' => 'Магазины', 'icon' => 'icon-basket'],
-                ['href' => 'tastings', 'name' => 'Дегустации', 'icon' => 'icon-trophy2'],
-                ['href' => 'users', 'name' => 'Пользователи', 'icon' => 'icon-users']
-            ];
-        } else {
-            $addMenus = [['href' => 'user', 'name' => 'Профиль пользователя', 'icon' => 'icon-profile']];
-        }
-
-        return array_merge($menus, $addMenus);
     }
 }

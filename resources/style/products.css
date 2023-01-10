@@ -195,6 +195,9 @@
     text-align: left;
     margin-bottom: 0;
 }
+.product h3 a {
+    color: inherit;
+}
 
 .category h3 {
     text-align: center;
@@ -232,14 +235,15 @@
     margin-bottom: 0;
 }
 
-.product p.price {
+.product p.price, .price-block {
     font-size: 15px;
     padding-bottom: 10px;
     font-weight: bold;
 }
 
 .product p.price > span,
-.product p.cost {
+.product p.cost,
+.price-block > span {
     font-style: italic;
     font-weight: normal;
 }
@@ -298,7 +302,7 @@
     display: table;
     text-align: center;
     padding: 20px;
-    background: url("../images/white.png") repeat;
+    background: rgba(255, 255, 255, 0.6);
 }
 
 .action-product h1 {

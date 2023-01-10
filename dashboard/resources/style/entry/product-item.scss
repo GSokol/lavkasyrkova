@@ -1,0 +1,83 @@
+@use '~element-plus/theme-chalk/src/var';
+@use '~element-plus/theme-chalk/src/common/transition';
+@use '~element-plus/theme-chalk/src/icon.scss';
+@use '~element-plus/theme-chalk/src/message-box.scss';
+@use '~element-plus/theme-chalk/src/overlay.scss';
+@use '~element-plus/theme-chalk/src/button.scss';
+@use '~element-plus/theme-chalk/src/select.scss';
+@use '~element-plus/theme-chalk/src/option.scss';
+@use '~element-plus/theme-chalk/src/input.scss';
+@use '~element-plus/theme-chalk/src/popper.scss';
+@use '~element-plus/theme-chalk/src/scrollbar.scss';
+@use '~element-plus/theme-chalk/src/notification.scss';
+@use '~element-plus/theme-chalk/src/checkbox.scss';
+@use '~element-plus/theme-chalk/src/tag.scss';
+@use '~element-plus/theme-chalk/src/upload.scss';
+@use '~element-plus/theme-chalk/src/switch.scss';
+@use '~element-plus/theme-chalk/src/link.scss';
+@use '~element-plus/theme-chalk/src/message.scss';
+@use '~element-plus/theme-chalk/src/dialog.scss';
+@use '../../style/theme/width.scss';
+
+.el-select-dropdown__item {
+    min-height: 34px;
+    height: auto;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.el-suggest-item--image {
+    float: left;
+    width: 60px;
+    margin-right: 20px;
+    position: relative;
+    top: 3px;
+    img {
+        max-width: 100%;
+        border-radius: 3px;
+    }
+}
+.el-suggest-item--title {
+    font-weight: bold;
+    line-height: 26px;
+}
+.el-suggest-item--subtitle {
+    line-height: 20px;
+    color: #999;
+}
+.el-upload-dragger {
+    padding: inherit;
+    .el-icon--upload {
+        font-size: 50px;
+        margin: 0;
+    }
+    img {
+        max-width: 100%;
+    }
+}
+input[type=file] {
+    display: none;
+}
+.el-upload-list--picture {
+    .el-upload-list__item-thumbnail {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    .el-upload-list__item-actions {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        cursor: default;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        opacity: 0;
+        font-size: 20px;
+        background-color: var(--el-overlay-color-lighter);
+        transition: opacity var(--el-transition-duration);
+    }
+}

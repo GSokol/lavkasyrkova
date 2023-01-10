@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -21,6 +22,8 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    protected $guard = 'web';
+
     /**
      * Where to redirect users after login.
      *
@@ -35,12 +38,73 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest:'.$this->guard)->except('logout');
     }
-    
-    public function logout()
+
+    /**
+     * Login page
+     *
+     * @return Illuminate\Support\Facades\View
+     */
+    public function showLoginForm()
     {
-        Auth::logout();
-        return redirect('/');
+        return view('auth.login');
     }
+
+    /**
+     * Log the user out of the application.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        Auth::guard($this->guard)->logout();
+        return redirect($this->redirectAfterLogout());
+    }
+
+    /**
+     * Where to redirect users after logout.
+     *
+     * @return string
+     */
+    protected function redirectAfterLogout()
+    {
+        return route('face.home');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postLogin(Request $request)
+    {
+        // validate input data
+        $this->validate($request, [
+            $this->username() => ['required', 'email', 'max:255'],
+            'password' => ['required', 'min:3'],
+        ]);
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+            return $this->sendLockoutResponse($request);
+        }
+        $credentials = [$this->username() => $request->email, 'password' => $request->password];
+        if (Auth::guard($this->guard)->attempt($credentials, $request->has('remember'))) {
+			return redirect()->intended($this->redirectTo);
+		}
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        $this->incrementLoginAttempts($request);
+        // throw exception
+        // if ($request->expectsJson()) {
+        //     throw ValidationException::withMessages([$this->username() => [trans('auth.failed')]]);
+        // }
+		return redirect()->back()
+            ->withInput($request->only($this->username(), 'remember'))
+			->withErrors([$this->username() => [trans('auth.failed')]]);
+	}
 }

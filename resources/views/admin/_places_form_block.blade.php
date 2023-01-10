@@ -1,4 +1,4 @@
-<form class="form-horizontal complex-form" enctype="multipart/form-data" action="{{ url('/admin/'.$url) }}" method="post">
+<form class="form-horizontal complex-form" enctype="multipart/form-data" action="{{ url('/dashboard/'.$url) }}" method="post">
     {{ csrf_field() }}
     <div class="panel-body">
         <div class="panel panel-flat">
@@ -16,3 +16,8 @@
     @include('admin._button_block', ['type' => 'button', 'icon' => 'icon-database-add', 'text' => 'Добавить '.$placeName, 'addClass' => 'add-button pull-left'])
     @include('admin._button_block', ['type' => 'submit', 'icon' => ' icon-floppy-disk', 'text' => trans('admin_content.save'), 'addClass' => 'pull-right'])
 </form>
+
+@section('script')
+<script type="text/javascript" src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+<script type="text/javascript" src="{{ asset('js/map.js') }}"></script>
+@endsection

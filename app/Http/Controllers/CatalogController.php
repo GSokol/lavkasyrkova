@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Models\AddCategory;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Tasting;
 
 class CatalogController extends Controller
@@ -17,10 +18,10 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
+        // $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
 
-        return view('face.pages.catalog', [
-            'tastings' => $tastings,
+        return view('pages.catalog', [
+            // 'tastings' => $tastings,
         ]);
     }
 
@@ -36,10 +37,13 @@ class CatalogController extends Controller
         if (!$category) {
             abort(404);
         }
-        $products = $category->products;
+        $products = Product::where('category_id', $category->id)
+            ->with(['addCategory'])
+            ->orderBy('active', 'desc')
+            ->get();
         $tastings = Auth::user() ? Tasting::getUserTasting(Auth::user()) : [];
 
-        return view('face.pages.category', [
+        return view('pages.category', [
             'category' => $category,
             'products' => $products,
             'tastings' => $tastings,

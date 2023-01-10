@@ -1,6 +1,6 @@
 $(document).ready(function ($) {
-    ymaps.ready(function () {
-        if ($('#map').length) addMap(window.map,'map');
+    $('#map').length && ymaps.ready(function () {
+        addMap(window.map,'map');
     });
 });
 

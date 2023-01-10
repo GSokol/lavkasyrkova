@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Events\PreorderCreated;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Product;
 use App\Models\ProductToOrder;
-use App\User;
+use App\Models\User;
 use Session;
 use Settings;
 use Helper;
@@ -45,13 +46,16 @@ class BasketController extends Controller
 
         $totalCost = 0;
         foreach ($basket as $key => $item) {
-            if ($key != 'total') $totalCost += $item['cost'];
+            if (!in_array($key, ['total', 'delivery'])) {
+                $totalCost += $item['cost'];
+            }
         }
 
         if (!$totalCost) Session::forget('basket');
         else {
-            $basket['total'] = $totalCost;
-            Session::put('basket',$basket);
+            $basket['delivery'] = $totalCost > (int)Settings::getSettings()->delivery_limit ? 0 : (int)Settings::getSettings()->delivery_amount;
+            $basket['total'] = $totalCost + $basket['delivery'];
+            Session::put('basket', $basket);
         }
 
         return response()->json([
@@ -80,7 +84,7 @@ class BasketController extends Controller
             'shop_id' => $this->validationShop,
         ];
 
-        if ($request->has('tasting_id') && $request->input('tasting_id')) $validationArr['tasting_id'] = $this->validationTasting;
+        if ($request->has('tasting_id') && $request->input('tasting_id')) $validationArr['tasting_id'] = 'required|integer|exists:tastings,id';
         $this->validate($request, $validationArr);
 
         $errors = [];
@@ -108,10 +112,11 @@ class BasketController extends Controller
             'tasting_id' => $request->has('tasting_id') && $request->input('tasting_id') ? $request->input('tasting_id') : null,
             'delivery' => $request->input('delivery') == 3,
             'description' => $request->input('description'),
+            'payment_type' => $request->input('payment_type'),
         ]);
 
         foreach (Session::get('basket') as $id => $item) {
-            if ($id != 'total') {
+            if (!in_array($id, ['total', 'delivery'])) {
                 ProductToOrder::create([
                     'whole_value' => $item['parts'] ? null : $item['value'],
                     'part_value' => $item['parts'] ? $item['value'] : null,
@@ -122,11 +127,15 @@ class BasketController extends Controller
         }
         Session::forget('basket');
 
-        $this->sendMessage($order->user->email, 'emails.new_order', ['title' => 'Новый заказ', 'order' => $order], (string)Settings::getSettings()->email);
-//        $this->sendMessage('romis.nesmelov@gmail.com', 'emails.new_order', ['title' => 'Новый заказ', 'order' => $order]);
+        // загрузка реляций
+        $order->load('status', 'orderToProducts.product');
+        // отправить уведомление (пользователю/менеджеру)
+        event(new PreorderCreated($order));
 
         $result = ['success' => true, 'message' => 'Ваш заказ оформлен!'];
-        if ($usingAjax) return response()->json($result);
-        else return $result;
+        if ($usingAjax) {
+            return response()->json($result);
+        }
+        return $result;
     }
 }

@@ -1,9 +1,14 @@
 {
-    "/js/admin/category.js": "/js/admin/category.js?id=f178df3ed20d8785e8bd",
-    "/js/admin/order.js": "/js/admin/order.js?id=0617ca7b039ca2d83408",
-    "/js/face/profile-order.js": "/js/face/profile-order.js?id=fc90631a01e7649f2d1d",
-    "/style/common.css": "/style/common.css?id=97e314ff05d34233afde",
-    "/style/auth.css": "/style/auth.css?id=5e461320f63aead8e6c6",
-    "/style/managment.css": "/style/managment.css?id=d9719770827fe8c98f3b",
-    "/js/face/app.js": "/js/face/app.js?id=900566dc8b615632acff"
+    "/js/face/profile-order.js": "/js/face/profile-order.js?id=135bf3d3d2b2111f9c12d9b1a3e664b5",
+    "/js/face/product-item.js": "/js/face/product-item.js?id=4010cce7017cbe5ddd43a93ecdb78f19",
+    "/js/dashboard/category.js": "/js/dashboard/category.js?id=781e4f650afbb6d8072d890a7f3907f0",
+    "/js/dashboard/order-item.js": "/js/dashboard/order-item.js?id=1fe0e0d26d52ef59104ede542861ea9d",
+    "/js/dashboard/product-item.js": "/js/dashboard/product-item.js?id=b470ef39bf1f0d28033b135beb38a994",
+    "/js/dashboard/tasting-list.js": "/js/dashboard/tasting-list.js?id=29295277f9ec9b2793606bfd0034f533",
+    "/style/face/product.css": "/style/face/product.css?id=bf2a325b307aec6e3528014047fc680a",
+    "/style/dashboard/product-item.css": "/style/dashboard/product-item.css?id=7743ce8c6337b6f4e8949480572fc32a",
+    "/style/dashboard.css": "/style/dashboard.css?id=4d38a7322d130bf5c114323a5683ca2d",
+    "/style/face/common.css": "/style/face/common.css?id=fc2783c1166198d3859d4e13cb44fce3",
+    "/style/auth.css": "/style/auth.css?id=df5004b506cabb5bbcda8ae61e41d97d",
+    "/js/face/app.js": "/js/face/app.js?id=31bc3e7bcfc8cee54273e29958c79254"
 }

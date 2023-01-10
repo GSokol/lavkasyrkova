@@ -1,4 +1,4 @@
-@extends('face.layouts.mail')
+@extends('layouts.mail')
 
 @section('content')
     <h1 class="section-title">Участие в дегустации «{{ $tasting->name }}», которая состоится в {{ $tasting->place.' '.date('d.m.Y',$tasting->time) }}</h1>

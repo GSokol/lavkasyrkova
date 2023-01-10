@@ -1,21 +1,6 @@
 <?php
 
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | DB Settings
-    |--------------------------------------------------------------------------
-    */
-    'db_user' => env('DB_USERNAME'),
-    'db_password' => env('DB_PASSWORD'),
-    'db_name' => env('DB_DATABASE'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Project path
-    |--------------------------------------------------------------------------
-    */
-    'path' => env('APP_PATH'),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -68,6 +53,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://lavkasyrkova.ru'),
+    'asset_url' => env('ASSET_URL', null),
 
     /* Main Title */
 
@@ -114,6 +100,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Faker Locale
+    |--------------------------------------------------------------------------
+    |
+    | This locale will be used by the Faker PHP library when generating fake
+    | data for your database seeds. For example, this will be used to get
+    | localized telephone numbers, street address information and more.
+    |
+    */
+
+    'faker_locale' => 'en_US',
+
+    /*
+    |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |
@@ -129,11 +128,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Project path
+    |--------------------------------------------------------------------------
+    */
+    'path' => env('APP_PATH'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Settings XML
     |--------------------------------------------------------------------------
     */
 
-    'settings_xml' => $_SERVER['DOCUMENT_ROOT'].env('SETTINGS_XML'),
+    'settings_xml' => env('SETTINGS_XML'),
 
     /*
     |--------------------------------------------------------------------------
@@ -151,24 +157,6 @@ return [
 
     'host_ip' => env('HOST_IP', '127.0.0.1'),
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Logging Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure the log settings for your application. Out of
-    | the box, Laravel uses the Monolog PHP logging library. This gives
-    | you a variety of powerful log handlers / formatters to utilize.
-    |
-    | Available Settings: "single", "daily", "syslog", "errorlog"
-    |
-    */
-
-    'log' => env('APP_LOG', 'single'),
-
-    'log_level' => env('APP_LOG_LEVEL', 'debug'),
-
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -185,28 +173,28 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-        Illuminate\Auth\AuthServiceProvider::class,
-        Illuminate\Broadcasting\BroadcastServiceProvider::class,
-        Illuminate\Bus\BusServiceProvider::class,
-        Illuminate\Cache\CacheServiceProvider::class,
-        Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-        Illuminate\Cookie\CookieServiceProvider::class,
-        Illuminate\Database\DatabaseServiceProvider::class,
-        Illuminate\Encryption\EncryptionServiceProvider::class,
-        Illuminate\Filesystem\FilesystemServiceProvider::class,
-        Illuminate\Foundation\Providers\FoundationServiceProvider::class,
-        Illuminate\Hashing\HashServiceProvider::class,
-        Illuminate\Mail\MailServiceProvider::class,
-        Illuminate\Notifications\NotificationServiceProvider::class,
-        Illuminate\Pagination\PaginationServiceProvider::class,
-        Illuminate\Pipeline\PipelineServiceProvider::class,
-        Illuminate\Queue\QueueServiceProvider::class,
-        Illuminate\Redis\RedisServiceProvider::class,
-        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
-        Illuminate\Session\SessionServiceProvider::class,
-        Illuminate\Translation\TranslationServiceProvider::class,
-        Illuminate\Validation\ValidationServiceProvider::class,
-        Illuminate\View\ViewServiceProvider::class,
+         Illuminate\Auth\AuthServiceProvider::class,
+         Illuminate\Broadcasting\BroadcastServiceProvider::class,
+         Illuminate\Bus\BusServiceProvider::class,
+         Illuminate\Cache\CacheServiceProvider::class,
+         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
+         Illuminate\Cookie\CookieServiceProvider::class,
+         Illuminate\Database\DatabaseServiceProvider::class,
+         Illuminate\Encryption\EncryptionServiceProvider::class,
+         Illuminate\Filesystem\FilesystemServiceProvider::class,
+         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
+         Illuminate\Hashing\HashServiceProvider::class,
+         Illuminate\Mail\MailServiceProvider::class,
+         Illuminate\Notifications\NotificationServiceProvider::class,
+         Illuminate\Pagination\PaginationServiceProvider::class,
+         Illuminate\Pipeline\PipelineServiceProvider::class,
+         Illuminate\Queue\QueueServiceProvider::class,
+         Illuminate\Redis\RedisServiceProvider::class,
+         Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
+         Illuminate\Session\SessionServiceProvider::class,
+         Illuminate\Translation\TranslationServiceProvider::class,
+         Illuminate\Validation\ValidationServiceProvider::class,
+         Illuminate\View\ViewServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -223,8 +211,16 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\ViewServiceProvider::class,
         App\Providers\SettingsProvider::class,
-        App\Providers\HelperProvider::class
+        App\Providers\HelperProvider::class,
+
+        /*
+         * Dashboard Service Providers...
+         */
+        Dashboard\Providers\DashboardServiceProvider::class,
+        Dashboard\Providers\RouteServiceProvider::class,
+        Dashboard\Providers\ViewServiceProvider::class,
     ],
 
     /*

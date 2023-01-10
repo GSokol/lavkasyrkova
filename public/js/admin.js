@@ -3,23 +3,23 @@ $(document).ready(function() {
         padding: 3
     });
 
-    $('input[name=phone]').mask("+7(999)999-99-99");
-    
-    // Preview upload image
-    $('input[type=file]').change(function () {
-        var input = $(this)[0];
-        var imagePreview = $(this).parents('.edit-image-preview').find('img');
+    $('input[name=phone]').mask("+7(9nn)nnn-nn-nn");
 
-        if (input.files[0].type.match('image.*')) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                imagePreview.attr('src', e.target.result);
-            };
-            reader.readAsDataURL(input.files[0]);
-        } else {
-            imagePreview.attr('src', '/images/placeholder.jpg');
-        }
-    });
+    // Preview upload image
+    // $('input[type=file]').change(function () {
+    //     var input = $(this)[0];
+    //     var imagePreview = $(this).parents('.edit-image-preview').find('img');
+    //
+    //     if (input.files[0].type.match('image.*')) {
+    //         var reader = new FileReader();
+    //         reader.onload = function (e) {
+    //             imagePreview.attr('src', e.target.result);
+    //         };
+    //         reader.readAsDataURL(input.files[0]);
+    //     } else {
+    //         imagePreview.attr('src', '/images/placeholder.jpg');
+    //     }
+    // });
 
     // Click to delete items
     $('.glyphicon-remove-circle, .delete-button').click(function () {
@@ -32,9 +32,10 @@ $(document).ready(function() {
         $('#'+localStorage.getItem('delete_modal')).modal('hide');
         addLoaderScreen();
 
-        $.post('/admin/'+localStorage.getItem('delete_function'), {
+        $.post('/dashboard/'+localStorage.getItem('delete_function'), {
             '_token': $('input[name=_token]').val(),
-            'id': localStorage.getItem('delete_id')
+            'id': localStorage.getItem('delete_id'),
+            'row_id': localStorage.getItem('row_id'),
         }, function (data) {
             if (data.success) {
                 removeLoaderScreen();

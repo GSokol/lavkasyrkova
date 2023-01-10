@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('face.components.head_auth')
+    @include('components.head_auth')
 </head>
 
 <body class="login-container">
@@ -20,7 +20,7 @@
 
 <script>
     $('.styled').uniform();
-    $('input[name=phone]').mask("+7(999)999-99-99");
+    $('input[name=phone]').mask("+7(9nn)nnn-nn-nn");
 </script>
 
 </body>

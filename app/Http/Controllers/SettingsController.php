@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Config;
+use Illuminate\Support\Facades\Cache;
 
 class SettingsController extends Controller
 {
     use HelperTrait;
 
-    private $settings;
+    public $settings;
 
     public function __construct()
     {
-        $this->settings = simplexml_load_file(public_path(Config::get('app.settings_xml')));
+        $this->settings = simplexml_load_file(public_path(config('app.settings_xml')));
     }
 
     // Seo
@@ -25,6 +25,16 @@ class SettingsController extends Controller
             $tags[$meta] = (string)$this->settings->seo->$meta;
         }
         return $tags;
+    }
+
+    public function getSettingsAll($force = false): array
+    {
+        if ($force) {
+            return json_decode(json_encode($this->settings), true);
+        }
+        return Cache::rememberForever('settings', function() {
+            return json_decode(json_encode($this->settings), true);
+        });
     }
 
     public function getSettings()
@@ -39,14 +49,8 @@ class SettingsController extends Controller
 
     public function saveSeoTags(Request $request)
     {
-        if ($request->has('title')) $this->settings->seo->title = $request->input('title');
-        foreach ($this->metas as $meta => $params) {
-            $this->settings->seo->$meta = $request->input($meta);
-        }
-        if ($request->has('address')) {
-            foreach ($request->get('address') as $key => $value) {
-                $this->settings->address->$key = $value;
-            }
+        foreach ($request->all() as $key => $value) {
+            $this->settings->seo->$key = $value;
         }
         $this->save();
     }
@@ -61,6 +65,6 @@ class SettingsController extends Controller
 
     private function save()
     {
-        $this->settings->asXML(public_path(Config::get('app.settings_xml')));
+        $this->settings->asXML(public_path(config('app.settings_xml')));
     }
 }

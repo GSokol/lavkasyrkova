@@ -1,4 +1,5 @@
 /node_modules
+/node_modules-v2
 /node_modules-v3
 /public/hot
 /public/storage
@@ -8,6 +9,7 @@
 /resources/js/routes.js
 /storage/*.key
 /vendor
+/vendor-v2
 /vendor-v3
 /.idea
 /.vagrant

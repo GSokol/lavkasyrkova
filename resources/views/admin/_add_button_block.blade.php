@@ -1,1 +1,1 @@
-<a href="/{{ Auth::user()->is_admin ? 'admin' : 'profile' }}/{{ $href }}">@include('admin._button_block', ['type' => 'submit', 'icon' => 'icon-database-add', 'text' => $text, 'addClass' => 'pull-right'])</a>
+<a href="/{{ Auth::user()->is_admin ? 'dashboard' : 'profile' }}/{{ $href }}">@include('admin._button_block', ['type' => 'submit', 'icon' => 'icon-database-add', 'text' => $text, 'addClass' => 'pull-right'])</a>

@@ -1,4 +1,4 @@
-@extends('face.layouts.mail')
+@extends('layouts.mail')
 
 @section('content')
     <h2 class="section-title">Изменены статусы следующих дегустаций:</h2>

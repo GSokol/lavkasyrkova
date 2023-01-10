@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +13,19 @@ mix.options({
     terser: {
         extractComments: false,
     }
+}).webpackConfig((webpack) => {
+    return {
+        resolve: {
+            alias: {
+                // vue: 'vue/dist/vue.js',
+            }
+        },
+        plugins: [
+            new webpack.ProvidePlugin({
+                _: 'lodash',
+            }),
+        ],
+    };
 });
 
 /*
@@ -26,29 +39,23 @@ mix.options({
  |
  */
 
+mix.setPublicPath('public');
 // copy directories
 mix.copyDirectory('resources/fonts', 'public/fonts');
 
 // scripts
-mix.js('resources/js/face/entry/profile-order.js', 'public/js/face');
-mix.js('resources/js/admin/entry/category.js', 'public/js/admin');
-mix.js('resources/js/admin/entry/order.js', 'public/js/admin');
+// mix.js('resources/js/entry/store/index.js', 'js/face/store.js').vue({version: 3});
+mix.js('resources/js/entry/profile-order.js', 'js/face').vue({version: 3});
+mix.js('resources/js/entry/product-item/index.js', 'js/face/product-item.js').vue({version: 3});
+mix.js('dashboard/resources/js/entry/category.js', 'js/dashboard').vue({version: 3});
+mix.js('dashboard/resources/js/entry/order-item/index.js', 'js/dashboard/order-item.js').vue({version: 3});
+mix.js('dashboard/resources/js/entry/product-item/index.js', 'js/dashboard/product-item.js').vue({version: 3});
+mix.js('dashboard/resources/js/entry/tasting-list/index.js', 'js/dashboard/tasting-list.js').vue({version: 3});
 
 // face
-mix.styles([
-    'resources/style/bootstrap.css',
-    'resources/style/bootstrap-switch.css',
-    'resources/style/bootstrap-toggle.min.css',
-    'resources/style/core.css',
-    'resources/style/components.css',
-    'resources/fonts/icomoon/styles.css',
-    'resources/style/top.css',
-    'resources/style/main.css',
-    'resources/style/products.css',
-    'resources/style/loader.css',
-    'resources/style/owl.carousel.min.css',
-    'resources/style/owl.theme.default.min.css',
-], 'public/style/common.css');
+mix.sass('resources/style/entry/common.scss', 'style/face').options({
+    processCssUrls: false,
+});
 
 // face auth
 mix.styles([
@@ -59,19 +66,14 @@ mix.styles([
     'resources/style/colors.css',
     'resources/style/main.css',
     'resources/style/auth.css',
-], 'public/style/auth.css');
+], 'style/auth.css');
 
-// admin
-mix.styles([
-    'resources/fonts/icomoon/styles.css',
-    'resources/style/bootstrap.css',
-    'resources/style/core.css',
-    'resources/style/components.css',
-    'resources/style/colors.css',
-    'resources/style/admin.css',
-    'resources/style/products.css',
-    'resources/style/loader.css',
-], 'public/style/managment.css');
+// dashboard
+mix.sass('resources/style/entry/dashboard.scss', 'style');
+mix.sass('dashboard/resources/style/entry/product-item.scss', 'style/dashboard');
+
+// face
+mix.sass('resources/style/entry/product.scss', 'style/face');
 
 mix.scripts([
     'public/js/core/libraries/jquery.min.js',

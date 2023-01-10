@@ -1,3 +1,14 @@
+@use '~element-plus/theme-chalk/src/var';
+@use '~element-plus/theme-chalk/src/common/transition';
+@use '~element-plus/theme-chalk/src/overlay.scss';
+@use '~element-plus/theme-chalk/src/message-box.scss';
+
+:root {
+    --vc-clr-primary: #faa54c !important;
+    --vc-nav-background-color: #ffffff !important;
+    --vc-nav-color: #000 !important;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: white;
@@ -51,9 +62,9 @@ a.button {
     width: 100%;
 }
 
-/*.image {*/
-    /*border: 1px solid #a76622;*/
-/*}*/
+#root {
+    padding-top: 62px;
+}
 
 .error {
     width: 100%;
@@ -105,7 +116,7 @@ a.button {
 }
 
 .cover.pattern {
-    background: url('../images/cheeses_pattern.png') #ffd180 repeat;
+    background: url('/images/cheeses_pattern.png') #ffd180 repeat;
 }
 
 .new-tasting {
@@ -158,14 +169,6 @@ input, select {
     line-height: 1.428571429;
 }
 
-/*select {*/
-    /*margin-bottom: 25px;*/
-/*}*/
-
-/*input[name=phone] {*/
-    /*letter-spacing: 0.1em;*/
-/*}*/
-
 .modal-header .close {
     width: 10px;
     top: 15px;
@@ -205,7 +208,7 @@ input, select {
 .modal-body textarea {
     width: 100%;
     height: 100px;
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
     resize: vertical;
 }
 
@@ -313,7 +316,7 @@ input, select {
     width: 100%;
     padding: 10px 0;
     border-top: 1px solid white;
-    background: url("../images/top_menu_bg.jpg") 50% 50% no-repeat;
+    background: url("/images/top_menu_bg.jpg") 50% 50% no-repeat;
 }
 
 #footer a {
@@ -330,6 +333,14 @@ input, select {
     color: white;
     margin-top: 10px;
     padding: 0;
+}
+
+.el-flex-overfirst {
+    order: -2;
+}
+
+.el-flex-first {
+    order: -1;
 }
 
 @media screen and (max-width: 768px) {
@@ -388,5 +399,18 @@ input, select {
     .btn-primary, .btn-primary.big-button {
         width: 90% !important;
         font-size: 13px;
+    }
+
+    .el-flex\@sm {
+        display: flex;
+    }
+    .el-flex-column\@sm {
+        flex-direction: column;
+    }
+    .el-flex-first\@sm {
+        order: -1;
+    }
+    .el-flex-last\@sm {
+        order: 99;
     }
 }

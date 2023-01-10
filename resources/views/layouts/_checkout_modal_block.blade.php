@@ -4,7 +4,7 @@
         @if (Session::has('basket'))
             @foreach (Session::get('basket') as $id => $item)
                 @foreach ($data['products'] as $product)
-                    @if ($id != 'total' && isset($item['value']) && $item['value'] && $id == $product->id)
+                    @if (!in_array($id, ['total', 'delivery']) && isset($item['value']) && $item['value'] && $id == $product->id)
                         <div id="basket-product-{{ $product->id }}" class="product-basket">
                             @include('_basket_product_block', [
                                 'product' => $product,
@@ -20,15 +20,21 @@
         @endif
     </div>
     <hr>
-    <p class="total-cost-basket"><b>Итоговая сумма: </b><span>{{ Session::has('basket') ? Session::get('basket')['total'] : '0' }} руб</span></p>
+    <p class="mb-15">
+        <strong>Доставка: </strong>
+        <span>{{ Session::has('basket') ? Session::get('basket')['delivery'] : 0 }} руб.</span>
+    </p>
+    <p class="total-cost-basket">
+        <b>Итоговая сумма: </b>
+        <span>{{ Session::has('basket') ? Session::get('basket')['total'] : '0' }} руб</span>
+    </p>
 
-    <h3>Доставка</h3>
     <?php $displayAddress = Session::has('basket') && Session::get('basket')['total'] > (int)Settings::getSettings()->delivery_limit || !count($tastings); ?>
     <div class="error"></div>
 
     @foreach(
         [
-            (Auth::user()->office->id == 1 || Auth::user()->office->id == 2 || count($tastings) ? Auth::user()->office->address : (count($tastings) ? 'Доставка в офис ('.Auth::user()->office->address.')' : null)),
+            ((Auth::user()->office && (Auth::user()->office->id == 1 || Auth::user()->office->id == 2)) || count($tastings) ? Auth::user()->office->address : (count($tastings) ? 'Доставка в офис ('.Auth::user()->office->address.')' : null)),
             'Доставка в магазин',
             'Доставка по адресу <span class="error">(при заказе свыше '.Settings::getSettings()->delivery_limit.' руб!)</span>'
         ] as $d => $delivery)
@@ -57,7 +63,7 @@
         @elseif ($d == 1)
             <div class="shops-block" style="display:none;">
                 @foreach($stores as $k => $store)
-                    @include('_radio_simple_block',[
+                    @include('_radio_simple_block', [
                         'name' => 'shop_id',
                         'value' => $store->id,
                         'label' => $store->address,
@@ -87,13 +93,29 @@
             'value' => '',
         ])
     </div>
+
+    <div class="">
+        <label>Способ оплаты:</label>
+        @include('_radio_simple_block',[
+            'name' => 'payment_type',
+            'value' => 'card',
+            'label' => 'Оплата картой',
+            'checked' => true,
+        ])
+        @include('_radio_simple_block',[
+            'name' => 'payment_type',
+            'value' => 'cash',
+            'label' => 'Оплата наличными курьеру',
+            'checked' => false,
+        ])
+    </div>
 </div>
 <div class="modal-footer">
     @include('_button_block', ['addAttr' => $usingAjax ? ['id' => 'checkout'] : null, 'type' => $usingAjax ? 'button' : 'submit', 'text' => 'Оформить заказ', 'icon' => 'icon-mail5'])
 </div>
 
 <?php $content = ob_get_clean(); ?>
-@include('layouts._modal_block',['id' => 'checkout-modal', 'title' => 'Оформление заказа', 'content' => $content, 'addClass' => isset($addClass) ? $addClass : null])
+@include('layouts._modal_block', ['id' => 'checkout-modal', 'title' => 'Оформление заказа', 'content' => $content, 'addClass' => isset($addClass) ? $addClass : null])
 
 @if (Session::has('basket') && Session::get('basket')['total'] && Request::has('basket') && Request::input('basket'))
     <script>

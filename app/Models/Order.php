@@ -11,6 +11,13 @@ use App\Models\Tasting;
 
 class Order extends Model
 {
+    const PAYMENT_TYPE_CARD = 'card';
+    const PAYMENT_TYPE_CASH = 'cash';
+    const PAYMENT_TYPES = [
+        self::PAYMENT_TYPE_CARD,
+        self::PAYMENT_TYPE_CASH,
+    ];
+
     protected $fillable = [
         'status_id',
         'description',
@@ -18,6 +25,8 @@ class Order extends Model
         'tasting_id',
         'shop_id',
         'delivery',
+        'payment_type',
+        'payment_link',
         'discount_value',
     ];
 
@@ -89,7 +98,7 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function orderToProducts()

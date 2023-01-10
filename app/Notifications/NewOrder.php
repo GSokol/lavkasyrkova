@@ -48,7 +48,6 @@ class NewOrder extends Notification
             ->subject('Новый заказ')
             ->from(config('app.master_mail'), $title)
             ->view('emails.new_order', [
-                'title' => 'Новый заказ',
                 'order' => $this->order,
             ]);
     }

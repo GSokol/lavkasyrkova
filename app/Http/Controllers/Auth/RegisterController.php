@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HelperTrait;
 use App\Models\Office;
-use App\User;
+use App\Models\User;
 
 class RegisterController extends Controller
 {
@@ -69,10 +69,9 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'phone' => $this->validationPhone,
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->validationPassword,
-            'office_id' => $this->validationOffice,
-            'g-recaptcha-response' => 'required|string',
+            'g-recaptcha-response' => ['required', 'string'],
         ]);
     }
 
@@ -80,7 +79,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\User
      */
     protected function create(array $data)
     {
@@ -89,7 +88,7 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'password' => bcrypt($data['password']),
             'confirm_token' => Str::random(32),
-            'office_id' => $data['office_id'],
+            'office_id' => isset($data['office_id']) ? $data['office_id'] : 1,
             'address' => $data['address'],
             'active' => false,
             'send_mail' => 1

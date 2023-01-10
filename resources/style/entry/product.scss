@@ -1,0 +1,69 @@
+body {
+    font-size: 15px;
+}
+
+h6 a {
+    color: inherit;
+}
+
+.iconograph {
+    max-width: 28px;
+    margin-right: 15px;
+}
+.param-title {
+    margin-right: 10px;
+    &.width {
+        min-width: 170px;
+        display: inline-block;
+    }
+}
+
+.price-block {
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.input-value-container.inline {
+    max-width: 50%;
+}
+.input-value-container.narrow {
+    max-width: 200px;
+}
+
+.info-block {
+    float: right;
+    width: 35%;
+    background: #f1f1f1;
+    padding: 10px 15px;
+    border-left: 3px solid #ccc;
+    display: block;
+}
+
+@media screen and (max-width: 450px) {
+    .info-block {
+        margin: 20px 0;
+        width: 100%;
+        float: none;
+    }
+    .input-value-container.narrow {
+        display: inline-block;
+        margin-bottom: -10px;
+        margin-left: 20px;
+    }
+}
+
+.alcohol-combination-block {
+    background-color: #fffaf3;
+    border-radius: 4px;
+    padding: 20px;
+    .description {
+        margin-top: 20px;
+    }
+}
+
+.carousel-thumbnails {
+    margin-top: 5px;
+    .carousel__item {
+        padding: 5px;
+    }
+}

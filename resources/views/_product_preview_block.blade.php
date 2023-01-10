@@ -1,1 +1,1 @@
-<a class="img-preview" href="{{ $product->big_image ? asset($product->big_image) : asset($product->image) }}"><img {{ isset($imageClass) ? 'class='.$imageClass : '' }} src="{{ asset($image) }}" /></a>
+<a class="img-preview" href="{{ $product->big_image ? asset($product->big_image) : asset($product->image) }}"><img {{ isset($imageClass) ? 'class='.$imageClass : '' }} src="{{ asset($image) }}" loading="lazy" onerror="this.src='/images/default.jpg'" /></a>

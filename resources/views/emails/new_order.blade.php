@@ -1,12 +1,22 @@
-@extends('face.layouts.mail')
+@extends('layouts.mail')
+
+@section('header')
+    <tr>
+        <td class="header">
+            <a href="#" style="display: inline-block;">
+                <img src="{{ asset('/images/logo_small.svg') }}" class="logo" alt="Лавка Сыркова">
+            </a>
+        </td>
+    </tr>
+@endsection
 
 @section('content')
-    <h1 class="section-title">{{ $title }} на сайте <a href="{{ Config::get('app.url') }}">{{ Config::get('app.name') }}</a></h1>
-    <p><b>Заказ №</b> {{ $order->id }}</p>
+    <h1 class="section-title">Заказ № {{ $order->id }}</h1>
+    <p><strong>Дата заказа:</strong> {{ $order->created_at }}</p>
     <p><strong>Статус:</strong> {{ $order->status->name }}</p>
-    <p><b>Заказчик:</b> {{ $order->user->name ? $order->user->name : $order->user->email }}</p>
-    <p><b>Контактный телефон:</b> {{ $order->user->phone ? $order->user->phone : 'не указан' }}<p>
-    <p><b>Доставка </b>{{ $order->delivery_info }}</p>
+    <p><strong>Заказчик:</strong> {{ $order->user->name ? $order->user->name : $order->user->email }}</p>
+    <p><strong>Контактный телефон:</strong> {{ $order->user->phone ? $order->user->phone : 'не указан' }}<p>
+    <p><strong>Доставка </strong>{{ $order->delivery_info }}</p>
     @if ($order->user->office_id > 2 && !$order->delivery && !$order->shop_id)
         <p><b>Получение заказа:</b> {{ date('d.m.Y',$order->tasting->time) }}</p>
     @endif
@@ -19,4 +29,21 @@
         <p><strong>Скидка: </strong>{{ $order->discount_value }}% ({{ $order->discount_amount }} руб.)</p>
         <p><strong>Итого к оплате: </strong>{{ $order->checkout_amount }} руб.</p>
     @endif
+    @if ($order->payment_link)
+        <p><strong>Ссылка на оплату: <a href="{{ $order->payment_link }}" style="font-weight: normal;">{{ $order->payment_link }}</a> </strong></p>
+    @endif
+@endsection
+
+@section('footer')
+    <tr>
+        <td>
+            <table class="footer" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
+                <tr>
+                    <td class="content-cell" align="center">
+                        Лавка Сыркова © 2019
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
 @endsection

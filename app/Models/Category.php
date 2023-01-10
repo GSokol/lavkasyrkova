@@ -19,7 +19,7 @@ class Category extends Model
      *
      * @return string
      */
-    public function getImageAttribute($value): string {
+    public function getImageAttribute($value) {
         if (!file_exists(public_path($value))) {
             return '/images/default.jpg';
         }
